@@ -1,0 +1,10 @@
+1. Co potrzebuję, aby ściągnąć kod?
+
+    Do ściągnięcia kodu przyda się:
+- Visual Studio 2005
+- AnkhSVN
+
+
+2. Czemu 'Repository Explorer' AnkhSVN nie otwiera repozytorium?
+
+   Zapewne podajesz złe hasło. Nazwa użytkownika to nazwa konta gmail, a hasło dostępne jest po zalogowaniu na stronie http://code.google.com/hosting/settings .
