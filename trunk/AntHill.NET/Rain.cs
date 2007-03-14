@@ -1,14 +1,17 @@
 using System;
 
-public class Rain : Element
+namespace AntHill.NET
 {
-    public override void Maintain()
+    public class Rain : Element
     {
-        throw new Exception("The method or operation is not implemented.");
-    }
+        public override void Maintain()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
 
-    public override void Destroy()
-    {
-        throw new Exception("The method or operation is not implemented.");
+        public override void Destroy()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

@@ -2,21 +2,24 @@ using System;
 using System.Drawing;
 using System.Collections.Generic;
 
-public abstract class Element
+namespace AntHill.NET
 {
-    private Point position;
-	public Point Position
-	{
-		get
+    public abstract class Element
+    {
+        private Point position;
+        public Point Position
         {
-			return position;
-		}
-		set
-        {
-			position = value;
-		}
-	}
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
 
-    public abstract void Maintain();
-	public abstract void Destroy();
+        public abstract void Maintain();
+        public abstract void Destroy();
+    }
 }

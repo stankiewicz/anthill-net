@@ -16,20 +16,4 @@ public class PointWithIntensity
         get { return intensity; }
         set { intensity = value; }
     }
-
-
-	public PointWithIntensity()
-	{
-	}
-
-	private System.Collections.Generic.List < Message > message;
-	
-	public System.Collections.Generic.List < Message > getMessage(){return null;}
-
-    public void setMessage(System.Collections.Generic.List<Message> theMessage) { }
-	
-	public virtual void  CountDown()
-	{
-		
-	}
 }

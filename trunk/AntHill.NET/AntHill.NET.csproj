@@ -44,8 +44,8 @@
     <Compile Include="Element.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="IFightableCreature.cs" />
-    <Compile Include="IMovableCreature.cs" />
     <Compile Include="ISimulation.cs" />
+    <Compile Include="ISimulationWorld.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,7 +84,6 @@
     <Compile Include="Rain.cs" />
     <Compile Include="Simulation.cs" />
     <Compile Include="Spider.cs" />
-    <Compile Include="State.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Worker.cs" />
   </ItemGroup>

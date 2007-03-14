@@ -1,20 +1,21 @@
 using System;
 
-public abstract class Citizen : Ant, IMovableCreature
+namespace AntHill.NET
 {
-	public Citizen()
-	{
-	}
 
-    public virtual void  SpreadSignal()
-	{
-	}
-	
-	public virtual void  ReadMessage()
-	{
-	}
-	
-	public virtual void  Move()
-	{
-	}
+    public abstract class Citizen : Ant
+    {
+
+        public Citizen()
+        {
+        }
+
+        public virtual void SpreadSignal()
+        {
+        }
+
+        public virtual void ReadMessage()
+        {
+        }
+    }
 }

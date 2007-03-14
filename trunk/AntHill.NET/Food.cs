@@ -1,29 +1,31 @@
 using System;
 
-public class Food : Element
+namespace AntHill.NET
 {
-    private int quantity;
-
-	virtual public int Quantity
-	{
-		get
-		{
-			return quantity;
-		}
-		
-		set
-		{
-			quantity = value;
-		}
-	}
-
-    public override void Maintain()
+    public class Food : Element
     {
-        throw new Exception("The method or operation is not implemented.");
-    }
+        private int quantity;
 
-    public override void Destroy()
-    {
-        throw new Exception("The method or operation is not implemented.");
+        virtual public int Quantity
+        {
+            get
+            {
+                return quantity;
+            }
+            set
+            {
+                quantity = value;
+            }
+        }
+
+        public override void Maintain()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override void Destroy()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }
