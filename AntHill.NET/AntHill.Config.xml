@@ -1,0 +1,49 @@
+<Anthill>
+	<!-- world structure description -->
+	<WorldMap rowCount="10" colCount="10">			
+		<!-- a single row of the world 
+		 o – corridor in the anthill, where ants can walk
+		 x – a wall in the anthill
+		 s – outdoor -->
+ 		<Map row = "oxooosssss"/>	
+		<Map row = "oooxxsssss"/>						
+		<Map row = "oxoxxxxsss"/>						
+		<Map row = "oxooooosss"/>						
+		<Map row = "oooxxxxsss"/>
+		<Map row = "xxoxxoosss"/>
+		<Map row = "xxoxxoxsss"/>
+		<Map row = "oooooooxss"/>
+		<Map row = "oooooooxss"/>
+		<Map row = "oooooooxss"/>
+	</WorldMap>
+	<CreaturesAbilities>
+	<!--maximum lenght of life, starvation resistence of every ant, 
+	and number of turns after which an ant become hungry -->
+    <!--slesinskik: I've added maxHealth for ants, it'll work same as for spiders-->
+		<Ant maxLife="" maxLifeWithoutFood="" turnNumberToBecomeHungry="" 
+			maxHealth="" strength="" forgettingTime="" sightRadius="" >			
+			<Citizen>					
+				<!--initial number of warriors-->
+				<Warrior startCount="" />	
+				<!--initial number of workers -->
+				<Worker startCount="" />					
+			</Citizen>
+			<!--position of the queen, which cannot be changed during simulation 
+			 probability of laying egg in a turn -->
+			<Queen layEggProbability="" xPosition="" yPosition=""/>
+			<!--probability of hatching the warrior and time, which an egg needs to	become an ant -->
+			<Egg hatchWarriorProbability="" hatchTime=""/>
+		</Ant>
+		<!--resistence to ants attack and probability of appear in simulated world 
+		quantity of food, which a living creature becomes after its death -->
+		<Spider maxHealth="" probability=""  foodQuantityAfterDeath=""/>
+	</CreaturesAbilities>
+	<EnvironmentCharacteristics>
+		<!--width of the cloud, probability of rain in a turn and duration of the 			rain -->
+		<Rain cloudWidth="" probability="" maxDuration=""/>
+		<!--maximal density of food on a single outside world and probability of its 		appearance -->
+		<Food probability=""/>
+		<!--signals characteristics -->
+		<Signal lifeTime="" radius=""/>
+	</EnvironmentCharacteristics>
+</Anthill>
