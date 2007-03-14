@@ -1,6 +1,6 @@
 using System;
 
-public interface ISimulation
+public interface ISimulationUser
 {
 	void  DoTurn();
 	void  Reset();

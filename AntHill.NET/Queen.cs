@@ -1,21 +1,21 @@
 using System;
 
-public class Queen : Ant
+namespace AntHill.NET
 {
-	private int layEggProbability;
-	
-	public virtual void  LayEgg()
-	{
-		
-	}
-
-    public override void Maintain()
+    public class Queen : Ant
     {
-        throw new Exception("The method or operation is not implemented.");
-    }
+        public void LayEgg()
+        {
+        }
 
-    public override void Destroy()
-    {
-        throw new Exception("The method or operation is not implemented.");
+        public override void Maintain()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override void Destroy()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

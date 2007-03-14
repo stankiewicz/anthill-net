@@ -1,23 +1,22 @@
 using System;
 
-public abstract class Ant : Creature
+namespace AntHill.NET
 {
+    public abstract class Ant : Creature
+    {
+        private int turnsToBecomeHungry;
+        public int TurnsToBecomeHungry
+        {
+            get
+            {
+                return turnsToBecomeHungry;
+            }
+            set
+            {
+                turnsToBecomeHungry = value;
+            }
+        }
 
-    public int TurnNumberToBecomeHungry
-	{
-		get
-		{
-			return turnNumberToBecomeHungry;
-		}
-		
-		set
-		{
-			turnNumberToBecomeHungry = value;
-		}
-		
-	}
-
-	private int turnNumberToBecomeHungry;
-
-    public virtual void Eat() { }
+        public virtual void Eat() { }
+    }
 }

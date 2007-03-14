@@ -1,16 +1,25 @@
 using System;
 
-public class Egg : Element
+namespace AntHill.NET
 {
-    private int timeToHatch;
 
-    public override void Maintain()
+    public class Egg : Element
     {
-        throw new Exception("The method or operation is not implemented.");
-    }
+        private int timeToHatch;
 
-    public override void Destroy()
-    {
-        throw new Exception("The method or operation is not implemented.");
+        public override void Maintain()
+        {
+            if (--timeToHatch == 0)
+            {
+                //create ant
+                //destroy egg
+            }
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override void Destroy()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
     }
 }

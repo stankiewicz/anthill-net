@@ -1,52 +1,24 @@
 using System;
 
-public abstract class Creature : Element
+namespace AntHill.NET
 {
-    private int life;
+    public enum Direction { S, W, E, N }
+    public enum State { Alive }
 
-	virtual public int FieldOfView
-	{
-		get
-		{
-			return fieldOfView;
-		}
-		
-		set
-		{
-			fieldOfView = value;
-		}
-		
-	}
-
-    virtual public int Direction
-	{
-		get
-		{
-			return direction;
-		}
-		
-		set
-		{
-			direction = value;
-		}
-		
-	}
-	
-    virtual public State[] State
-	{
-		get
-		{
-			return state;
-		}
-		
-		set
-		{
-			state = value;
-		}
-		
-	}
-	private int fieldOfView;
-	private int direction;
-	private State[] state = new State[3];
-	
+    public abstract class Creature : Element
+    {
+        private int life;
+        private Direction direction;
+        public Direction Direction
+        {
+            get
+            {
+                return direction;
+            }
+            set
+            {
+                direction = value;
+            }
+        }
+    }
 }
