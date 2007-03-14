@@ -13,9 +13,7 @@ public class Message : Element
 {
     private MessageType type;
 
-	public Message()
-	{
-	}
+	public Message() {}
 
 	public MessageType GetMessageType
 	{
@@ -25,7 +23,7 @@ public class Message : Element
 		}
 	}
 	
-	public List<PointWithIntensity> points;	
+	public List<PointWithIntensity> points;
     public void AddPoint(List<PointWithIntensity> newPoint) { }
 	
     public override void Maintain()

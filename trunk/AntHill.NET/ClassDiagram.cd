@@ -12,7 +12,7 @@
     <Position X="5" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Worker.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAEAgAAAAAAAAQAAAABAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAEAgAAAAAAAAQABAABAAAAAQAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Creature">
@@ -44,7 +44,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Queen">
-    <Position X="8.75" Y="9.5" Width="1.5" />
+    <Position X="7.25" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Queen.cs</FileName>
       <HashCode>AAAACAAAAAAgAAAAAAAAAAAAAABAAAAQAAAAAAAAAAA=</HashCode>
@@ -54,7 +54,7 @@
     <Position X="2.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Rain.cs</FileName>
-      <HashCode>AAAAAAAAAAAgAAAAAAAAAAIAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Spider">
@@ -80,50 +80,50 @@
       <HashCode>AAAAAACAAAAwAAQAAAAAAAAAAABBAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="AntHill.NET.AntHillConfig">
-    <Position X="3.75" Y="1" Width="1.5" />
+  <Class Name="AntHill.NET.AntHillConfig" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>AntHillConfig.cs</FileName>
-      <HashCode>BABCAIAICQAQAAAAgQAAABAAAAgABAAIAAAAgCCAAQE=</HashCode>
+      <HashCode>BAJCAIAEAQAQACAAAQAAIBAAAAgACBAIAAQAACCAEQE=</HashCode>
     </TypeIdentifier>
   </Class>
   <Interface Name="IFightableCreature" Collapsed="true">
-    <Position X="16.5" Y="0.5" Width="1.5" />
+    <Position X="16.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>IFightableCreature.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="IMovableCreature" Collapsed="true">
-    <Position X="18.25" Y="0.5" Width="1.5" />
+    <Position X="18.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>IMovableCreature.cs</FileName>
       <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="ISimulation" Collapsed="true">
-    <Position X="16.5" Y="1.25" Width="1.5" />
+    <Position X="16.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ISimulation.cs</FileName>
       <HashCode>AAAgAAAAECAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Enum Name="TileType" Collapsed="true">
-    <Position X="16.5" Y="3" Width="1.5" />
+    <Position X="16.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Tile.cs</FileName>
       <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Enum>
   <Enum Name="State" Collapsed="true">
-    <Position X="18.25" Y="2.25" Width="1.5" />
+    <Position X="18.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>State.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Enum>
   <Enum Name="MessageType" Collapsed="true">
-    <Position X="16.5" Y="2.25" Width="1.5" />
+    <Position X="16.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Message.cs</FileName>
       <HashCode>AAAACAAAAAAAAAAAAAAAAAAQAAAIAEAAAAAAAAAAAAA=</HashCode>

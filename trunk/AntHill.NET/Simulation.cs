@@ -7,7 +7,7 @@ public class Simulation : ISimulation
 
     //We should add List<Food>, List<Spider>, List<Ant> here
     public List<Message> messages = new List<Message>();
-    public List<Element> elements = new List<Element>();
+    
     public Queen queen = null;
 
 	public Simulation(Map map)
@@ -25,6 +25,10 @@ public class Simulation : ISimulation
 	
 	#region ISimulation Members
 
+
+    /// <summary>
+    /// This is the most important function 
+    /// </summary>
     void ISimulation.DoTurn()
     {
         throw new Exception("The method or operation is not implemented.");
