@@ -2,6 +2,8 @@ using System;
 
 public abstract class Creature : Element
 {
+    private int life;
+
 	virtual public int FieldOfView
 	{
 		get
