@@ -9,6 +9,8 @@ namespace AntHill.NET
     /// </summary>
     public static class AntHillConfig
     {
+        #region Simulation_Parameters
+
         //World map
         static private int mapRowCount, mapColCount;
 
@@ -34,5 +36,13 @@ namespace AntHill.NET
 
         //Message (referred as 'signal' in config file)
         static private int messageLifeTime, messageRadius;
+
+        #endregion 
+
+        #region Simulation_Additional_Parameters
+
+        //If we need to configure/store some settings then do it here
+
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ namespace AntHill.NET
     {
         private int timeToHatch;
 
-        public override void Maintain()
+        public override void Maintain(ISimulationWorld isw)
         {
             if (--timeToHatch == 0)
             {

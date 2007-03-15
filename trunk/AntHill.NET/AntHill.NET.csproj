@@ -43,7 +43,6 @@
     <Compile Include="Egg.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Food.cs" />
-    <Compile Include="IFightableCreature.cs" />
     <Compile Include="ISimulation.cs" />
     <Compile Include="ISimulationWorld.cs" />
     <Compile Include="MainForm.cs">
