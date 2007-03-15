@@ -19,7 +19,7 @@ namespace AntHill.NET
             }
         }
 
-        public abstract void Maintain();
+        public abstract void Maintain(ISimulationWorld isw);
         public abstract void Destroy();
     }
 }

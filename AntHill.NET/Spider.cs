@@ -2,9 +2,9 @@ using System;
 
 namespace AntHill.NET
 {
-    public class Spider : Creature, IFightableCreature
+    public class Spider : Creature
     {
-        public override void Maintain()
+        public override void Maintain(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
         }
@@ -13,14 +13,5 @@ namespace AntHill.NET
         {
             throw new Exception("The method or operation is not implemented.");
         }
-
-        #region IFightableCreature Members
-
-        void IFightableCreature.Attack()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        #endregion
     }
 }

@@ -32,7 +32,7 @@ namespace AntHill.NET
 
         }
 
-        public override void Maintain()
+        public override void Maintain(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
         }

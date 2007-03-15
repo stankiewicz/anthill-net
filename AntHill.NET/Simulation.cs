@@ -7,8 +7,10 @@ namespace AntHill.NET
     {
         private Map map;
 
-        //We should add List<Food>, List<Spider>, List<Ant> here
         public List<Message> messages = new List<Message>();
+        public List<Food> food = new List<Food>();
+        public List<Spider> spiders = new List<Spider>();
+        public List<Ant> ants = new List<Ant>();
         
         public Queen queen = null;
 
@@ -21,9 +23,6 @@ namespace AntHill.NET
         {
             get { return map; }
         }
-
-        public void AddMessage(List<Message> newMessage) { }
-        public void AddElement(List<Element> newElement) { }
     	
 	    #region ISimulation Members
 
@@ -76,6 +75,26 @@ namespace AntHill.NET
         }
 
         public void Attack(Creature cA, Creature cB)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public List<Ant> GetVisibleAnts(Creature c)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public List<Food> GetVisibleFood(Creature c)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public List<Spider> GetVisibleSpiders(Creature c)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public List<Message> GetVisibleMessages(Creature c)
         {
             throw new Exception("The method or operation is not implemented.");
         }

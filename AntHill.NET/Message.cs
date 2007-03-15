@@ -26,7 +26,7 @@ namespace AntHill.NET
             get { return type; }
         }
 
-        public override void Maintain()
+        public override void Maintain(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
         }
