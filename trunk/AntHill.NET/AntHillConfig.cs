@@ -13,7 +13,7 @@ namespace AntHill.NET
 
         //World map
         static public int mapRowCount, mapColCount;
-        static public Tile[][] map;
+        static public Tile[,] tiles;
 
         //Ants
         static public int antMaxLife, antMaxLifeWithoutFood, antTurnNumberToBecomeHungry,

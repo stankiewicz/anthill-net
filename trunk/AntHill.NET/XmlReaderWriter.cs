@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,19 +5,14 @@ using System.Xml;
 using System.Collections;
 using System.Xml.Schema;
 
-
 namespace AntHill.NET
 {
-
     class XmlReaderWriter
     {
-        
-        List<string> Errors = new List<string>();
-      
+        List<string> Errors = new List<string>();      
 
         bool ValidateMe()
         {
-
             XmlSchemaSet sc = new XmlSchemaSet();
 
             // Add the schema to the collection.
@@ -37,11 +30,12 @@ namespace AntHill.NET
             // Parse the file. 
             while (reader.Read()) ;
 
-            if (Errors.Count == 0) return true;
-            else return false;
+            if (Errors.Count == 0)
+                return true;
+            else
+                return false;
         }
 
-        
          // Display any validation errors.
         private  void ValidationCallBack(object sender, ValidationEventArgs e)
         {
@@ -50,8 +44,8 @@ namespace AntHill.NET
 
         public void ReadMe()
         {
-            int k=0;
-            int l=0;
+            int rowCount = 0;
+
             XmlTextReader textReader = new XmlTextReader("AntHill.Config.xml");
             textReader.Read();
             while (textReader.Read())
@@ -61,32 +55,33 @@ namespace AntHill.NET
                     {
                         case "WorldMap":
                             {
-                                AntHillConfig.mapRowCount= int.Parse(textReader.GetAttribute("rowCount"));
-                                AntHillConfig.mapColCount= int.Parse(textReader.GetAttribute("colCount"));
+                                AntHillConfig.mapRowCount = int.Parse(textReader.GetAttribute("rowCount"));
+                                AntHillConfig.mapColCount = int.Parse(textReader.GetAttribute("colCount"));
+                                AntHillConfig.tiles = new Tile[AntHillConfig.mapRowCount, AntHillConfig.mapColCount];
                             } break;
                         case "Map":
-                            {   
+                            {
+                                //If this is happens before 'WorldMap' then we're f***ed up
+                                //because AntHillConfig.tiles array won't be initialized.
+                                //I suggest we use more reliable xml parsing.
+                                string s = textReader.GetAttribute("row");
                                 
-                                string s=(textReader.GetAttribute("row"));
-                                CharEnumerator iter=s.GetEnumerator();
-                                while (iter.MoveNext())
+                                for (int i=0; i <s.Length; ++i)
                                 {
-                                    switch (iter.Current)
-                                    {
+                                    switch(s[i])
+                                    {                                
                                         case 'o':
-                                            AntHillConfig.map[k][l].tileType= TileType.Indoor;
+                                            AntHillConfig.tiles[rowCount, i] = new Tile(TileType.Indoor);
                                             break;
                                         case 'x':
-                                            AntHillConfig.map[k][l].tileType = TileType.Wall;
+                                            AntHillConfig.tiles[rowCount, i] = new Tile(TileType.Wall);
                                             break;
                                         case 's':
-                                            AntHillConfig.map[k][l].tileType = TileType.Outdoor;
-                                            
+                                            AntHillConfig.tiles[rowCount, i] = new Tile(TileType.Outdoor);
                                             break;
                                     }
-                                    l++;
-                                 }
-                                 k++;
+                                }
+                                rowCount++;
                             } break;
                         case "Ant":
                             {
@@ -130,19 +125,15 @@ namespace AntHill.NET
                             } break;
                         case "Food":
                             {
-                               AntHillConfig.foodProbability = int.Parse(textReader.GetAttribute("probability"));
+                                AntHillConfig.foodProbability = int.Parse(textReader.GetAttribute("probability"));
                             } break;
                         case "Signal":
                             {
                                 AntHillConfig.messageLifeTime = int.Parse(textReader.GetAttribute("lifeTime"));
                                 AntHillConfig.messageRadius= int.Parse(textReader.GetAttribute("radius"));
                             } break;
-
                     }
-
             }
-
         }
-
     }
 }
