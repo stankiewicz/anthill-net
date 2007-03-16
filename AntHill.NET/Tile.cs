@@ -7,7 +7,7 @@ namespace AntHill.NET
 
     public class Tile
     {
-        public TileType tileType;
+        private TileType tileType;
         public TileType GetTileType
         {
             get { return tileType; }
@@ -19,5 +19,11 @@ namespace AntHill.NET
          * at the cost of memory.
          */
         public List<Message> messages;
+
+        public Tile(TileType ttype)
+        {
+            tileType = ttype;
+            messages = new List<Message>();
+        }
     }
 }
