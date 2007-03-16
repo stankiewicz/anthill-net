@@ -12,30 +12,30 @@ namespace AntHill.NET
         #region Simulation_Parameters
 
         //World map
-        static private int mapRowCount, mapColCount;
+        static public int mapRowCount, mapColCount;
 
         //Ants
-        static private int antMaxLife, antMaxLifeWithoutFood, antTurnNumberToBecomeHungry,
+        static public int antMaxLife, antMaxLifeWithoutFood, antTurnNumberToBecomeHungry,
                     antMaxHealth, antStrength, antForgettingTime, antSightRadius,
                     workerStartCount, warriorStartCount;
 
         //Queen
-        static private int queenLayEggProbability, queenXPosition, queenYPosition;
+        static public int queenLayEggProbability, queenXPosition, queenYPosition;
 
         //Egg
-        static private int eggHatchWarriorProbability, eggHatchTime;
+        static public int eggHatchWarriorProbability, eggHatchTime;
 
         //Spider
-        static private int spiderMaxHealth, spiderProbability, spiderFoodQuantityAfterDeath;
+        static public int spiderMaxHealth, spiderProbability, spiderFoodQuantityAfterDeath;
 
         //Rain
-        static private int rainWidth, rainProbability, rainMaxDuration;
+        static public int rainWidth, rainProbability, rainMaxDuration;
 
         //Food
-        static private int foodProbability;
+        static public int foodProbability;
 
         //Message (referred as 'signal' in config file)
-        static private int messageLifeTime, messageRadius;
+        static public int messageLifeTime, messageRadius;
 
         #endregion 
 
