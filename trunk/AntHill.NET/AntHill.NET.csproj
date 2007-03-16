@@ -85,6 +85,7 @@
     <Compile Include="Spider.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Worker.cs" />
+    <Compile Include="XmlReaderWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AntHill.Config.xml" />
