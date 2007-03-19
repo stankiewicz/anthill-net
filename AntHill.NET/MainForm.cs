@@ -10,6 +10,7 @@ namespace AntHill.NET
 {
     public partial class MainForm : Form
     {
+        ISimulationUser simulation = new Simulation(null);
         public MainForm()
         {
             InitializeComponent();
@@ -45,7 +46,7 @@ namespace AntHill.NET
             stopButton.Enabled = true;
             doTurnButton.Enabled = false;
             pauseButton.Enabled = true;
-            Simulation.Start();            
+            simulation.Start();            
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -54,7 +55,7 @@ namespace AntHill.NET
             stopButton.Enabled = false;
             doTurnButton.Enabled = true;
             pauseButton.Enabled = false;
-            Simulation.Reset();
+            simulation.Reset();
         }
 
         private void doTurnButton_Click(object sender, EventArgs e)
@@ -63,7 +64,7 @@ namespace AntHill.NET
             stopButton.Enabled = true;
             doTurnButton.Enabled = true;
             pauseButton.Enabled = false;
-            Simulation.DoTurn();
+            simulation.DoTurn();
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace AntHill.NET
             stopButton.Enabled = true;
             doTurnButton.Enabled = true;
             pauseButton.Enabled = false;
-            Simulation.Pause();
+            simulation.Pause();
         }
     }
 }

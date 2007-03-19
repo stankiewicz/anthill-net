@@ -30,26 +30,39 @@ namespace AntHill.NET
             List<Spider> lSpider = isw.GetVisibleSpiders(this);
             List<Message>lMessage=isw.GetVisibleMessages(this);
 
-            foreach(Food f in lFood)
-                isw.DeleteFood(f);
-           
-            foreach(Ant a in lAnt)
-                isw.DeleteAnt(a);
-            
-            foreach(Spider s in lSpider)
-                isw.DeleteSpider(s);
+            for(int i = 0; i < lFood.Count;++i)
+                isw.DeleteFood(lFood[i]);
 
-            foreach (Message m in lMessage)
+            for (int i = 0; i < lAnt.Count; ++i)
+                isw.DeleteAnt(lAnt[i]);
+
+            for (int i = 0; i < lSpider.Count; ++i)
+                isw.DeleteSpider(lSpider[i]);
+
+
+            foreach(Message m in lMessage)
             {
-                
-                for (int j = 0; j < m.points.Count;)
+
+                for (int j = 0; j < m.points.Count; )
                 {
-                    if (Math.Abs(m.points[j].Tile.Position.X - rainPos.X) < AntHillConfig.rainWidth/2 && Math.Abs(m.points[j].Tile.Position.Y - rainPos.Y) < AntHillConfig.rainWidth/2)
+                    if (Math.Abs(m.points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth 
+                        && Math.Abs(m.points[j].Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth)
                         m.points.RemoveAt(j);
                     else
                         j++;
                 }
             }
+
+            Map map = isw.GetMap();
+
+            for (int i = 0; i < AntHillConfig.rainWidth; i++)
+            {
+                for (int j = 0; j < AntHillConfig.rainWidth; j++)
+                {
+                    map.GetTile(i, j).messages.Clear();
+                }
+            }
+
             throw new Exception("The method or operation is not implemented.");
         }
          
