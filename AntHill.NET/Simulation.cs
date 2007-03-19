@@ -67,6 +67,40 @@ namespace AntHill.NET
                 this.CreateRain(GetRandomTile());
             }
 
+            tempAnts.Clear();
+            tempSpiders.Clear();
+            // tworzenie list
+            // optymalizacja!!!!!
+            for (int i = 0; i < ants.Count; i++)
+            {
+                tempAnts.Add(ants[i]);
+            }
+            for (int i = 0; i < spiders.Count; i++)
+            {
+                tempSpiders.Add(spiders[i]);
+            }
+
+            
+            while (tempAnts.Count != 0 || tempSpiders.Count != 0)
+            {
+                Creature creature=null;
+                // wybieramy jedno lub 2gie.
+                if (tempSpiders.Count == 0 || rnd.Next(1)==0)
+                {
+                    creature = tempAnts[0];
+                    tempAnts.RemoveAt(0);
+                }
+                else
+                {
+                    creature = tempSpiders[0];
+                    tempSpiders.RemoveAt(0);
+                }
+
+                creature.Maintain(this);
+
+
+            }
+
             
 
         }
@@ -132,22 +166,22 @@ namespace AntHill.NET
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public List<Ant> GetVisibleAnts(Creature c)
+        public List<Ant> GetVisibleAnts(Element c)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public List<Food> GetVisibleFood(Creature c)
+        public List<Food> GetVisibleFood(Element c)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public List<Spider> GetVisibleSpiders(Creature c)
+        public List<Spider> GetVisibleSpiders(Element c)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public List<Message> GetVisibleMessages(Creature c)
+        public List<Message> GetVisibleMessages(Element c)
         {
             throw new Exception("The method or operation is not implemented.");
         }
