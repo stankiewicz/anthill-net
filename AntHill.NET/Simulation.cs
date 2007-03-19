@@ -100,5 +100,19 @@ namespace AntHill.NET
         }
 
         #endregion
+
+        #region ISimulationWorld Members
+
+        public void CreateAnt(System.Drawing.Point position)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public void DeleteEgg(Egg egg)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
     }
 }

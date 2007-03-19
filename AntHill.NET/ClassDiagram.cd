@@ -104,7 +104,7 @@
     <Position X="21" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Tile.cs</FileName>
-      <HashCode>AAAAAAAAAAAACAAAAAAAACAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAACAAAAAAAICAAAAAAAAABAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Worker">
@@ -112,13 +112,6 @@
     <TypeIdentifier>
       <FileName>Worker.cs</FileName>
       <HashCode>AAAAAAAAAAAgAEAgAAAAAAAAQABAABAAAAAQAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PointWithIntensity" Collapsed="true">
-    <Position X="21" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>PointWithIntensity.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAgAAAAIAAIAAAACAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Warrior">

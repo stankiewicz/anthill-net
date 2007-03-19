@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -11,7 +12,7 @@ namespace AntHill.NET
     /// </summary>
     public interface ISimulationWorld
     {
-        void CreateAnt();
+        void CreateAnt(Point position);
         void CreateSpider();    //This might be unnecessary because only Simulation creates Spiders
         void CreateFood();      //This might be used in Ants' Destroy() function, or at Simulation level -  after creature's death
         void CreateMessage();
@@ -22,5 +23,7 @@ namespace AntHill.NET
         List<Food> GetVisibleFood(Creature c);
         List<Spider> GetVisibleSpiders(Creature c);
         List<Message> GetVisibleMessages(Creature c);
+
+        void DeleteEgg(Egg egg);
     }
 }

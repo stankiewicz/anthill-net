@@ -9,7 +9,7 @@ namespace AntHill.NET
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override void Destroy()
+        public override void Destroy(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
         }
