@@ -25,5 +25,7 @@ namespace AntHill.NET
             tileType = ttype;
             messages = new List<Message>();
         }
+
+        private System.Drawing.Point position;
     }
 }
