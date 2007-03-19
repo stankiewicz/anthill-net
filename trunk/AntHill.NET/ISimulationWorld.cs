@@ -32,5 +32,6 @@ namespace AntHill.NET
         void DeleteFood(Food food);
         void DeleteAnt(Ant ant);
         void DeleteSpider(Spider spider);
+        Map GetMap();
     }
 }

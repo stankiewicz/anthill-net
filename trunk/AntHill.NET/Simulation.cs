@@ -24,7 +24,7 @@ namespace AntHill.NET
             this.map = map;
         }
 
-        public Map GetMap
+        public Map Map
         {
             get { return map; }
         }
@@ -238,5 +238,23 @@ namespace AntHill.NET
 
         #endregion
 
+
+        #region ISimulationWorld Members
+
+
+        
+        #endregion
+
+       
+
+        #region ISimulationWorld Members
+
+
+        public Map GetMap()
+        {
+            return map;
+        }
+
+        #endregion
     }
 }
