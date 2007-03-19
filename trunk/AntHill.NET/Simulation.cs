@@ -211,5 +211,25 @@ namespace AntHill.NET
         }
 
         #endregion
+
+        #region ISimulationWorld Members
+
+
+        public void DeleteFood(Food food)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public void DeleteAnt(Ant ant)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public void DeleteSpider(Spider spider)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
     }
 }
