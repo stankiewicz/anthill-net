@@ -42,11 +42,11 @@ namespace AntHill.NET
             Errors.Add(e.Message);
         }
 
-        public void ReadMe()
+        public void ReadMe(string filename)
         {
             int rowCount = 0;
 
-            XmlTextReader textReader = new XmlTextReader("AntHill.Config.xml");
+            XmlTextReader textReader = new XmlTextReader(filename);
             textReader.Read();
             while (textReader.Read())
             {
@@ -108,24 +108,24 @@ namespace AntHill.NET
                             } break;
                         case "Egg":
                             {
-                                AntHillConfig.eggHatchWarriorProbability = int.Parse(textReader.GetAttribute("hatchWarriorProbability"));
+                                AntHillConfig.eggHatchWarriorProbability = float.Parse(textReader.GetAttribute("hatchWarriorProbability"));
                                 AntHillConfig.eggHatchTime = int.Parse(textReader.GetAttribute("hatchTime"));
                             } break;
                         case "Spider":
                             {
                                 AntHillConfig.spiderMaxHealth= int.Parse(textReader.GetAttribute("maxHealth"));
-                                AntHillConfig.spiderProbability = int.Parse(textReader.GetAttribute("probability"));
+                                AntHillConfig.spiderProbability = float.Parse(textReader.GetAttribute("probability"));
                                 AntHillConfig.spiderFoodQuantityAfterDeath = int.Parse(textReader.GetAttribute("foodQuantityAfterDeath"));
                             } break;
                         case "Rain":
                             {
                                 AntHillConfig.rainWidth= int.Parse(textReader.GetAttribute("cloudWidth"));
-                                AntHillConfig.rainProbability = int.Parse(textReader.GetAttribute("probability"));
+                                AntHillConfig.rainProbability = float.Parse(textReader.GetAttribute("probability"));
                                 AntHillConfig.rainMaxDuration= int.Parse(textReader.GetAttribute("maxDuration"));
                             } break;
                         case "Food":
                             {
-                                AntHillConfig.foodProbability = int.Parse(textReader.GetAttribute("probability"));
+                                AntHillConfig.foodProbability = float.Parse(textReader.GetAttribute("probability"));
                             } break;
                         case "Signal":
                             {

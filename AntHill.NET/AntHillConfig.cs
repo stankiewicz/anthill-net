@@ -24,16 +24,19 @@ namespace AntHill.NET
         static public int queenLayEggProbability, queenXPosition, queenYPosition;
 
         //Egg
-        static public int eggHatchWarriorProbability, eggHatchTime;
+        static public int eggHatchTime;
+        static public float eggHatchWarriorProbability; //value from 0 to 1
 
         //Spider
-        static public int spiderMaxHealth, spiderProbability, spiderFoodQuantityAfterDeath;
+        static public int spiderMaxHealth, spiderFoodQuantityAfterDeath;
+        static public float spiderProbability;
 
         //Rain
-        static public int rainWidth, rainProbability, rainMaxDuration;
+        static public int rainWidth, rainMaxDuration;
+        static public float rainProbability;
 
         //Food
-        static public int foodProbability;
+        static public float foodProbability;
 
         //Message (referred as 'signal' in config file)
         static public int messageLifeTime, messageRadius;
