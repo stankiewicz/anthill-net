@@ -25,6 +25,8 @@ namespace AntHill.NET
         {
         }
 
+
+        public bool Empty { get { return points.Count == 0; } }
         public MessageType GetMessageType
         {
             get { return type; }
