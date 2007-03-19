@@ -84,7 +84,7 @@
     <Compile Include="Rain.cs" />
     <Compile Include="Simulation.cs" />
     <Compile Include="Spider.cs" />
-    <Compile Include="TestClass.cs" />
+    <Compile Include="tests\TestClass.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Warrior.cs" />
     <Compile Include="Worker.cs" />

@@ -15,7 +15,24 @@ namespace AntHill.NET
 
         public override void Maintain(ISimulationWorld isw)
         {
-            throw new Exception("The method or operation is not implemented.");
+            Random rnd = new Random();
+            if (rnd.Next(101) > AntHillConfig.queenLayEggProbability)
+            {
+                isw.CreateEgg(this.Position);
+            }
+            if (this.TurnsToBecomeHungry == 0)
+            {
+                if (isw.GetVisibleFood(this).Count != 0)
+                {
+                    this.Eat();
+                    this.TurnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
+                }
+                else
+                {
+                    // wysylam sygnal ze glodny 
+                    // zaczynam odliczac do smierci
+                }
+            }
         }
 
         public override void Destroy(ISimulationWorld isw)

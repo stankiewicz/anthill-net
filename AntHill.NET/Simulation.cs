@@ -8,12 +8,16 @@ namespace AntHill.NET
     {
         private Map map;
 
+        public List<Egg> eggs = new List<Egg>();
         public List<Message> messages = new List<Message>();
         public List<Food> food = new List<Food>();
-        public List<Spider> spiders = new List<Spider>(), tempSpiders;
-        public List<Ant> ants = new List<Ant>(), tempAnts;
+        public List<Spider> spiders = new List<Spider>();
+        public List<Ant> ants = new List<Ant>();
         public Rain rain;
         public Queen queen = null;
+        bool isEggDeleted = false;
+        bool isAntDeleted = false;
+        bool isSpiderDeleted = false;
 
 	    public Simulation(Map map)
         {
@@ -67,41 +71,43 @@ namespace AntHill.NET
                 this.CreateRain(GetRandomTile());
             }
 
-            tempAnts.Clear();
-            tempSpiders.Clear();
-            // tworzenie list
-            // optymalizacja!!!!!
+
             for (int i = 0; i < ants.Count; i++)
             {
-                tempAnts.Add(ants[i]);
+                ants[i].Maintain(this);
+                if (isAntDeleted) { --i; isAntDeleted = false; }
             }
+
             for (int i = 0; i < spiders.Count; i++)
             {
-                tempSpiders.Add(spiders[i]);
+                spiders[i].Maintain(this);
+                if (isSpiderDeleted) { --i; isSpiderDeleted = false; }
             }
 
+            //while (tempAnts.Count != 0 || tempSpiders.Count != 0)
+            //{
+            //    Creature creature=null;
+            //    // wybieramy jedno lub 2gie.
+            //    if (tempSpiders.Count == 0 || rnd.Next(1)==0)
+            //    {
+            //        creature = tempAnts[0];
+            //        tempAnts.RemoveAt(0);
+            //    }
+            //    else
+            //    {
+            //        creature = tempSpiders[0];
+            //        tempSpiders.RemoveAt(0);
+            //    }
+
+            //    creature.Maintain(this);
+            //}
             
-            while (tempAnts.Count != 0 || tempSpiders.Count != 0)
+
+            for (int i = 0; i < eggs.Count; ++i)
             {
-                Creature creature=null;
-                // wybieramy jedno lub 2gie.
-                if (tempSpiders.Count == 0 || rnd.Next(1)==0)
-                {
-                    creature = tempAnts[0];
-                    tempAnts.RemoveAt(0);
-                }
-                else
-                {
-                    creature = tempSpiders[0];
-                    tempSpiders.RemoveAt(0);
-                }
-
-                creature.Maintain(this);
-
-
+                eggs[i].Maintain(this);
+                if (isEggDeleted) { --i; isEggDeleted = false; }
             }
-
-            
 
         }
 
@@ -109,17 +115,17 @@ namespace AntHill.NET
 
         private void CreateRain(Point point)
         {
-            throw new Exception("The method or operation is not implemented.");
+            rain = new Rain(point);
         }
 
         private void CreateFood(Point point)
         {
-            throw new Exception("The method or operation is not implemented.");
+            food.Add(new Food(point));
         }
 
         private void CreateSpider(Point point)
         {
-            throw new Exception("The method or operation is not implemented.");
+            spiders.Add(new Spider(point));
         }
 
         void ISimulationUser.Reset()
@@ -197,7 +203,7 @@ namespace AntHill.NET
 
         public void DeleteEgg(Egg egg)
         {
-            throw new Exception("The method or operation is not implemented.");
+            isEggDeleted = true;
         }
 
         #endregion
@@ -213,6 +219,13 @@ namespace AntHill.NET
         #endregion
 
         #region ISimulationWorld Members
+
+
+        public void CreateEgg(Point pos)
+        {
+            eggs.Add(new Egg(pos));
+        }
+
 
 
         public void DeleteFood(Food food)
@@ -231,5 +244,6 @@ namespace AntHill.NET
         }
 
         #endregion
+
     }
 }

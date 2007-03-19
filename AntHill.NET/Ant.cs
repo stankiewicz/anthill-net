@@ -9,6 +9,14 @@ namespace AntHill.NET
         {
 
         }
+        private int turnsWithoutFood;
+
+        public int TurnsWithoutFood
+        {
+            get { return turnsWithoutFood; }
+            set { turnsWithoutFood = value; }
+        }
+
         private int turnsToBecomeHungry;
         public int TurnsToBecomeHungry
         {
