@@ -42,8 +42,12 @@ namespace AntHill.NET
             foreach (Message m in lMessage)
             {
                 
-                for (int j = 0; j < m.points.Count; j++)
+                for (int j = 0; j < m.points.Count;)
                 {
+                    if (Math.Abs(m.points[j].Tile.Position.X - rainPos.X) < AntHillConfig.rainWidth/2 && Math.Abs(m.points[j].Tile.Position.Y - rainPos.Y) < AntHillConfig.rainWidth/2)
+                        m.points.RemoveAt(j);
+                    else
+                        j++;
                 }
             }
             throw new Exception("The method or operation is not implemented.");
