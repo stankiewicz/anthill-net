@@ -14,5 +14,65 @@ namespace AntHill.NET
         {
             InitializeComponent();
         }
+
+        private void loadDataButton_Click(object sender, EventArgs e)
+        {
+            string name;
+            if (simulationXMLopenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                name = simulationXMLopenFileDialog.FileName;
+                XmlReaderWriter reader = new XmlReaderWriter();
+                try
+                {
+                    reader.ReadMe(name);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(name + Properties.Resources.exceptionXmlNotValid + ex.ToString(), "Error");
+                    return;
+                }
+                simulationPanel.Enabled = true;
+                startButton.Enabled = true;
+                stopButton.Enabled = false;
+                doTurnButton.Enabled = true;
+                pauseButton.Enabled = false;
+            }
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            startButton.Enabled = false;
+            stopButton.Enabled = true;
+            doTurnButton.Enabled = false;
+            pauseButton.Enabled = true;
+            Simulation.Start();            
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            startButton.Enabled = true;
+            stopButton.Enabled = false;
+            doTurnButton.Enabled = true;
+            pauseButton.Enabled = false;
+            Simulation.Reset();
+        }
+
+        private void doTurnButton_Click(object sender, EventArgs e)
+        {
+            startButton.Enabled = true;
+            stopButton.Enabled = true;
+            doTurnButton.Enabled = true;
+            pauseButton.Enabled = false;
+            Simulation.DoTurn();
+        }
+
+        private void pauseButton_Click(object sender, EventArgs e)
+        {
+            startButton.Enabled = true;
+            stopButton.Enabled = true;
+            doTurnButton.Enabled = true;
+            pauseButton.Enabled = false;
+            Simulation.Pause();
+        }
     }
 }
