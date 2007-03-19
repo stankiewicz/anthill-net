@@ -86,6 +86,7 @@
     <Compile Include="Spider.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="Warrior.cs" />
     <Compile Include="Worker.cs" />
     <Compile Include="XmlReaderWriter.cs" />
   </ItemGroup>

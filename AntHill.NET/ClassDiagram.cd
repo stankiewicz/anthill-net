@@ -5,7 +5,7 @@
     <Position X="17.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>AntHillConfig.cs</FileName>
-      <HashCode>BAJCAIAEAQAQACAAAQAAIBAAAAgACBAIAAQAACCAEQE=</HashCode>
+      <HashCode>BAJCAIAEAQAQACAAAQAAIBAAAggACBAIAAQAACCAEQE=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Ant">
@@ -119,6 +119,13 @@
     <TypeIdentifier>
       <FileName>PointWithIntensity.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAgAAAAIAAIAAAACAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AntHill.NET.Warrior">
+    <Position X="1.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Warrior.cs</FileName>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Interface Name="ISimulationUser" Collapsed="true">
