@@ -57,20 +57,33 @@ namespace AntHill.NET
         {
             //throw new Exception("The method or operation is not implemented.");
             Random rnd = new Random();
-            if (rnd.Next(101) >= AntHillConfig.spiderProbability)
+            if (rnd.NextDouble() >= AntHillConfig.spiderProbability)
             {
                 this.CreateSpider(GetTile(TileType.Outdoor));
             }
-            if (rnd.Next(101) >= AntHillConfig.foodProbability)
+            
+            if (rnd.NextDouble() >= AntHillConfig.foodProbability)
             {
-
                 this.CreateFood(GetTile(TileType.Outdoor));
             }
-            if (rnd==null && rnd.Next(101) >= AntHillConfig.rainProbability)
+            
+            if (rain==null && rnd.NextDouble() >= AntHillConfig.rainProbability)
             {
                 this.CreateRain(GetRandomTile());
             }
 
+            if (rain != null)
+                rain.Maintain(this);
+
+            for (int i = 0; i < messages.Count; i++)
+            {
+                messages[i].Maintain(this);
+                if (messages[i].Empty)
+                {
+                    messages.RemoveAt(i);
+                    --i;
+                }
+            }
 
             for (int i = 0; i < ants.Count; i++)
             {
@@ -83,25 +96,6 @@ namespace AntHill.NET
                 spiders[i].Maintain(this);
                 if (isSpiderDeleted) { --i; isSpiderDeleted = false; }
             }
-
-            //while (tempAnts.Count != 0 || tempSpiders.Count != 0)
-            //{
-            //    Creature creature=null;
-            //    // wybieramy jedno lub 2gie.
-            //    if (tempSpiders.Count == 0 || rnd.Next(1)==0)
-            //    {
-            //        creature = tempAnts[0];
-            //        tempAnts.RemoveAt(0);
-            //    }
-            //    else
-            //    {
-            //        creature = tempSpiders[0];
-            //        tempSpiders.RemoveAt(0);
-            //    }
-
-            //    creature.Maintain(this);
-            //}
-            
 
             for (int i = 0; i < eggs.Count; ++i)
             {
@@ -225,7 +219,6 @@ namespace AntHill.NET
         {
             eggs.Add(new Egg(pos));
         }
-
 
 
         public void DeleteFood(Food food)
