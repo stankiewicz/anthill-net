@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -16,7 +17,10 @@ namespace AntHill.NET
                 foodQuantity = value;
             }
         }
+        public Worker(Point pos):base(pos)
+        {
 
+        }
         public void Dig()
         {
 

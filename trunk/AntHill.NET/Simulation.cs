@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -9,9 +10,9 @@ namespace AntHill.NET
 
         public List<Message> messages = new List<Message>();
         public List<Food> food = new List<Food>();
-        public List<Spider> spiders = new List<Spider>();
-        public List<Ant> ants = new List<Ant>();
-        
+        public List<Spider> spiders = new List<Spider>(), tempSpiders;
+        public List<Ant> ants = new List<Ant>(), tempAnts;
+        public Rain rain;
         public Queen queen = null;
 
 	    public Simulation(Map map)
@@ -23,14 +24,66 @@ namespace AntHill.NET
         {
             get { return map; }
         }
-    	
+
+        Point GetTile(TileType tt)
+        {
+            Random rnd = new Random();
+            Tile t;
+            // modlmy sie ze znajdzie szybko
+            while (true)
+            {
+                if ((t = map.GetTile(rnd.Next(map.GetWidth), rnd.Next(map.GetHeight))).GetTileType == tt)
+                    return t.Position;
+            }
+        }
+
+        Point GetRandomTile()
+        {
+            Random rnd = new Random();
+            return new Point(rnd.Next(map.GetWidth), rnd.Next(map.GetHeight));
+        }
+
 	    #region ISimulation Members
 
 
         /// <summary>
-        /// This is the most important function 
+        /// This is the most important function - activity diagram
         /// </summary>
         void ISimulationUser.DoTurn()
+        {
+            //throw new Exception("The method or operation is not implemented.");
+            Random rnd = new Random();
+            if (rnd.Next(101) >= AntHillConfig.spiderProbability)
+            {
+                this.CreateSpider(GetTile(TileType.Outdoor));
+            }
+            if (rnd.Next(101) >= AntHillConfig.foodProbability)
+            {
+
+                this.CreateFood(GetTile(TileType.Outdoor));
+            }
+            if (rnd==null && rnd.Next(101) >= AntHillConfig.rainProbability)
+            {
+                this.CreateRain(GetRandomTile());
+            }
+
+            
+
+        }
+
+        
+
+        private void CreateRain(Point point)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        private void CreateFood(Point point)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        private void CreateSpider(Point point)
         {
             throw new Exception("The method or operation is not implemented.");
         }
@@ -111,6 +164,16 @@ namespace AntHill.NET
         public void DeleteEgg(Egg egg)
         {
             throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
+
+        #region ISimulationWorld Members
+
+
+        public void DeleteRain()
+        {
+            rain = null;
         }
 
         #endregion

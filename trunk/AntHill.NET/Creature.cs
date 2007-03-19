@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -7,6 +8,11 @@ namespace AntHill.NET
 
     public abstract class Creature : Element
     {
+        public Creature(Point pos):base(pos)
+        {
+
+        }
+        
         private int life;
         private Direction direction;
         public Direction Direction

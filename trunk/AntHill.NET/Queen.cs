@@ -1,9 +1,14 @@
 using System;
+using System.Drawing;
 
 namespace AntHill.NET
 {
     public class Queen : Ant
     {
+        public Queen(Point pos):base(pos)
+        {
+
+        }
         public void LayEgg()
         {
         }
