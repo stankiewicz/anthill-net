@@ -23,12 +23,8 @@ namespace AntHill.NET
         {
             if (--timeToHatch == 0)
             {
-                //create ant
-                //destroy egg
-
                 isw.CreateAnt(this.Position);
                 isw.DeleteEgg(this);
-
             }
         }
 
