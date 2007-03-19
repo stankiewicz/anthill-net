@@ -19,12 +19,17 @@ namespace AntHill.NET
         void Attack(Creature cA, Creature cB);
 
         //'Creature c' is a creature that wants to get some info
+
         List<Ant> GetVisibleAnts(Element c);
         List<Food> GetVisibleFood(Element c);
         List<Spider> GetVisibleSpiders(Element c);
         List<Message> GetVisibleMessages(Element c);
 
+
         void DeleteEgg(Egg egg);
         void DeleteRain();
+        void DeleteFood(Food food);
+        void DeleteAnt(Ant ant);
+        void DeleteSpider(Spider spider);
     }
 }
