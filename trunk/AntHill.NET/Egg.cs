@@ -13,11 +13,15 @@ namespace AntHill.NET
             {
                 //create ant
                 //destroy egg
+
+                isw.CreateAnt(this.Position);
+                isw.DeleteEgg(this);
+
             }
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public override void Destroy()
+        public override void Destroy(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
         }
