@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -6,7 +7,7 @@ namespace AntHill.NET
     public abstract class Citizen : Ant
     {
 
-        public Citizen()
+        public Citizen(Point pos):base(pos)
         {
         }
 

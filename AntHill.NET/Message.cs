@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -16,7 +17,10 @@ namespace AntHill.NET
     {
         private MessageType type;
         public List<PointWithIntensity> points;
+        public Message(Point pos):base(pos)
+        {
 
+        }
         public void AddPoint(List<PointWithIntensity> newPoint)
         {
         }

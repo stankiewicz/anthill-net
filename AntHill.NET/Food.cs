@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -6,6 +7,10 @@ namespace AntHill.NET
     {
         private int quantity;
 
+        public Food(Point pos):base(pos)
+        {
+
+        }
         virtual public int Quantity
         {
             get

@@ -25,5 +25,6 @@ namespace AntHill.NET
         List<Message> GetVisibleMessages(Creature c);
 
         void DeleteEgg(Egg egg);
+        void DeleteRain();
     }
 }

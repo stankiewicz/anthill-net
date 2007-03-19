@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -6,7 +7,16 @@ namespace AntHill.NET
     public class Egg : Element
     {
         private int timeToHatch;
-
+        
+        public Egg(Point pos):base(pos)
+        {
+            timeToHatch = AntHillConfig.eggHatchTime;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isw"></param>
         public override void Maintain(ISimulationWorld isw)
         {
             if (--timeToHatch == 0)
@@ -18,12 +28,11 @@ namespace AntHill.NET
                 isw.DeleteEgg(this);
 
             }
-            throw new Exception("The method or operation is not implemented.");
         }
 
         public override void Destroy(ISimulationWorld isw)
         {
-            throw new Exception("The method or operation is not implemented.");
+            isw.DeleteEgg(this);
         }
     }
 }

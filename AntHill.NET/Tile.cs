@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -27,5 +28,6 @@ namespace AntHill.NET
         }
 
         private System.Drawing.Point position;
+        public Point Position { get { return position; } }
     }
 }
