@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
 
 namespace AntHill.NET
 {
@@ -49,6 +50,9 @@ namespace AntHill.NET
                 "foodProbability = " + AntHillConfig.foodProbability + Environment.NewLine +
                 "messageLifeTime = " + AntHillConfig.messageLifeTime + Environment.NewLine +
                 "messageRadius = " + AntHillConfig.messageRadius;
+
+            //Type t = ((System.Object)AntHillConfig).GetType();
+            //foreach (FieldInfo fi in t.GetFields())
         }
     }
 }
