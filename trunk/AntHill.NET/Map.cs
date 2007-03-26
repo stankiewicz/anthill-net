@@ -15,12 +15,12 @@ namespace AntHill.NET
             tiles = t;
         }
 
-        public int GetWidth
+        public int Width
         {
             get { return width; }
         }
 
-        public int GetHeight
+        public int Height
         {
             get { return height; }
         }
