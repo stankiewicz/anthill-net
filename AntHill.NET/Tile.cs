@@ -9,7 +9,7 @@ namespace AntHill.NET
     public class Tile
     {
         private TileType tileType;
-        public TileType GetTileType
+        public TileType TileType
         {
             get { return tileType; }
         }

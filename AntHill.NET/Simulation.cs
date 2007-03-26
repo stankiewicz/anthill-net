@@ -54,7 +54,7 @@ namespace AntHill.NET
             // modlmy sie ze znajdzie szybko
             while (true)
             {
-                if ((t = map.GetTile(rnd.Next(map.GetWidth), rnd.Next(map.GetHeight))).GetTileType == tt)
+                if ((t = map.GetTile(rnd.Next(map.Width), rnd.Next(map.Height))).TileType == tt)
                     return t.Position;
             }
         }
@@ -62,7 +62,7 @@ namespace AntHill.NET
         Point GetRandomTile()
         {
             Random rnd = new Random();
-            return new Point(rnd.Next(map.GetWidth), rnd.Next(map.GetHeight));
+            return new Point(rnd.Next(map.Width), rnd.Next(map.Height));
         }
 
 	    #region ISimulation Members

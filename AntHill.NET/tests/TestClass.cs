@@ -16,9 +16,20 @@ namespace AntHill.NET
         }
 
         [Test]
+        
         public void TestFun()
         {
-            //Assert.
+            Tile[,] test_tiles =
+            {{new Tile(TileType.Indoor), new Tile(TileType.Outdoor), new Tile(TileType.Wall)},
+            {new Tile(TileType.Wall), new Tile(TileType.Indoor), new Tile(TileType.Outdoor)},
+            {new Tile(TileType.Outdoor), new Tile(TileType.Indoor), new Tile(TileType.Wall)},
+            {new Tile(TileType.Indoor), new Tile(TileType.Wall), new Tile(TileType.Outdoor)}};
+
+            Map test_map = new Map(3, 4, test_tiles);
+        
+            Assert.AreSame(3, test_map.Width);
+            Assert.AreSame(4, test_map.Height);
+            Assert.AreSame(TileType.Wall, test_map.GetTile(1, 3), "Z³e pole na mapie");
         }
     }
 }
