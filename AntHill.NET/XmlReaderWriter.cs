@@ -57,7 +57,7 @@ namespace AntHill.NET
                             {
                                 AntHillConfig.mapRowCount = int.Parse(textReader.GetAttribute("rowCount"));
                                 AntHillConfig.mapColCount = int.Parse(textReader.GetAttribute("colCount"));
-                                AntHillConfig.tiles = new Tile[AntHillConfig.mapRowCount, AntHillConfig.mapColCount];
+                                AntHillConfig.tiles = new Tile[AntHillConfig.mapColCount, AntHillConfig.mapRowCount];
                             } break;
                         case "Map":
                             {
@@ -71,13 +71,13 @@ namespace AntHill.NET
                                     switch(s[i])
                                     {                                
                                         case 'o':
-                                            AntHillConfig.tiles[rowCount, i] = new Tile(TileType.Indoor);
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Indoor);
                                             break;
                                         case 'x':
-                                            AntHillConfig.tiles[rowCount, i] = new Tile(TileType.Wall);
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Wall);
                                             break;
                                         case 's':
-                                            AntHillConfig.tiles[rowCount, i] = new Tile(TileType.Outdoor);
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Outdoor);
                                             break;
                                     }
                                 }
