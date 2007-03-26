@@ -6,6 +6,24 @@ namespace AntHill.NET
 {
     public class Simulation : ISimulationUser, ISimulationWorld
     {
+        public static Simulation singletonInstance = null;
+        public static void Init(Map map)
+        {
+            if(singletonInstance == null)
+                singletonInstance = new Simulation(map);
+        }
+        public static void DeInit()
+        {
+            singletonInstance = null;
+        }
+        public static Simulation simulation
+        {
+            get
+            {
+                return singletonInstance;
+            }
+        }
+
         private Map map;
 
         public List<Egg> eggs = new List<Egg>();

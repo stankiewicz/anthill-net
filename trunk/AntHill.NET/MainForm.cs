@@ -37,6 +37,9 @@ namespace AntHill.NET
                 stopButton.Enabled = false;
                 doTurnButton.Enabled = true;
                 pauseButton.Enabled = false;
+
+                Simulation.DeInit();
+                Simulation.Init(new Map(AntHillConfig.mapColCount,AntHillConfig.mapRowCount,AntHillConfig.tiles));
             }
         }
 
