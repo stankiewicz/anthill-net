@@ -37,18 +37,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ant.cs" />
     <Compile Include="AntHillConfig.cs" />
-    <Compile Include="Astar.cs" />
-    <Compile Include="AstarOtherObject.cs" />
-    <Compile Include="AstarWorkerObject.cs" />
-    <Compile Include="Citizen.cs" />
-    <Compile Include="Creature.cs" />
-    <Compile Include="Egg.cs" />
-    <Compile Include="Element.cs" />
-    <Compile Include="Food.cs" />
-    <Compile Include="Heap.cs" />
-    <Compile Include="IAstar.cs" />
+    <Compile Include="Astar\Astar.cs" />
+    <Compile Include="Astar\AstarOtherObject.cs" />
+    <Compile Include="Astar\AstarWorkerObject.cs" />
+    <Compile Include="Astar\Heap.cs" />
+    <Compile Include="Astar\IAstar.cs" />
+    <Compile Include="Element\Creatures\Ant.cs" />
+    <Compile Include="Element\Creatures\Citizen.cs" />
+    <Compile Include="Element\Creatures\Creature.cs" />
+    <Compile Include="Element\Creatures\Egg.cs" />
+    <Compile Include="Element\Creatures\Queen.cs" />
+    <Compile Include="Element\Creatures\Spider.cs" />
+    <Compile Include="Element\Creatures\Warrior.cs" />
+    <Compile Include="Element\Creatures\Worker.cs" />
+    <Compile Include="Element\Element.cs" />
+    <Compile Include="Element\Food.cs" />
+    <Compile Include="Element\Message.cs" />
+    <Compile Include="Element\PointWithIntensity.cs" />
+    <Compile Include="Element\Rain.cs" />
     <Compile Include="ISimulation.cs" />
     <Compile Include="ISimulationWorld.cs" />
     <Compile Include="MainForm.cs">
@@ -58,8 +65,6 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Map.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="PointWithIntensity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -87,14 +92,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Queen.cs" />
-    <Compile Include="Rain.cs" />
     <Compile Include="Simulation.cs" />
-    <Compile Include="Spider.cs" />
     <Compile Include="tests\TestClass.cs" />
     <Compile Include="Tile.cs" />
-    <Compile Include="Warrior.cs" />
-    <Compile Include="Worker.cs" />
     <Compile Include="XmlReaderWriter.cs" />
   </ItemGroup>
   <ItemGroup>
