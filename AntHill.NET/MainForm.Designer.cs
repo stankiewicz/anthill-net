@@ -39,9 +39,12 @@ namespace AntHill.NET
             this.labelSpeed = new System.Windows.Forms.Label();
             this.loadDataButton = new System.Windows.Forms.Button();
             this.simulationXMLopenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.panelDebug = new System.Windows.Forms.Panel();
+            this.buttonShowConfig = new System.Windows.Forms.Button();
             this.rightPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
+            this.panelDebug.SuspendLayout();
             this.SuspendLayout();
             // 
             // rightPanel
@@ -56,6 +59,7 @@ namespace AntHill.NET
             // 
             // simulationPanel
             // 
+            this.simulationPanel.Controls.Add(this.panelDebug);
             this.simulationPanel.Controls.Add(this.pauseButton);
             this.simulationPanel.Controls.Add(this.checkBox1);
             this.simulationPanel.Controls.Add(this.startButton);
@@ -63,10 +67,11 @@ namespace AntHill.NET
             this.simulationPanel.Controls.Add(this.stopButton);
             this.simulationPanel.Controls.Add(this.speedBar);
             this.simulationPanel.Controls.Add(this.labelSpeed);
+            this.simulationPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.simulationPanel.Enabled = false;
             this.simulationPanel.Location = new System.Drawing.Point(0, 28);
             this.simulationPanel.Name = "simulationPanel";
-            this.simulationPanel.Size = new System.Drawing.Size(80, 183);
+            this.simulationPanel.Size = new System.Drawing.Size(80, 409);
             this.simulationPanel.TabIndex = 8;
             // 
             // pauseButton
@@ -156,6 +161,26 @@ namespace AntHill.NET
             this.loadDataButton.UseVisualStyleBackColor = true;
             this.loadDataButton.Click += new System.EventHandler(this.loadDataButton_Click);
             // 
+            // panelDebug
+            // 
+            this.panelDebug.Controls.Add(this.buttonShowConfig);
+            this.panelDebug.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelDebug.Location = new System.Drawing.Point(0, 182);
+            this.panelDebug.Name = "panelDebug";
+            this.panelDebug.Size = new System.Drawing.Size(80, 227);
+            this.panelDebug.TabIndex = 8;
+            // 
+            // buttonShowConfig
+            // 
+            this.buttonShowConfig.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonShowConfig.Location = new System.Drawing.Point(0, 0);
+            this.buttonShowConfig.Name = "buttonShowConfig";
+            this.buttonShowConfig.Size = new System.Drawing.Size(80, 23);
+            this.buttonShowConfig.TabIndex = 0;
+            this.buttonShowConfig.Text = "Show Config";
+            this.buttonShowConfig.UseVisualStyleBackColor = true;
+            this.buttonShowConfig.Click += new System.EventHandler(this.buttonShowConfig_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,6 +193,7 @@ namespace AntHill.NET
             this.simulationPanel.ResumeLayout(false);
             this.simulationPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
+            this.panelDebug.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -185,6 +211,8 @@ namespace AntHill.NET
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel simulationPanel;
         private System.Windows.Forms.OpenFileDialog simulationXMLopenFileDialog;
+        private System.Windows.Forms.Panel panelDebug;
+        private System.Windows.Forms.Button buttonShowConfig;
     }
 }
 
