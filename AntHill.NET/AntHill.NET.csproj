@@ -39,11 +39,16 @@
   <ItemGroup>
     <Compile Include="Ant.cs" />
     <Compile Include="AntHillConfig.cs" />
+    <Compile Include="Astar.cs" />
+    <Compile Include="AstarOtherObject.cs" />
+    <Compile Include="AstarWorkerObject.cs" />
     <Compile Include="Citizen.cs" />
     <Compile Include="Creature.cs" />
     <Compile Include="Egg.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Food.cs" />
+    <Compile Include="Heap.cs" />
+    <Compile Include="IAstar.cs" />
     <Compile Include="ISimulation.cs" />
     <Compile Include="ISimulationWorld.cs" />
     <Compile Include="MainForm.cs">

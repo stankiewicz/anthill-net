@@ -28,7 +28,8 @@ namespace AntHill.NET
             Map test_map = new Map(3, 4, test_tiles);
         
             Assert.AreSame(3, test_map.Width);
-            Assert.AreSame(4, test_map.Height);
+            
+            Assert.AreSame(1, test_map.Height);
             Assert.AreSame(TileType.Wall, test_map.GetTile(1, 3), "Z³e pole na mapie");
         }
     }

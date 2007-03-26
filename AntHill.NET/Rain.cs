@@ -17,6 +17,14 @@ namespace AntHill.NET
             timeToLive = rand.Next(AntHillConfig.rainMaxDuration+1);
         }
 
+        public bool isRainingAt(int x, int y)
+        {
+            if (x >= Position.X && y >= Position.Y && x < Position.X + AntHillConfig.rainWidth &&
+                y < Position.Y + AntHillConfig.rainWidth)
+                return true;
+            return false;
+        }
+
         public override void Maintain(ISimulationWorld isw)
         {
             if (--timeToLive == 0)
