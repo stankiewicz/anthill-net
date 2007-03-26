@@ -10,7 +10,6 @@ namespace AntHill.NET
 {
     public partial class MainForm : Form
     {
-        ISimulationUser simulation = new Simulation(null);
         public MainForm()
         {
             InitializeComponent();
