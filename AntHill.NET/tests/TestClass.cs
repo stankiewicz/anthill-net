@@ -34,7 +34,7 @@ namespace AntHill.NET
             Assert.AreEqual(4, test_map.Height, "Bad height of map");
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 4; j++)
-                    Assert.AreEqual(test_tiles[i, j], test_map.GetTile(i, j), "Bad type in tile (" + i.ToString() + "," + j.ToString() + ").");
+                   Assert.AreEqual(test_tiles[j, i], test_map.GetTile(j, i), "Bad type in tile (" + j.ToString() + "," + i.ToString() + ").");
 
             // WARRIOR TEST...
             Warrior test_warrior = new Warrior(new System.Drawing.Point(123, 345));
@@ -45,7 +45,7 @@ namespace AntHill.NET
             Assert.AreEqual(43, test_warrior.TurnsToBecomeHungry, "Warrior.TurnsToBecomeHungry problem");
             Assert.AreEqual(23, test_warrior.TurnsWithoutFood, "Warrior.TurnsWithoutFood problem");
             Assert.AreEqual(Direction.E, test_warrior.Direction, "Warrior.Direction problem");
-            Assert.AreSame(new System.Drawing.Point(123, 456), test_warrior.Position, "Warrior.Position problem");
+            Assert.AreEqual(new System.Drawing.Point(123, 345),test_warrior.Position, "Warrior.Position problem");
 
             // WORKER TEST...
             Worker test_worker = new Worker(new System.Drawing.Point(321, 255));
@@ -58,9 +58,12 @@ namespace AntHill.NET
             Assert.AreEqual(35, test_worker.TurnsWithoutFood, "Worker.TurnsWithoutFood problem");
             Assert.AreEqual(17, test_worker.FoodQuantity, "Worker.FoodQuantity problem");
             Assert.AreEqual(Direction.W, test_worker.Direction, "Worker.Direction problem");
-            Assert.AreSame(new System.Drawing.Point(321, 255), test_worker.Position, "Worker.Position problem");
+            Assert.AreEqual(new System.Drawing.Point(321, 255), test_worker.Position, "Worker.Position problem");
 
-            // TEST...
+            // RAIN TEST...
+            Rain test_rain=new Rain(new System.Drawing.Point(155, 155));
+            test_rain.isRainingAt(155, 155);
+            Assert.AreEqual(new System.Drawing.Point(155, 155), test_rain.Position, "Rain.Position problem");
 
         }
     }
