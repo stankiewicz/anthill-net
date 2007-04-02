@@ -41,10 +41,7 @@ namespace AntHill.NET
             return null;
         }
 
-        private void Move(KeyValuePair<int, int> position)
-        {
-            this.Position = new Point(position.Key, position.Value);
-        }
+      
         public override void Maintain(ISimulationWorld isw)
         {
             Ant ant = FindNearestAnt();
