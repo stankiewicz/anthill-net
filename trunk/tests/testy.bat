@@ -1,1 +1,1 @@
-nunit-console "\anthill_project\AntHill.Net\bin\Debug\AntHill.Net.exe" /xml:TestResults_LONG.xml > TestResults_SHORT.txt
+nunit-console "..\AntHill.Net\bin\Debug\AntHill.Net.exe" /xml:TestResults_LONG.xml > TestResults_SHORT.txt
