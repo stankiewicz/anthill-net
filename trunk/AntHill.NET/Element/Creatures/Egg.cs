@@ -6,9 +6,7 @@ namespace AntHill.NET
 
     public class Egg : Element
     {
-        private int timeToHatch;
-
-	
+        private int timeToHatch;	
         
         public Egg(Point pos):base(pos)
         {
