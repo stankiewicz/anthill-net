@@ -9,14 +9,7 @@ namespace AntHill.NET
         //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
         public Spider(Point pos):base(pos) {}
 //        List<KeyValuePair<int><int>>
-        private int Distance(Point p1, Point p2)
-        {          
-            int x = Math.Abs(p1.X - p2.X);
-            int y = Math.Abs(p1.Y - p2.Y);
-            if (x > y)
-                return x;
-            return y;
-        }
+        
         private Ant FindNearestAnt()
         {            
            // if(queenSpotted)

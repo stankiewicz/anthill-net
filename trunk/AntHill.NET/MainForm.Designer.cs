@@ -43,10 +43,15 @@ namespace AntHill.NET
             this.simulationXMLopenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.magnitudeBar = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.magnitudePanel = new System.Windows.Forms.Panel();
             this.rightPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
             this.panelDebug.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magnitudeBar)).BeginInit();
+            this.magnitudePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // rightPanel
@@ -62,6 +67,7 @@ namespace AntHill.NET
             // simulationPanel
             // 
             this.simulationPanel.Controls.Add(this.panelDebug);
+            this.simulationPanel.Controls.Add(this.magnitudePanel);
             this.simulationPanel.Controls.Add(this.pauseButton);
             this.simulationPanel.Controls.Add(this.checkBox1);
             this.simulationPanel.Controls.Add(this.startButton);
@@ -190,6 +196,7 @@ namespace AntHill.NET
             this.vScrollBar1.Name = "vScrollBar1";
             this.vScrollBar1.Size = new System.Drawing.Size(16, 451);
             this.vScrollBar1.TabIndex = 1;
+            this.vScrollBar1.Visible = false;
             // 
             // hScrollBar1
             // 
@@ -198,6 +205,34 @@ namespace AntHill.NET
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(493, 16);
             this.hScrollBar1.TabIndex = 2;
+            this.hScrollBar1.Visible = false;
+            // 
+            // magnitudeBar
+            // 
+            this.magnitudeBar.Location = new System.Drawing.Point(15, 60);
+            this.magnitudeBar.Name = "magnitudeBar";
+            this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
+            this.magnitudeBar.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 167);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Magnitude";
+            // 
+            // magnitudePanel
+            // 
+            this.magnitudePanel.Controls.Add(this.magnitudeBar);
+            this.magnitudePanel.Controls.Add(this.label1);
+            this.magnitudePanel.Location = new System.Drawing.Point(1, 208);
+            this.magnitudePanel.Name = "magnitudePanel";
+            this.magnitudePanel.Size = new System.Drawing.Size(76, 191);
+            this.magnitudePanel.TabIndex = 3;
+            this.magnitudePanel.Visible = false;
             // 
             // MainForm
             // 
@@ -211,11 +246,15 @@ namespace AntHill.NET
             this.Name = "MainForm";
             this.Text = "AntHill";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.rightPanel.ResumeLayout(false);
             this.simulationPanel.ResumeLayout(false);
             this.simulationPanel.PerformLayout();
             this.panelDebug.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.magnitudeBar)).EndInit();
+            this.magnitudePanel.ResumeLayout(false);
+            this.magnitudePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -237,6 +276,9 @@ namespace AntHill.NET
         private System.Windows.Forms.Button buttonShowConfig;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.TrackBar magnitudeBar;
+        private System.Windows.Forms.Panel magnitudePanel;
+        private System.Windows.Forms.Label label1;
     }
 }
 
