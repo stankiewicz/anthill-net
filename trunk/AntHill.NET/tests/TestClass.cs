@@ -15,16 +15,20 @@ namespace AntHill.NET
         }
 
         [Test]
+        [Ignore("Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...")]
         public void AntTest()
         {
 
         }
+
         [Test]
+        [Ignore("Citizen class is abstract. NO TEST IN OTHER CLASS (yet?)...")]
         public void CitizenTest()
         {
 
         }
         [Test]
+        [Ignore("Creature class is abstract. Creature.Direction test in WorkerTest and WarriorTest...")]
         public void CreatureTest()
         {
 
@@ -41,6 +45,7 @@ namespace AntHill.NET
 
         }
         [Test]
+        [Ignore("Element class is abstract. Element.Position test in WorkerTest and WarriorTest...")]
         public void ElementTest()
         {
 
@@ -102,7 +107,6 @@ namespace AntHill.NET
         [Test]
         public void WarriorTest()
         {
-
             Warrior test_warrior = new Warrior(new System.Drawing.Point(123, 345));
             test_warrior.TurnsToBecomeHungry = 43;
             test_warrior.Direction = Direction.E;
