@@ -7,7 +7,13 @@ namespace AntHill.NET
     public class Rain : Element
     {
         Point rainPos;
-        int timeToLive;
+        private int timeToLive;
+
+        public int TimeToLive
+        {
+            get { return timeToLive; }
+            set { timeToLive = value; }
+        }
 
 
         public Rain(Point pos):base(pos)
