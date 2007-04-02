@@ -42,7 +42,7 @@ namespace AntHill.NET
             List<Food> lFood = isw.GetVisibleFood(this);
             List<Ant> lAnt = isw.GetVisibleAnts(this);
             List<Spider> lSpider = isw.GetVisibleSpiders(this);
-            List<Message>lMessage=isw.GetVisibleMessages(this);
+            List<Message>lMessage = isw.GetVisibleMessages(this);
 
             for(int i = 0; i < lFood.Count;++i)
                 isw.DeleteFood(lFood[i]);
@@ -56,7 +56,6 @@ namespace AntHill.NET
 
             foreach(Message m in lMessage)
             {
-
                 for (int j = 0; j < m.points.Count; )
                 {
                     if (Math.Abs(m.points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth 
@@ -76,8 +75,6 @@ namespace AntHill.NET
                     map.GetTile(i, j).messages.Clear();
                 }
             }
-
-            throw new Exception("The method or operation is not implemented.");
         }
          
         public override void Destroy(ISimulationWorld isw)

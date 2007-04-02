@@ -5,11 +5,13 @@ namespace AntHill.NET
 {
     public abstract class Ant : Creature
     {
+        private int turnsWithoutFood;
+        private int turnsToBecomeHungry;
+
         public Ant(Point pos):base(pos)
         {
 
         }
-        private int turnsWithoutFood;
 
         public int TurnsWithoutFood
         {
@@ -17,7 +19,7 @@ namespace AntHill.NET
             set { turnsWithoutFood = value; }
         }
 
-        private int turnsToBecomeHungry;
+        
         public int TurnsToBecomeHungry
         {
             get
