@@ -6,7 +6,7 @@ namespace AntHill.NET
 {
     public class Spider : Creature
     {
-        bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
+        //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
         public Spider(Point pos):base(pos) {}
 //        List<KeyValuePair<int><int>>
         private int Distance(Point p1, Point p2)
@@ -19,11 +19,11 @@ namespace AntHill.NET
         }
         private Ant FindNearestAnt()
         {            
-            if(queenSpotted)
-                return Simulation.simulation.queen;
+           // if(queenSpotted)
+             //   return Simulation.simulation.queen;
             if (AntHillConfig.antSightRadius <= Distance(Simulation.simulation.queen.Position, this.Position))
             {                                
-                queenSpotted = true;
+                //queenSpotted = true;
                 return Simulation.simulation.queen;
             }
             
