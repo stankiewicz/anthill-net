@@ -84,6 +84,7 @@ namespace AntHill.NET
                         if (Direction == Direction.N)
                         {
                             isw.Attack(this, ant);
+            
                             return;
                         }
                         else

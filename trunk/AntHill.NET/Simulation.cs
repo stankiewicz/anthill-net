@@ -67,7 +67,6 @@ namespace AntHill.NET
 
 	    #region ISimulation Members
 
-
         /// <summary>
         /// This is the most important function - activity diagram
         /// </summary>
@@ -204,10 +203,6 @@ namespace AntHill.NET
             throw new Exception("The method or operation is not implemented.");
         }
 
-        #endregion
-
-        #region ISimulationWorld Members
-
         public void CreateAnt(System.Drawing.Point position)
         {
             throw new Exception("The method or operation is not implemented.");
@@ -218,26 +213,15 @@ namespace AntHill.NET
             isEggDeleted = true;
         }
 
-        #endregion
-
-        #region ISimulationWorld Members
-
-
         public void DeleteRain()
         {
             rain = null;
         }
 
-        #endregion
-
-        #region ISimulationWorld Members
-
-
         public void CreateEgg(Point pos)
         {
             eggs.Add(new Egg(pos));
         }
-
 
         public void DeleteFood(Food food)
         {
@@ -253,20 +237,6 @@ namespace AntHill.NET
         {
             throw new Exception("The method or operation is not implemented.");
         }
-
-        #endregion
-
-
-        #region ISimulationWorld Members
-
-
-        
-        #endregion
-
-       
-
-        #region ISimulationWorld Members
-
 
         public Map GetMap()
         {
