@@ -30,6 +30,27 @@ namespace AntHill.NET
             }
         }
 
-        public virtual void Eat() { }
+        public virtual bool Live()
+        {
+            if (turnsToBecomeHungry > 0)
+            {
+                turnsToBecomeHungry--;
+                return true;
+            }
+
+            if (turnsWithoutFood > 0)
+            {
+                turnsWithoutFood--;
+                return true;
+            }
+            
+            return false;
+        }
+
+        public virtual void Eat()
+        {
+            TurnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
+            turnsWithoutFood = AntHillConfig.antMaxLifeWithoutFood;
+        }
     }
 }

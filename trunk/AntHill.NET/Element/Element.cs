@@ -30,6 +30,10 @@ namespace AntHill.NET
                 return x;
             return y;
         }
+        public void Move(KeyValuePair<int, int> position)
+        {
+            this.Position = new Point(position.Key, position.Value);
+        }
         public abstract void Maintain(ISimulationWorld isw);
         public abstract void Destroy(ISimulationWorld isw);
     }
