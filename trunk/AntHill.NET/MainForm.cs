@@ -41,6 +41,7 @@ namespace AntHill.NET
 
                 Simulation.DeInit();
                 Simulation.Init(new Map(AntHillConfig.mapColCount,AntHillConfig.mapRowCount,AntHillConfig.tiles));
+                Invalidate();
             }
         }
 
@@ -105,37 +106,52 @@ namespace AntHill.NET
                 return;
             if(Simulation.simulation.Map.Width * 128 > drawingRect.X)
             {
-                hScrollBar1.Visible = true;
+                hScrollBar1.Enabled = true;
                 drawingRect.Y = this.hScrollBar1.Location.Y - 1;
                 magnitudePanel.Visible = true;
             }
-            else            
-                hScrollBar1.Visible = false;            
+            else
+                hScrollBar1.Enabled = false;            
             if(Simulation.simulation.Map.Height * 128 > drawingRect.Y)
             {
-                vScrollBar1.Visible = true;
-                drawingRect.X = this.vScrollBar1.Location.Y - 1;
+                vScrollBar1.Enabled = true;
+                drawingRect.X = this.vScrollBar1.Location.X - 1;
                 magnitudePanel.Visible = true;
             }
-            else            
-                hScrollBar1.Visible = false;            
+            else
+                vScrollBar1.Enabled = false;            
             if(Simulation.simulation.Map.Width * 128 > drawingRect.X)
             {
-                hScrollBar1.Visible = true;
+                hScrollBar1.Enabled = true;
                 drawingRect.Y = this.hScrollBar1.Location.Y - 1;
                 magnitudePanel.Visible = true;
             }
-            else            
-                hScrollBar1.Visible = false;            
+            else
+                hScrollBar1.Enabled = false;            
             if((!hScrollBar1.Visible)&&(!vScrollBar1.Visible))
                 magnitudePanel.Visible = false;
 
-            float magnitude = 1.0f;
-            int currentX = 0, currentY = 0, nextX = 128, nextY = 128;
+            float magnitude;
+            float mapScreenSizeX = 128 * Simulation.simulation.Map.Width;
+            float mapScreenSizeY = 128 * Simulation.simulation.Map.Height;
+            mapScreenSizeX /= drawingRect.X;
+            mapScreenSizeY /= drawingRect.Y;            
+            if (mapScreenSizeX > mapScreenSizeY)            
+                magnitudeBar.Maximum = (int) Math.Ceiling(1000.0f * mapScreenSizeX);            
+            else
+                magnitudeBar.Maximum = (int)Math.Ceiling(1000.0f * mapScreenSizeY);
+            if (magnitudeBar.Maximum < 1000)
+                magnitude = 1.0f;
+            else
+                magnitude = 1000.0f / magnitudeBar.Value;            
+            
+            int currentX = 0, currentY = 0, nextX = (int)(128.0f * magnitude), nextY = (int)(128.0f * magnitude);
 
-            for(int x = 0; x<Simulation.simulation.Map.Width; x++)
+            for (int y = 0; y < Simulation.simulation.Map.Height; y++)            
             {
-                for(int y = 0; y<Simulation.simulation.Map.Height; y++)
+                currentX = 0;
+                nextX = (int)(128.0f * magnitude);
+                for (int x = 0; x < Simulation.simulation.Map.Width; x++)
                 {
                     e.Graphics.DrawImage(Simulation.simulation.Map.GetTile(x, y).Image,currentX,currentY,nextX - currentX, nextY - currentY);
                     currentX = nextX;
@@ -153,6 +169,26 @@ namespace AntHill.NET
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
+        }
+
+        private void magnitudeBar_Scroll(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void MainForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            Invalidate();
         }
     }
 }

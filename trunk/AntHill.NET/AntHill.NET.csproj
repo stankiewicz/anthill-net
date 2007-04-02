@@ -109,14 +109,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AntHill.Config.xml" />
-    <Content Include="Graphics\ant.png" />
-    <Content Include="Graphics\antQueen.png" />
-    <Content Include="Graphics\antWarrior.png" />
-    <Content Include="Graphics\antWorker.png" />
-    <Content Include="Graphics\grassTile.png" />
-    <Content Include="Graphics\sandTile.png" />
-    <Content Include="Graphics\spider.png" />
-    <Content Include="Graphics\stoneTile.png" />
+    <Content Include="Graphics\ant.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\antQueen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\antWarrior.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\antWorker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\grassTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\sandTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\spider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphics\stoneTile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="nunit.framework.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

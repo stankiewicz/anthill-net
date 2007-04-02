@@ -8,9 +8,9 @@ namespace AntHill.NET
 
     class TileBitmap
     {
-        static public Bitmap wall = new Bitmap("..\\..\\Graphics\\stoneTile.png");
-        static public Bitmap indoor = new Bitmap("..\\..\\Graphics\\sandTile.png");
-        static public Bitmap outdoor = new Bitmap("..\\..\\Graphics\\grassTile.png");
+        static public Bitmap wall = new Bitmap("Graphics/stoneTile.png");
+        static public Bitmap indoor = new Bitmap("Graphics/sandTile.png");
+        static public Bitmap outdoor = new Bitmap("Graphics/grassTile.png");
     }
 
     public class Tile

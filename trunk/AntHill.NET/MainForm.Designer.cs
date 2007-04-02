@@ -32,6 +32,9 @@ namespace AntHill.NET
             this.simulationPanel = new System.Windows.Forms.Panel();
             this.panelDebug = new System.Windows.Forms.Panel();
             this.buttonShowConfig = new System.Windows.Forms.Button();
+            this.magnitudePanel = new System.Windows.Forms.Panel();
+            this.magnitudeBar = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.pauseButton = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.startButton = new System.Windows.Forms.Button();
@@ -43,15 +46,12 @@ namespace AntHill.NET
             this.simulationXMLopenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
-            this.magnitudeBar = new System.Windows.Forms.TrackBar();
-            this.label1 = new System.Windows.Forms.Label();
-            this.magnitudePanel = new System.Windows.Forms.Panel();
             this.rightPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
             this.panelDebug.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.magnitudeBar)).BeginInit();
             this.magnitudePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.magnitudeBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
             this.SuspendLayout();
             // 
             // rightPanel
@@ -101,6 +101,37 @@ namespace AntHill.NET
             this.buttonShowConfig.Text = "Show Config";
             this.buttonShowConfig.UseVisualStyleBackColor = true;
             this.buttonShowConfig.Click += new System.EventHandler(this.buttonShowConfig_Click);
+            // 
+            // magnitudePanel
+            // 
+            this.magnitudePanel.Controls.Add(this.magnitudeBar);
+            this.magnitudePanel.Controls.Add(this.label1);
+            this.magnitudePanel.Location = new System.Drawing.Point(2, 182);
+            this.magnitudePanel.Name = "magnitudePanel";
+            this.magnitudePanel.Size = new System.Drawing.Size(76, 134);
+            this.magnitudePanel.TabIndex = 3;
+            this.magnitudePanel.Visible = false;
+            // 
+            // magnitudeBar
+            // 
+            this.magnitudeBar.Location = new System.Drawing.Point(14, 3);
+            this.magnitudeBar.Maximum = 10000;
+            this.magnitudeBar.Minimum = 1000;
+            this.magnitudeBar.Name = "magnitudeBar";
+            this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
+            this.magnitudeBar.TabIndex = 3;
+            this.magnitudeBar.Value = 1000;
+            this.magnitudeBar.Scroll += new System.EventHandler(this.magnitudeBar_Scroll);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 110);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Magnitude";
             // 
             // pauseButton
             // 
@@ -192,47 +223,22 @@ namespace AntHill.NET
             // vScrollBar1
             // 
             this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.Enabled = false;
             this.vScrollBar1.Location = new System.Drawing.Point(493, 0);
             this.vScrollBar1.Name = "vScrollBar1";
             this.vScrollBar1.Size = new System.Drawing.Size(16, 451);
             this.vScrollBar1.TabIndex = 1;
-            this.vScrollBar1.Visible = false;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
             // hScrollBar1
             // 
             this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Enabled = false;
             this.hScrollBar1.Location = new System.Drawing.Point(0, 435);
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(493, 16);
             this.hScrollBar1.TabIndex = 2;
-            this.hScrollBar1.Visible = false;
-            // 
-            // magnitudeBar
-            // 
-            this.magnitudeBar.Location = new System.Drawing.Point(15, 60);
-            this.magnitudeBar.Name = "magnitudeBar";
-            this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
-            this.magnitudeBar.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 167);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Magnitude";
-            // 
-            // magnitudePanel
-            // 
-            this.magnitudePanel.Controls.Add(this.magnitudeBar);
-            this.magnitudePanel.Controls.Add(this.label1);
-            this.magnitudePanel.Location = new System.Drawing.Point(1, 208);
-            this.magnitudePanel.Name = "magnitudePanel";
-            this.magnitudePanel.Size = new System.Drawing.Size(76, 191);
-            this.magnitudePanel.TabIndex = 3;
-            this.magnitudePanel.Visible = false;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
             // MainForm
             // 
@@ -246,15 +252,16 @@ namespace AntHill.NET
             this.Name = "MainForm";
             this.Text = "AntHill";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
+            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.rightPanel.ResumeLayout(false);
             this.simulationPanel.ResumeLayout(false);
             this.simulationPanel.PerformLayout();
             this.panelDebug.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.magnitudeBar)).EndInit();
             this.magnitudePanel.ResumeLayout(false);
             this.magnitudePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.magnitudeBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
             this.ResumeLayout(false);
 
         }
