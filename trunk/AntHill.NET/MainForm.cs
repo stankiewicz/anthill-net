@@ -93,5 +93,10 @@ namespace AntHill.NET
                 cf.Show();
             }
         }
+
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -30,6 +30,8 @@ namespace AntHill.NET
         {
             this.rightPanel = new System.Windows.Forms.Panel();
             this.simulationPanel = new System.Windows.Forms.Panel();
+            this.panelDebug = new System.Windows.Forms.Panel();
+            this.buttonShowConfig = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.startButton = new System.Windows.Forms.Button();
@@ -39,12 +41,12 @@ namespace AntHill.NET
             this.labelSpeed = new System.Windows.Forms.Label();
             this.loadDataButton = new System.Windows.Forms.Button();
             this.simulationXMLopenFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.panelDebug = new System.Windows.Forms.Panel();
-            this.buttonShowConfig = new System.Windows.Forms.Button();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.rightPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
             this.panelDebug.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
             this.SuspendLayout();
             // 
             // rightPanel
@@ -52,9 +54,9 @@ namespace AntHill.NET
             this.rightPanel.Controls.Add(this.simulationPanel);
             this.rightPanel.Controls.Add(this.loadDataButton);
             this.rightPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rightPanel.Location = new System.Drawing.Point(603, 0);
+            this.rightPanel.Location = new System.Drawing.Point(509, 0);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(80, 437);
+            this.rightPanel.Size = new System.Drawing.Size(80, 451);
             this.rightPanel.TabIndex = 0;
             // 
             // simulationPanel
@@ -67,12 +69,32 @@ namespace AntHill.NET
             this.simulationPanel.Controls.Add(this.stopButton);
             this.simulationPanel.Controls.Add(this.speedBar);
             this.simulationPanel.Controls.Add(this.labelSpeed);
-            this.simulationPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.simulationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.simulationPanel.Enabled = false;
-            this.simulationPanel.Location = new System.Drawing.Point(0, 28);
+            this.simulationPanel.Location = new System.Drawing.Point(0, 22);
             this.simulationPanel.Name = "simulationPanel";
-            this.simulationPanel.Size = new System.Drawing.Size(80, 409);
+            this.simulationPanel.Size = new System.Drawing.Size(80, 429);
             this.simulationPanel.TabIndex = 8;
+            // 
+            // panelDebug
+            // 
+            this.panelDebug.Controls.Add(this.buttonShowConfig);
+            this.panelDebug.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelDebug.Location = new System.Drawing.Point(0, 405);
+            this.panelDebug.Name = "panelDebug";
+            this.panelDebug.Size = new System.Drawing.Size(80, 24);
+            this.panelDebug.TabIndex = 8;
+            // 
+            // buttonShowConfig
+            // 
+            this.buttonShowConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonShowConfig.Location = new System.Drawing.Point(0, 0);
+            this.buttonShowConfig.Name = "buttonShowConfig";
+            this.buttonShowConfig.Size = new System.Drawing.Size(80, 24);
+            this.buttonShowConfig.TabIndex = 0;
+            this.buttonShowConfig.Text = "Show Config";
+            this.buttonShowConfig.UseVisualStyleBackColor = true;
+            this.buttonShowConfig.Click += new System.EventHandler(this.buttonShowConfig_Click);
             // 
             // pauseButton
             // 
@@ -161,39 +183,39 @@ namespace AntHill.NET
             this.loadDataButton.UseVisualStyleBackColor = true;
             this.loadDataButton.Click += new System.EventHandler(this.loadDataButton_Click);
             // 
-            // panelDebug
+            // vScrollBar1
             // 
-            this.panelDebug.Controls.Add(this.buttonShowConfig);
-            this.panelDebug.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelDebug.Location = new System.Drawing.Point(0, 182);
-            this.panelDebug.Name = "panelDebug";
-            this.panelDebug.Size = new System.Drawing.Size(80, 227);
-            this.panelDebug.TabIndex = 8;
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.Location = new System.Drawing.Point(493, 0);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(16, 451);
+            this.vScrollBar1.TabIndex = 1;
             // 
-            // buttonShowConfig
+            // hScrollBar1
             // 
-            this.buttonShowConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonShowConfig.Location = new System.Drawing.Point(0, 0);
-            this.buttonShowConfig.Name = "buttonShowConfig";
-            this.buttonShowConfig.Size = new System.Drawing.Size(80, 23);
-            this.buttonShowConfig.TabIndex = 0;
-            this.buttonShowConfig.Text = "Show Config";
-            this.buttonShowConfig.UseVisualStyleBackColor = true;
-            this.buttonShowConfig.Click += new System.EventHandler(this.buttonShowConfig_Click);
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 435);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(493, 16);
+            this.hScrollBar1.TabIndex = 2;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(683, 437);
+            this.ClientSize = new System.Drawing.Size(589, 451);
+            this.Controls.Add(this.hScrollBar1);
+            this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.rightPanel);
+            this.DoubleBuffered = true;
             this.Name = "MainForm";
             this.Text = "AntHill";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.rightPanel.ResumeLayout(false);
             this.simulationPanel.ResumeLayout(false);
             this.simulationPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
             this.panelDebug.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -213,6 +235,8 @@ namespace AntHill.NET
         private System.Windows.Forms.OpenFileDialog simulationXMLopenFileDialog;
         private System.Windows.Forms.Panel panelDebug;
         private System.Windows.Forms.Button buttonShowConfig;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
     }
 }
 
