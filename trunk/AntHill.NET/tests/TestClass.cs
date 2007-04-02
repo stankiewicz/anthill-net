@@ -12,8 +12,64 @@ namespace AntHill.NET
         public TestClass()
         {
 
+        }
+
+        [Test]
+        public void AntTest()
+        {
 
         }
+        [Test]
+        public void CitizenTest()
+        {
+
+        }
+        [Test]
+        public void CreatureTest()
+        {
+
+        }
+
+        [Test]
+        public void QueenTest()
+        {
+
+        }
+        [Test]
+        public void SpiderTest()
+        {
+
+        }
+        [Test]
+        public void ElementTest()
+        {
+
+        }
+        [Test]
+        public void FoodTest()
+        {
+
+        }
+        [Test]
+        public void MessageTest()
+        {
+
+        }
+        [Test]
+        public void PointWithIntensityTest()
+        {
+            Tile test_tile = new Tile(TileType.Wall);
+            PointWithIntensity test_pointwithintensity = new PointWithIntensity(test_tile, 23);
+            Assert.AreEqual(test_pointwithintensity.Intensity, 23, "PointWithIntensity.Intensity problem");
+            Assert.AreEqual(test_pointwithintensity.Tile, test_tile, "PointWithIntensity.Tile problem");
+        }
+
+        [Test]
+        public void XmlTest()
+        {
+
+        }
+        
 
         [Test]
         public void MapTest()
@@ -33,6 +89,15 @@ namespace AntHill.NET
                     Assert.AreEqual(test_tiles[j, i], test_map.GetTile(j, i), "Bad type in tile (" + j.ToString() + "," + i.ToString() + ").");
 
         }
+
+        [Test]
+        public void TileTest()
+        {
+            Tile test_tile = new Tile(TileType.Indoor);
+            Assert.AreEqual(TileType.Indoor, test_tile.TileType, "Tile.TileType problem");
+
+        }
+
 
         [Test]
         public void WarriorTest()
@@ -66,7 +131,9 @@ namespace AntHill.NET
 
         }
 
+
         [Test]
+        [Ignore("narazie brak zaimplementowanych metod (w klasie Simulation) niezbêdnych do dzia³ania tej klasy")]
         public void RainTest()
         {
 

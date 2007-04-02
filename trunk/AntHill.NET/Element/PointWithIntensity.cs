@@ -6,6 +6,12 @@ namespace AntHill.NET
 {
     public class PointWithIntensity
     {
+        public PointWithIntensity(Tile t, int i)
+        {
+            tile = t;
+            intensity = i;
+        }
+
         private Tile tile;
         public Tile Tile
         {
