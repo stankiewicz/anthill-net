@@ -135,15 +135,30 @@ namespace AntHill.NET
             float mapScreenSizeX = 128 * Simulation.simulation.Map.Width;
             float mapScreenSizeY = 128 * Simulation.simulation.Map.Height;
             mapScreenSizeX /= drawingRect.X;
-            mapScreenSizeY /= drawingRect.Y;            
-            if (mapScreenSizeX > mapScreenSizeY)            
-                magnitudeBar.Maximum = (int) Math.Ceiling(1000.0f * mapScreenSizeX);            
+            mapScreenSizeY /= drawingRect.Y;
+            if (mapScreenSizeX > mapScreenSizeY)
+            {
+                if (mapScreenSizeX > 1)
+                {
+                    magnitudeBar.Maximum = (int)Math.Ceiling(1000.0f * mapScreenSizeX);
+                    magnitudeBar.Minimum = 1000;
+                }
+            }
             else
-                magnitudeBar.Maximum = (int)Math.Ceiling(1000.0f * mapScreenSizeY);
+            {
+                if (mapScreenSizeY > 1)
+                {
+                    magnitudeBar.Maximum = (int)Math.Ceiling(1000.0f * mapScreenSizeY);
+                    magnitudeBar.Minimum = 1000;
+                }
+            }
             if (magnitudeBar.Maximum < 1000)
                 magnitude = 1.0f;
             else
-                magnitude = 1000.0f / magnitudeBar.Value;            
+            {
+                magnitudeBar.Minimum = 1000;
+                magnitude = 1000.0f / magnitudeBar.Value;
+            }
             
             int currentX = 0, currentY = 0, nextX = (int)(128.0f * magnitude), nextY = (int)(128.0f * magnitude);
 
