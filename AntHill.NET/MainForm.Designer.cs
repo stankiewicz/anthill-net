@@ -61,7 +61,7 @@ namespace AntHill.NET
             this.rightPanel.Dock = System.Windows.Forms.DockStyle.Right;
             this.rightPanel.Location = new System.Drawing.Point(509, 0);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(80, 451);
+            this.rightPanel.Size = new System.Drawing.Size(80, 450);
             this.rightPanel.TabIndex = 0;
             // 
             // simulationPanel
@@ -79,14 +79,14 @@ namespace AntHill.NET
             this.simulationPanel.Enabled = false;
             this.simulationPanel.Location = new System.Drawing.Point(0, 22);
             this.simulationPanel.Name = "simulationPanel";
-            this.simulationPanel.Size = new System.Drawing.Size(80, 429);
+            this.simulationPanel.Size = new System.Drawing.Size(80, 428);
             this.simulationPanel.TabIndex = 8;
             // 
             // panelDebug
             // 
             this.panelDebug.Controls.Add(this.buttonShowConfig);
             this.panelDebug.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelDebug.Location = new System.Drawing.Point(0, 405);
+            this.panelDebug.Location = new System.Drawing.Point(0, 404);
             this.panelDebug.Name = "panelDebug";
             this.panelDebug.Size = new System.Drawing.Size(80, 24);
             this.panelDebug.TabIndex = 8;
@@ -119,7 +119,7 @@ namespace AntHill.NET
             this.magnitudeBar.Minimum = 1000;
             this.magnitudeBar.Name = "magnitudeBar";
             this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
+            this.magnitudeBar.Size = new System.Drawing.Size(45, 104);
             this.magnitudeBar.TabIndex = 3;
             this.magnitudeBar.Value = 1000;
             this.magnitudeBar.Scroll += new System.EventHandler(this.magnitudeBar_Scroll);
@@ -196,7 +196,7 @@ namespace AntHill.NET
             this.speedBar.Maximum = 5;
             this.speedBar.Minimum = 1;
             this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(75, 42);
+            this.speedBar.Size = new System.Drawing.Size(75, 45);
             this.speedBar.TabIndex = 5;
             this.speedBar.Value = 1;
             // 
@@ -226,7 +226,7 @@ namespace AntHill.NET
             this.vScrollBar1.Enabled = false;
             this.vScrollBar1.Location = new System.Drawing.Point(493, 0);
             this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(16, 451);
+            this.vScrollBar1.Size = new System.Drawing.Size(16, 450);
             this.vScrollBar1.TabIndex = 1;
             this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
@@ -234,7 +234,7 @@ namespace AntHill.NET
             // 
             this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.hScrollBar1.Enabled = false;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 435);
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 434);
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(493, 16);
             this.hScrollBar1.TabIndex = 2;
@@ -244,7 +244,7 @@ namespace AntHill.NET
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(589, 451);
+            this.ClientSize = new System.Drawing.Size(589, 450);
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.rightPanel);
