@@ -73,11 +73,24 @@ namespace AntHill.NET
             get { return map; }
         }
 
+        bool CheckIfExists(TileType tt)
+        {
+            for (int i = 0; i < Map.Height; i++)
+            {
+                for (int j = 0; j < Map.Width; j++)
+                {
+                    if (Map.GetTile(j, i).TileType == tt) return true;
+                }
+            }
+            return false;
+        }
+
         Point GetTile(TileType tt)
         {
             Random rnd = new Random();
             Tile t;
             // modlmy sie ze znajdzie szybko
+            if (CheckIfExists(tt) == false) throw new Exception("no more " + tt.ToString() + " on map");
             while (true)
             {
                 if ((t = map.GetTile(rnd.Next(map.Width), rnd.Next(map.Height))).TileType == tt)
@@ -100,11 +113,25 @@ namespace AntHill.NET
         {
             Random rnd = new Random();
 
-            if (rnd.NextDouble() >= AntHillConfig.spiderProbability)
-                this.CreateSpider(GetTile(TileType.Outdoor));
-            
-            if (rnd.NextDouble() >= AntHillConfig.foodProbability)
-                this.CreateFood(GetTile(TileType.Outdoor), GetRandomFoodQuantity());
+            try
+            {
+                if (rnd.NextDouble() >= AntHillConfig.spiderProbability)
+                    this.CreateSpider(GetTile(TileType.Outdoor));
+            }
+            catch (Exception)
+            {
+
+            }
+
+            try
+            {
+                if (rnd.NextDouble() >= AntHillConfig.foodProbability)
+                    this.CreateFood(GetTile(TileType.Outdoor), GetRandomFoodQuantity());
+            }
+            catch (Exception)
+            {
+                
+            }
             
             if ( (rain == null) && (rnd.NextDouble() >= AntHillConfig.rainProbability))
                 this.CreateRain(GetRandomPoint());
