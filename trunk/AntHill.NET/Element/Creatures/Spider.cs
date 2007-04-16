@@ -43,7 +43,7 @@ namespace AntHill.NET
 
       
         public override void Maintain(ISimulationWorld isw)
-        {
+        {//TODO czy na pewno dobrze znajduje droge? (pobieranie astar) czy spider nie szuka krolowej?
             Ant ant = FindNearestAnt();
             if (ant == null)
             {

@@ -24,22 +24,22 @@ namespace AntHill.NET
 
         }
         public void Dig()
-        {
+        {//TODO gdzie kopie
 
         }
 
         public void LoadFood()
-        {
+        {//TODO skad zabiera?
 
         }
 
         public void UnloadFood()
-        {
+        {//TODO gdzie rozladowuje
 
         }
 
         public override void Maintain(ISimulationWorld isw)
-        {
+        {//TODO sciezka moze nulla zwrocic
             if (base.Live())
             {
                 if (this.TurnsToBecomeHungry == 0)

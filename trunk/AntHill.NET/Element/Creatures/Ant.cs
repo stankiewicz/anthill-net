@@ -33,7 +33,7 @@ namespace AntHill.NET
         }
 
         public virtual bool Live()
-        {
+        {//TODO czy dobrze logika zycia
             if (turnsToBecomeHungry > 0)
             {
                 turnsToBecomeHungry--;
