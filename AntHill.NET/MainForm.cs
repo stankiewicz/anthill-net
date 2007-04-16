@@ -40,14 +40,23 @@ namespace AntHill.NET
                     MessageBox.Show(name + Properties.Resources.exceptionXmlNotValid + ex.ToString(), "Error");
                     return;
                 }
+                try
+                {
+                    Simulation.DeInit();
+                    Simulation.Init(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message);
+                    return;
+                }
+
                 simulationPanel.Enabled = true;
                 startButton.Enabled = true;
                 stopButton.Enabled = false;
                 doTurnButton.Enabled = true;
                 pauseButton.Enabled = false;
 
-                Simulation.DeInit();
-                Simulation.Init(new Map(AntHillConfig.mapColCount,AntHillConfig.mapRowCount,AntHillConfig.tiles));
                 Invalidate();
             }
         }

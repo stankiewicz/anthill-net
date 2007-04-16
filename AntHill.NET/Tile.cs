@@ -35,6 +35,7 @@ namespace AntHill.NET
         public TileType TileType
         {
             get { return tileType; }
+            set { tileType = value; }
         }
 
         /*

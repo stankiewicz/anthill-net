@@ -120,4 +120,10 @@
   <data name="exceptionXmlNotValid" xml:space="preserve">
     <value>file is not valid. It generated exception: </value>
   </data>
+  <data name="noIndoorTilesError" xml:space="preserve">
+    <value>Map has no indoor tiles.</value>
+  </data>
+  <data name="noOutdoorTilesError" xml:space="preserve">
+    <value>Map has no outdoor tiles.</value>
+  </data>
 </root>
