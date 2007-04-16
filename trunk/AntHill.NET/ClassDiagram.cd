@@ -11,57 +11,57 @@
   <Class Name="AntHill.NET.Ant">
     <Position X="3.75" Y="5.5" Width="2" />
     <TypeIdentifier>
-      <FileName>Ant.cs</FileName>
-      <HashCode>AAAAAAAAEAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Element\Creatures\Ant.cs</FileName>
+      <HashCode>AAAAAAAAEAAAAAAAQAAABAAAAAAAAAAAEAAAEAABAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Citizen">
     <Position X="5" Y="8.25" Width="1.75" />
     <TypeIdentifier>
-      <FileName>Citizen.cs</FileName>
+      <FileName>Element\Creatures\Citizen.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAEBAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Creature">
     <Position X="2.75" Y="3.25" Width="1.75" />
     <TypeIdentifier>
-      <FileName>Creature.cs</FileName>
-      <HashCode>AAEAAAAAAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Element\Creatures\Creature.cs</FileName>
+      <HashCode>AAEAAAAAAAAAIAAAACACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Egg">
     <Position X="15" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Egg.cs</FileName>
+      <FileName>Element\Creatures\Egg.cs</FileName>
       <HashCode>AAAAAAAQAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Element">
     <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Element.cs</FileName>
-      <HashCode>AAAAAAAAAAAgAAAgAAAAIAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Element\Element.cs</FileName>
+      <HashCode>AAAAAAAAAIAgAAAgAAAAIAAAAABAAABAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Food">
     <Position X="10.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Food.cs</FileName>
-      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAACAAAAAgAAAAAA=</HashCode>
+      <FileName>Element\Food.cs</FileName>
+      <HashCode>AAAAAAAAAAAiAAAAAAAAAAAAAABAAACAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Map" Collapsed="true">
     <Position X="19.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Map.cs</FileName>
-      <HashCode>AQAAAAAAAAAAAAQAQAAAAABAAgAAAAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AQAAAAAABAAAAAQAQAAAAEAAAgAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Message">
     <Position X="7.5" Y="3.25" Width="2.25" />
     <TypeIdentifier>
-      <FileName>Message.cs</FileName>
-      <HashCode>AAAAAACAAAAwAAQAAAAAAAAAAABBAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Element\Message.cs</FileName>
+      <HashCode>AAAAAACAAAAwAAQAAAIAAAAAAABBAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Program" Collapsed="true">
@@ -74,49 +74,50 @@
   <Class Name="AntHill.NET.Queen">
     <Position X="2.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Queen.cs</FileName>
+      <FileName>Element\Creatures\Queen.cs</FileName>
       <HashCode>AAAACAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Rain">
     <Position X="12.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Rain.cs</FileName>
-      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Element\Rain.cs</FileName>
+      <HashCode>AAAAAABAAAAgAAAAAAAAAARABABAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Simulation" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="19.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Simulation.cs</FileName>
-      <HashCode>ABAgEIAAECCABAAAAgAAAAQAgoAAAASRAEAAAAAAAAI=</HashCode>
+      <HashCode>ARAAEIAgADCEAQCQmgAAAAQBi4ABAlyVAEQCABABoAo=</HashCode>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="AntHill.NET.Spider">
     <Position X="0.5" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Spider.cs</FileName>
-      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Element\Creatures\Spider.cs</FileName>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAIAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Tile" Collapsed="true">
     <Position X="21" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Tile.cs</FileName>
-      <HashCode>AAAAAAAAAAAACAAAAAAAICAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAIAAAACAAgAAAAIAAAAAAAABABAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Worker">
     <Position X="5" Y="10.25" Width="1.75" />
     <TypeIdentifier>
-      <FileName>Worker.cs</FileName>
+      <FileName>Element\Creatures\Worker.cs</FileName>
       <HashCode>AAAAAAAAAAAgAEAgAAAAAAAAQABAABAAAAAQAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="AntHill.NET.Warrior">
     <Position X="1.25" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Warrior.cs</FileName>
+      <FileName>Element\Creatures\Warrior.cs</FileName>
       <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
@@ -124,27 +125,27 @@
     <Position X="22.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <FileName>ISimulationWorld.cs</FileName>
-      <HashCode>AAAAEAAAAACAAAAAAgAAAAQAgIAAAACQAEAAAAAAAAA=</HashCode>
+      <HashCode>ABAAEIAAAACAAACAggAAAAQBiIABAECRAEAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Enum Name="AntHill.NET.Direction" Collapsed="true">
     <Position X="17.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Creature.cs</FileName>
+      <FileName>Element\Creatures\Creature.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhCIAAA=</HashCode>
     </TypeIdentifier>
   </Enum>
   <Enum Name="AntHill.NET.State" Collapsed="true">
     <Position X="21" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Creature.cs</FileName>
+      <FileName>Element\Creatures\Creature.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Enum>
   <Enum Name="AntHill.NET.MessageType" Collapsed="true">
     <Position X="19.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>Message.cs</FileName>
+      <FileName>Element\Message.cs</FileName>
       <HashCode>AAAACAAAAAAAAAAAAAAAAAAQAAAIAEAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Enum>

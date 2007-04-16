@@ -49,6 +49,7 @@
     <Compile Include="ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreatureImages.cs" />
     <Compile Include="Element\Creatures\Ant.cs" />
     <Compile Include="Element\Creatures\Citizen.cs" />
     <Compile Include="Element\Creatures\Creature.cs" />

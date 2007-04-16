@@ -13,6 +13,7 @@ namespace AntHill.NET
         static public Bitmap outdoor = new Bitmap("Graphics/grassTile.png");
     }
 
+
     public class Tile
     {
         private TileType tileType;
