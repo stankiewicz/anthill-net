@@ -32,7 +32,62 @@ namespace AntHill.NET
 
         protected bool MoveOrRotate(KeyValuePair<int, int> pos)
         {
-            return true;
+            if (Position.X == pos.Key)
+            {
+                if (Position.Y == pos.Value + 1) //ant 1 tile above
+                {
+                    if (Direction == Direction.N)
+                    {
+                        Move(pos);
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Direction.N;
+                    }
+                }
+                else
+                {
+                    if (Direction == Direction.S)
+                    {
+                        Move(pos);
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Direction.S;
+                    }
+                }
+            }
+            else
+            {
+                if (Position.X == pos.Key + 1) //ant 1 tile left
+                {
+                    if (Direction == Direction.W)
+                    {
+                        Move(pos);
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Direction.W;
+                    }
+                }
+                else
+                {
+                    if (Direction == Direction.E)
+                    {
+                        Move(pos);
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Direction.E;
+                    }
+                }
+
+            }
+            return false;
         }
     }
 }
