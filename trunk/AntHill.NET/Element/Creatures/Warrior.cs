@@ -49,6 +49,7 @@ namespace AntHill.NET
         {//TODO malo:)
             if (!base.IsAlive())
             {
+                isw.DeleteAnt(this);
                 return false;
             }
             List<Spider> list;
@@ -159,7 +160,6 @@ namespace AntHill.NET
             return true;
         }
 
-        
 
         public override void Destroy(ISimulationWorld isw)
         {
