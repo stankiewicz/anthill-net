@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using astar;
 
 namespace AntHill.NET
 {
@@ -49,8 +50,7 @@ namespace AntHill.NET
             {
                 Random random = new Random();
                 Point destination = new Point(random.Next(AntHillConfig.mapColCount - 1),random.Next(AntHillConfig.mapRowCount - 1));
-                astar.Astar astar = new astar.Astar(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
-                List<KeyValuePair<int, int>> trail = astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(destination.X, destination.Y),new AstarOtherObject());
+                List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(destination.X, destination.Y),new AstarOtherObject());
                 if (trail == null)
                     return;
                 if (trail.Count <= 1)
@@ -126,8 +126,8 @@ namespace AntHill.NET
             }
             if (distance > 1)
             {
-                astar.Astar astar = new astar.Astar(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
-                List<KeyValuePair<int, int>> trail = astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(ant.Position.X, ant.Position.Y), new AstarOtherObject());
+                
+                List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(ant.Position.X, ant.Position.Y), new AstarOtherObject());
                 if (trail == null)
                     return;
                 if (trail.Count <= 1)

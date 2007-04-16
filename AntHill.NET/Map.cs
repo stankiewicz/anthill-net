@@ -14,6 +14,11 @@ namespace AntHill.NET
             height = h;
             tiles = t;
         }
+        public bool Inside(int x,int y)
+        {
+            return x >= 0 && x < width && y >= 0 && y < height;
+        }
+
 
         public int Width
         {

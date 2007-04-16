@@ -6,7 +6,7 @@ using AntHill.NET;
 
 namespace astar
 {
-    class Astar
+    static class Astar
     {
         
         class AstarNode : IComparable
@@ -79,67 +79,32 @@ namespace astar
 
         }
 
-        int[,] map;
 
-        Heap OpenHeap = new Heap();
-        List<AstarNode> Closed = new List<AstarNode>();
-        System.Collections.Generic.Dictionary<KeyValuePair<int, int>, AstarNode> dict = new Dictionary<KeyValuePair<int, int>, AstarNode>();
-        private int width;
-        private int height;
+        static Heap OpenHeap = new Heap();
+        static List<AstarNode> Closed = new List<AstarNode>();
+        static System.Collections.Generic.Dictionary<KeyValuePair<int, int>, AstarNode> dict = new Dictionary<KeyValuePair<int, int>, AstarNode>();
+        static private int width;
+        static private int height;
 
-        public int Height
+        static public int Height
         {
             get { return height; }
             set { height = value; }
         }
 
-        public int Width
+        static public int Width
         {
             get { return width; }
             set { width = value; }
         }
 
-        public Astar(int width, int height)
+        static public void Init(int width, int height)
         {
-            map = new int[width, height];
-            this.width = width;
-            this.height = height;
-            Reset();
+            Width = width;
+            Height = height;
         }
 
-        public void Reset()
-        {
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    map[i, j] = 1;
-                }
-            }
-        }
-
-        int this[int x, int y]
-        {
-            get { return map[x, y]; }
-            set { map[x, y] = value; }
-        }
-
-        public void Round(int x, int y, int r, int value)
-        {
-            for (int i = -r; i < r; i++)
-            {
-                for (int j = -r; j < r; j++)
-                {
-                    if ((i) * (i) + (j) * (j) < r * r)
-                    {
-                        map[x + i, y + j] = value;
-                    }
-                }
-            }
-
-        }
-
-        List<KeyValuePair<int, int>> CreatePath(AstarNode last)
+        static List<KeyValuePair<int, int>> CreatePath(AstarNode last)
         {
             List<KeyValuePair<int, int>> path = new List<KeyValuePair<int, int>>();
             do
@@ -153,17 +118,14 @@ namespace astar
             return path;
         }
 
-        public void Point(int x, int y, int value)
-        {
-            map[x, y] = value;
-        }
 
-        public List<KeyValuePair<int, int>> Search(KeyValuePair<int, int> start, KeyValuePair<int, int> goal, IAstar ia )
+
+        static public List<KeyValuePair<int, int>> Search(KeyValuePair<int, int> start, KeyValuePair<int, int> goal, IAstar ia)
         {
             //int counter = 0;
             OpenHeap.Clear();
             Closed.Clear();
-            AstarNode StartNode = new AstarNode(start, map[start.Key, start.Value]);
+            AstarNode StartNode = new AstarNode(start, ia.GetWeight(start.Key, start.Value));
             StartNode.Parent = null;
             StartNode.Calc(goal);
             dict.Clear();
@@ -219,7 +181,7 @@ namespace astar
             return null;
         }
 
-        List<AstarNode> NearNodes(AstarNode center, IAstar ia)
+        static List<AstarNode> NearNodes(AstarNode center, IAstar ia)
         {
             List<AstarNode> list = new List<AstarNode>();
             KeyValuePair<int, int> loc;
@@ -259,7 +221,7 @@ namespace astar
             return list;
         }
 
-        bool Inside(KeyValuePair<int, int> loc)
+        static bool Inside(KeyValuePair<int, int> loc)
         {
             return loc.Key >= 0 && loc.Key < width && loc.Value >= 0 && loc.Value < height;
         }

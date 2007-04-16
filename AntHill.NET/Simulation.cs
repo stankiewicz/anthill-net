@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using astar;
 
 namespace AntHill.NET
 {
@@ -14,6 +15,7 @@ namespace AntHill.NET
         {
             if(singletonInstance == null)
                 singletonInstance = new Simulation(map);
+            Astar.Init(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
         }
 
         public static void DeInit()
@@ -112,7 +114,6 @@ namespace AntHill.NET
         void ISimulationUser.DoTurn()
         {
             Random rnd = new Random();
-
             try
             {
                 if (rnd.NextDouble() >= AntHillConfig.spiderProbability)
@@ -246,10 +247,7 @@ namespace AntHill.NET
             //throw new Exception("The method or operation is not implemented.");
         }
 
-        public void CreateMessage()
-        {
-            //throw new Exception("The method or operation is not implemented.");
-        }
+
 
         public void Attack(Creature cA, Creature cB)
         {
@@ -326,5 +324,30 @@ namespace AntHill.NET
         {
             return new Random().Next(20);
         }
+
+        #region ISimulationWorld Members
+
+
+        public void CreateMessage(Point pos, MessageType mt)
+        {
+            Message ms = new Message(pos, mt);
+            for (int i = -AntHillConfig.messageRadius; i < AntHillConfig.messageRadius; i++)
+            {
+                for (int j = -AntHillConfig.messageRadius; j <  AntHillConfig.messageRadius; j++)
+                {
+                    if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
+                    {
+                        if (map.Inside(i, j))
+                        {
+                            ms.points.Add(new PointWithIntensity(map.GetTile(i, j), AntHillConfig.messageLifeTime));
+                        }
+                    }
+                }
+
+            }
+            this.messages.Add(ms);
+        }
+
+        #endregion
     }
 }
