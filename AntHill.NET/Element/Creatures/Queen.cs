@@ -14,7 +14,7 @@ namespace AntHill.NET
         }
 
         public override void Maintain(ISimulationWorld isw)
-        {
+        {//TODO nie do konca zrobiona logika
             Random rnd = new Random();
             if (rnd.Next(101) > AntHillConfig.queenLayEggProbability)
             {

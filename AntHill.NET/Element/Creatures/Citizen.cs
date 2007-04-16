@@ -12,11 +12,11 @@ namespace AntHill.NET
         }
 
         public virtual void SpreadSignal()
-        {
+        {//TODO wrzucanie na liste? jak to dziala
         }
 
         public virtual void ReadMessage()
-        {
+        {//TODO jak czyta..
         }
     }
 }
