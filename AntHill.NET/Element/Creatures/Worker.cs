@@ -61,8 +61,8 @@ namespace AntHill.NET
                     }
                 if (path.Count > 0)
                 {
-                    Move(path[0]);
-                    path.RemoveAt(0);
+                    if(MoveOrRotate(path[1]))
+                        path.RemoveAt(0);
                 }
             }
             else

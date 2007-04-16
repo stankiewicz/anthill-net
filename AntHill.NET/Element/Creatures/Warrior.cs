@@ -128,7 +128,7 @@ namespace AntHill.NET
                         return true;
                     if (trail.Count <= 1)
                         return true;
-                    Move(trail[1]);
+                    MoveOrRotate(trail[1]);
                     return true;
                 }
                 return true;
