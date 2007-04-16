@@ -178,7 +178,22 @@ namespace AntHill.NET
                 if(currentY > drawingRect.Y)
                     break;
                 nextY += (int) (128.0f * magnitude);
-            }            
+            }
+            foreach (Ant ant in Simulation.simulation.ants)
+            {
+                if (ant is Queen)
+                    e.Graphics.DrawImage(CreatureImages.antQueen, ant.Position);
+                if (ant is Warrior)
+                    e.Graphics.DrawImage(CreatureImages.antWarrior, ant.Position);
+                if (ant is Worker)
+                    e.Graphics.DrawImage(CreatureImages.antWorker, ant.Position);
+            }
+
+            foreach(Spider spider in Simulation.simulation.spiders)
+                e.Graphics.DrawImage(CreatureImages.spider, spider.Position);
+
+            if (Simulation.simulation.queen != null)
+                e.Graphics.DrawImage(CreatureImages.antQueen, Simulation.simulation.queen.Position);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
