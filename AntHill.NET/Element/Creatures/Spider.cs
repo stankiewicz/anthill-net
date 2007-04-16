@@ -43,7 +43,7 @@ namespace AntHill.NET
         }
 
       
-        public override void Maintain(ISimulationWorld isw)
+        public override bool Maintain(ISimulationWorld isw)
         {//TODO czy na pewno dobrze znajduje droge? (pobieranie astar) czy spider nie szuka krolowej?
             Ant ant = FindNearestAnt();
             if (ant == null)
@@ -52,18 +52,18 @@ namespace AntHill.NET
                 Point destination = new Point(random.Next(AntHillConfig.mapColCount - 1),random.Next(AntHillConfig.mapRowCount - 1));
                 List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(destination.X, destination.Y),new AstarOtherObject());
                 if (trail == null)
-                    return;
+                    return true;
                 if (trail.Count <= 1)
-                    return;
+                    return true;
                 Move(trail[1]);                
-                return;
+                return true;
             }
 
             int distance = Distance(ant.Position, this.Position);
             if (distance == 0)
             {
                 isw.Attack(this, ant);
-                return;
+                return true; 
             }
             if (distance == 1)
             {
@@ -75,7 +75,7 @@ namespace AntHill.NET
                         {
                             isw.Attack(this, ant);
             
-                            return;
+                            return true;
                         }
                         else
                         {
@@ -87,7 +87,7 @@ namespace AntHill.NET
                         if (Direction == Direction.S)
                         {
                             isw.Attack(this, ant);
-                            return;
+                            return true; 
                         }
                         else
                         {
@@ -102,7 +102,7 @@ namespace AntHill.NET
                         if (Direction == Direction.W)
                         {
                             isw.Attack(this, ant);
-                            return;
+                            return true; 
                         }
                         else
                         {
@@ -114,7 +114,7 @@ namespace AntHill.NET
                         if (Direction == Direction.E)
                         {
                             isw.Attack(this, ant);
-                            return;
+                            return true; 
                         }
                         else
                         {
@@ -122,21 +122,21 @@ namespace AntHill.NET
                         }
                     }
                 }
-                return;
+                return true;
             }
             if (distance > 1)
             {
                 
                 List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(ant.Position.X, ant.Position.Y), new AstarOtherObject());
                 if (trail == null)
-                    return;
+                    return true;
                 if (trail.Count <= 1)
-                    return;
+                    return true;
                 Move(trail[1]);
-                return;
+                return true;
             }
 
-            //throw new Exception("The method or operation is not implemented.");
+            return true;
         }
 
         public override void Destroy(ISimulationWorld isw)

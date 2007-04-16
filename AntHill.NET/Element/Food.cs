@@ -17,9 +17,10 @@ namespace AntHill.NET
             get { return quantity; }
         }
 
-        public override void Maintain(ISimulationWorld isw)
+        public override bool Maintain(ISimulationWorld isw)
         {
             //throw new Exception("The method or operation is not implemented.");
+            return true;
         }
 
         public override void Destroy(ISimulationWorld isw)

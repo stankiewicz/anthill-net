@@ -17,13 +17,14 @@ namespace AntHill.NET
         /// 
         /// </summary>
         /// <param name="isw"></param>
-        public override void Maintain(ISimulationWorld isw)
+        public override bool Maintain(ISimulationWorld isw)
         {
             if (--timeToHatch == 0)
             {
                 isw.CreateAnt(this.Position);
                 isw.DeleteEgg(this);
             }
+            return true;
         }
 
         public override void Destroy(ISimulationWorld isw)

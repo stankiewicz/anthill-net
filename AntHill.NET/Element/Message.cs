@@ -33,7 +33,7 @@ namespace AntHill.NET
             get { return type; }
         }
 
-        public override void Maintain(ISimulationWorld isw)
+        public override bool Maintain(ISimulationWorld isw)
         {
             for (int i = 0; i < points.Count; i++)
             {
@@ -44,6 +44,7 @@ namespace AntHill.NET
                     i--;
                 }
             }
+            return true;
         }
 
 
