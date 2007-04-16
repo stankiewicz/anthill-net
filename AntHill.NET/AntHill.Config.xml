@@ -1,14 +1,17 @@
 <Anthill>
 	<!-- world structure description -->
-	<WorldMap rowCount="2" colCount="2">			
+	<WorldMap rowCount="5" colCount="5">			
 		<!-- a single row of the world 
 		 o – corridor in the anthill, where ants can walk
 		 x – a wall in the anthill
 		 s – outdoor -->
  		<Map row = "ox"/>	
-		<Map row = "oo"/>						
-		
-	</WorldMap>
+		<Map row = "oo"/>
+    <Map row = "oo"/>
+    <Map row = "oo"/>
+    <Map row = "oo"/>
+
+  </WorldMap>
 	<CreaturesAbilities>
 	<!--maximum lenght of life, starvation resistence of every ant, 
 	and number of turns after which an ant become hungry -->

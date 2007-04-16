@@ -110,6 +110,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AntHill.Config.xml" />
+    <Content Include="Configs\test-anthill-1.xml" />
+    <Content Include="Configs\test-anthill-2.xml" />
     <Content Include="Graphics\ant.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

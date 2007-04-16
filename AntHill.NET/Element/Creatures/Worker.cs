@@ -40,7 +40,7 @@ namespace AntHill.NET
 
         public override void Maintain(ISimulationWorld isw)
         {//TODO sciezka moze nulla zwrocic
-            if (base.Live())
+            if (base.IsAlive())
             {
                 if (this.TurnsToBecomeHungry == 0)
                     if (this.foodQuantity > 0)

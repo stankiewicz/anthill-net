@@ -62,7 +62,7 @@ namespace AntHill.NET
 
             this.map = map;
 
-            for (int i = AntHillConfig.workerStartCount; i > 0; i++)
+            for (int i = AntHillConfig.workerStartCount; i > 0; i--)
             {
                 //this.CreateAnt
             }

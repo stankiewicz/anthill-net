@@ -15,6 +15,13 @@ namespace AntHill.NET
         public MainForm()
         {
             InitializeComponent();
+
+            if (TileBitmap.Init() == false)
+            {
+                MessageBox.Show("Invalid bitmap(s)");
+                Application.Exit();
+            }
+
         }
 
         private void loadDataButton_Click(object sender, EventArgs e)
@@ -168,7 +175,7 @@ namespace AntHill.NET
                 nextX = (int)(128.0f * magnitude);
                 for (int x = 0; x < Simulation.simulation.Map.Width; x++)
                 {
-                    e.Graphics.DrawImage(Simulation.simulation.Map.GetTile(x, y).Image,currentX,currentY,nextX - currentX, nextY - currentY);
+                    e.Graphics.DrawImage(Simulation.simulation.Map.GetTile(x, y).GetImage,currentX,currentY,nextX - currentX, nextY - currentY);
                     currentX = nextX;
                     if(currentX > drawingRect.X)
                         break;

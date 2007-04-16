@@ -13,7 +13,7 @@ namespace AntHill.NET
         }
         public override void Maintain(ISimulationWorld isw)
         {//TODO malo:)
-            if (!base.Live())
+            if (!base.IsAlive())
                 isw.DeleteAnt(this);
         }
 

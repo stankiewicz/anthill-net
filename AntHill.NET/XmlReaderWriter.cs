@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml; 
 using System.Collections;
 using System.Xml.Schema;
+using System.Globalization;
 
 namespace AntHill.NET
 {
@@ -35,7 +36,7 @@ namespace AntHill.NET
             else
                 return false;
         }
-
+        
          // Display any validation errors.
         private  void ValidationCallBack(object sender, ValidationEventArgs e)
         {
@@ -48,6 +49,7 @@ namespace AntHill.NET
 
             XmlTextReader textReader = new XmlTextReader(filename);
             textReader.Read();
+            CultureInfo ci = new CultureInfo("en-US");
             while (textReader.Read())
             {
                 if (textReader.HasAttributes)
@@ -102,30 +104,30 @@ namespace AntHill.NET
                             } break;
                         case "Queen":
                             {
-                                AntHillConfig.queenLayEggProbability = int.Parse(textReader.GetAttribute("layEggProbability"));
+                                AntHillConfig.queenLayEggProbability = float.Parse(textReader.GetAttribute("layEggProbability"), ci.NumberFormat);
                                 AntHillConfig.queenXPosition= int.Parse(textReader.GetAttribute("xPosition"));
                                 AntHillConfig.queenYPosition= int.Parse(textReader.GetAttribute("yPosition"));
                             } break;
                         case "Egg":
                             {
-                                AntHillConfig.eggHatchWarriorProbability = float.Parse(textReader.GetAttribute("hatchWarriorProbability"));
+                                AntHillConfig.eggHatchWarriorProbability = float.Parse(textReader.GetAttribute("hatchWarriorProbability"), ci.NumberFormat);
                                 AntHillConfig.eggHatchTime = int.Parse(textReader.GetAttribute("hatchTime"));
                             } break;
                         case "Spider":
                             {
                                 AntHillConfig.spiderMaxHealth= int.Parse(textReader.GetAttribute("maxHealth"));
-                                AntHillConfig.spiderProbability = float.Parse(textReader.GetAttribute("probability"));
+                                AntHillConfig.spiderProbability = float.Parse(textReader.GetAttribute("probability"), ci.NumberFormat);
                                 AntHillConfig.spiderFoodQuantityAfterDeath = int.Parse(textReader.GetAttribute("foodQuantityAfterDeath"));
                             } break;
                         case "Rain":
                             {
                                 AntHillConfig.rainWidth= int.Parse(textReader.GetAttribute("cloudWidth"));
-                                AntHillConfig.rainProbability = float.Parse(textReader.GetAttribute("probability"));
+                                AntHillConfig.rainProbability = float.Parse(textReader.GetAttribute("probability"), ci.NumberFormat);
                                 AntHillConfig.rainMaxDuration= int.Parse(textReader.GetAttribute("maxDuration"));
                             } break;
                         case "Food":
                             {
-                                AntHillConfig.foodProbability = float.Parse(textReader.GetAttribute("probability"));
+                                AntHillConfig.foodProbability = float.Parse(textReader.GetAttribute("probability"), ci.NumberFormat);
                             } break;
                         case "Signal":
                             {
