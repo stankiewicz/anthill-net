@@ -22,6 +22,16 @@ namespace AntHill.NET
                 Application.Exit();
             }
 
+            try
+            {
+                AnthillGraphics.Init();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                Application.Exit();
+            }
+
         }
 
         private void loadDataButton_Click(object sender, EventArgs e)
@@ -195,21 +205,65 @@ namespace AntHill.NET
                     break;
                 nextY += (int) (128.0f * magnitude);
             }
+          // AnthillGraphics.rotatedImages();
             foreach (Ant ant in Simulation.simulation.ants)
             {
-                if (ant is Queen)
-                    e.Graphics.DrawImage(CreatureImages.antQueen, ant.Position);
                 if (ant is Warrior)
-                    e.Graphics.DrawImage(CreatureImages.antWarrior, ant.Position);
+                    switch (ant.Direction)
+                    {
+                        case Direction.N:
+                            e.Graphics.DrawImage(AnthillGraphics.antWarriorN, ant.Position);
+                            break;
+                        case Direction.E:
+                            e.Graphics.DrawImage(AnthillGraphics.antWarriorE, ant.Position);
+                            break;
+                        case Direction.S:
+                            e.Graphics.DrawImage(AnthillGraphics.antWarriorS, ant.Position);
+                            break;
+                        case Direction.W:
+                            e.Graphics.DrawImage(AnthillGraphics.antWarriorW,ant.Position);
+                            break;
+                    }
+                    
                 if (ant is Worker)
-                    e.Graphics.DrawImage(CreatureImages.antWorker, ant.Position);
+                    switch (ant.Direction)
+                    {
+                        case Direction.N:
+                            e.Graphics.DrawImage(AnthillGraphics.antWorkerN, ant.Position);
+                            break;
+                        case Direction.E:
+                            e.Graphics.DrawImage(AnthillGraphics.antWorkerE, ant.Position);
+                            break;
+                        case Direction.S:
+                            e.Graphics.DrawImage(AnthillGraphics.antWorkerS, ant.Position);
+                            break;
+                        case Direction.W:
+                            e.Graphics.DrawImage(AnthillGraphics.antWorkerW, ant.Position);
+                            break;
+                    } 
             }
 
             foreach(Spider spider in Simulation.simulation.spiders)
-                e.Graphics.DrawImage(CreatureImages.spider, spider.Position);
+                e.Graphics.DrawImage(AnthillGraphics.spider, spider.Position);
 
-            if (Simulation.simulation.queen != null)
-                e.Graphics.DrawImage(CreatureImages.antQueen, Simulation.simulation.queen.Position);
+            Queen queen=Simulation.simulation.queen ;
+            if (queen!= null)
+                switch (queen.Direction)
+                {
+                    case Direction.N:
+                        e.Graphics.DrawImage(AnthillGraphics.antQueenN, queen.Position);
+                        break;
+                    case Direction.E:
+                        e.Graphics.DrawImage(AnthillGraphics.antQueenE, queen.Position);
+                        break;
+                    case Direction.S:
+                        e.Graphics.DrawImage(AnthillGraphics.antQueenS,queen.Position);
+                        break;
+                    case Direction.W:
+                        e.Graphics.DrawImage(AnthillGraphics.antQueenW, queen.Position);
+                        break;
+                }
+            
         }
 
         private void MainForm_Load(object sender, EventArgs e)

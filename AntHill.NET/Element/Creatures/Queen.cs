@@ -7,7 +7,7 @@ namespace AntHill.NET
     {
         public Queen(Point pos):base(pos)
         {
-
+            this.Direction = Direction.E;
         }
 
         public override bool Maintain(ISimulationWorld isw)
