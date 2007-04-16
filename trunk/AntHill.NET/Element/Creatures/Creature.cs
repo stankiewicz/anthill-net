@@ -29,5 +29,10 @@ namespace AntHill.NET
                 direction = value;
             }
         }
+
+        protected bool MoveOrRotate(KeyValuePair<int, int> pos)
+        {
+            return true;
+        }
     }
 }

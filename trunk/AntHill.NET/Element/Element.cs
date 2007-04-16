@@ -31,10 +31,10 @@ namespace AntHill.NET
             return y;
         }
         public void Move(KeyValuePair<int, int> position)
-        {
+        {//TODO zle ;)
             this.Position = new Point(position.Key, position.Value);
         }
-        public abstract void Maintain(ISimulationWorld isw);
+        public abstract bool Maintain(ISimulationWorld isw);
         public abstract void Destroy(ISimulationWorld isw);
     }
 }

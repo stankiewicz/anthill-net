@@ -31,12 +31,12 @@ namespace AntHill.NET
             return false;
         }
 
-        public override void Maintain(ISimulationWorld isw)
+        public override bool Maintain(ISimulationWorld isw)
         {
             if (--timeToLive <= 0)
             {
                 isw.DeleteRain();
-                return;
+                return false;
             }
 
             List<Food> lFood = isw.GetVisibleFood(this);
@@ -78,6 +78,7 @@ namespace AntHill.NET
                     map.GetTile(i, j).messages.Clear();
                 }
             }
+            return true;
         }
          
         public override void Destroy(ISimulationWorld isw)

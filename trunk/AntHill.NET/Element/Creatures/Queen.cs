@@ -9,12 +9,14 @@ namespace AntHill.NET
         {
 
         }
-        public void LayEgg()
-        {
-        }
 
-        public override void Maintain(ISimulationWorld isw)
-        {//TODO nie do konca zrobiona logika
+        public override bool Maintain(ISimulationWorld isw)
+        {
+            if (!IsAlive())
+            {
+                //isw.DeleteAnt(this);
+                return false;
+            }
             Random rnd = new Random();
             if (rnd.NextDouble() > AntHillConfig.queenLayEggProbability)
             {
@@ -30,10 +32,13 @@ namespace AntHill.NET
                 else
                 {
                     isw.CreateMessage(this.Position, MessageType.QueenIsHungry);
-                    // wysylam sygnal ze glodny
-                    // zaczynam odliczac do smierci
                 }
             }
+            if (isw.GetVisibleSpiders(this).Count != 0)
+            {
+                isw.CreateMessage(this.Position, MessageType.QueenInDanger);
+            }
+            return true;
         }
 
         public override void Destroy(ISimulationWorld isw)

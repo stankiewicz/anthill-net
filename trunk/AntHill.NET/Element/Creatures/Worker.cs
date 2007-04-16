@@ -39,7 +39,7 @@ namespace AntHill.NET
 
         }
 
-        public override void Maintain(ISimulationWorld isw)
+        public override bool Maintain(ISimulationWorld isw)
         {//TODO sciezka moze nulla zwrocic
             if (base.IsAlive())
             {
@@ -67,7 +67,7 @@ namespace AntHill.NET
             }
             else
                 isw.DeleteAnt(this);
-           
+            return true;
         }
 
         public override void Destroy(ISimulationWorld isw)
