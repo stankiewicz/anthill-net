@@ -21,7 +21,8 @@ namespace AntHill.NET
                     workerStartCount, warriorStartCount;
 
         //Queen
-        static public int queenLayEggProbability, queenXPosition, queenYPosition;
+        static public float queenLayEggProbability;
+        static public int queenXPosition, queenYPosition;
 
         //Egg
         static public int eggHatchTime;
