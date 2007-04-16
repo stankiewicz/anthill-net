@@ -11,11 +11,21 @@ namespace AntHill.NET
 
         public static Simulation singletonInstance = null;
 
-        public static void Init(Map map)
+        public static bool Init(Map map)
         {
-            if(singletonInstance == null)
-                singletonInstance = new Simulation(map);
+            try
+            {
+                if (singletonInstance == null)
+                    singletonInstance = new Simulation(map);
+            }
+            catch (Exception exc) //Simulation(map) can throw an exception
+            {
+                throw exc;
+            }
+
             Astar.Init(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
+
+            return true;
         }
 
         public static void DeInit()
@@ -61,6 +71,11 @@ namespace AntHill.NET
 	    public Simulation(Map map)
         {
             Initialize();
+
+            if (map.GetIndoorCount == 0)
+                throw new Exception(Properties.Resources.noIndoorTilesError);
+            if (map.GetOutdoorCount == 0)
+                throw new Exception(Properties.Resources.noOutdoorTilesError);
 
             this.map = map;
 

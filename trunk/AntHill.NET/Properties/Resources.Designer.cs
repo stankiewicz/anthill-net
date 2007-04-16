@@ -68,5 +68,23 @@ namespace AntHill.NET.Properties {
                 return ResourceManager.GetString("exceptionXmlNotValid", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map has no indoor tiles..
+        /// </summary>
+        internal static string noIndoorTilesError {
+            get {
+                return ResourceManager.GetString("noIndoorTilesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map has no outdoor tiles..
+        /// </summary>
+        internal static string noOutdoorTilesError {
+            get {
+                return ResourceManager.GetString("noOutdoorTilesError", resourceCulture);
+            }
+        }
     }
 }
