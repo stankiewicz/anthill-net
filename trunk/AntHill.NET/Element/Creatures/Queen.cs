@@ -16,7 +16,7 @@ namespace AntHill.NET
         public override void Maintain(ISimulationWorld isw)
         {//TODO nie do konca zrobiona logika
             Random rnd = new Random();
-            if (rnd.Next(101) > AntHillConfig.queenLayEggProbability)
+            if (rnd.NextDouble() > AntHillConfig.queenLayEggProbability)
             {
                 isw.CreateEgg(this.Position);
             }
@@ -29,7 +29,8 @@ namespace AntHill.NET
                 }
                 else
                 {
-                    // wysylam sygnal ze glodny 
+                    isw.CreateMessage(this.Position, MessageType.QueenIsHungry);
+                    // wysylam sygnal ze glodny
                     // zaczynam odliczac do smierci
                 }
             }

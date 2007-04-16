@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using astar;
 
 namespace AntHill.NET
 {
@@ -47,9 +48,8 @@ namespace AntHill.NET
                     {
                         if (path.Count == 0)
                         {
-                            astar.Astar astar = new astar.Astar(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
                             base.path =
-                            astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y),
+                            Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y),
                             new KeyValuePair<int, int>(150, 150), new AstarOtherObject());
                             base.path.RemoveAt(0);
                         }

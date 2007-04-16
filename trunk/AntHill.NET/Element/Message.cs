@@ -17,14 +17,15 @@ namespace AntHill.NET
     {
         private MessageType type;
         public List<PointWithIntensity> points;
-        public Message(Point pos):base(pos)
+        public Message(Point pos, MessageType mt ):base(pos)
         {
-
+            type = mt;
+            points = new List<PointWithIntensity>();
         }
         public void AddPoint(List<PointWithIntensity> newPoint)
         {
+            points.AddRange(newPoint);
         }
-
 
         public bool Empty { get { return points.Count == 0; } }
         public MessageType GetMessageType
@@ -34,10 +35,18 @@ namespace AntHill.NET
 
         public override void Maintain(ISimulationWorld isw)
         {
-            throw new Exception("The method or operation is not implemented.");
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (--points[i].Intensity == 0)
+                {
+                    points[i].Tile.messages.Remove(this);
+                    points.RemoveAt(i);
+                    i--;
+                }
+            }
         }
 
-        
+
 
         public override void Destroy(ISimulationWorld isw)
         {

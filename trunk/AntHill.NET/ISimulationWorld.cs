@@ -17,7 +17,7 @@ namespace AntHill.NET
         void CreateWorker(Point position);
         void CreateSpider(Point position);    //This might be unnecessary because only Simulation creates Spiders
         void CreateFood(Point position, int quantity);      //This might be used in Ants' Destroy() function, or at Simulation level -  after creature's death
-        void CreateMessage();
+        void CreateMessage(Point pos, MessageType mt);
         void CreateEgg(Point pos);
         void Attack(Creature cA, Creature cB);
 
