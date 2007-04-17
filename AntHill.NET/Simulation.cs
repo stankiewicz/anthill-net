@@ -333,22 +333,12 @@ namespace AntHill.NET
             return map;
         }
 
-        #endregion
-
-        private int GetRandomFoodQuantity()
-        {
-            return new Random().Next(20);
-        }
-
-        #region ISimulationWorld Members
-
-
         public void CreateMessage(Point pos, MessageType mt)
         {
             Message ms = new Message(pos, mt);
             for (int i = -AntHillConfig.messageRadius; i < AntHillConfig.messageRadius; i++)
             {
-                for (int j = -AntHillConfig.messageRadius; j <  AntHillConfig.messageRadius; j++)
+                for (int j = -AntHillConfig.messageRadius; j < AntHillConfig.messageRadius; j++)
                 {
                     if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
                     {
@@ -361,6 +351,11 @@ namespace AntHill.NET
 
             }
             this.messages.Add(ms);
+        }
+
+        private int GetRandomFoodQuantity()
+        {
+            return new Random().Next(20);
         }
 
         #endregion

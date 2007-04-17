@@ -4,31 +4,24 @@ using System.Collections.Generic;
 
 namespace AntHill.NET
 {
-    public enum Direction { S, W, E, N }
-    public enum State { Alive }
-    
+    public enum Dir { S, W, E, N }
+    public enum CreatureType { queen, warrior, spider, worker }
 
     public abstract class Creature : Element
     {
-        
-        public Creature(Point pos):base(pos)
-        {
-
-        }
         public List<KeyValuePair<int, int>> path;
         private int life;
-        private Direction direction;
-        public Direction Direction
+        private Dir direction;
+
+        public Creature(Point pos):base(pos) {}
+        
+        public Dir Direction
         {
-            get
-            {
-                return direction;
-            }
-            set
-            {
-                direction = value;
-            }
+            get { return direction; }
+            set { direction = value; }
         }
+
+        public virtual Bitmap GetBitmap() { return new Bitmap(1, 1); }
 
         protected bool MoveOrRotate(KeyValuePair<int, int> pos)
         {
@@ -36,26 +29,26 @@ namespace AntHill.NET
             {
                 if (Position.Y == pos.Value + 1) //ant 1 tile above
                 {
-                    if (Direction == Direction.N)
+                    if (Direction == Dir.N)
                     {
                         Move(pos);
                         return true;
                     }
                     else
                     {
-                        Direction = Direction.N;
+                        Direction = Dir.N;
                     }
                 }
                 else
                 {
-                    if (Direction == Direction.S)
+                    if (Direction == Dir.S)
                     {
                         Move(pos);
                         return true;
                     }
                     else
                     {
-                        Direction = Direction.S;
+                        Direction = Dir.S;
                     }
                 }
             }
@@ -63,29 +56,28 @@ namespace AntHill.NET
             {
                 if (Position.X == pos.Key + 1) //ant 1 tile left
                 {
-                    if (Direction == Direction.W)
+                    if (Direction == Dir.W)
                     {
                         Move(pos);
                         return true;
                     }
                     else
                     {
-                        Direction = Direction.W;
+                        Direction = Dir.W;
                     }
                 }
                 else
                 {
-                    if (Direction == Direction.E)
+                    if (Direction == Dir.E)
                     {
                         Move(pos);
                         return true;
                     }
                     else
                     {
-                        Direction = Direction.E;
+                        Direction = Dir.E;
                     }
                 }
-
             }
             return false;
         }

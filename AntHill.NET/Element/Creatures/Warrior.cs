@@ -67,7 +67,7 @@ namespace AntHill.NET
                     {
                         if (Position.Y == list[i].Position.Y + 1) //ant 1 tile above
                         {
-                            if (Direction == Direction.N)
+                            if (Direction == Dir.N)
                             {
                                 isw.Attack(this, list[i]);
 
@@ -75,19 +75,19 @@ namespace AntHill.NET
                             }
                             else
                             {
-                                Direction = Direction.N;
+                                Direction = Dir.N;
                             }
                         }
                         else
                         {
-                            if (Direction == Direction.S)
+                            if (Direction == Dir.S)
                             {
                                 isw.Attack(this, list[i]);
                                 return true;
                             }
                             else
                             {
-                                Direction = Direction.S;
+                                Direction = Dir.S;
                             }
                         }
                     }
@@ -95,26 +95,26 @@ namespace AntHill.NET
                     {
                         if (Position.X == list[i].Position.X + 1) //ant 1 tile left
                         {
-                            if (Direction == Direction.W)
+                            if (Direction == Dir.W)
                             {
                                 isw.Attack(this, list[i]);
                                 return true;
                             }
                             else
                             {
-                                Direction = Direction.W;
+                                Direction = Dir.W;
                             }
                         }
                         else
                         {
-                            if (Direction == Direction.E)
+                            if (Direction == Dir.E)
                             {
                                 isw.Attack(this, list[i]);
                                 return true;
                             }
                             else
                             {
-                                Direction = Direction.E;
+                                Direction = Dir.E;
                             }
                         }
 
@@ -164,6 +164,11 @@ namespace AntHill.NET
         public override void Destroy(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override Bitmap GetBitmap()
+        {
+            return AHGraphics.GetCreature(CreatureType.warrior, this.Direction);
         }
     }
 }

@@ -16,22 +16,15 @@ namespace AntHill.NET
         {
             InitializeComponent();
 
-            if (TileBitmap.Init() == false)
-            {
-                MessageBox.Show("Invalid bitmap(s)");
-                Application.Exit();
-            }
-
             try
             {
-                AnthillGraphics.Init();
+                AHGraphics.Init();
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
                 Application.Exit();
             }
-
         }
 
         private void loadDataButton_Click(object sender, EventArgs e)
@@ -194,7 +187,7 @@ namespace AntHill.NET
                 nextX = (int)(128.0f * magnitude);
                 for (int x = 0; x < Simulation.simulation.Map.Width; x++)
                 {
-                    e.Graphics.DrawImage(Simulation.simulation.Map.GetTile(x, y).GetImage,currentX,currentY,nextX - currentX, nextY - currentY);
+                    e.Graphics.DrawImage(Simulation.simulation.Map.GetTile(x, y).GetBitmap() ,currentX,currentY,nextX - currentX, nextY - currentY);
                     currentX = nextX;
                     if(currentX > drawingRect.X)
                         break;
@@ -205,65 +198,17 @@ namespace AntHill.NET
                     break;
                 nextY += (int) (128.0f * magnitude);
             }
-          // AnthillGraphics.rotatedImages();
+
+            //this HAS to be corrected
             foreach (Ant ant in Simulation.simulation.ants)
-            {
-                if (ant is Warrior)
-                    switch (ant.Direction)
-                    {
-                        case Direction.N:
-                            e.Graphics.DrawImage(AnthillGraphics.antWarriorN, ant.Position);
-                            break;
-                        case Direction.E:
-                            e.Graphics.DrawImage(AnthillGraphics.antWarriorE, ant.Position);
-                            break;
-                        case Direction.S:
-                            e.Graphics.DrawImage(AnthillGraphics.antWarriorS, ant.Position);
-                            break;
-                        case Direction.W:
-                            e.Graphics.DrawImage(AnthillGraphics.antWarriorW,ant.Position);
-                            break;
-                    }
-                    
-                if (ant is Worker)
-                    switch (ant.Direction)
-                    {
-                        case Direction.N:
-                            e.Graphics.DrawImage(AnthillGraphics.antWorkerN, ant.Position);
-                            break;
-                        case Direction.E:
-                            e.Graphics.DrawImage(AnthillGraphics.antWorkerE, ant.Position);
-                            break;
-                        case Direction.S:
-                            e.Graphics.DrawImage(AnthillGraphics.antWorkerS, ant.Position);
-                            break;
-                        case Direction.W:
-                            e.Graphics.DrawImage(AnthillGraphics.antWorkerW, ant.Position);
-                            break;
-                    } 
-            }
+                e.Graphics.DrawImage(ant.GetBitmap(), ant.Position);
 
             foreach(Spider spider in Simulation.simulation.spiders)
-                e.Graphics.DrawImage(AnthillGraphics.spider, spider.Position);
+                e.Graphics.DrawImage(spider.GetBitmap(), spider.Position);
 
-            Queen queen=Simulation.simulation.queen ;
-            if (queen!= null)
-                switch (queen.Direction)
-                {
-                    case Direction.N:
-                        e.Graphics.DrawImage(AnthillGraphics.antQueenN, queen.Position);
-                        break;
-                    case Direction.E:
-                        e.Graphics.DrawImage(AnthillGraphics.antQueenE, queen.Position);
-                        break;
-                    case Direction.S:
-                        e.Graphics.DrawImage(AnthillGraphics.antQueenS,queen.Position);
-                        break;
-                    case Direction.W:
-                        e.Graphics.DrawImage(AnthillGraphics.antQueenW, queen.Position);
-                        break;
-                }
-            
+            if (Simulation.simulation.queen != null)
+                e.Graphics.DrawImage(Simulation.simulation.queen.GetBitmap(),
+                                     Simulation.simulation.queen.Position);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
