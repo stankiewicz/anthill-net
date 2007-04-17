@@ -61,11 +61,56 @@ namespace AntHill.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to antQueen.png.
+        /// </summary>
+        internal static string antQueenBmp {
+            get {
+                return ResourceManager.GetString("antQueenBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to antWarrior.png.
+        /// </summary>
+        internal static string antWarriorBmp {
+            get {
+                return ResourceManager.GetString("antWarriorBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to antWorker.png.
+        /// </summary>
+        internal static string antWorkerBmp {
+            get {
+                return ResourceManager.GetString("antWorkerBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to file is not valid. It generated exception: .
         /// </summary>
         internal static string exceptionXmlNotValid {
             get {
                 return ResourceManager.GetString("exceptionXmlNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graphics.
+        /// </summary>
+        internal static string GraphicsPath {
+            get {
+                return ResourceManager.GetString("GraphicsPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sandTile.png.
+        /// </summary>
+        internal static string indoorTileBmp {
+            get {
+                return ResourceManager.GetString("indoorTileBmp", resourceCulture);
             }
         }
         
@@ -84,6 +129,33 @@ namespace AntHill.NET.Properties {
         internal static string noOutdoorTilesError {
             get {
                 return ResourceManager.GetString("noOutdoorTilesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to grassTile.png.
+        /// </summary>
+        internal static string outdoorTileBmp {
+            get {
+                return ResourceManager.GetString("outdoorTileBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to spider.png.
+        /// </summary>
+        internal static string spiderBmp {
+            get {
+                return ResourceManager.GetString("spiderBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stoneTile.png.
+        /// </summary>
+        internal static string wallTileBmp {
+            get {
+                return ResourceManager.GetString("wallTileBmp", resourceCulture);
             }
         }
     }

@@ -6,29 +6,6 @@ namespace AntHill.NET
 {
     public enum TileType { Wall, Outdoor, Indoor };
 
-    static class TileBitmap
-    {
-        public static bool Init()
-        {
-            try
-            {
-                wall = new Bitmap("Graphics/stoneTile.png");
-                indoor = new Bitmap("Graphics/sandTile.png");
-                outdoor = new Bitmap("Graphics/grassTile.png");
-            }
-            catch
-            {
-                wall = indoor = outdoor = null;
-                return false;
-            }
-
-            return true;
-        }
-
-        static public Bitmap wall, indoor, outdoor;
-    }
-
-
     public class Tile
     {
         private TileType tileType;
@@ -54,16 +31,9 @@ namespace AntHill.NET
         private Point position;
         public Point Position { get { return position; } }
 
-        public Image GetImage
+        public Bitmap GetBitmap()
         {
-            get
-            {
-                if (tileType == TileType.Indoor)
-                    return TileBitmap.indoor;
-                if (tileType == TileType.Outdoor)
-                    return TileBitmap.outdoor;
-                return TileBitmap.wall;
-            }
+            return AHGraphics.GetTile(this.TileType);
         }
     }
 }

@@ -7,7 +7,10 @@ namespace AntHill.NET
     {
         public Queen(Point pos):base(pos)
         {
-            this.Direction = Direction.E;
+            Random rnd = new Random();
+            Array a = Enum.GetValues(typeof(Dir));
+            int i = rnd.Next(a.Length);
+            this.Direction = (Dir)i;
         }
 
         public override bool Maintain(ISimulationWorld isw)
@@ -44,6 +47,11 @@ namespace AntHill.NET
         public override void Destroy(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
+        }
+
+        public override Bitmap GetBitmap()
+        {
+            return AHGraphics.GetCreature(CreatureType.queen, this.Direction);
         }
     }
 }
