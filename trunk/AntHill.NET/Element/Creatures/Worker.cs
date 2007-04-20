@@ -22,7 +22,10 @@ namespace AntHill.NET
         }
         public Worker(Point pos):base(pos)
         {
-
+            Random rnd = new Random();
+            Array a = Enum.GetValues(typeof(Dir));
+            int i = rnd.Next(a.Length);
+            this.Direction = (Dir)i;
         }
         public void Dig()
         {//TODO gdzie kopie

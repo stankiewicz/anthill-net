@@ -192,6 +192,23 @@ namespace AntHill.NET
                     if(currentX > drawingRect.X)
                         break;
                     nextX += (int) (128.0f * magnitude);
+
+                    //show queen
+                    if (Simulation.simulation.queen != null)
+                        e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.queen, Simulation.simulation.queen.Direction),
+                     Simulation.simulation.queen.Position.X , Simulation.simulation.queen.Position.Y, nextX - currentX, nextY - currentY);
+                    
+                    //Show ants
+                    foreach (Ant ant in Simulation.simulation.ants)
+                        if(ant is Warrior)
+                            e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.warrior, ant.Direction), ant.Position.X * magnitude, ant.Position.Y * magnitude, nextX - currentX, nextY - currentY);
+                        else
+                            e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.worker, ant.Direction), ant.Position.X * magnitude, ant.Position.Y * magnitude, nextX - currentX, nextY - currentY);
+                    
+                    //show spider
+                     foreach (Spider spider in Simulation.simulation.spiders)
+                         e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.spider, spider.Direction), spider.Position.X * magnitude, spider.Position.Y * magnitude, nextX - currentX, nextY - currentY);
+                    
                 }
                 currentY = nextY;
                 if(currentY > drawingRect.Y)
@@ -199,16 +216,12 @@ namespace AntHill.NET
                 nextY += (int) (128.0f * magnitude);
             }
 
-            //this HAS to be corrected
-            foreach (Ant ant in Simulation.simulation.ants)
-                e.Graphics.DrawImage(ant.GetBitmap(), ant.Position);
+     
 
-            foreach(Spider spider in Simulation.simulation.spiders)
-                e.Graphics.DrawImage(spider.GetBitmap(), spider.Position);
+            //foreach(Spider spider in Simulation.simulation.spiders)
+               // e.Graphics.DrawImage(spider.GetBitmap(), spider.Position);
 
-            if (Simulation.simulation.queen != null)
-                e.Graphics.DrawImage(Simulation.simulation.queen.GetBitmap(),
-                                     Simulation.simulation.queen.Position);
+            
         }
 
         private void MainForm_Load(object sender, EventArgs e)

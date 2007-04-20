@@ -8,7 +8,15 @@ namespace AntHill.NET
     public class Spider : Creature
     {
         //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
-        public Spider(Point pos):base(pos) {}
+        public Spider(Point pos):base(pos) {
+
+            Random rnd = new Random();
+            Array a = Enum.GetValues(typeof(Dir));
+            int i = rnd.Next(a.Length);
+            this.Direction = (Dir)i;
+        
+        
+        }
 //        List<KeyValuePair<int><int>>
         
         private Ant FindNearestAnt()
