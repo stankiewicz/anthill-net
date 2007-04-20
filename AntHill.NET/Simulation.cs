@@ -82,7 +82,10 @@ namespace AntHill.NET
             for (int i = AntHillConfig.workerStartCount; i > 0; i--)
             {
                 //this.CreateAnt
-            }
+           }
+            spiders.Add(new Spider(new Point(100,100)));
+            ants.Add(new Warrior(new Point(150, 150)));
+            ants.Add(new Worker(new Point(300, 300)));
         }
 
         public Map Map
