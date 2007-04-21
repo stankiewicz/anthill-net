@@ -38,8 +38,6 @@ namespace AntHill.NET
             get { return singletonInstance; }
         }
 
-        volatile bool pause;
-
         private Map map;
         public List<Egg> eggs;
         public List<Message> messages;
@@ -49,15 +47,8 @@ namespace AntHill.NET
         public Rain rain;
         public Queen queen;
 
-        //These are used to update list<[elem]> after an item has been deleted
-        bool isEggDeleted = false;
-        bool isAntDeleted = false;
-        bool isSpiderDeleted = false;
-
         private void Initialize()
         {
-            pause = false;
-
             map = null;
             eggs = new List<Egg>();
             messages = new List<Message>();
@@ -81,15 +72,12 @@ namespace AntHill.NET
 
             for (int i = AntHillConfig.workerStartCount; i > 0; i--)
             {
-                //this.CreateAnt
-           }
-            spiders.Add(new Spider(new Point(2,2)));
-            ants.Add(new Warrior(new Point(0, 0)));
-            ants.Add(new Worker(new Point(1, 0)));
-            ants.Add(new Worker(new Point(0, 1)));
-            spiders.Add(new Spider(new Point(1, 1)));
-            ants.Add(new Warrior(new Point(20,20)));
-            ants.Add(new Worker(new Point(21, 20)));
+                this.CreateWorker(Map.GetRandomTile(TileType.Indoor).Position);
+            }
+            for (int i = AntHillConfig.warriorStartCount; i > 0; i--)
+            {
+                this.CreateWarrior(Map.GetRandomTile(TileType.Indoor).Position);
+            }
         }
 
         public Map Map
@@ -109,23 +97,10 @@ namespace AntHill.NET
             return false;
         }
 
-        Point GetTile(TileType tt)
-        {
-            Random rnd = new Random();
-            Tile t;
-            // modlmy sie ze znajdzie szybko
-            if (CheckIfExists(tt) == false) throw new Exception("no more " + tt.ToString() + " on map");
-            while (true)
-            {
-                if ((t = map.GetTile(rnd.Next(map.Width), rnd.Next(map.Height))).TileType == tt)
-                    return t.Position;
-            }
-        }
 
         Point GetRandomPoint()
         {
-            Random rnd = new Random();
-            return new Point(rnd.Next(map.Width), rnd.Next(map.Height));
+            return new Point(Randomizer.Next(Map.Width), Randomizer.Next(Map.Height));
         }
 
 	    #region ISimulation Members
@@ -135,11 +110,10 @@ namespace AntHill.NET
         /// </summary>
         void ISimulationUser.DoTurn()
         {
-            Random rnd = new Random();
             try
             {
-                if (rnd.NextDouble() >= AntHillConfig.spiderProbability)
-                    this.CreateSpider(GetTile(TileType.Outdoor));
+                if (Randomizer.NextDouble() >= AntHillConfig.spiderProbability)
+                    this.CreateSpider(Map.GetRandomTile(TileType.Outdoor).Position);
             }
             catch (Exception)
             {
@@ -148,15 +122,15 @@ namespace AntHill.NET
 
             try
             {
-                if (rnd.NextDouble() >= AntHillConfig.foodProbability)
-                    this.CreateFood(GetTile(TileType.Outdoor), GetRandomFoodQuantity());
+                if (Randomizer.NextDouble() >= AntHillConfig.foodProbability)
+                    this.CreateFood(Map.GetRandomTile(TileType.Outdoor).Position, GetRandomFoodQuantity());
             }
             catch (Exception)
             {
                 
             }
-            
-            if ( (rain == null) && (rnd.NextDouble() >= AntHillConfig.rainProbability))
+
+            if ((rain == null) && (Randomizer.NextDouble() >= AntHillConfig.rainProbability))
                 this.CreateRain(GetRandomPoint());
 
             if (rain != null)
@@ -174,33 +148,21 @@ namespace AntHill.NET
 
             for (int i = 0; i < ants.Count; i++)
             {
-                ants[i].Maintain(this);
-                if (isAntDeleted)
-                {
+                if (!ants[i].Maintain(this))
                     --i;
-                    isAntDeleted = false;
-                }
             }
 
             for (int i = 0; i < spiders.Count; i++)
             {
-                spiders[i].Maintain(this);
-                if (isSpiderDeleted)
-                {
+                if (!spiders[i].Maintain(this))
                     --i;
-                    isSpiderDeleted = false;
-                }
             }
 
             for (int i = 0; i < eggs.Count; ++i)
             {
-                eggs[i].Maintain(this);
-                if (isEggDeleted)
-                {
+                if (!eggs[i].Maintain(this))
                     --i;
-                    isEggDeleted = false;
-                }
-            }
+            }             
         }        
 
         private void CreateRain(Point point)
@@ -225,19 +187,12 @@ namespace AntHill.NET
 
         void ISimulationUser.Start()
         {
-            pause = false;
 
-            while (!pause)
-            {
-                ((ISimulationUser)this).DoTurn();
-                if (this.afterTurn != null)
-                    afterTurn(null, null);
-            }
         }
 
         void ISimulationUser.Pause()
         {
-            pause = true;
+            
         }
 
         #endregion
@@ -251,26 +206,24 @@ namespace AntHill.NET
 
         public void CreateWarrior(Point pos)
         {
-            //throw new Exception("The method or operation is not implemented.");
+            ants.Add(new Warrior(pos));
         }
 
         public void CreateWorker(Point pos)
         {
-            //throw
+            ants.Add(new Worker(pos));
         }
 
         public void CreateSpider()
         {
-            //throw new Exception("The method or operation is not implemented.");
+            spiders.Add(new Spider(Map.GetRandomTile(TileType.Outdoor).Position));
         }
 
         public void CreateFood()
         {
             //throw new Exception("The method or operation is not implemented.");
         }
-
-
-
+        
         public void Attack(Creature cA, Creature cB)
         {
             //throw new Exception("The method or operation is not implemented.");
@@ -307,7 +260,7 @@ namespace AntHill.NET
 
         public void DeleteEgg(Egg egg)
         {
-            isEggDeleted = true;
+            eggs.Remove(egg);
         }
 
         public void DeleteRain()
@@ -322,17 +275,17 @@ namespace AntHill.NET
 
         public void DeleteFood(Food food)
         {
-            //throw new Exception("The method or operation is not implemented.");
+            this.food.Remove(food);
         }
 
         public void DeleteAnt(Ant ant)
         {
-           // throw new Exception("The method or operation is not implemented.");
+            ants.Remove(ant);
         }
 
         public void DeleteSpider(Spider spider)
         {
-            //throw new Exception("The method or operation is not implemented.");
+            spiders.Remove(spider);
         }
 
         public Map GetMap()
@@ -362,7 +315,7 @@ namespace AntHill.NET
 
         private int GetRandomFoodQuantity()
         {
-            return new Random().Next(20);
+            return Randomizer.Next(20);
         }
 
         #endregion

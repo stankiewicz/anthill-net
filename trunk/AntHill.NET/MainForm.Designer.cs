@@ -28,6 +28,7 @@ namespace AntHill.NET
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.rightPanel = new System.Windows.Forms.Panel();
             this.simulationPanel = new System.Windows.Forms.Panel();
             this.panelDebug = new System.Windows.Forms.Panel();
@@ -46,6 +47,7 @@ namespace AntHill.NET
             this.simulationXMLopenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.rightPanel.SuspendLayout();
             this.simulationPanel.SuspendLayout();
             this.panelDebug.SuspendLayout();
@@ -119,7 +121,7 @@ namespace AntHill.NET
             this.magnitudeBar.Minimum = 1000;
             this.magnitudeBar.Name = "magnitudeBar";
             this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.magnitudeBar.Size = new System.Drawing.Size(45, 104);
+            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
             this.magnitudeBar.TabIndex = 3;
             this.magnitudeBar.Value = 1000;
             this.magnitudeBar.Scroll += new System.EventHandler(this.magnitudeBar_Scroll);
@@ -196,7 +198,7 @@ namespace AntHill.NET
             this.speedBar.Maximum = 5;
             this.speedBar.Minimum = 1;
             this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(75, 45);
+            this.speedBar.Size = new System.Drawing.Size(75, 42);
             this.speedBar.TabIndex = 5;
             this.speedBar.Value = 1;
             // 
@@ -239,6 +241,11 @@ namespace AntHill.NET
             this.hScrollBar1.Size = new System.Drawing.Size(493, 16);
             this.hScrollBar1.TabIndex = 2;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // timer
+            // 
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // MainForm
             // 
@@ -286,6 +293,7 @@ namespace AntHill.NET
         private System.Windows.Forms.TrackBar magnitudeBar;
         private System.Windows.Forms.Panel magnitudePanel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timer;
     }
 }
 

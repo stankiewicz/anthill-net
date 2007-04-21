@@ -13,7 +13,12 @@ namespace AntHill.NET
         private int life;
         private Dir direction;
 
-        public Creature(Point pos):base(pos) {}
+        public Creature(Point pos):base(pos)
+        {
+            int i = Randomizer.Next(Enum.GetValues(typeof(Dir)).Length);
+
+            direction = (Dir)i;
+        }
         
         public Dir Direction
         {

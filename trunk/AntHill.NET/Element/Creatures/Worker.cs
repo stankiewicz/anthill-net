@@ -20,13 +20,8 @@ namespace AntHill.NET
                 foodQuantity = value;
             }
         }
-        public Worker(Point pos):base(pos)
-        {
-            Random rnd = new Random();
-            Array a = Enum.GetValues(typeof(Dir));
-            int i = rnd.Next(a.Length);
-            this.Direction = (Dir)i;
-        }
+        public Worker(Point pos):base(pos) {}
+
         public void Dig()
         {//TODO gdzie kopie
 

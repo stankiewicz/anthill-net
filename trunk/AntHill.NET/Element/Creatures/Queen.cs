@@ -7,10 +7,6 @@ namespace AntHill.NET
     {
         public Queen(Point pos):base(pos)
         {
-            Random rnd = new Random();
-            Array a = Enum.GetValues(typeof(Dir));
-            int i = rnd.Next(a.Length);
-            this.Direction = (Dir)i;
         }
 
         public override bool Maintain(ISimulationWorld isw)
@@ -20,8 +16,7 @@ namespace AntHill.NET
                 //isw.DeleteAnt(this);
                 return false;
             }
-            Random rnd = new Random();
-            if (rnd.NextDouble() > AntHillConfig.queenLayEggProbability)
+            if (Randomizer.NextDouble() > AntHillConfig.queenLayEggProbability)
             {
                 isw.CreateEgg(this.Position);
             }

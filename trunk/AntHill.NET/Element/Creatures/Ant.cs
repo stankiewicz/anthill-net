@@ -10,7 +10,6 @@ namespace AntHill.NET
 
         public Ant(Point pos):base(pos)
         {
-
         }
 
         public int TurnsWithoutFood

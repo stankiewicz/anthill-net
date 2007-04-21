@@ -19,8 +19,7 @@ namespace AntHill.NET
         public Rain(Point pos):base(pos)
         {
             rainPos = pos;
-            Random rand = new Random();
-            timeToLive = rand.Next(AntHillConfig.rainMaxDuration+1);
+            timeToLive = Randomizer.Next(AntHillConfig.rainMaxDuration + 1);
         }
 
         public bool isRainingAt(int x, int y)

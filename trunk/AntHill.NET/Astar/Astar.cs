@@ -118,8 +118,6 @@ namespace astar
             return path;
         }
 
-
-
         static public List<KeyValuePair<int, int>> Search(KeyValuePair<int, int> start, KeyValuePair<int, int> goal, IAstar ia)
         {
             //int counter = 0;
