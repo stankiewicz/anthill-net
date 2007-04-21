@@ -83,9 +83,13 @@ namespace AntHill.NET
             {
                 //this.CreateAnt
            }
-            spiders.Add(new Spider(new Point(100,100)));
-            ants.Add(new Warrior(new Point(150, 150)));
-            ants.Add(new Worker(new Point(300, 300)));
+            spiders.Add(new Spider(new Point(2,2)));
+            ants.Add(new Warrior(new Point(0, 0)));
+            ants.Add(new Worker(new Point(1, 0)));
+            ants.Add(new Worker(new Point(0, 1)));
+            spiders.Add(new Spider(new Point(1, 1)));
+            ants.Add(new Warrior(new Point(20,20)));
+            ants.Add(new Worker(new Point(21, 20)));
         }
 
         public Map Map

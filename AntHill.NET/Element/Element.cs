@@ -8,7 +8,9 @@ namespace AntHill.NET
     {
         public Element(Point pos)
         {
-            position = pos;
+     
+                        position = pos;
+            
         }
         private Point position;
         public Point Position
