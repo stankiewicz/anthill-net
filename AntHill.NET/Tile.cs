@@ -22,8 +22,9 @@ namespace AntHill.NET
          */
         public List<Message> messages;
 
-        public Tile(TileType ttype)
+        public Tile(TileType ttype, Point pos)
         {
+            position = pos;
             tileType = ttype;
             messages = new List<Message>();
         }

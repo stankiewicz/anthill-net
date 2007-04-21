@@ -60,21 +60,20 @@ namespace AntHill.NET
         }
 
         public Tile GetTile(int x, int y) { return tiles[x, y]; }
+
         public Tile GetRandomTile(TileType tt)
         {
-            Random r = new Random();
-
             switch (tt)
             {
                 case TileType.Wall:
                     if (wallTiles.Count == 0) return null;
-                    return wallTiles[r.Next(wallTiles.Count - 1)];
+                    return wallTiles[Randomizer.Next(wallTiles.Count)];
                 case TileType.Outdoor:
                     if (outdoorTiles.Count == 0) return null;
-                    return outdoorTiles[r.Next(outdoorTiles.Count - 1)];
+                    return outdoorTiles[Randomizer.Next(outdoorTiles.Count)];
                 case TileType.Indoor:
                     if (indoorTiles.Count == 0) return null;
-                    return indoorTiles[r.Next(indoorTiles.Count)];
+                    return indoorTiles[Randomizer.Next(indoorTiles.Count)];
                 default:
                     return null;
             }

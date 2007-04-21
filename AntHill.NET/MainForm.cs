@@ -70,7 +70,9 @@ namespace AntHill.NET
             stopButton.Enabled = true;
             doTurnButton.Enabled = false;
             pauseButton.Enabled = true;
-            ((ISimulationUser)Simulation.simulation).Start();
+
+            timer.Start();
+            //((ISimulationUser)Simulation.simulation).Start();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -79,7 +81,7 @@ namespace AntHill.NET
             stopButton.Enabled = false;
             doTurnButton.Enabled = true;
             pauseButton.Enabled = false;
-            ((ISimulationUser)Simulation.simulation).Reset();
+            
         }
 
         private void doTurnButton_Click(object sender, EventArgs e)
@@ -87,17 +89,21 @@ namespace AntHill.NET
             startButton.Enabled = true;
             stopButton.Enabled = true;
             doTurnButton.Enabled = true;
-            pauseButton.Enabled = false;
+
             ((ISimulationUser)Simulation.simulation).DoTurn();
+            Invalidate();
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
+            timer.Stop();
+
             startButton.Enabled = true;
             stopButton.Enabled = true;
             doTurnButton.Enabled = true;
             pauseButton.Enabled = false;
-            ((ISimulationUser)Simulation.simulation).Pause();
+
+            //((ISimulationUser)Simulation.simulation).Pause();
         }
 
         private void buttonShowConfig_Click(object sender, EventArgs e)
@@ -117,6 +123,8 @@ namespace AntHill.NET
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.Clear(Color.Black);
+            if (!checkBox1.Checked) return;
+
             Point drawingRect = rightPanel.Location;
             drawingRect.X -= 1;
             drawingRect.Y = this.hScrollBar1.Location.Y + this.hScrollBar1.Size.Height - 1;
@@ -192,13 +200,13 @@ namespace AntHill.NET
                     if(currentX > drawingRect.X)
                         break;
                     nextX += (int) (128.0f * magnitude);
-
                 }
                 currentY = nextY;
                 if(currentY > drawingRect.Y)
                     break;
                 nextY += (int) (128.0f * magnitude);
             }
+
             nextX=(int)(128.0f * magnitude);
             //show queen
             if (Simulation.simulation.queen != null)
@@ -215,8 +223,6 @@ namespace AntHill.NET
              //show spider
              foreach (Spider spider in Simulation.simulation.spiders)
                 e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.spider, spider.Direction), spider.Position.X *nextX, spider.Position.Y * nextX, nextX, nextX);
-
-            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -241,6 +247,12 @@ namespace AntHill.NET
 
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
+            Invalidate();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            ((ISimulationUser)Simulation.simulation).DoTurn();
             Invalidate();
         }
     }

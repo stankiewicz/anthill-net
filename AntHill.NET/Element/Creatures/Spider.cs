@@ -9,13 +9,6 @@ namespace AntHill.NET
     {
         //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
         public Spider(Point pos):base(pos) {
-
-            Random rnd = new Random();
-            Array a = Enum.GetValues(typeof(Dir));
-            int i = rnd.Next(a.Length);
-            this.Direction = (Dir)i;
-        
-        
         }
 //        List<KeyValuePair<int><int>>
         
@@ -56,8 +49,7 @@ namespace AntHill.NET
             Ant ant = FindNearestAnt();
             if (ant == null)
             {
-                Random random = new Random();
-                Point destination = new Point(random.Next(AntHillConfig.mapColCount - 1),random.Next(AntHillConfig.mapRowCount - 1));
+                Point destination = new Point(Randomizer.Next(AntHillConfig.mapColCount), Randomizer.Next(AntHillConfig.mapRowCount));
                 List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(destination.X, destination.Y),new AstarOtherObject());
                 if (trail == null)
                     return true;

@@ -5,6 +5,7 @@ using System.Xml;
 using System.Collections;
 using System.Xml.Schema;
 using System.Globalization;
+using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -73,13 +74,13 @@ namespace AntHill.NET
                                     switch(s[i])
                                     {                                
                                         case 'o':
-                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Indoor);
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Indoor, new Point(i, rowCount));
                                             break;
                                         case 'x':
-                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Wall);
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Wall, new Point(i, rowCount));
                                             break;
                                         case 's':
-                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Outdoor);
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Outdoor, new Point(i, rowCount));
                                             break;
                                     }
                                 }
