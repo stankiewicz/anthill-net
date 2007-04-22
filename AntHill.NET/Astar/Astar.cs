@@ -11,12 +11,21 @@ namespace astar
         
         class AstarNode : IComparable
         {
+            
             private AstarNode parent;
 
             public AstarNode Parent
             {
                 get { return parent; }
                 set { parent = value; }
+            }
+
+            private int deep;
+
+            public int Deep
+            {
+                get { return deep; }
+                set { deep = value; }
             }
 
 
@@ -48,11 +57,12 @@ namespace astar
             }
 
 
-            public AstarNode(KeyValuePair<int, int> loc, double weightCost)
+            public AstarNode(KeyValuePair<int, int> loc, double weightCost, double parentCost,int lastDeep)
             {
                 this.loc = loc;
-                cost = weightCost;
-                if ((int)weightCost == int.MaxValue) isObstacle = true;
+                this.deep = lastDeep + 1;
+                cost = weightCost + parentCost;
+                if ((int)weightCost >= int.MaxValue) isObstacle = true;
             }
 
             private bool isObstacle;
@@ -78,7 +88,7 @@ namespace astar
             }
 
         }
-
+        const int max_deep = 10;
 
         static Heap OpenHeap = new Heap();
         static List<AstarNode> Closed = new List<AstarNode>();
@@ -123,7 +133,7 @@ namespace astar
             //int counter = 0;
             OpenHeap.Clear();
             Closed.Clear();
-            AstarNode StartNode = new AstarNode(start, ia.GetWeight(start.Key, start.Value));
+            AstarNode StartNode = new AstarNode(start, ia.GetWeight(start.Key, start.Value),0,0);
             StartNode.Parent = null;
             StartNode.Calc(goal);
             dict.Clear();
@@ -136,7 +146,7 @@ namespace astar
             {
                 AstarNode node = (AstarNode)OpenHeap.Pop();
                 dict.Remove(node.Loc);
-                if (node.Loc.Equals(goal))
+                if (node.Loc.Equals(goal) || node.Deep ==  max_deep)
                 {
                     return CreatePath(node);
                 }
@@ -189,7 +199,7 @@ namespace astar
             //}
             if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key, center.Loc.Value - 1)))
             {
-                list.Add(new AstarNode(loc,ia.GetWeight(center.Loc.Key, center.Loc.Value - 1)));
+                list.Add(new AstarNode(loc,ia.GetWeight(center.Loc.Key, center.Loc.Value - 1),center.Cost,center.Deep));
             }
             //if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key + 1, center.Loc.Value - 1)))
             //{
@@ -197,11 +207,11 @@ namespace astar
             //}
             if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key - 1, center.Loc.Value)))
             {
-                list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key - 1, center.Loc.Value)));
+                list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key - 1, center.Loc.Value), center.Cost, center.Deep));
             }
             if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key + 1, center.Loc.Value)))
             {
-                list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key + 1, center.Loc.Value)));
+                list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key + 1, center.Loc.Value), center.Cost, center.Deep));
             }
             //if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key - 1, center.Loc.Value + 1)))
             //{
@@ -209,7 +219,7 @@ namespace astar
             //}
             if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key, center.Loc.Value + 1)))
             {
-                list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key, center.Loc.Value + 1)));
+                list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key, center.Loc.Value + 1), center.Cost, center.Deep));
             }
             //if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key + 1, center.Loc.Value + 1)))
             //{
