@@ -49,7 +49,7 @@
     <Compile Include="Forms\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Graphics\AnthillGraphics.cs" />
+    <Compile Include="AnthillGraphics.cs" />
     <Compile Include="Element\Creatures\Ant.cs" />
     <Compile Include="Element\Creatures\Citizen.cs" />
     <Compile Include="Element\Creatures\Creature.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="Element\Message.cs" />
     <Compile Include="Element\PointWithIntensity.cs" />
     <Compile Include="Element\Rain.cs" />
-    <Compile Include="ISimulation.cs" />
+    <Compile Include="Interfaces\ISimulation.cs" />
     <Compile Include="Interfaces\ISimulationWorld.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
