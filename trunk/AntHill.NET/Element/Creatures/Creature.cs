@@ -9,7 +9,7 @@ namespace AntHill.NET
 
     public abstract class Creature : Element
     {
-        public List<KeyValuePair<int, int>> path;
+        public List<KeyValuePair<int, int>> path=new List<KeyValuePair<int,int>>();
         private int life;
         private Dir direction;
 
