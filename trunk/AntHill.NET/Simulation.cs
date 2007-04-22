@@ -190,7 +190,7 @@ namespace AntHill.NET
 
         }
 
-        void ISimulationUser.Pause()
+        void ISimulationUser.Stop()
         {
             
         }

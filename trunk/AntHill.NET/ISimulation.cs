@@ -7,6 +7,6 @@ namespace AntHill.NET
         void DoTurn();
         void Reset();
         void Start();
-        void Pause();
+        void Stop();
     }
 }
