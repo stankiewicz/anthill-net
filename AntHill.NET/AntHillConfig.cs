@@ -17,7 +17,7 @@ namespace AntHill.NET
 
         //Ants
         static public int antMaxLife, antMaxLifeWithoutFood, antTurnNumberToBecomeHungry,
-                    antMaxHealth, antStrength, antForgettingTime, antSightRadius,
+                    antStrength, antForgettingTime, antSightRadius,
                     workerStartCount, warriorStartCount;
 
         //Queen
@@ -47,6 +47,8 @@ namespace AntHill.NET
         #region Simulation_Additional_Parameters
 
         //If we need to configure/store some settings then do it here
+        
+        static public int antMaxHealth = 1; //same as in spider
 
         #endregion
     }

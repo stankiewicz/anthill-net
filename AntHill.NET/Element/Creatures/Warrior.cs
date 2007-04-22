@@ -10,7 +10,7 @@ namespace AntHill.NET
     {
         public Warrior(Point pos):base(pos)
         {
-
+            
         }
 
         int GetNearestSpider(List<Spider> spiders)

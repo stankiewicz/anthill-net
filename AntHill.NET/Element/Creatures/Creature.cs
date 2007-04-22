@@ -10,14 +10,15 @@ namespace AntHill.NET
     public abstract class Creature : Element
     {
         public List<KeyValuePair<int, int>> path=new List<KeyValuePair<int,int>>();
-        private int life;
-        private Dir direction;
+        protected int health;
+        protected Dir direction;
 
         public Creature(Point pos):base(pos)
         {
             int i = Randomizer.Next(Enum.GetValues(typeof(Dir)).Length);
-
             direction = (Dir)i;
+
+            path = new List<KeyValuePair<int, int>>();
         }
         
         public Dir Direction

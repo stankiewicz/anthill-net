@@ -36,11 +36,11 @@ namespace AntHill.NET
             this.magnitudePanel = new System.Windows.Forms.Panel();
             this.magnitudeBar = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
-            this.pauseButton = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.startButton = new System.Windows.Forms.Button();
             this.doTurnButton = new System.Windows.Forms.Button();
-            this.stopButton = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.speedBar = new System.Windows.Forms.TrackBar();
             this.labelSpeed = new System.Windows.Forms.Label();
             this.loadDataButton = new System.Windows.Forms.Button();
@@ -70,25 +70,25 @@ namespace AntHill.NET
             // 
             this.simulationPanel.Controls.Add(this.panelDebug);
             this.simulationPanel.Controls.Add(this.magnitudePanel);
-            this.simulationPanel.Controls.Add(this.pauseButton);
+            this.simulationPanel.Controls.Add(this.btnStop);
             this.simulationPanel.Controls.Add(this.checkBox1);
             this.simulationPanel.Controls.Add(this.startButton);
             this.simulationPanel.Controls.Add(this.doTurnButton);
-            this.simulationPanel.Controls.Add(this.stopButton);
+            this.simulationPanel.Controls.Add(this.btnReset);
             this.simulationPanel.Controls.Add(this.speedBar);
             this.simulationPanel.Controls.Add(this.labelSpeed);
-            this.simulationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.simulationPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.simulationPanel.Enabled = false;
-            this.simulationPanel.Location = new System.Drawing.Point(0, 22);
+            this.simulationPanel.Location = new System.Drawing.Point(0, 68);
             this.simulationPanel.Name = "simulationPanel";
-            this.simulationPanel.Size = new System.Drawing.Size(80, 427);
+            this.simulationPanel.Size = new System.Drawing.Size(80, 381);
             this.simulationPanel.TabIndex = 8;
             // 
             // panelDebug
             // 
             this.panelDebug.Controls.Add(this.buttonShowConfig);
             this.panelDebug.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelDebug.Location = new System.Drawing.Point(0, 403);
+            this.panelDebug.Location = new System.Drawing.Point(0, 357);
             this.panelDebug.Name = "panelDebug";
             this.panelDebug.Size = new System.Drawing.Size(80, 24);
             this.panelDebug.TabIndex = 8;
@@ -116,13 +116,15 @@ namespace AntHill.NET
             // 
             // magnitudeBar
             // 
+            this.magnitudeBar.Cursor = System.Windows.Forms.Cursors.SizeNS;
             this.magnitudeBar.Location = new System.Drawing.Point(14, 3);
             this.magnitudeBar.Maximum = 10000;
             this.magnitudeBar.Minimum = 1000;
             this.magnitudeBar.Name = "magnitudeBar";
             this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
+            this.magnitudeBar.Size = new System.Drawing.Size(45, 104);
             this.magnitudeBar.TabIndex = 3;
+            this.magnitudeBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.magnitudeBar.Value = 1000;
             this.magnitudeBar.Scroll += new System.EventHandler(this.magnitudeBar_Scroll);
             // 
@@ -135,16 +137,16 @@ namespace AntHill.NET
             this.label1.TabIndex = 3;
             this.label1.Text = "Magnitude";
             // 
-            // pauseButton
+            // btnStop
             // 
-            this.pauseButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pauseButton.Location = new System.Drawing.Point(0, 69);
-            this.pauseButton.Name = "pauseButton";
-            this.pauseButton.Size = new System.Drawing.Size(80, 23);
-            this.pauseButton.TabIndex = 4;
-            this.pauseButton.Text = "Pause";
-            this.pauseButton.UseVisualStyleBackColor = true;
-            this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
+            this.btnStop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnStop.Location = new System.Drawing.Point(0, 69);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(80, 23);
+            this.btnStop.TabIndex = 4;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.pauseButton_Click);
             // 
             // checkBox1
             // 
@@ -180,16 +182,16 @@ namespace AntHill.NET
             this.doTurnButton.UseVisualStyleBackColor = true;
             this.doTurnButton.Click += new System.EventHandler(this.doTurnButton_Click);
             // 
-            // stopButton
+            // btnReset
             // 
-            this.stopButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stopButton.Location = new System.Drawing.Point(0, 0);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(80, 23);
-            this.stopButton.TabIndex = 2;
-            this.stopButton.Text = "Stop";
-            this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            this.btnReset.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnReset.Location = new System.Drawing.Point(0, 0);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(80, 23);
+            this.btnReset.TabIndex = 2;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // speedBar
             // 
@@ -198,7 +200,7 @@ namespace AntHill.NET
             this.speedBar.Maximum = 5;
             this.speedBar.Minimum = 1;
             this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(75, 42);
+            this.speedBar.Size = new System.Drawing.Size(75, 45);
             this.speedBar.TabIndex = 5;
             this.speedBar.Value = 1;
             // 
@@ -213,8 +215,7 @@ namespace AntHill.NET
             // 
             // loadDataButton
             // 
-            this.loadDataButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.loadDataButton.Location = new System.Drawing.Point(0, 0);
+            this.loadDataButton.Location = new System.Drawing.Point(0, 40);
             this.loadDataButton.Name = "loadDataButton";
             this.loadDataButton.Size = new System.Drawing.Size(80, 22);
             this.loadDataButton.TabIndex = 0;
@@ -278,10 +279,10 @@ namespace AntHill.NET
         private System.Windows.Forms.Panel rightPanel;
         private System.Windows.Forms.Button doTurnButton;
         private System.Windows.Forms.Button loadDataButton;
-        private System.Windows.Forms.Button pauseButton;
+        private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Label labelSpeed;
         private System.Windows.Forms.TrackBar speedBar;
-        private System.Windows.Forms.Button stopButton;
+        private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel simulationPanel;

@@ -56,9 +56,9 @@ namespace AntHill.NET
 
                 simulationPanel.Enabled = true;
                 startButton.Enabled = true;
-                stopButton.Enabled = false;
+                btnReset.Enabled = false;
                 doTurnButton.Enabled = true;
-                pauseButton.Enabled = false;
+                btnStop.Enabled = false;
 
                 Invalidate();
             }
@@ -67,9 +67,9 @@ namespace AntHill.NET
         private void startButton_Click(object sender, EventArgs e)
         {
             startButton.Enabled = false;
-            stopButton.Enabled = true;
+            btnReset.Enabled = true;
             doTurnButton.Enabled = false;
-            pauseButton.Enabled = true;
+            btnStop.Enabled = true;
 
             timer.Start();
             //((ISimulationUser)Simulation.simulation).Start();
@@ -78,16 +78,16 @@ namespace AntHill.NET
         private void stopButton_Click(object sender, EventArgs e)
         {
             startButton.Enabled = true;
-            stopButton.Enabled = false;
+            btnReset.Enabled = false;
             doTurnButton.Enabled = true;
-            pauseButton.Enabled = false;
+            btnStop.Enabled = false;
             
         }
 
         private void doTurnButton_Click(object sender, EventArgs e)
         {
             startButton.Enabled = true;
-            stopButton.Enabled = true;
+            btnReset.Enabled = true;
             doTurnButton.Enabled = true;
 
             ((ISimulationUser)Simulation.simulation).DoTurn();
@@ -99,9 +99,9 @@ namespace AntHill.NET
             timer.Stop();
 
             startButton.Enabled = true;
-            stopButton.Enabled = true;
+            btnReset.Enabled = true;
             doTurnButton.Enabled = true;
-            pauseButton.Enabled = false;
+            btnStop.Enabled = false;
 
             //((ISimulationUser)Simulation.simulation).Pause();
         }

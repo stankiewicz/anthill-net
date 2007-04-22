@@ -39,6 +39,7 @@ namespace AntHill.NET
 
         public override bool Maintain(ISimulationWorld isw)
         {//TODO sciezka moze nulla zwrocic
+            //i zwraca - Kamil :-P
             if (base.IsAlive())
             {
                 if (this.TurnsToBecomeHungry == 0)
@@ -53,8 +54,8 @@ namespace AntHill.NET
                         }
                         if (path.Count > this.TurnsWithoutFood)
                         {
+                            foodQuantity--;
                             this.Eat();
-                            this.foodQuantity--;
                         }
                     }
                 if (path.Count > 0)
