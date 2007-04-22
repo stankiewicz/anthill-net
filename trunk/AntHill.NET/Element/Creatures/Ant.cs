@@ -10,6 +10,9 @@ namespace AntHill.NET
 
         public Ant(Point pos):base(pos)
         {
+            health = AntHillConfig.antMaxLife;
+            turnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
+            turnsWithoutFood = AntHillConfig.antMaxLifeWithoutFood;
         }
 
         public int TurnsWithoutFood

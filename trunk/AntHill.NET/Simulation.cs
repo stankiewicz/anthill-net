@@ -231,26 +231,22 @@ namespace AntHill.NET
 
         public List<Ant> GetVisibleAnts(Element c)
         {
-            //throw new Exception("The method or operation is not implemented.");
-            return null;
+            return new List<Ant>();
         }
 
         public List<Food> GetVisibleFood(Element c)
         {
-            //throw new Exception("The method or operation is not implemented.");
-            return null;
+            return new List<Food>();
         }
 
         public List<Spider> GetVisibleSpiders(Element c)
         {
-            //throw new Exception("The method or operation is not implemented.");
-            return null;
+            return new List<Spider>();
         }
 
         public List<Message> GetVisibleMessages(Element c)
         {
-            //throw new Exception("The method or operation is not implemented.");
-            return null;
+            return new List<Message>();
         }
 
         public void CreateAnt(System.Drawing.Point position)
