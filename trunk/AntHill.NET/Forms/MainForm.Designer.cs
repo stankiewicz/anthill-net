@@ -262,6 +262,7 @@ namespace AntHill.NET
             this.Name = "MainForm";
             this.Text = "AntHill";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.rightPanel.ResumeLayout(false);

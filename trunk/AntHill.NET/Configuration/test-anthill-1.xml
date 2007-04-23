@@ -13,7 +13,7 @@
 	<Map row="ssssssssss" />
 </WorldMap>
 <CreaturesAbilities>
-- <Ant maxLife="100" maxLifeWithoutFood="10" turnNumberToBecomeHungry="3" strength="3" forgettingTime="5" sightRadius="2">
+- <Ant maxLife="100" maxLifeWithoutFood="100" turnNumberToBecomeHungry="50" strength="3" forgettingTime="5" sightRadius="2">
 - <Citizen>
   <Warrior startCount="2" /> 
   <Worker startCount="8" /> 

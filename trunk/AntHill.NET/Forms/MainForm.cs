@@ -59,7 +59,10 @@ namespace AntHill.NET
                 btnReset.Enabled = false;
                 doTurnButton.Enabled = true;
                 btnStop.Enabled = false;
-
+                hScrollBar1.Maximum = AntHillConfig.mapColCount;
+                vScrollBar1.Maximum = AntHillConfig.mapRowCount;
+                hScrollBar1.Value = hScrollBar1.Maximum / 2;
+                vScrollBar1.Value = vScrollBar1.Maximum / 2;
                 Invalidate();
             }
         }
@@ -136,6 +139,7 @@ namespace AntHill.NET
 
             if(Simulation.simulation == null)
                 return;
+            //Point center;
             if(Simulation.simulation.Map.Width * 128 > drawingRect.X)
             {
                 hScrollBar1.Enabled = true;
@@ -194,11 +198,11 @@ namespace AntHill.NET
             
             int currentX = 0, currentY = 0, nextX = (int)(128.0f * magnitude), nextY = (int)(128.0f * magnitude);
 
-            for (int y = 0; y < Simulation.simulation.Map.Height; y++)            
+            for (int y = vScrollBar1.Value; y < Simulation.simulation.Map.Height; y++)            
             {
                 currentX = 0;
                 nextX = (int)(128.0f * magnitude);
-                for (int x = 0; x < Simulation.simulation.Map.Width; x++)
+                for (int x = hScrollBar1.Value; x < Simulation.simulation.Map.Width; x++)
                 {
                     e.Graphics.DrawImage(Simulation.simulation.Map.GetTile(x, y).GetBitmap() ,currentX,currentY,nextX - currentX, nextY - currentY);
                     currentX = nextX;
@@ -216,18 +220,18 @@ namespace AntHill.NET
             //show queen
             if (Simulation.simulation.queen != null)
                 e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.queen, Simulation.simulation.queen.Direction),
-             Simulation.simulation.queen.Position.X*nextX, Simulation.simulation.queen.Position.Y*nextX, nextX, nextX); 
+             (Simulation.simulation.queen.Position.X - hScrollBar1.Value) * nextX, (Simulation.simulation.queen.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX); 
  
              //Show ants
               foreach (Ant ant in Simulation.simulation.ants)
                    if(ant is Warrior)
-                       e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.warrior, ant.Direction), ant.Position.X * nextX, ant.Position.Y * nextX, nextX, nextX);
+                       e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.warrior, ant.Direction), (ant.Position.X - hScrollBar1.Value) * nextX, (ant.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
                    else
-                      e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.worker, ant.Direction), ant.Position.X * nextX, ant.Position.Y * nextX, nextX, nextX);
+                       e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.worker, ant.Direction), (ant.Position.X - hScrollBar1.Value) * nextX, (ant.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
                     
              //show spider
              foreach (Spider spider in Simulation.simulation.spiders)
-                e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.spider, spider.Direction), spider.Position.X *nextX, spider.Position.Y * nextX, nextX, nextX);
+                e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.spider, spider.Direction), (spider.Position.X - hScrollBar1.Value) * nextX, (spider.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -259,8 +263,8 @@ namespace AntHill.NET
         {
             if (((ISimulationUser)Simulation.simulation).DoTurn() == false)
             {
+                timer.Stop();
                 MessageBox.Show("symulacja skonczona");
-                ((ISimulationUser)Simulation.simulation).Stop();
             }
             Invalidate();
         }
@@ -273,6 +277,11 @@ namespace AntHill.NET
         private void speedBar_Scroll(object sender, EventArgs e)
         {
             timer.Interval = speedBar.Value;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            Invalidate();
         }
     }
 }
