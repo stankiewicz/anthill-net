@@ -255,5 +255,15 @@ namespace AntHill.NET
             ((ISimulationUser)Simulation.simulation).DoTurn();
             Invalidate();
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void speedBar_Scroll(object sender, EventArgs e)
+        {
+            timer.Interval = speedBar.Value;
+        }
     }
 }

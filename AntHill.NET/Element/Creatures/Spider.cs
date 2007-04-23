@@ -49,13 +49,13 @@ namespace AntHill.NET
             Ant ant = FindNearestAnt();
             if (ant == null)
             {
-                Point destination = new Point(Randomizer.Next(AntHillConfig.mapColCount), Randomizer.Next(AntHillConfig.mapRowCount));
+                Point destination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
                 List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(destination.X, destination.Y),new AstarOtherObject());
                 if (trail == null)
                     return true;
                 if (trail.Count <= 1)
                     return true;
-                Move(trail[1]);                
+                MoveOrRotate(trail[1]); 
                 return true;
             }
 
