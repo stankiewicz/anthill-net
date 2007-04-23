@@ -8,28 +8,23 @@ namespace AntHill.NET
     public class Spider : Creature
     {
         Point randomDestination = new Point(-1, 0);
-        //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
-        public Spider(Point pos):base(pos) {
-        }
-//        List<KeyValuePair<int><int>>
-        
+        public Spider(Point pos):base(pos) {}
         private Ant FindNearestAnt()
-        {            
-           // if(queenSpotted)
-             //   return Simulation.simulation.queen;
-            if (AntHillConfig.antSightRadius >= Distance(Simulation.simulation.queen.Position, this.Position))
-            {                                
-                //queenSpotted = true;
+        {
+            if (Simulation.simulation.queen == null)
+                return null;
+            if (AntHillConfig.antSightRadius >= Distance(Simulation.simulation.queen.Position, this.Position))                                          
                 return Simulation.simulation.queen;
-            }
             
-            List<Ant> ants = Simulation.simulation.ants;
+            List<Ant> ants = Simulation.simulation.GetVisibleAnts(this);
+            if (ants == null)
+                return null;
             if (ants.Count == 0)
                 return null;
             int minDistance = Distance(ants[0].Position, Position);
 
             int index = 0;
-            int distance, bestIndex = 0;// bestDistance = int.MaxValue;
+            int distance, bestIndex = 0;
             foreach (Ant ant in ants)
             {
                 if ((distance = Distance(this.Position, ant.Position)) < minDistance)

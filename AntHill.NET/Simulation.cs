@@ -240,7 +240,7 @@ namespace AntHill.NET
 
         public List<Ant> GetVisibleAnts(Element c)
         {
-            return new List<Ant>();
+            return Simulation.simulation.ants;
         }
 
         public List<Food> GetVisibleFood(Element c)
