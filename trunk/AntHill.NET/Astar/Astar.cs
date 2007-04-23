@@ -185,8 +185,8 @@ namespace astar
                 }//foreach
                 Closed.Add(node);
             }
-
-            return null;
+            List<KeyValuePair<int, int>> l=new List<KeyValuePair<int,int>>();
+            return l;
         }
 
         static List<AstarNode> NearNodes(AstarNode center, IAstar ia)
