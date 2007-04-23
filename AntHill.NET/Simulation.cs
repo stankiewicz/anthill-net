@@ -78,10 +78,6 @@ namespace AntHill.NET
             {
                 this.CreateWarrior(Map.GetRandomTile(TileType.Indoor).Position);
             }
-            //testowy 
-            food.Add(new Food(new Point(5,5),4));
-            food.Add(new Food(new Point(6, 7), 4));
-            this.CreateRain(new Point(6, 6));
         }
 
         public Map Map
@@ -262,9 +258,33 @@ namespace AntHill.NET
             return false;
         }
 
+        private bool IsVisible(Point p1, Point p2)
+        {
+            //not ready
+            return true;
+        }
+
+        private bool IsInRect(Point pt, Point pos, int width, int height)
+        {
+            //not ready
+            return true;
+        }
+
         public List<Ant> GetVisibleAnts(Element c)
         {
-            return Simulation.simulation.ants;
+            List<Ant> ants = new List<Ant>();
+            int radius = AntHillConfig.antSightRadius; //same as for ant
+            if (c is Spider || c is Ant)
+            {/*
+                for (int i=0; i < ants.Count; i++)
+                {
+                    //if (ants[i].Position
+                    for (int x=c.Position - radius; x < c.Position + radius);
+                    }
+              */
+            }
+                
+            return ants;
         }
 
         public List<Food> GetVisibleFood(Element c)
