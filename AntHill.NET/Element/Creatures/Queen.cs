@@ -21,9 +21,11 @@ namespace AntHill.NET
             }
             if (this.TurnsToBecomeHungry == 0)
             {
-                if (isw.GetVisibleFood(this).Count != 0)
+                System.Collections.Generic.List<Food> food = isw.GetVisibleFood(this);
+                if (food.Count != 0)
                 {
                     this.Eat();
+                    food[0].Maintain(isw);
                     this.TurnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
                 }
                 else

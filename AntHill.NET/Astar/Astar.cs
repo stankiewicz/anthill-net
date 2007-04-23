@@ -62,7 +62,7 @@ namespace astar
                 this.loc = loc;
                 this.deep = lastDeep + 1;
                 cost = weightCost + parentCost;
-                if ((int)weightCost >= int.MaxValue) isObstacle = true;
+                if (weightCost >= int.MaxValue) isObstacle = true;
             }
 
             private bool isObstacle;
@@ -84,7 +84,6 @@ namespace astar
             public void Calc(KeyValuePair<int, int> goal)
             {
                 GoalEstimate = Math.Sqrt(Math.Pow(this.loc.Key - goal.Key, 2) + Math.Pow(this.loc.Value - goal.Value, 2));
-
             }
 
         }
