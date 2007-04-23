@@ -122,7 +122,7 @@ namespace AntHill.NET
             this.magnitudeBar.Minimum = 1000;
             this.magnitudeBar.Name = "magnitudeBar";
             this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.magnitudeBar.Size = new System.Drawing.Size(45, 104);
+            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
             this.magnitudeBar.TabIndex = 3;
             this.magnitudeBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.magnitudeBar.Value = 1000;
@@ -159,6 +159,7 @@ namespace AntHill.NET
             this.checkBox1.TabIndex = 6;
             this.checkBox1.Text = "Show";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // startButton
             // 
@@ -197,12 +198,13 @@ namespace AntHill.NET
             // 
             this.speedBar.LargeChange = 1;
             this.speedBar.Location = new System.Drawing.Point(2, 111);
-            this.speedBar.Maximum = 5;
-            this.speedBar.Minimum = 1;
+            this.speedBar.Maximum = 1000;
+            this.speedBar.Minimum = 10;
             this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(75, 45);
+            this.speedBar.Size = new System.Drawing.Size(75, 42);
             this.speedBar.TabIndex = 5;
-            this.speedBar.Value = 1;
+            this.speedBar.Value = 500;
+            this.speedBar.Scroll += new System.EventHandler(this.speedBar_Scroll);
             // 
             // labelSpeed
             // 
