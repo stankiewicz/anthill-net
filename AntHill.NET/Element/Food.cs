@@ -19,7 +19,11 @@ namespace AntHill.NET
 
         public override bool Maintain(ISimulationWorld isw)
         {
-            //throw new Exception("The method or operation is not implemented.");
+            if (quantity-- <= 0)
+            {
+                isw.DeleteFood(this);
+                return false;
+            }
             return true;
         }
 

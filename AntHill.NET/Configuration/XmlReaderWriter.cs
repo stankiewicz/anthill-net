@@ -6,6 +6,7 @@ using System.Collections;
 using System.Xml.Schema;
 using System.Globalization;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace AntHill.NET
 {
@@ -67,6 +68,11 @@ namespace AntHill.NET
                                 //If this is happens before 'WorldMap' then we're f***ed up
                                 //because AntHillConfig.tiles array won't be initialized.
                                 //I suggest we use more reliable xml parsing.
+                                if (rowCount >= AntHillConfig.mapRowCount)
+                                {
+                                    rowCount++;
+                                    break;
+                                }
                                 string s = textReader.GetAttribute("row");
                                 
                                 for (int i=0; i <s.Length; ++i)
@@ -137,6 +143,10 @@ namespace AntHill.NET
                             } break;
                     }
             }
+
+            if (rowCount < AntHillConfig.mapRowCount)
+                throw new Exception("Not enough rows");
+            //MessageBox.Show(rowCount.ToString());
         }
     }
 }

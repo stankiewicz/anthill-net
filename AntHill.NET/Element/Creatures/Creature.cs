@@ -7,11 +7,25 @@ namespace AntHill.NET
     public enum Dir { S, W, E, N }
     public enum CreatureType { queen, warrior, spider, worker }
     public enum AddsType { rain=0,food=1 }
+    class DeathException : Exception
+    {
+    }
+
     public abstract class Creature : Element
     {
         public List<KeyValuePair<int, int>> path=new List<KeyValuePair<int,int>>();
         protected int health;
         protected Dir direction;
+
+        public int Health
+        {
+            get { return health; }
+            set
+            {
+                if ((health = value) <= 0)
+                    throw new DeathException();
+            }
+        }
 
         public Creature(Point pos):base(pos)
         {

@@ -8,7 +8,13 @@ namespace AntHill.NET
     public class Spider : Creature
     {
         Point randomDestination = new Point(-1, 0);
-        public Spider(Point pos):base(pos) {}
+        //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
+        public Spider(Point pos):base(pos)
+        {
+            this.health = AntHillConfig.spiderMaxHealth;
+        }
+//        List<KeyValuePair<int><int>>
+        
         private Ant FindNearestAnt()
         {
             if (Simulation.simulation.queen == null)
