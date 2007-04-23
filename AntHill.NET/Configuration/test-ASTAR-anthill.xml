@@ -15,8 +15,8 @@
 <CreaturesAbilities>
 - <Ant maxLife="100" maxLifeWithoutFood="100" turnNumberToBecomeHungry="3" strength="3" forgettingTime="5" sightRadius="2">
 - <Citizen>
-  <Warrior startCount="1" /> 
-  <Worker startCount="2" /> 
+  <Warrior startCount="0" /> 
+  <Worker startCount="0" /> 
   </Citizen>
   <Queen layEggProbability="0.4" xPosition="5" yPosition="6" /> 
   <Egg hatchWarriorProbability="0.2" hatchTime="10" /> 

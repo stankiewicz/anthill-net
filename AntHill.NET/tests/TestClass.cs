@@ -184,10 +184,37 @@ namespace AntHill.NET
 
         }
 
-//astar
-//getvisible sth...
+//astar - narazie nie dzia³a :(
+        [Test]
+        public void AstarTest()
+        {
 
+        }
 
+//getvisible sth... - narazie nie ma funkcji:(
+        [Test]
+        public void GetVisibleAnts()
+        {
+
+        }
+
+        [Test]
+        public void GetVisibleFood()
+        {
+
+        }
+
+        [Test]
+        public void GetVisibleSpiders()
+        {
+
+        }
+
+        [Test]
+        public void GetVisibleMessages()
+        {
+
+        }
 
     }
 }
