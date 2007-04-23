@@ -26,9 +26,10 @@ namespace AntHill.NET
         {
             int x = Math.Abs(p1.X - p2.X);
             int y = Math.Abs(p1.Y - p2.Y);
-            if (x > y)
+            return x + y;
+            /*if (x > y)
                 return x;
-            return y;
+            return y;*/
         }
         public void Move(KeyValuePair<int, int> position)
         {//TODO zle ;)

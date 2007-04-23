@@ -7,6 +7,7 @@ namespace AntHill.NET
 {
     public class Spider : Creature
     {
+        Point randomDestination = new Point(-1, 0);
         //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
         public Spider(Point pos):base(pos) {
         }
@@ -16,7 +17,7 @@ namespace AntHill.NET
         {            
            // if(queenSpotted)
              //   return Simulation.simulation.queen;
-            if (AntHillConfig.antSightRadius <= Distance(Simulation.simulation.queen.Position, this.Position))
+            if (AntHillConfig.antSightRadius >= Distance(Simulation.simulation.queen.Position, this.Position))
             {                                
                 //queenSpotted = true;
                 return Simulation.simulation.queen;
@@ -28,17 +29,17 @@ namespace AntHill.NET
             int minDistance = Distance(ants[0].Position, Position);
 
             int index = 0;
-            int distance, bestIndex = 0, bestDistance = int.MaxValue;
+            int distance, bestIndex = 0;// bestDistance = int.MaxValue;
             foreach (Ant ant in ants)
             {
                 if ((distance = Distance(this.Position, ant.Position)) < minDistance)
                 {
                     bestIndex = index;
-                    bestDistance = distance;
+                    minDistance = distance;
                 }
                 index++;
             }
-            if (bestDistance <= AntHillConfig.antSightRadius)
+            if (minDistance <= AntHillConfig.antSightRadius)
                 return ants[bestIndex];
             return null;
         }
@@ -49,16 +50,23 @@ namespace AntHill.NET
             Ant ant = FindNearestAnt();
             if (ant == null)
             {
-                Point destination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
-                List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(destination.X, destination.Y),new AstarOtherObject());
+                if(randomDestination.X < 0)
+                    randomDestination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
+                List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y),new AstarOtherObject());
                 if (trail == null)
+                {
+                    randomDestination.X = -1;
                     return true;
+                }
                 if (trail.Count <= 1)
+                {
+                    randomDestination.X = -1;
                     return true;
+                }
                 MoveOrRotate(trail[1]); 
                 return true;
             }
-
+            randomDestination.X = -1;
             int distance = Distance(ant.Position, this.Position);
             if (distance == 0)
             {
@@ -132,7 +140,7 @@ namespace AntHill.NET
                     return true;
                 if (trail.Count <= 1)
                     return true;
-                Move(trail[1]);
+                MoveOrRotate(trail[1]);
                 return true;
             }
 
