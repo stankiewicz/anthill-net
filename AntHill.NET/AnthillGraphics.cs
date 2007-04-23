@@ -11,6 +11,8 @@ namespace AntHill.NET
     {
         static Bitmap outdoorTile, indoorTile, wallTile;
         static Bitmap[,] creatureBitmaps;
+        static Bitmap rainBitmap;
+        static Bitmap foodBitmap;
 
         static public void Init()
         {
@@ -21,6 +23,11 @@ namespace AntHill.NET
             outdoorTile = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.outdoorTileBmp));
             wallTile = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.wallTileBmp));
 
+            
+            rainBitmap=new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
+            foodBitmap=new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
+             
+            
             creatureBitmaps[(int)CreatureType.queen, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antQueenBmp));
             creatureBitmaps[(int)CreatureType.warrior, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antWarriorBmp));
             creatureBitmaps[(int)CreatureType.worker, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antWorkerBmp));
@@ -61,6 +68,16 @@ namespace AntHill.NET
         static public Bitmap GetCreature(CreatureType ct, Dir d)
         {
             return creatureBitmaps[(int)ct, (int)d];
+        }
+
+        static public Bitmap GetRainBitmap()
+        {
+            return rainBitmap;
+        }
+
+        static public Bitmap GetFoodBitmap()
+        {
+            return foodBitmap;
         }
     }
 }

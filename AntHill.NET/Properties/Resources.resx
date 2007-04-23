@@ -129,6 +129,9 @@
   <data name="exceptionXmlNotValid" xml:space="preserve">
     <value>file is not valid. It generated exception: </value>
   </data>
+  <data name="foodBmp" xml:space="preserve">
+    <value>food.png</value>
+  </data>
   <data name="GraphicsPath" xml:space="preserve">
     <value>Graphics</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="outdoorTileBmp" xml:space="preserve">
     <value>grassTile.png</value>
+  </data>
+  <data name="rainBmp" xml:space="preserve">
+    <value>rain.png</value>
   </data>
   <data name="spiderBmp" xml:space="preserve">
     <value>spider.png</value>

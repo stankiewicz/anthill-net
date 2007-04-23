@@ -78,6 +78,10 @@ namespace AntHill.NET
             {
                 this.CreateWarrior(Map.GetRandomTile(TileType.Indoor).Position);
             }
+            //testowy 
+            food.Add(new Food(new Point(5,5),4));
+            food.Add(new Food(new Point(6, 7), 4));
+            this.CreateRain(new Point(6, 6));
         }
 
         public Map Map

@@ -97,6 +97,15 @@ namespace AntHill.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to food.png.
+        /// </summary>
+        internal static string foodBmp {
+            get {
+                return ResourceManager.GetString("foodBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphics.
         /// </summary>
         internal static string GraphicsPath {
@@ -138,6 +147,15 @@ namespace AntHill.NET.Properties {
         internal static string outdoorTileBmp {
             get {
                 return ResourceManager.GetString("outdoorTileBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rain.png.
+        /// </summary>
+        internal static string rainBmp {
+            get {
+                return ResourceManager.GetString("rainBmp", resourceCulture);
             }
         }
         
