@@ -18,7 +18,7 @@
   <Warrior startCount="0" /> 
   <Worker startCount="0" /> 
   </Citizen>
-  <Queen layEggProbability="0.4" xPosition="5" yPosition="6" /> 
+  <Queen layEggProbability="0.0" xPosition="5" yPosition="6" /> 
   <Egg hatchWarriorProbability="0.2" hatchTime="10" /> 
   </Ant>
   <Spider maxHealth="10" probability="0.5" foodQuantityAfterDeath="5" /> 
