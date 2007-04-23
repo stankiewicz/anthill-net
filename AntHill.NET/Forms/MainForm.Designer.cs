@@ -243,6 +243,7 @@ namespace AntHill.NET
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(493, 16);
             this.hScrollBar1.TabIndex = 2;
+            this.hScrollBar1.Value = 41;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
             // timer
