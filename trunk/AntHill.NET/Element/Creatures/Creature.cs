@@ -6,7 +6,7 @@ namespace AntHill.NET
 {
     public enum Dir { S, W, E, N }
     public enum CreatureType { queen, warrior, spider, worker }
-
+    public enum AddsType { rain=0,food=1 }
     public abstract class Creature : Element
     {
         public List<KeyValuePair<int, int>> path=new List<KeyValuePair<int,int>>();

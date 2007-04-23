@@ -217,6 +217,10 @@ namespace AntHill.NET
             }
 
             nextX=(int)(128.0f * magnitude);
+            //show food
+            foreach (Food food in Simulation.simulation.food)
+                e.Graphics.DrawImage(AHGraphics.GetFoodBitmap(), food.Position.X * nextX, food.Position.Y * nextX, nextX, nextX);
+
             //show queen
             if (Simulation.simulation.queen != null)
                 e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.queen, Simulation.simulation.queen.Direction),
@@ -232,6 +236,15 @@ namespace AntHill.NET
              //show spider
              foreach (Spider spider in Simulation.simulation.spiders)
                 e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.spider, spider.Direction), (spider.Position.X - hScrollBar1.Value) * nextX, (spider.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
+            //show rain
+            if (Simulation.simulation.rain != null)
+            {
+                e.Graphics.SetClip(new RectangleF(0, 0, Simulation.simulation.Map.Width * nextX, Simulation.simulation.Map.Height * nextX));
+                e.Graphics.DrawImage(AHGraphics.GetRainBitmap(), (Simulation.simulation.rain.Position.X - AntHillConfig.rainWidth / 2) * nextX, (Simulation.simulation.rain.Position.Y - AntHillConfig.rainWidth / 2) * nextX, AntHillConfig.rainWidth * nextX, AntHillConfig.rainWidth * nextX);
+                e.Graphics.ResetClip();
+            }
+                
+          
         }
 
         private void MainForm_Load(object sender, EventArgs e)
