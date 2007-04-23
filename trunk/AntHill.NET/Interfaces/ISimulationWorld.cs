@@ -12,14 +12,14 @@ namespace AntHill.NET
     /// </summary>
     public interface ISimulationWorld
     {
-        void CreateAnt(Point position);
-        void CreateWarrior(Point position);
-        void CreateWorker(Point position);
-        void CreateSpider(Point position);    //This might be unnecessary because only Simulation creates Spiders
-        void CreateFood(Point position, int quantity);      //This might be used in Ants' Destroy() function, or at Simulation level -  after creature's death
-        void CreateMessage(Point pos, MessageType mt);
-        void CreateEgg(Point pos);
-        void Attack(Creature cA, Creature cB);
+        bool CreateAnt(Point position);
+        bool CreateWarrior(Point position);
+        bool CreateWorker(Point position);
+        bool CreateSpider(Point position);    //This might be unnecessary because only Simulation creates Spiders
+        bool CreateFood(Point position, int quantity);      //This might be used in Ants' Destroy() function, or at Simulation level -  after creature's death
+        bool CreateMessage(Point pos, MessageType mt);
+        bool CreateEgg(Point pos);
+        bool Attack(Creature cA, Creature cB);
 
         //'Creature c' is a creature that wants to get some info
         List<Ant> GetVisibleAnts(Element c);
@@ -27,11 +27,11 @@ namespace AntHill.NET
         List<Spider> GetVisibleSpiders(Element c);
         List<Message> GetVisibleMessages(Element c);
 
-        void DeleteEgg(Egg egg);
-        void DeleteRain();
-        void DeleteFood(Food food);
-        void DeleteAnt(Ant ant);
-        void DeleteSpider(Spider spider);
+        bool DeleteEgg(Egg egg);
+        bool DeleteRain();
+        bool DeleteFood(Food food);
+        bool DeleteAnt(Ant ant);
+        bool DeleteSpider(Spider spider);
         Map GetMap();
     }
 }

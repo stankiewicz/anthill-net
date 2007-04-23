@@ -176,21 +176,6 @@ namespace AntHill.NET
                 return false;
             }
             return true;
-        }        
-
-        private void CreateRain(Point point)
-        {
-            rain = new Rain(point);
-        }
-
-        public void CreateFood(Point point, int quantity)
-        {
-            food.Add(new Food(point, quantity));
-        }
-
-        public void CreateSpider(Point point)
-        {
-            spiders.Add(new Spider(point));
         }
 
         void ISimulationUser.Reset()
@@ -212,34 +197,69 @@ namespace AntHill.NET
 
         #region ISimulationWorld Members
 
-        public void CreateAnt()
+        private bool CreateRain(Point point)
         {
-            //throw new Exception("The method or operation is not implemented.");
+            rain = new Rain(point);
+            return true;
         }
 
-        public void CreateWarrior(Point pos)
+        public bool CreateFood(Point point, int quantity)
+        {
+            food.Add(new Food(point, quantity));
+            return true;
+        }
+
+        public bool CreateSpider(Point point)
+        {
+            spiders.Add(new Spider(point));
+            return true;
+        }
+
+
+        public bool CreateWarrior(Point pos)
         {
             ants.Add(new Warrior(pos));
+            return true;
         }
 
-        public void CreateWorker(Point pos)
+        public bool CreateWorker(Point pos)
         {
             ants.Add(new Worker(pos));
+            return true;
         }
 
-        public void CreateSpider()
+        public bool CreateSpider()
         {
             spiders.Add(new Spider(Map.GetRandomTile(TileType.Outdoor).Position));
+            return true;
         }
 
-        public void CreateFood()
+
+        //returns true if cD is killed
+        public bool Attack(Creature cA, Creature cD)
         {
-            //throw new Exception("The method or operation is not implemented.");
-        }
-        
-        public void Attack(Creature cA, Creature cB)
-        {
-            //throw new Exception("The method or operation is not implemented.");
+            if (cA is Spider)
+            {
+                if (cD is Queen) queen = null;
+                else if (cD is Ant)
+                    this.DeleteAnt((Ant)cD);
+
+                return true;
+            }
+            else if (cA is Warrior && cD is Spider)
+            {
+                try
+                {
+                    ((Spider)cD).Health--;
+                }
+                catch (DeathException de)
+                {
+                    this.DeleteSpider((Spider)cD);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public List<Ant> GetVisibleAnts(Element c)
@@ -262,39 +282,50 @@ namespace AntHill.NET
             return new List<Message>();
         }
 
-        public void CreateAnt(System.Drawing.Point position)
+        public bool CreateAnt(System.Drawing.Point position)
         {
-            //throw new Exception("The method or operation is not implemented.");
+            if (Randomizer.NextDouble() > AntHillConfig.eggHatchWarriorProbability)
+                ants.Add(new Warrior(position));
+            else
+                ants.Add(new Worker(position));
+
+            return true;
         }
 
-        public void DeleteEgg(Egg egg)
+        public bool DeleteEgg(Egg egg)
         {
             eggs.Remove(egg);
+            return true;
         }
 
-        public void DeleteRain()
+        public bool DeleteRain()
         {
             rain = null;
+            return true;
         }
 
-        public void CreateEgg(Point pos)
+        public bool CreateEgg(Point pos)
         {
             eggs.Add(new Egg(pos));
+            return true;
         }
 
-        public void DeleteFood(Food food)
+        public bool DeleteFood(Food food)
         {
             this.food.Remove(food);
+            return true;
         }
 
-        public void DeleteAnt(Ant ant)
+        public bool DeleteAnt(Ant ant)
         {
             ants.Remove(ant);
+            return true;
         }
 
-        public void DeleteSpider(Spider spider)
+        public bool DeleteSpider(Spider spider)
         {
             spiders.Remove(spider);
+            return true;
         }
 
         public Map GetMap()
@@ -302,7 +333,7 @@ namespace AntHill.NET
             return map;
         }
 
-        public void CreateMessage(Point pos, MessageType mt)
+        public bool CreateMessage(Point pos, MessageType mt)
         {
             Message ms = new Message(pos, mt);
             for (int i = -AntHillConfig.messageRadius; i < AntHillConfig.messageRadius; i++)
@@ -320,6 +351,8 @@ namespace AntHill.NET
 
             }
             this.messages.Add(ms);
+
+            return true;
         }
 
         private int GetRandomFoodQuantity()
