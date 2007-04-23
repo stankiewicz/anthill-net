@@ -108,8 +108,9 @@ namespace AntHill.NET
         /// <summary>
         /// This is the most important function - activity diagram
         /// </summary>
-        void ISimulationUser.DoTurn()
+        bool ISimulationUser.DoTurn()
         {
+            if (queen == null) return false;
             try
             {
                 if (Randomizer.NextDouble() >= AntHillConfig.spiderProbability)
@@ -149,7 +150,9 @@ namespace AntHill.NET
             for (int i = 0; i < ants.Count; i++)
             {
                 if (!ants[i].Maintain(this))
+                {
                     --i;
+                }
             }
 
             for (int i = 0; i < spiders.Count; i++)
@@ -162,7 +165,13 @@ namespace AntHill.NET
             {
                 if (!eggs[i].Maintain(this))
                     --i;
-            }             
+            }
+            if (queen!=null && !queen.Maintain(this))
+            {
+                queen = null;
+                return false;
+            }
+            return true;
         }        
 
         private void CreateRain(Point point)

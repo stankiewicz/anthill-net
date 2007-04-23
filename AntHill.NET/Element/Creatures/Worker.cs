@@ -60,12 +60,15 @@ namespace AntHill.NET
                     }
                 if (path.Count > 0)
                 {
-                    if(MoveOrRotate(path[1]))
+                    if (MoveOrRotate(path[1]))
                         path.RemoveAt(0);
                 }
             }
             else
+            {
                 isw.DeleteAnt(this);
+                return false;
+            }
             return true;
         }
 

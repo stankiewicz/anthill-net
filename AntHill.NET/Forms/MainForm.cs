@@ -90,7 +90,11 @@ namespace AntHill.NET
             btnReset.Enabled = true;
             doTurnButton.Enabled = true;
 
-            ((ISimulationUser)Simulation.simulation).DoTurn();
+            if (((ISimulationUser)Simulation.simulation).DoTurn()==false)
+            {
+                MessageBox.Show("symulacja skonczona");
+            }
+            
             Invalidate();
         }
 
@@ -252,7 +256,11 @@ namespace AntHill.NET
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            ((ISimulationUser)Simulation.simulation).DoTurn();
+            if (((ISimulationUser)Simulation.simulation).DoTurn() == false)
+            {
+                MessageBox.Show("symulacja skonczona");
+                ((ISimulationUser)Simulation.simulation).Stop();
+            }
             Invalidate();
         }
 
