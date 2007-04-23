@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System;
 using NUnit.Framework;
 using System.Drawing;
+using astar;
 
 namespace AntHill.NET
 {
@@ -184,11 +186,53 @@ namespace AntHill.NET
 
         }
 
-//astar - narazie nie dzia³a :(
         [Test]
         public void AstarTest()
         {
 
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\Configuration\test-ASTAR-anthill.xml");
+
+            Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+
+            Spider test_spider = new Spider(new Point(5, 0));
+            Ant test_ant = new Warrior(new Point(5, 10));
+            List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(test_spider.Position.X, test_spider.Position.Y), new KeyValuePair<int, int>(test_ant.Position.X, test_ant.Position.Y), new TestAstarObject(test_isw));
+
+//            List<KeyValuePair<int, int>> test_trail = new List<KeyValuePair<int,int>>
+//            foreach (KeyValuePair<int, int> key in trail)
+
+
+
+        }
+
+        class TestAstarObject: IAstar
+        {
+            Simulation simm;
+            public TestAstarObject(Simulation sim)
+            {
+                simm = sim;
+            }
+
+            #region IAstar Members
+
+            public int GetWeight(int x, int y)
+            {
+                switch (simm.GetMap().GetTile(x, y).TileType)
+                {
+                    case TileType.Wall:
+                        return int.MaxValue;
+                    case TileType.Outdoor:
+                        return 1;
+                    case TileType.Indoor:
+                        return 1;
+                    default:
+                        break;
+                }
+                return 0;
+            }
+
+            #endregion
         }
 
 //getvisible sth... - narazie nie ma funkcji:(
@@ -215,6 +259,8 @@ namespace AntHill.NET
         {
 
         }
+
+
 
     }
 }

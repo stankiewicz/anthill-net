@@ -8,8 +8,8 @@ Runtime Environment -
    OS Version: Microsoft Windows NT 5.0.2195 Service Pack 4
   CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
 
-.N.N.N.N......N......
-Tests run: 11, Failures: 0, Not run: 5, Time: 0.141 seconds
+.N..N.N.N..........N......
+Tests run: 16, Failures: 0, Not run: 5, Time: 0.188 seconds
 
 Tests not run:
 1) AntHill.NET.TestClass.AntTest : Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...
