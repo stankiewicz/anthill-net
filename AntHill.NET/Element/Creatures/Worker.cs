@@ -50,6 +50,7 @@ namespace AntHill.NET
                             base.path =
                             Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y),
                             new KeyValuePair<int, int>(150, 150), new AstarOtherObject());
+                            // pobranie z visible food albo  jesli nie ma to z sygnalu..
                             base.path.RemoveAt(0);
                         }
                         if (path.Count > this.TurnsWithoutFood)
