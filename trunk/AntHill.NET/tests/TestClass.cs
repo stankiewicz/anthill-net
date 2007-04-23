@@ -184,6 +184,9 @@ namespace AntHill.NET
 
         }
 
+//astar
+//getvisible sth...
+
 
 
     }
