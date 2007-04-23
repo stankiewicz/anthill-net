@@ -13,7 +13,6 @@ namespace AntHill.NET
         {
             if (!IsAlive())
             {
-                //isw.DeleteAnt(this);
                 return false;
             }
             if (Randomizer.NextDouble() > AntHillConfig.queenLayEggProbability)
