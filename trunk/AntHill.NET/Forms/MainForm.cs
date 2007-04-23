@@ -196,6 +196,28 @@ namespace AntHill.NET
                 magnitude = 1000.0f / magnitudeBar.Value;
             }
             
+            int tmp2;
+            int tmp21 = (int)Math.Floor((float)drawingRect.X / (magnitude * 128.0f));
+            int tmp22 = (int)Math.Floor((float)drawingRect.Y / (magnitude * 128.0f));
+            
+            if (tmp21 < tmp22)
+                tmp2 = tmp21;
+            else
+                tmp2 = tmp22;
+            hScrollBar1.Maximum = AntHillConfig.mapColCount - tmp2;
+            vScrollBar1.Maximum = AntHillConfig.mapRowCount - tmp2;
+            hScrollBar1.Maximum = (int)((float)hScrollBar1.Maximum * 1.25f);
+            vScrollBar1.Maximum = (int)((float)vScrollBar1.Maximum * 1.25f);
+            if (hScrollBar1.Maximum < 0)
+            {
+                hScrollBar1.Maximum = 0;
+                hScrollBar1.Minimum = 0;
+            }
+            if (vScrollBar1.Maximum < 0)
+            {
+                vScrollBar1.Maximum = 0;
+                vScrollBar1.Minimum = 0;
+            }
             int currentX = 0, currentY = 0, nextX = (int)(128.0f * magnitude), nextY = (int)(128.0f * magnitude);
 
             for (int y = vScrollBar1.Value; y < Simulation.simulation.Map.Height; y++)            
