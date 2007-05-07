@@ -17,7 +17,7 @@ namespace AntHill.NET
         public List<KeyValuePair<int, int>> path=new List<KeyValuePair<int,int>>();
         protected int health;
         protected Dir direction;
-
+        protected Point randomDestination = new Point(-1, 0);
         public int Health
         {
             get { return health; }

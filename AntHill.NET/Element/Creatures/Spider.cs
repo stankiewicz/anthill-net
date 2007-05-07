@@ -6,8 +6,7 @@ using astar;
 namespace AntHill.NET
 {
     public class Spider : Creature
-    {
-        Point randomDestination = new Point(-1, 0);
+    {        
         //bool queenSpotted = false;// searching, 1 moving to ant, 2 fighting, 10 attack queen        
         public Spider(Point pos):base(pos)
         {

@@ -21,7 +21,7 @@
   <Queen layEggProbability="0.4" xPosition="5" yPosition="5" /> 
   <Egg hatchWarriorProbability="0.2" hatchTime="10" /> 
   </Ant>
-  <Spider maxHealth="10" probability="0.5" foodQuantityAfterDeath="5" /> 
+  <Spider maxHealth="1" probability="0.5" foodQuantityAfterDeath="5" /> 
   </CreaturesAbilities>
 - <EnvironmentCharacteristics>
   <Rain cloudWidth="3" probability="0.1" maxDuration="2" /> 
