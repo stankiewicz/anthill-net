@@ -50,6 +50,7 @@ namespace AntHill.NET
         
         static public int antMaxHealth = 1; //same as in spider
 
+        static public int tileSize = 32;
         #endregion
     }
 }
