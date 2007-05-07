@@ -71,30 +71,7 @@ namespace AntHill.NET
                 }
                 return true;
             }
-            Point indoorDestination, outdoorDestination;
-            if ((randomMovemenCount == 10) ||(randomDestination.X < 0))
-            {
-                randomMovemenCount = 0;
-                indoorDestination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
-                outdoorDestination = isw.GetMap().GetRandomTile(TileType.Outdoor).Position;
-                if (Randomizer.Next(2) == 0)
-                    randomDestination = outdoorDestination;
-                else
-                    randomDestination = indoorDestination;
-            }
-            randomMovemenCount++;            
-            List<KeyValuePair<int, int>> newTrail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y), new AstarOtherObject());
-            if (newTrail == null)
-            {
-                randomDestination.X = -1;
-                return true;
-            }
-            if (newTrail.Count <= 1)
-            {
-                randomDestination.X = -1;
-                return true;
-            }
-            MoveOrRotate(newTrail[1]);            
+            MoveRandomly(isw);            
             return true;
         }
 
