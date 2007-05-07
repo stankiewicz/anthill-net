@@ -61,7 +61,7 @@ namespace AntHill.NET
             }
             else
             {
-                
+                isw.DeleteAnt(this);
                 return false;
             }
             return true;
