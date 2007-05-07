@@ -113,7 +113,7 @@ namespace AntHill.NET
             if (queen == null) return false;
             try
             {
-                if (Randomizer.NextDouble() >= AntHillConfig.spiderProbability)
+                if (Randomizer.NextDouble() <= AntHillConfig.spiderProbability)
                     this.CreateSpider(Map.GetRandomTile(TileType.Outdoor).Position);
             }
             catch (Exception)
@@ -123,7 +123,7 @@ namespace AntHill.NET
 
             try
             {
-                if (Randomizer.NextDouble() >= AntHillConfig.foodProbability)
+                if (Randomizer.NextDouble() <= AntHillConfig.foodProbability)
                     this.CreateFood(Map.GetRandomTile(TileType.Outdoor).Position, GetRandomFoodQuantity());
             }
             catch (Exception)
@@ -131,7 +131,7 @@ namespace AntHill.NET
                 
             }
 
-            if ((rain == null) && (Randomizer.NextDouble() >= AntHillConfig.rainProbability))
+            if ((rain == null) && (Randomizer.NextDouble() <= AntHillConfig.rainProbability))
                 this.CreateRain(GetRandomPoint());
 
             if (rain != null)
@@ -400,7 +400,7 @@ namespace AntHill.NET
 
         public bool CreateAnt(System.Drawing.Point position)
         {
-            if (Randomizer.NextDouble() > AntHillConfig.eggHatchWarriorProbability)
+            if (Randomizer.NextDouble() < AntHillConfig.eggHatchWarriorProbability)
                 ants.Add(new Warrior(position));
             else
                 ants.Add(new Worker(position));
