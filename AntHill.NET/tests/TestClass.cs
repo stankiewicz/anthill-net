@@ -33,7 +33,7 @@ namespace AntHill.NET
         [Ignore("Creature class is abstract. Creature.Direction test in WorkerTest and WarriorTest...")]
         public void CreatureTest()
         {
-
+            
         }
 
         [Test]
@@ -44,6 +44,12 @@ namespace AntHill.NET
         [Test]
         public void SpiderTest()
         {
+            Spider test_spider = new Spider(new System.Drawing.Point(110, 145));
+            test_spider.Health = 10;
+            test_spider.Direction = Dir.E;
+            Assert.AreEqual(Dir.E, test_spider.Direction, "Spider.Direction problem");
+            Assert.AreEqual(10, test_spider.Health, "Spider.Health problem");
+            Assert.AreEqual(new System.Drawing.Point(110, 145), test_spider.Position, "spider.Position problem");
 
         }
         [Test]
@@ -114,6 +120,7 @@ namespace AntHill.NET
             Warrior test_warrior = new Warrior(new System.Drawing.Point(123, 345));
             test_warrior.TurnsToBecomeHungry = 43;
             test_warrior.Direction = Dir.E;
+           
             test_warrior.TurnsWithoutFood = 23;
 
             Assert.AreEqual(43, test_warrior.TurnsToBecomeHungry, "Warrior.TurnsToBecomeHungry problem");
