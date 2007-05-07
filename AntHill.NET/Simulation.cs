@@ -434,12 +434,14 @@ namespace AntHill.NET
 
         public bool DeleteAnt(Ant ant)
         {
+            this.food.Add(new Food(ant.Position, AntHillConfig.antFoodQuantityAfterDeath));
             ants.Remove(ant);
             return true;
         }
 
         public bool DeleteSpider(Spider spider)
         {
+            this.food.Add(new Food(spider.Position, AntHillConfig.spiderFoodQuantityAfterDeath));
             spiders.Remove(spider);
             return true;
         }
