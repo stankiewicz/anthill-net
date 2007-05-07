@@ -272,19 +272,31 @@ namespace AntHill.NET
 
         public List<Ant> GetVisibleAnts(Element c)
         {
-            List<Ant> ants = new List<Ant>();
-            int radius = AntHillConfig.antSightRadius; //same as for ant
-            if (c is Spider || c is Ant)
-            {/*
-                for (int i=0; i < ants.Count; i++)
+            List<Ant> res_ants = new List<Ant>();
+            int radius;
+            if (c is Spider || c is Ant) //same radius
+            {
+                radius = AntHillConfig.antSightRadius; //same as for ant
+                for (int i = 0; i < ants.Count; i++)
                 {
-                    //if (ants[i].Position
-                    for (int x=c.Position - radius; x < c.Position + radius);
-                    }
-              */
+                    //as for name - simple, implement Bresenham's alg. in the future
+                    if (Math.Abs(ants[i].Position.X - c.Position.X) <= radius &&
+                        Math.Abs(ants[i].Position.Y - c.Position.Y) <= radius)
+                        res_ants.Add(ants[i]);
+                }
+            }
+            else if (c is Rain)
+            {
+                radius = AntHillConfig.rainWidth;
+                for (int i = 0; i < ants.Count; i++)
+                {
+                    if (Math.Abs(ants[i].Position.X - c.Position.X) <= radius &&
+                        Math.Abs(ants[i].Position.Y - c.Position.Y) <= radius)
+                        res_ants.Add(ants[i]);
+                }
             }
                 
-            return ants;
+            return res_ants;
         }
 
         public List<Food> GetVisibleFood(Element c)
