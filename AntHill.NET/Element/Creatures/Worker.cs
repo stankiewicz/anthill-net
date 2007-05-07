@@ -32,6 +32,7 @@ namespace AntHill.NET
             if (!base.IsAlive()) return false;
             
             SpreadSignal(isw);
+            List<Food> food;
             List<Message> msg = isw.GetVisibleMessages(this);
             for(int i=0; i<msg.Count; i++)
                 this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
@@ -39,8 +40,16 @@ namespace AntHill.NET
             if (this.TurnsToBecomeHungry == 0)
                 if (this.foodQuantity > 0)
                 {
-
+                    foodQuantity--;
+                    Eat();
                 }
+
+            if (this.foodQuantity == 0) //search for food
+            {
+                food = isw.GetVisibleFood(this);
+                
+            }
+
             if (path.Count > 0)
             {
                 if (MoveOrRotate(path[1]))

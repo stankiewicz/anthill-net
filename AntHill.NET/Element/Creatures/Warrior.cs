@@ -29,21 +29,7 @@ namespace AntHill.NET
             return spiders[i];
         }
 
-        Food GetNearestFood(List<Food> foods)
-        {
-            int i = 0;
-            int min = Int32.MaxValue;
-            int tmp;
-            for (int j = 0; j < foods.Count; j++)
-            {
-                if ((tmp = Distance(this.Position, foods[i].Position)) < min)
-                {
-                    i = j;
-                    min = tmp;
-                }
-            }
-            return foods[i];
-        }
+        
 
         public override bool Maintain(ISimulationWorld isw)
         {//TODO malo:)
