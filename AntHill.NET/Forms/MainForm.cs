@@ -249,9 +249,12 @@ namespace AntHill.NET
 
             //show queen
             if (Simulation.simulation.queen != null)
+            {
                 e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.queen, Simulation.simulation.queen.Direction),
-             (Simulation.simulation.queen.Position.X - hScrollBar1.Value) * nextX, (Simulation.simulation.queen.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX); 
- 
+             (Simulation.simulation.queen.Position.X - hScrollBar1.Value) * nextX, (Simulation.simulation.queen.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
+                if (Simulation.simulation.queen.FoodQuantity > 0)
+                    e.Graphics.DrawImage(AHGraphics.GetFoodBitmap(), (Simulation.simulation.queen.Position.X - hScrollBar1.Value) * nextX, (Simulation.simulation.queen.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
+            }
              //Show ants
               foreach (Ant ant in Simulation.simulation.ants)
                    if(ant is Warrior)
