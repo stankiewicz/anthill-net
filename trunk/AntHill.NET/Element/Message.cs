@@ -16,11 +16,26 @@ namespace AntHill.NET
     public class Message : Element
     {
         private MessageType type;
+        private Point location;
+
+        public Point Location
+        {
+            get { return location; }
+            set { location = value; }
+        }
+
         public List<PointWithIntensity> points;
         public Message(Point pos, MessageType mt ):base(pos)
         {
             type = mt;
             points = new List<PointWithIntensity>();
+        }
+        public Message(Point pos, MessageType mt, Point location)
+            : base(pos)
+        {
+            type = mt;
+            points = new List<PointWithIntensity>();
+            this.location = location;
         }
         public void AddPoint(List<PointWithIntensity> newPoint)
         {

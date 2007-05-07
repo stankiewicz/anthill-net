@@ -18,6 +18,7 @@ namespace AntHill.NET
         bool CreateSpider(Point position);    //This might be unnecessary because only Simulation creates Spiders
         bool CreateFood(Point position, int quantity);      //This might be used in Ants' Destroy() function, or at Simulation level -  after creature's death
         bool CreateMessage(Point pos, MessageType mt);
+        bool CreateMessage(Point pos, MessageType mt, Point location);
         bool CreateEgg(Point pos);
         bool Attack(Creature cA, Creature cB);
         bool FeedQueen(Worker w);
