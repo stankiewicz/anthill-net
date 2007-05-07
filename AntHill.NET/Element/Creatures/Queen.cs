@@ -8,6 +8,13 @@ namespace AntHill.NET
         public Queen(Point pos):base(pos)
         {
         }
+        private int foodQuantity;
+
+        public int FoodQuantity
+        {
+            get { return foodQuantity; }
+            set { foodQuantity = value; }
+        }
 
         public override bool Maintain(ISimulationWorld isw)
         {
@@ -21,11 +28,11 @@ namespace AntHill.NET
             }
             if (this.TurnsToBecomeHungry == 0)
             {
-                System.Collections.Generic.List<Food> food = isw.GetVisibleFood(this);
-                if (food.Count != 0)
+
+                if (foodQuantity != 0)
                 {
                     this.Eat();
-                    food[0].Maintain(isw);
+                    foodQuantity--;
                     this.TurnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
                 }
                 else
