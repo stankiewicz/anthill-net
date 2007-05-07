@@ -122,8 +122,12 @@ namespace AntHill.NET
             }
             else
             {
-                cf.RefreshData();
-                cf.Show();
+                try
+                {
+                    cf.RefreshData();
+                    cf.Show();
+                }
+                catch { }
             }
         }
 

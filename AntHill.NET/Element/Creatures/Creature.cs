@@ -28,6 +28,38 @@ namespace AntHill.NET
                     throw new DeathException();
             }
         }
+        List<KeyValuePair<int, int>> currentTrail = new List<KeyValuePair<int,int>>();
+        protected void MoveRandomly(ISimulationWorld isw)
+        {            
+            Point indoorDestination, outdoorDestination;
+            randomMovemenCount++;     
+            if ((randomMovemenCount >= currentTrail.Count) || (randomDestination.X < 0))
+            {
+                randomMovemenCount = 0;
+                indoorDestination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
+                outdoorDestination = isw.GetMap().GetRandomTile(TileType.Outdoor).Position;
+                if (Randomizer.Next(2) == 0)
+                    randomDestination = outdoorDestination;
+                else
+                    randomDestination = indoorDestination;
+                currentTrail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y), new AstarOtherObject());
+            }
+            
+            if (currentTrail == null)
+            {
+                randomDestination.X = -1;
+                return;
+            }
+            if (currentTrail.Count <= 1)
+            {
+                randomDestination.X = -1;
+                return;
+            }
+            if (!MoveOrRotate(currentTrail[randomMovemenCount]))
+                randomMovemenCount--;
+            if (randomMovemenCount >= 10)            
+                randomDestination.X = -1;            
+        }
         public void MoveRotateOrAttack(Creature aggresor, Creature prey, ISimulationWorld isw)
         {
             int distance = Distance(aggresor.Position, prey.Position);

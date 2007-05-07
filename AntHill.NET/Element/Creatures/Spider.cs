@@ -50,20 +50,7 @@ namespace AntHill.NET
             Ant ant = FindNearestAnt();
             if (ant == null)
             {
-                if(randomDestination.X < 0)
-                    randomDestination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
-                List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y),new AstarOtherObject());
-                if (trail == null)
-                {
-                    randomDestination.X = -1;
-                    return true;
-                }
-                if (trail.Count <= 1)
-                {
-                    randomDestination.X = -1;
-                    return true;
-                }
-                MoveOrRotate(trail[1]); 
+                MoveRandomly(isw);
                 return true;
             }
             randomDestination.X = -1;
