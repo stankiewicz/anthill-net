@@ -22,10 +22,10 @@ namespace AntHill.NET
             timeToLive = Randomizer.Next(AntHillConfig.rainMaxDuration + 1);
         }
 
-        public bool isRainingAt(int x, int y)
+        public bool IsRainOver(int x, int y)
         {
-            if (x >= Position.X && y >= Position.Y && x < Position.X + AntHillConfig.rainWidth &&
-                y < Position.Y + AntHillConfig.rainWidth)
+            if (Math.Abs(x - Position.X) <= AntHillConfig.rainWidth / 2 &&
+                Math.Abs(y - Position.Y) <= AntHillConfig.rainWidth / 2)
                 return true;
             return false;
         }
@@ -43,13 +43,13 @@ namespace AntHill.NET
             List<Spider> lSpider = isw.GetVisibleSpiders(this);
             List<Message>lMessage = isw.GetVisibleMessages(this);
 
-            for(int i = 0;lFood!=null&& i < lFood.Count;++i)
+            for(int i = 0; i < lFood.Count;++i)
                 isw.DeleteFood(lFood[i]);
 
-            for (int i = 0;lAnt!=null && i < lAnt.Count; ++i)
+            for (int i = 0; i < lAnt.Count; ++i)
                 isw.DeleteAnt(lAnt[i]);
 
-            for (int i = 0;lSpider!=null && i < lSpider.Count; ++i)
+            for (int i = 0; i < lSpider.Count; ++i)
                 isw.DeleteSpider(lSpider[i]);
 
 

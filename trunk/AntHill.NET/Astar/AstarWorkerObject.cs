@@ -14,7 +14,7 @@ namespace AntHill.NET
             bool rain=false;
             if (Simulation.simulation.rain != null)
             {
-                rain = Simulation.simulation.rain.isRainingAt(x,y);
+                rain = Simulation.simulation.rain.IsRainOver(x,y);
             }
             switch (Simulation.simulation.GetMap().GetTile(x, y).TileType)
             {

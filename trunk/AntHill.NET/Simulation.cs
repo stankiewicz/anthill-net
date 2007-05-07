@@ -287,11 +287,10 @@ namespace AntHill.NET
             }
             else if (c is Rain)
             {
-                radius = AntHillConfig.rainWidth;
                 for (int i = 0; i < ants.Count; i++)
                 {
-                    if (Math.Abs(ants[i].Position.X - c.Position.X) <= radius &&
-                        Math.Abs(ants[i].Position.Y - c.Position.Y) <= radius)
+                    if (map.GetTile(ants[i].Position.X, ants[i].Position.Y).TileType == TileType.Outdoor &&
+                        rain.IsRainOver(ants[i].Position.X, ants[i].Position.Y))
                         res_ants.Add(ants[i]);
                 }
             }
@@ -301,17 +300,94 @@ namespace AntHill.NET
 
         public List<Food> GetVisibleFood(Element c)
         {
-            return new List<Food>();
+            List<Food> res_food = new List<Food>();
+            int radius;
+            if (c is Spider || c is Ant) //same radius
+            {
+                radius = AntHillConfig.antSightRadius; //same as for ant
+                for (int i = 0; i < food.Count; i++)
+                {
+                    //as for name - simple, implement Bresenham's alg. in the future
+                    if (Math.Abs(food[i].Position.X - c.Position.X) <= radius &&
+                        Math.Abs(food[i].Position.Y - c.Position.Y) <= radius)
+                        res_food.Add(food[i]);
+                }
+            }
+            else if (c is Rain)
+            {
+                for (int i = 0; i < food.Count; i++)
+                {
+                    if (map.GetTile(food[i].Position.X, food[i].Position.Y).TileType == TileType.Outdoor &&
+                        rain.IsRainOver(food[i].Position.X, food[i].Position.Y))
+                        res_food.Add(food[i]);
+                }
+            }
+
+            return res_food;
         }
 
         public List<Spider> GetVisibleSpiders(Element c)
         {
-            return spiders;
+            List<Spider> res_spiders = new List<Spider>();
+            int radius;
+            if (c is Spider || c is Ant) //same radius
+            {
+                radius = AntHillConfig.antSightRadius; //same as for ant
+                for (int i = 0; i < spiders.Count; i++)
+                {
+                    //as for name - simple, implement Bresenham's alg. in the future
+                    if (Math.Abs(spiders[i].Position.X - c.Position.X) <= radius &&
+                        Math.Abs(spiders[i].Position.Y - c.Position.Y) <= radius)
+                        res_spiders.Add(spiders[i]);
+                }
+            }
+            else if (c is Rain)
+            {
+                for (int i = 0; i < spiders.Count; i++)
+                {
+                    if (map.GetTile(spiders[i].Position.X, spiders[i].Position.Y).TileType == TileType.Outdoor &&
+                        rain.IsRainOver(spiders[i].Position.X, spiders[i].Position.Y))
+                        res_spiders.Add(spiders[i]);
+                }
+            }
+
+            return res_spiders;
         }
 
         public List<Message> GetVisibleMessages(Element c)
         {
-            return new List<Message>();
+            List<Message> res_messages =  new List<Message>();
+            if (c is Ant)
+            {
+                for (int i = 0; i < messages.Count; i++)
+                {
+                    for (int j = 0; j < messages[i].points.Count; j++)
+                    {
+                        if (c.Position == messages[i].points[j].Tile.Position)
+                        {
+                            res_messages.Add(messages[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (c is Rain)
+            {
+                for (int i = 0; i < messages.Count; i++)
+                {
+                    for (int j = 0; j < messages[i].points.Count; j++)
+                    {
+                        if (messages[i].points[j].Tile.TileType == TileType.Outdoor &&
+                            c.Position == messages[i].points[j].Tile.Position)
+                        {
+                            res_messages.Add(messages[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return res_messages;
         }
 
         public bool CreateAnt(System.Drawing.Point position)
