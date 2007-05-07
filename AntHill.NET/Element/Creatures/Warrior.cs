@@ -89,9 +89,9 @@ namespace AntHill.NET
                 indoorDestination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
                 outdoorDestination = isw.GetMap().GetRandomTile(TileType.Outdoor).Position;
                 if (Randomizer.Next(2) == 0)
-                    randomDestination = indoorDestination;
-                else
                     randomDestination = outdoorDestination;
+                else
+                    randomDestination = indoorDestination;
             }
             List<KeyValuePair<int, int>> newTrail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y), new AstarOtherObject());
             if (newTrail == null)
