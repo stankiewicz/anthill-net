@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
+using astar;
 
 namespace AntHill.NET
 {
@@ -24,6 +25,83 @@ namespace AntHill.NET
             {
                 if ((health = value) <= 0)
                     throw new DeathException();
+            }
+        }
+        public void MoveRotateOrAttack(Creature aggresor, Creature prey, ISimulationWorld isw)
+        {
+            int distance = Distance(aggresor.Position, prey.Position);
+            if (distance == 0)
+            {
+                isw.Attack(aggresor, prey);
+            }
+            if (distance == 1)
+            {
+                if (aggresor.Position.X == prey.Position.X)
+                {
+                    if (aggresor.Position.Y == prey.Position.Y + 1) //ant 1 tile above
+                    {
+                        if (aggresor.Direction == Dir.N)
+                        {
+                            isw.Attack(aggresor, prey);
+                            return;
+                        }
+                        else
+                        {
+                            aggresor.Direction = Dir.N;
+                        }
+                    }
+                    else
+                    {
+                        if (aggresor.Direction == Dir.S)
+                        {
+                            isw.Attack(aggresor, prey);
+                            return;
+                        }
+                        else
+                        {
+                            aggresor.Direction = Dir.S;
+                        }
+                    }
+                }
+                else
+                {
+                    if (aggresor.Position.X == prey.Position.X + 1) //ant 1 tile left
+                    {
+                        if (aggresor.Direction == Dir.W)
+                        {
+                            isw.Attack(aggresor, prey);
+                            return;
+                        }
+                        else
+                        {
+                            aggresor.Direction = Dir.W;
+                        }
+                    }
+                    else
+                    {
+                        if (aggresor.Direction == Dir.E)
+                        {
+                            isw.Attack(aggresor, prey);
+                            return;
+                        }
+                        else
+                        {
+                            aggresor.Direction = Dir.E;
+                        }
+                    }
+
+                }
+                return;
+            }
+            if (distance > 1)
+            {
+
+                List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(aggresor.Position.X, aggresor.Position.Y), new KeyValuePair<int, int>(prey.Position.X, prey.Position.Y), new AstarOtherObject());
+                if (trail == null)
+                    return;
+                if (trail.Count <= 1)
+                    return;
+                MoveOrRotate(trail[1]);                
             }
         }
 

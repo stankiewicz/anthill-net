@@ -248,7 +248,7 @@ namespace AntHill.NET
                 {
                     ((Spider)cD).Health--;
                 }
-                catch (DeathException de)
+                catch (Exception)
                 {
                     this.DeleteSpider((Spider)cD);
                     return true;
@@ -306,7 +306,7 @@ namespace AntHill.NET
 
         public List<Spider> GetVisibleSpiders(Element c)
         {
-            return new List<Spider>();
+            return spiders;
         }
 
         public List<Message> GetVisibleMessages(Element c)
