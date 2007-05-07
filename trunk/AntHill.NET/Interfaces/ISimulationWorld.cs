@@ -20,6 +20,7 @@ namespace AntHill.NET
         bool CreateMessage(Point pos, MessageType mt);
         bool CreateEgg(Point pos);
         bool Attack(Creature cA, Creature cB);
+        bool FeedQueen(Worker w);
 
         //'Creature c' is a creature that wants to get some info
         List<Ant> GetVisibleAnts(Element c);

@@ -390,6 +390,14 @@ namespace AntHill.NET
             return res_messages;
         }
 
+        public bool FeedQueen(Worker w)
+        {
+            if (w.Position != queen.Position) return false;
+            queen.FoodQuantity += w.FoodQuantity;
+            w.FoodQuantity = 0;
+            return true;
+        }
+
         public bool CreateAnt(System.Drawing.Point position)
         {
             if (Randomizer.NextDouble() > AntHillConfig.eggHatchWarriorProbability)

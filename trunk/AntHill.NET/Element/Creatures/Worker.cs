@@ -8,33 +8,27 @@ namespace AntHill.NET
     public class Worker : Citizen
     {
         private int foodQuantity;
-
         public int FoodQuantity
         {
-            get
-            {
-                return foodQuantity;
-            }
-            set
-            {
-                foodQuantity = value;
-            }
+            get { return foodQuantity; }
+            set { foodQuantity = value; }
         }
+
         public Worker(Point pos):base(pos) {}
 
-        public void Dig(ISimulationWorld isw)
-        {//TODO gdzie kopie
-
+        public void Dig(ISimulationWorld isw, Point pos)
+        {
+            isw.GetMap().DestroyWall(isw.GetMap().GetTile(pos.X, pos.Y));
         }
 
-        public void LoadFood(ISimulationWorld isw)
-        {//TODO skad zabiera?
-
+        public void LoadFood(ISimulationWorld isw, Food f)
+        {
+            isw.DeleteFood(f);
+            foodQuantity += f.GetQuantity;
         }
 
-        public void UnloadFood(ISimulationWorld isw)
-        {//TODO gdzie rozladowuje
-
+        public void UnloadFood(ISimulationWorld isw, int quantity)
+        {
         }
 
         public override bool Maintain(ISimulationWorld isw)
