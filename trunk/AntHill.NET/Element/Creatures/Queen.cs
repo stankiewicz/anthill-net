@@ -8,7 +8,7 @@ namespace AntHill.NET
         public Queen(Point pos):base(pos)
         {
         }
-        private int foodQuantity;
+        private int foodQuantity=0;
 
         public int FoodQuantity
         {
@@ -22,14 +22,14 @@ namespace AntHill.NET
             {
                 return false;
             }
-            if (Randomizer.NextDouble() > AntHillConfig.queenLayEggProbability)
+            if (Randomizer.NextDouble() < AntHillConfig.queenLayEggProbability)
             {
                 isw.CreateEgg(this.Position);
             }
             if (this.TurnsToBecomeHungry == 0)
             {
 
-                if (foodQuantity != 0)
+                if (foodQuantity > 0)
                 {
                     this.Eat();
                     foodQuantity--;
