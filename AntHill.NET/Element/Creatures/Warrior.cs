@@ -42,6 +42,7 @@ namespace AntHill.NET
             List<Spider> spiders;
             if ((spiders=isw.GetVisibleSpiders(this)).Count!=0)
             {
+                randomMovemenCount = 0;
                 Spider spider = GetNearestSpider(spiders);                
                 MoveRotateOrAttack(this, spider, isw);
                 return true;
@@ -49,6 +50,7 @@ namespace AntHill.NET
             // teraz wcinamy
             if (this.TurnsToBecomeHungry == 0)
             {
+                randomMovemenCount = 0;
                 List<Food> foods = isw.GetVisibleFood(this);
                 if (foods.Count != 0)
                 {
@@ -70,8 +72,9 @@ namespace AntHill.NET
                 return true;
             }
             Point indoorDestination, outdoorDestination;
-            if (randomDestination.X < 0)
+            if ((randomMovemenCount == 10) ||(randomDestination.X < 0))
             {
+                randomMovemenCount = 0;
                 indoorDestination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
                 outdoorDestination = isw.GetMap().GetRandomTile(TileType.Outdoor).Position;
                 if (Randomizer.Next(2) == 0)
@@ -79,6 +82,7 @@ namespace AntHill.NET
                 else
                     randomDestination = indoorDestination;
             }
+            randomMovemenCount++;            
             List<KeyValuePair<int, int>> newTrail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y), new AstarOtherObject());
             if (newTrail == null)
             {
