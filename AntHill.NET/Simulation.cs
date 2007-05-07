@@ -472,6 +472,27 @@ namespace AntHill.NET
 
             return true;
         }
+        public bool CreateMessage(Point pos, MessageType mt, Point location)
+        {
+            Message ms = new Message(pos, mt,location);
+            for (int i = -AntHillConfig.messageRadius; i < AntHillConfig.messageRadius; i++)
+            {
+                for (int j = -AntHillConfig.messageRadius; j < AntHillConfig.messageRadius; j++)
+                {
+                    if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
+                    {
+                        if (map.Inside(i, j))
+                        {
+                            ms.points.Add(new PointWithIntensity(map.GetTile(i, j), AntHillConfig.messageLifeTime));
+                        }
+                    }
+                }
+
+            }
+            this.messages.Add(ms);
+
+            return true;
+        }
 
         private int GetRandomFoodQuantity()
         {

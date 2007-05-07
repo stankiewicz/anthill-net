@@ -14,6 +14,8 @@ namespace AntHill.NET
             set { foodQuantity = value; }
         }
 
+        List<KeyValuePair<int, int>> path;
+
         public Worker(Point pos):base(pos) {}
 
         public void Dig(ISimulationWorld isw, Point pos)
@@ -50,16 +52,71 @@ namespace AntHill.NET
 
             if (this.foodQuantity == 0) //search for food
             {
+                path = null;
                 food = isw.GetVisibleFood(this);
-                
+
+                if (food.Count != 0)
+                {// idzie do jedzenia
+                    Food nearestFood = this.GetNearestFood(food);
+                    int dist = this.Distance(this.Position, nearestFood.Position);
+                    if (dist == 0)
+                    {
+                        this.FoodQuantity = nearestFood.GetQuantity;
+                        isw.DeleteFood(nearestFood);
+                    }
+                    else
+                    {
+                        isw.CreateMessage(this.Position, MessageType.FoodLocalization,nearestFood.Position);
+                        // znajdujemy t¹ krótk¹ œcie¿kê - wyliczane co 'maintain'
+                        List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(nearestFood.Position.X, nearestFood.Position.Y), new AstarOtherObject());
+                        if (trail.Count >= 2)
+                        {
+                            MoveOrRotate(trail[1]);
+                            return true;
+                        }
+                    }
+                }
+                else
+                {// nie widzi
+                    Message m = ReadMessage(MessageType.FoodLocalization);
+                    if (m != null)
+                    {
+                        // ma sygnal o najwiekszej intensywnosci
+                        List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(m.Position.X, m.Position.Y), new AstarOtherObject());
+                        if (trail.Count >= 2)
+                        {
+                            MoveOrRotate(trail[1]);
+                            return true;
+                        }
+                    }
+
+                }
+
+            }
+            else
+            {
+                int dist = this.Distance(this.Position, Simulation.simulation.queen.Position);
+                if (dist == 0)
+                {
+                    isw.FeedQueen(this);
+                    path = null;
+                }
+                else
+                {
+                    if (path == null || path.Count < 2)
+                    {
+                        path = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(Simulation.simulation.queen.Position.X, Simulation.simulation.queen.Position.Y), new AstarOtherObject());
+                    }
+                    if (path.Count >= 2)
+                    {
+                        if(MoveOrRotate(path[1]))
+                            path.RemoveAt(0);
+                        return true;
+                    }
+                }
             }
 
-            if (path.Count > 0)
-            {
-                if (MoveOrRotate(path[1]))
-                    path.RemoveAt(0);
-            }
-                  
+            MoveRandomly(isw);
 
             return true;
         }

@@ -60,8 +60,23 @@ namespace AntHill.NET
             return foods[i];
         }
 
-        public virtual void ReadMessage()
-        {//TODO jak czyta..
+        public virtual Message ReadMessage(MessageType mt)
+        {
+            int which=-1;
+            int max = -1;
+            for (int i = 0; i < remembered.Count; i++)
+            {
+                if (remembered[i].GetMessageType == mt)
+                {
+                    if (rememberedIntensities[i] > max)
+                    {
+                        max = rememberedIntensities[i];
+                        which = i;
+                    }
+                }
+            }
+            if (which == -1) return null;
+            return remembered[which];
         }
     }
 }
