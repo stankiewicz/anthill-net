@@ -25,5 +25,13 @@ namespace AntHill.NET
             get { return intensity; }
             set { intensity = value; }
         }
+        public override bool Equals(object obj)
+        {
+            if (obj is PointWithIntensity)
+            {
+                if (this.tile.Equals(((PointWithIntensity)obj).Tile)) return true;
+            }
+            return false;
+        }
     }
 }

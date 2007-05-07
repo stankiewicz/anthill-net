@@ -13,53 +13,36 @@ namespace AntHill.NET
             
         }
 
-        Spider GetNearestSpider(List<Spider> list)
+        int GetNearestSpider(List<Spider> spiders)
         {
-            int i = 0;
-            int min = Int32.MaxValue;
+            int i=0;
+            int min=Int32.MaxValue;
             int tmp;
-            for (int j = 0; j < list.Count; j++)
-            {
-                if ((tmp = Distance(this.Position, list[i].Position)) < min)
+            for (int j = 0; j < spiders.Count; j++)
+			{
+                if ((tmp = Distance(this.Position, spiders[i].Position)) < min)
                 {
                     i = j;
                     min = tmp;
                 }
-            }
-            return list[i];            
+			}
+            return i;
         }
 
-        
-        Food GetNearestFood(List<Food> list)
+        int GetNearestFood(List<Food> foods)
         {
             int i = 0;
             int min = Int32.MaxValue;
             int tmp;
-            for (int j = 0; j < list.Count; j++)
+            for (int j = 0; j < foods.Count; j++)
             {
-                if ((tmp = Distance(this.Position, list[i].Position)) < min)
+                if ((tmp = Distance(this.Position, foods[i].Position)) < min)
                 {
                     i = j;
                     min = tmp;
                 }
             }
-            return list[i];
-        }
-        
-        Element GetNearest(List<Element> list)
-        {
-            int i = 0;
-            int min = Int32.MaxValue;
-            int tmp;
-            for (int j = 0; j < list.Count; j++)
-            {
-                if ((tmp = Distance(this.Position, list[i].Position)) < min)
-                {
-                    i = j;
-                    min = tmp;
-                }
-            }
-            return list[i];
+            return i;
         }
 
         public override bool Maintain(ISimulationWorld isw)
@@ -69,11 +52,87 @@ namespace AntHill.NET
                 isw.DeleteAnt(this);
                 return false;
             }
-            List<Spider> spiders;
-            if ((spiders = isw.GetVisibleSpiders(this)).Count!=0)
+            SpreadSignal(isw);
+            List<Spider> list;
+            if ((list=isw.GetVisibleSpiders(this)).Count!=0)
             {
-                Spider spider = GetNearestSpider(spiders);
-                MoveRotateOrAttack(this, spider, isw);
+                int i = GetNearestSpider(list);
+                int distance = Distance(this.Position, list[i].Position);
+                if (distance == 0)
+                {
+                    isw.Attack(this,list[i]);
+                }
+                if (distance == 1)
+                {
+                    if (Position.X == list[i].Position.X)
+                    {
+                        if (Position.Y == list[i].Position.Y + 1) //ant 1 tile above
+                        {
+                            if (Direction == Dir.N)
+                            {
+                                isw.Attack(this, list[i]);
+
+                                return true;
+                            }
+                            else
+                            {
+                                Direction = Dir.N;
+                            }
+                        }
+                        else
+                        {
+                            if (Direction == Dir.S)
+                            {
+                                isw.Attack(this, list[i]);
+                                return true;
+                            }
+                            else
+                            {
+                                Direction = Dir.S;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Position.X == list[i].Position.X + 1) //ant 1 tile left
+                        {
+                            if (Direction == Dir.W)
+                            {
+                                isw.Attack(this, list[i]);
+                                return true;
+                            }
+                            else
+                            {
+                                Direction = Dir.W;
+                            }
+                        }
+                        else
+                        {
+                            if (Direction == Dir.E)
+                            {
+                                isw.Attack(this, list[i]);
+                                return true;
+                            }
+                            else
+                            {
+                                Direction = Dir.E;
+                            }
+                        }
+
+                    }
+                    return true;
+                }
+                if (distance > 1)
+                {
+
+                    List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(list[i].Position.X, list[i].Position.Y), new AstarOtherObject());
+                    if (trail == null)
+                        return true;
+                    if (trail.Count <= 1)
+                        return true;
+                    MoveOrRotate(trail[1]);
+                    return true;
+                }
                 return true;
             }
             // teraz wcinamy
@@ -82,15 +141,15 @@ namespace AntHill.NET
                 List<Food> foods = isw.GetVisibleFood(this);
                 if (foods.Count != 0)
                 {
-                    Food food = GetNearestFood(foods);
-                    int distance = Distance(this.Position, food.Position);
+                    int nearest = GetNearestFood(foods);
+                    int distance = Distance(this.Position, foods[nearest].Position);
                     if (distance == 0)
                     {
-                        isw.DeleteFood(food);
+                        isw.DeleteFood(foods[nearest]);
                         this.Eat();
                         return true;
                     }
-                    List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(food.Position.X, food.Position.Y), new AstarOtherObject());
+                    List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(foods[nearest].Position.X, foods[nearest].Position.Y), new AstarOtherObject());
                     if (trail == null)
                         return true;
                     if (trail.Count <= 1)

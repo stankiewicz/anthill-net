@@ -22,26 +22,26 @@ namespace AntHill.NET
         }
         public Worker(Point pos):base(pos) {}
 
-        public void Dig()
+        public void Dig(ISimulationWorld isw)
         {//TODO gdzie kopie
 
         }
 
-        public void LoadFood()
+        public void LoadFood(ISimulationWorld isw)
         {//TODO skad zabiera?
 
         }
 
-        public void UnloadFood()
+        public void UnloadFood(ISimulationWorld isw)
         {//TODO gdzie rozladowuje
 
         }
 
         public override bool Maintain(ISimulationWorld isw)
-        {//TODO sciezka moze nulla zwrocic
-            //i zwraca - Kamil :-P
+        {
             if (base.IsAlive())
             {
+                SpreadSignal(isw);
                 if (this.TurnsToBecomeHungry == 0)
                     if (this.foodQuantity > 0)
                     {
@@ -67,7 +67,7 @@ namespace AntHill.NET
             }
             else
             {
-                isw.DeleteAnt(this);
+                
                 return false;
             }
             return true;
