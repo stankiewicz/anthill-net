@@ -49,6 +49,7 @@ namespace AntHill.NET
         //If we need to configure/store some settings then do it here
         
         static public int antMaxHealth = 1; //same as in spider
+        static public int antFoodQuantityAfterDeath = 1;
 
         #endregion
     }
