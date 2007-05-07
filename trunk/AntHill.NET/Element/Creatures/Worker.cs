@@ -29,7 +29,11 @@ namespace AntHill.NET
 
         public override bool Maintain(ISimulationWorld isw)
         {
-            if (!base.IsAlive()) return false;
+            if (!base.IsAlive())
+            {
+                isw.DeleteAnt(this);
+                return false;
+            }
             
             SpreadSignal(isw);
             List<Food> food;
