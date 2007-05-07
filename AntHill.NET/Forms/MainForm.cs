@@ -139,28 +139,28 @@ namespace AntHill.NET
 
             Point drawingRect = rightPanel.Location;
             drawingRect.X -= 1;
-            drawingRect.Y = this.hScrollBar1.Location.Y + this.hScrollBar1.Size.Height - 1;
+            drawingRect.Y = this.ClientSize.Height;
 
             if(Simulation.simulation == null)
                 return;
             //Point center;
-            if(Simulation.simulation.Map.Width * 128 > drawingRect.X)
+            if (Simulation.simulation.Map.Width * AntHillConfig.tileSize > drawingRect.X)
             {
                 hScrollBar1.Enabled = true;
                 drawingRect.Y = this.hScrollBar1.Location.Y - 1;
                 magnitudePanel.Visible = true;
             }
             else
-                hScrollBar1.Enabled = false;            
-            if(Simulation.simulation.Map.Height * 128 > drawingRect.Y)
+                hScrollBar1.Enabled = false;
+            if (Simulation.simulation.Map.Height * AntHillConfig.tileSize > drawingRect.Y)
             {
                 vScrollBar1.Enabled = true;
                 drawingRect.X = this.vScrollBar1.Location.X - 1;
                 magnitudePanel.Visible = true;
             }
             else
-                vScrollBar1.Enabled = false;            
-            if(Simulation.simulation.Map.Width * 128 > drawingRect.X)
+                vScrollBar1.Enabled = false;
+            if (Simulation.simulation.Map.Width * AntHillConfig.tileSize > drawingRect.X)
             {
                 hScrollBar1.Enabled = true;
                 drawingRect.Y = this.hScrollBar1.Location.Y - 1;
@@ -172,8 +172,8 @@ namespace AntHill.NET
                 magnitudePanel.Visible = false;
 
             float magnitude;
-            float mapScreenSizeX = 128 * Simulation.simulation.Map.Width;
-            float mapScreenSizeY = 128 * Simulation.simulation.Map.Height;
+            float mapScreenSizeX = AntHillConfig.tileSize * Simulation.simulation.Map.Width;
+            float mapScreenSizeY = AntHillConfig.tileSize * Simulation.simulation.Map.Height;
             mapScreenSizeX /= drawingRect.X;
             mapScreenSizeY /= drawingRect.Y;
             if (mapScreenSizeX > mapScreenSizeY)
@@ -201,8 +201,8 @@ namespace AntHill.NET
             }
             
             int tmp2;
-            int tmp21 = (int)Math.Floor((float)drawingRect.X / (magnitude * 128.0f));
-            int tmp22 = (int)Math.Floor((float)drawingRect.Y / (magnitude * 128.0f));
+            int tmp21 = (int)Math.Floor((float)drawingRect.X / (magnitude * AntHillConfig.tileSize));
+            int tmp22 = (int)Math.Floor((float)drawingRect.Y / (magnitude * AntHillConfig.tileSize));
             
             if (tmp21 < tmp22)
                 tmp2 = tmp21;
@@ -222,8 +222,11 @@ namespace AntHill.NET
                 vScrollBar1.Maximum = 0;
                 vScrollBar1.Minimum = 0;
             }
-            int currentX = 0, currentY = 0, nextX = (int)(128.0f * magnitude), nextY = (int)(128.0f * magnitude);
+            int currentX = 0, currentY = 0, nextX = (int)(AntHillConfig.tileSize * magnitude), nextY = (int)(AntHillConfig.tileSize * magnitude);
 
+            Simulation.simulation.Map.DrawMap(e.Graphics, drawingRect.X, drawingRect.Y,
+                0, 0, magnitude);
+            /*
             for (int y = vScrollBar1.Value; y < Simulation.simulation.Map.Height; y++)            
             {
                 currentX = 0;
@@ -241,8 +244,9 @@ namespace AntHill.NET
                     break;
                 nextY += (int) (128.0f * magnitude);
             }
+             */
 
-            nextX=(int)(128.0f * magnitude);
+            nextX = (int)(AntHillConfig.tileSize * magnitude);
             //show food
             foreach (Food food in Simulation.simulation.food)
                 e.Graphics.DrawImage(AHGraphics.GetFoodBitmap(), (food.Position.X - hScrollBar1.Value) * nextX, (food.Position.Y- vScrollBar1.Value) * nextX, nextX, nextX);
