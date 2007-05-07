@@ -265,8 +265,6 @@ namespace AntHill.NET
                 e.Graphics.DrawImage(AHGraphics.GetRainBitmap(), (Simulation.simulation.rain.Position.X - AntHillConfig.rainWidth / 2 - hScrollBar1.Value) * nextX, (Simulation.simulation.rain.Position.Y - AntHillConfig.rainWidth / 2 - vScrollBar1.Value) * nextX, AntHillConfig.rainWidth * nextX, AntHillConfig.rainWidth * nextX);
                 e.Graphics.ResetClip();
             }
-                
-          
         }
 
         private void MainForm_Load(object sender, EventArgs e)

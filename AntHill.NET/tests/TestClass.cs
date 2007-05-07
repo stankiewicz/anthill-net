@@ -156,7 +156,7 @@ namespace AntHill.NET
             Simulation tmp_isw = new Simulation(tmp_map);
 
             Rain test_rain=new Rain(new System.Drawing.Point(155, 155));
-            test_rain.isRainingAt(155, 155);
+            test_rain.IsRainOver(155, 155);
             Assert.AreEqual(new System.Drawing.Point(155, 155), test_rain.Position, "Rain.Position problem");
             Assert.IsTrue((test_rain.TimeToLive >= 0) && (test_rain.TimeToLive < AntHillConfig.rainMaxDuration + 1), "Rain.TimeToLive range problem");
             int tmp = test_rain.TimeToLive;
