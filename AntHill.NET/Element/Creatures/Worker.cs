@@ -27,43 +27,27 @@ namespace AntHill.NET
             foodQuantity += f.GetQuantity;
         }
 
-        public void UnloadFood(ISimulationWorld isw, int quantity)
-        {
-        }
-
         public override bool Maintain(ISimulationWorld isw)
         {
-            if (base.IsAlive())
-            {
-                SpreadSignal(isw);
-                if (this.TurnsToBecomeHungry == 0)
-                    if (this.foodQuantity > 0)
-                    {
-                        if (path.Count == 0)
-                        {
-                            base.path =
-                            Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y),
-                            new KeyValuePair<int, int>(150, 150), new AstarOtherObject());
-                            // pobranie z visible food albo  jesli nie ma to z sygnalu..
-                            base.path.RemoveAt(0);
-                        }
-                        if (path.Count > this.TurnsWithoutFood)
-                        {
-                            foodQuantity--;
-                            this.Eat();
-                        }
-                    }
-                if (path.Count > 0)
+            if (!base.IsAlive()) return false;
+            
+            SpreadSignal(isw);
+            List<Message> msg = isw.GetVisibleMessages(this);
+            for(int i=0; i<msg.Count; i++)
+                this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
+
+            if (this.TurnsToBecomeHungry == 0)
+                if (this.foodQuantity > 0)
                 {
-                    if (MoveOrRotate(path[1]))
-                        path.RemoveAt(0);
+
                 }
-            }
-            else
+            if (path.Count > 0)
             {
-                isw.DeleteAnt(this);
-                return false;
+                if (MoveOrRotate(path[1]))
+                    path.RemoveAt(0);
             }
+                  
+
             return true;
         }
 

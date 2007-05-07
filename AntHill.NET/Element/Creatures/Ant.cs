@@ -36,13 +36,13 @@ namespace AntHill.NET
 
         public virtual bool IsAlive()
         {
-            if (turnsToBecomeHungry > 0)
+            if (turnsToBecomeHungry >= 0)
             {
                 turnsToBecomeHungry--;
                 return true;
             }
 
-            if (turnsWithoutFood > 0)
+            if (turnsWithoutFood >= 0)
             {
                 turnsWithoutFood--;
                 return true;

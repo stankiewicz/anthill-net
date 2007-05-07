@@ -246,7 +246,7 @@ namespace AntHill.NET
             {
                 try
                 {
-                    ((Spider)cD).Health--;
+                    ((Spider)cD).Health -= AntHillConfig.antStrength;
                 }
                 catch (Exception)
                 {
