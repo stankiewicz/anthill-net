@@ -206,8 +206,8 @@ namespace AntHill.NET
                 tmp2 = tmp22;
             hScrollBar1.Maximum = AntHillConfig.mapColCount - tmp2;
             vScrollBar1.Maximum = AntHillConfig.mapRowCount - tmp2;
-            hScrollBar1.Maximum = (int)((float)hScrollBar1.Maximum * 1.25f);
-            vScrollBar1.Maximum = (int)((float)vScrollBar1.Maximum * 1.25f);
+            hScrollBar1.Maximum = (int)((float)hScrollBar1.Maximum * 1.5f + 10);
+            vScrollBar1.Maximum = (int)((float)vScrollBar1.Maximum * 1.5f + 10);
             if (hScrollBar1.Maximum < 0)
             {
                 hScrollBar1.Maximum = 0;
