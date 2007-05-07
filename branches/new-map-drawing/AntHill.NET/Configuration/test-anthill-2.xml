@@ -1,0 +1,71 @@
+<Anthill>
+
+<WorldMap rowCount="50" colCount="50">
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssooooooooooooooooooooooooooooooooooooooossssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="sssssxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxoxssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+	<Map row="ssssssssssssssssssssssssssssssssssssssssssssssssss" />
+</WorldMap>
+<CreaturesAbilities>
+- <Ant maxLife="100" maxLifeWithoutFood="100" turnNumberToBecomeHungry="50" strength="3" forgettingTime="5" sightRadius="2">
+- <Citizen>
+  <Warrior startCount="20" /> 
+  <Worker startCount="80" /> 
+  </Citizen>
+  <Queen layEggProbability="0.4" xPosition="6" yPosition="6" /> 
+  <Egg hatchWarriorProbability="0.2" hatchTime="10" /> 
+  </Ant>
+  <Spider maxHealth="100" probability="0.5" foodQuantityAfterDeath="5" /> 
+  </CreaturesAbilities>
+- <EnvironmentCharacteristics>
+  <Rain cloudWidth="30" probability="0.1" maxDuration="2" /> 
+  <Food probability="0.2" /> 
+  <Signal lifeTime="10" radius="3" /> 
+  </EnvironmentCharacteristics>
+</Anthill>

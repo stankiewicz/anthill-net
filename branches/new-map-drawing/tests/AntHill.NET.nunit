@@ -1,0 +1,6 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Default" />
+  <Config name="Default" binpathtype="Auto">
+    <assembly path="AntHill.NET\bin\Debug\AntHill.NET.exe" />
+  </Config>
+</NUnitProject>
