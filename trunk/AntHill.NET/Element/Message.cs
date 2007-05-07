@@ -33,6 +33,15 @@ namespace AntHill.NET
             get { return type; }
         }
 
+        public PointWithIntensity GetPoint(Point p)
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (points[i].Tile.Position == p) return points[i];
+            }
+            return null;
+        }
+
         public override bool Maintain(ISimulationWorld isw)
         {
             for (int i = 0; i < points.Count; i++)

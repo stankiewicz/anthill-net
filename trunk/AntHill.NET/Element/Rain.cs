@@ -32,7 +32,7 @@ namespace AntHill.NET
 
         public override bool Maintain(ISimulationWorld isw)
         {
-            if (--timeToLive <= 0)
+            if (--timeToLive < 0)
             {
                 isw.DeleteRain();
                 return false;
