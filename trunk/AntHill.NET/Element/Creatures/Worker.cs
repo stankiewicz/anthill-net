@@ -14,8 +14,6 @@ namespace AntHill.NET
             set { foodQuantity = value; }
         }
 
-        List<KeyValuePair<int, int>> path;
-
         public Worker(Point pos):base(pos) {}
 
         public void Dig(ISimulationWorld isw, Point pos)

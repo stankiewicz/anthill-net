@@ -48,7 +48,9 @@ namespace AntHill.NET
             this.ClientSize = new System.Drawing.Size(463, 387);
             this.Controls.Add(this.txtConfig);
             this.Name = "ConfigForm";
+            this.Opacity = 0.75;
             this.Text = "ConfigForm";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigForm_FormClosing);
             this.Load += new System.EventHandler(this.ConfigForm_Load);
             this.ResumeLayout(false);
