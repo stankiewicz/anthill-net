@@ -87,7 +87,7 @@ namespace astar
             }
 
         }
-        const int max_deep = 30;
+        const int max_deep = 10;
 
         static Heap OpenHeap = new Heap();
         static List<AstarNode> Closed = new List<AstarNode>();

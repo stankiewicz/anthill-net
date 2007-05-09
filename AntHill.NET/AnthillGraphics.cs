@@ -13,6 +13,7 @@ namespace AntHill.NET
         static Bitmap[,] creatureBitmaps;
         static Bitmap rainBitmap;
         static Bitmap foodBitmap;
+        static Bitmap unknown;
 
         static public void Init()
         {
@@ -26,7 +27,9 @@ namespace AntHill.NET
             
             rainBitmap=new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
             foodBitmap=new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
-             
+            //For unknown (new) objects:
+            unknown = new Bitmap(1, 1);
+            unknown.SetPixel(0, 0, Color.White);             
             
             creatureBitmaps[(int)CreatureType.queen, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antQueenBmp));
             creatureBitmaps[(int)CreatureType.warrior, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antWarriorBmp));
@@ -78,6 +81,47 @@ namespace AntHill.NET
         static public Bitmap GetFoodBitmap()
         {
             return foodBitmap;
+        }
+
+        static public CreatureType GetType(Creature c)
+        {
+            if (c is Worker) return CreatureType.worker;
+            if (c is Warrior) return CreatureType.warrior;
+            if (c is Spider) return CreatureType.spider;
+            // Default:
+            return CreatureType.queen;            
+        }
+
+        static public Bitmap GetElementBitmap(Element e)
+        {
+            if (e is Food) return foodBitmap;
+            if (e is Creature) return GetCreature(GetType((Creature)e), ((Creature)e).Direction);
+            if (e is Rain) return rainBitmap;
+            return unknown;
+        }
+
+        static public void DrawElement(Graphics g, Element e, float realTileSize, float offX, float offY)
+        {
+            if (e is Queen)
+                if (((Queen)e).FoodQuantity > 0)
+                    g.DrawImage(foodBitmap,
+                        e.Position.X * realTileSize - offX,
+                        e.Position.Y * realTileSize - offY,
+                        realTileSize, realTileSize);
+
+            if (!(e is Rain))
+            {
+                g.DrawImage(GetElementBitmap(e),
+                        e.Position.X * realTileSize - offX,
+                        e.Position.Y * realTileSize - offY,
+                        realTileSize, realTileSize);
+                return;
+            }
+
+            g.DrawImage(rainBitmap,
+                    (e.Position.X - AntHillConfig.rainWidth / 2) * realTileSize - offX,
+                    (e.Position.Y - AntHillConfig.rainWidth / 2) * realTileSize - offY,
+                    AntHillConfig.rainWidth * realTileSize, AntHillConfig.rainWidth * realTileSize);
         }
     }
 }

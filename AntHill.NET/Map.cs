@@ -24,7 +24,7 @@ namespace AntHill.NET
         {
             width = w;
             height = h;
-            this.tiles = tiles;
+            this.tiles = (Tile[,])tiles.Clone();
 
             indoorTiles = new List<Tile>();
             outdoorTiles = new List<Tile>();
@@ -80,33 +80,37 @@ namespace AntHill.NET
             }
         }
 
-        public void DrawMap(Graphics g, int width, int height, float middleX, float middleY, float magnitude)
+        public void DrawMap(Graphics g, Rectangle drawingRect, float middleX, float middleY, float magnitude)
         {
+            int width = drawingRect.Width, height = drawingRect.Height;
             Matrix m = new Matrix();
             m.Scale(magnitude, magnitude);
             float mXt = middleX,
                   mYt = middleY;
 
-            Region r = rOutdoor.Clone();
+            Region r;
             //todo:
             //r translate to 0,0
             //r zoom
             //r translate to dest
+            r = rOutdoor.Clone();
             r.Transform(m);
             r.Translate(-mXt, -mYt);
-            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Replace);
+            g.SetClip(drawingRect);
+            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Intersect);
             g.DrawImage(bmpOutdoor, -mXt, -mYt, bmpOutdoor.Width * magnitude, bmpOutdoor.Height * magnitude);
             r = rIndoor.Clone();
             r.Transform(m);
             r.Translate(-mXt, -mYt);
-            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Replace);
+            g.SetClip(drawingRect);
+            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Intersect);
             g.DrawImage(bmpIndoor, -mXt, -mYt, bmpIndoor.Width * magnitude, bmpIndoor.Height * magnitude);
             r = rWall.Clone();
             r.Transform(m);
             r.Translate(-mXt, -mYt);
-            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Replace);
+            g.SetClip(drawingRect);
+            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Intersect);
             g.DrawImage(bmpWall, -mXt, -mYt, bmpWall.Width * magnitude, bmpWall.Height * magnitude);
-            g.ResetClip();
         }
 
         public bool Inside(int x, int y)
