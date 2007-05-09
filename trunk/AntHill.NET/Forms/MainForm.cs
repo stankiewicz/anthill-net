@@ -196,6 +196,7 @@ namespace AntHill.NET
                 realHeight = mapHeight * tileSize,
                 xRatio, yRatio, magnitude;
 
+            // drawingRect is not the exact position - just width & height
             drawingRect = new Rectangle(0, 0,
                                     rightPanel.Location.X - 1 - vScrollBar1.Width,
                                     ClientSize.Height - hScrollBar1.Height - menuStrip1.Height);
@@ -233,7 +234,7 @@ namespace AntHill.NET
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Invalidate();
+            Invalidate(drawingRect);
         }
 
         private void btnReset_Click(object sender, EventArgs e)

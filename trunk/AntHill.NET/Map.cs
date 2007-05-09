@@ -24,7 +24,11 @@ namespace AntHill.NET
         {
             width = w;
             height = h;
-            this.tiles = (Tile[,])tiles.Clone();
+            //this.tiles = (Tile[,])tiles.Clone();
+            this.tiles = new Tile[w, h];
+            for (int x = 0; x < w; x++)
+                for (int y = 0; y < h; y++)
+                    this.tiles[x, y] = new Tile(tiles[x, y].TileType, tiles[x, y].Position);
 
             indoorTiles = new List<Tile>();
             outdoorTiles = new List<Tile>();
@@ -42,8 +46,7 @@ namespace AntHill.NET
             List<Tile> tmpTile;
             Graphics gWall = Graphics.FromImage(bmpWall),
                     gIndoor = Graphics.FromImage(bmpIndoor),
-                    gOutdoor = Graphics.FromImage(bmpOutdoor),
-                    gTmp;
+                    gOutdoor = Graphics.FromImage(bmpOutdoor);
             Region r;
             Rectangle rect;
             for (int y = 0; y < this.height; y++)
@@ -54,18 +57,15 @@ namespace AntHill.NET
                     {
                         case TileType.Wall:
                             tmpTile = wallTiles;
-                            gTmp = gWall;
                             r = rWall;
                             break;
                         case TileType.Outdoor:
                             tmpTile = outdoorTiles;
-                            gTmp = gOutdoor;
                             r = rOutdoor;
                             break;
                         case TileType.Indoor:
                         default:
                             tmpTile = indoorTiles;
-                            gTmp = gIndoor;
                             r = rIndoor;
                             break;
                     }
@@ -74,8 +74,12 @@ namespace AntHill.NET
                                          AntHillConfig.tileSize,
                                          AntHillConfig.tileSize);
                     tmpTile.Add(t);
-                    gTmp.DrawImage(t.GetBitmap(), rect);
                     r.Union(rect);
+
+                    //Draw appropriate tiles on each bitmap
+                    gIndoor.DrawImage(AHGraphics.GetTile(TileType.Indoor), rect);
+                    gOutdoor.DrawImage(AHGraphics.GetTile(TileType.Outdoor), rect);
+                    gWall.DrawImage(AHGraphics.GetTile(TileType.Wall), rect);
                 }
             }
         }
@@ -150,15 +154,17 @@ namespace AntHill.NET
 
         public void DestroyWall(Tile t)
         {
-            t.TileType = TileType.Outdoor;
             wallTiles.Remove(t);
+            t.TileType = TileType.Indoor;
+            
+            indoorTiles.Add(t);
             Rectangle rec = new Rectangle(t.Position.X * AntHillConfig.tileSize,
                                          t.Position.Y * AntHillConfig.tileSize,
                                          AntHillConfig.tileSize,
                                          AntHillConfig.tileSize);
             this.rWall.Exclude(rec);
             this.rIndoor.Union(rec);
-            indoorTiles.Add(t);
+            
         }
     }
 }
