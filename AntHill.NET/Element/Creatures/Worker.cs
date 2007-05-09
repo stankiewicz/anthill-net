@@ -80,10 +80,10 @@ namespace AntHill.NET
                     if (m != null)
                     {
                         // ma sygnal o najwiekszej intensywnosci
-                        List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(m.Position.X, m.Position.Y), new AstarOtherObject());
+                        List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(m.Position.X, m.Position.Y), new AstarWorkerObject());
                         if (trail.Count >= 2)
                         {
-                            MoveOrRotate(trail[1]);
+                            MoveOrRotateOrDig(isw,trail[1]);
                             return true;
                         }
                     }
@@ -103,11 +103,11 @@ namespace AntHill.NET
                 {
                     if (path == null || path.Count < 2)
                     {
-                        path = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(Simulation.simulation.queen.Position.X, Simulation.simulation.queen.Position.Y), new AstarOtherObject());
+                        path = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(Simulation.simulation.queen.Position.X, Simulation.simulation.queen.Position.Y), new AstarWorkerObject());
                     }
                     if (path.Count >= 2)
                     {
-                        if(MoveOrRotate(path[1]))
+                        if (MoveOrRotateOrDig(isw,path[1]))
                             path.RemoveAt(0);
                         return true;
                     }
@@ -117,6 +117,16 @@ namespace AntHill.NET
             MoveRandomly(isw);
 
             return true;
+        }
+        bool MoveOrRotateOrDig(ISimulationWorld isw,KeyValuePair<int, int> where)
+        {// nie chce mi sie obrotu zrobic do kopania.. 
+            Tile t =isw.GetMap().GetTile(where.Key, where.Value);
+            if (t.TileType == TileType.Wall)
+            {// destroy wall nie ma zabawy z regionami
+                isw.GetMap().DestroyWall(t);
+                return false;
+            }
+            return MoveOrRotate(where);
         }
 
         public override void Destroy(ISimulationWorld isw)
