@@ -49,10 +49,17 @@ namespace AntHill.NET
                 "rainProbability = " + AntHillConfig.rainProbability + Environment.NewLine +
                 "foodProbability = " + AntHillConfig.foodProbability + Environment.NewLine +
                 "messageLifeTime = " + AntHillConfig.messageLifeTime + Environment.NewLine +
-                "messageRadius = " + AntHillConfig.messageRadius;
+                "messageRadius = " + AntHillConfig.messageRadius + Environment.NewLine +
+                "magnitude = " + AntHillConfig.curMagnitude;
 
             //Type t = ((System.Object)AntHillConfig).GetType();
             //foreach (FieldInfo fi in t.GetFields())
+        }
+
+        private void ConfigForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
         }
     }
 }

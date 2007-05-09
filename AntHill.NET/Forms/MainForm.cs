@@ -25,10 +25,14 @@ namespace AntHill.NET
                 MessageBox.Show(e.Message);
                 Application.Exit();
             }
+
+            cf = new ConfigForm();
         }
 
         private void loadDataButton_Click(object sender, EventArgs e)
         {
+            this.Resize -= new EventHandler(UpdateMap);
+
             string name;
             if (simulationXMLopenFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -37,20 +41,13 @@ namespace AntHill.NET
                 try
                 {
                     reader.ReadMe(name);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(name + Properties.Resources.exceptionXmlNotValid + ex.ToString(), "Error");
-                    return;
-                }
-                try
-                {
                     Simulation.DeInit();
                     Simulation.Init(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
                 }
                 catch (Exception exc)
                 {
                     MessageBox.Show(exc.Message);
+                    Invalidate();
                     return;
                 }
 
@@ -59,10 +56,9 @@ namespace AntHill.NET
                 btnReset.Enabled = false;
                 doTurnButton.Enabled = true;
                 btnStop.Enabled = false;
-                hScrollBar1.Maximum = AntHillConfig.mapColCount;
-                vScrollBar1.Maximum = AntHillConfig.mapRowCount;
-                hScrollBar1.Value = hScrollBar1.Maximum / 2;
-                vScrollBar1.Value = vScrollBar1.Maximum / 2;
+
+                this.Resize += new EventHandler(UpdateMap);
+                RecalculateUI();
                 Invalidate();
             }
         }
@@ -93,9 +89,10 @@ namespace AntHill.NET
             btnReset.Enabled = true;
             doTurnButton.Enabled = true;
 
-            if (((ISimulationUser)Simulation.simulation).DoTurn()==false)
+            if (((ISimulationUser)Simulation.simulation).DoTurn() == false)
             {
-                MessageBox.Show("symulacja skonczona");
+                Invalidate();
+                MessageBox.Show(Properties.Resources.SimulationFinished);
             }
             
             Invalidate();
@@ -113,179 +110,144 @@ namespace AntHill.NET
             //((ISimulationUser)Simulation.simulation).Pause();
         }
 
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (((ISimulationUser)Simulation.simulation).DoTurn() == false)
+            {
+                timer.Stop();
+                MessageBox.Show(Properties.Resources.SimulationFinished);
+            }
+            Invalidate();
+        }
+
         private void buttonShowConfig_Click(object sender, EventArgs e)
         {
-            if (cf == null)
-            {
-                cf = new ConfigForm();
-                cf.Show();
-            }
-            else
-            {
-                try
-                {
-                    cf.RefreshData();
-                    cf.Show();
-                }
-                catch { }
-            }
+            cf.RefreshData();
+            cf.Show();
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
         {
+            //Faster drawing
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
             e.Graphics.Clear(Color.Black);
-            if (!checkBox1.Checked) return;
 
-            Point drawingRect = rightPanel.Location;
-            drawingRect.X -= 1;
-            drawingRect.Y = this.hScrollBar1.Location.Y + this.hScrollBar1.Size.Height - 1;
-
-            if(Simulation.simulation == null)
+            //Check whether we really need to draw the map
+            if ((Simulation.simulation == null) ||
+                !checkBox1.Checked)
                 return;
-            //Point center;
-            if(Simulation.simulation.Map.Width * 128 > drawingRect.X)
-            {
-                hScrollBar1.Enabled = true;
-                drawingRect.Y = this.hScrollBar1.Location.Y - 1;
-                magnitudePanel.Visible = true;
-            }
-            else
-                hScrollBar1.Enabled = false;            
-            if(Simulation.simulation.Map.Height * 128 > drawingRect.Y)
-            {
-                vScrollBar1.Enabled = true;
-                drawingRect.X = this.vScrollBar1.Location.X - 1;
-                magnitudePanel.Visible = true;
-            }
-            else
-                vScrollBar1.Enabled = false;            
-            if(Simulation.simulation.Map.Width * 128 > drawingRect.X)
-            {
-                hScrollBar1.Enabled = true;
-                drawingRect.Y = this.hScrollBar1.Location.Y - 1;
-                magnitudePanel.Visible = true;
-            }
-            else
-                hScrollBar1.Enabled = false;            
-            if((!hScrollBar1.Visible)&&(!vScrollBar1.Visible))
-                magnitudePanel.Visible = false;
 
-            float magnitude;
-            float mapScreenSizeX = 128 * Simulation.simulation.Map.Width;
-            float mapScreenSizeY = 128 * Simulation.simulation.Map.Height;
-            mapScreenSizeX /= drawingRect.X;
-            mapScreenSizeY /= drawingRect.Y;
-            if (mapScreenSizeX > mapScreenSizeY)
-            {
-                if (mapScreenSizeX > 1)
-                {
-                    magnitudeBar.Maximum = (int)Math.Ceiling(1000.0f * mapScreenSizeX);
-                    magnitudeBar.Minimum = 1000;
-                }
-            }
-            else
-            {
-                if (mapScreenSizeY > 1)
-                {
-                    magnitudeBar.Maximum = (int)Math.Ceiling(1000.0f * mapScreenSizeY);
-                    magnitudeBar.Minimum = 1000;
-                }
-            }
-            if (magnitudeBar.Maximum < 1000)
-                magnitude = 1.0f;
-            else
-            {
-                magnitudeBar.Minimum = 1000;
-                magnitude = 1000.0f / magnitudeBar.Value;
-            }
+            //Init variables
+            float mapWidth = Simulation.simulation.Map.Width,
+                mapHeight = Simulation.simulation.Map.Height,
+                tileSize = AntHillConfig.tileSize,
+                realWidth = mapWidth * tileSize,
+                realHeight = mapHeight * tileSize,
+                magnitude = AntHillConfig.curMagnitude,
+                realTileSize = tileSize * magnitude,
+                offX = hScrollBar1.Value, offY = vScrollBar1.Value;
+                
+
+            Point drawingRect = new Point(rightPanel.Location.X - 1 - ((vScrollBar1.Visible)?vScrollBar1.Width:0),
+                ClientSize.Height - ((hScrollBar1.Visible)?hScrollBar1.Height:0));
             
-            int tmp2;
-            int tmp21 = (int)Math.Floor((float)drawingRect.X / (magnitude * 128.0f));
-            int tmp22 = (int)Math.Floor((float)drawingRect.Y / (magnitude * 128.0f));
-            
-            if (tmp21 < tmp22)
-                tmp2 = tmp21;
-            else
-                tmp2 = tmp22;
-            hScrollBar1.Maximum = AntHillConfig.mapColCount - tmp2;
-            vScrollBar1.Maximum = AntHillConfig.mapRowCount - tmp2;
-            hScrollBar1.Maximum = (int)((float)hScrollBar1.Maximum * 1.5f + 10);
-            vScrollBar1.Maximum = (int)((float)vScrollBar1.Maximum * 1.5f + 10);
-            if (hScrollBar1.Maximum < 0)
-            {
-                hScrollBar1.Maximum = 0;
-                hScrollBar1.Minimum = 0;
-            }
-            if (vScrollBar1.Maximum < 0)
-            {
-                vScrollBar1.Maximum = 0;
-                vScrollBar1.Minimum = 0;
-            }
-            int currentX = 0, currentY = 0, nextX = (int)(128.0f * magnitude), nextY = (int)(128.0f * magnitude);
+            Simulation.simulation.Map.DrawMap(e.Graphics, drawingRect.X, drawingRect.Y,
+                offX, offY, magnitude);
 
-            for (int y = vScrollBar1.Value; y < Simulation.simulation.Map.Height; y++)            
-            {
-                currentX = 0;
-                nextX = (int)(128.0f * magnitude);
-                for (int x = hScrollBar1.Value; x < Simulation.simulation.Map.Width; x++)
-                {
-                    e.Graphics.DrawImage(Simulation.simulation.Map.GetTile(x, y).GetBitmap() ,currentX,currentY,nextX - currentX, nextY - currentY);
-                    currentX = nextX;
-                    if(currentX > drawingRect.X)
-                        break;
-                    nextX += (int) (128.0f * magnitude);
-                }
-                currentY = nextY;
-                if(currentY > drawingRect.Y)
-                    break;
-                nextY += (int) (128.0f * magnitude);
-            }
-
-            nextX=(int)(128.0f * magnitude);
             //show food
             foreach (Food food in Simulation.simulation.food)
-                e.Graphics.DrawImage(AHGraphics.GetFoodBitmap(), (food.Position.X - hScrollBar1.Value) * nextX, (food.Position.Y- vScrollBar1.Value) * nextX, nextX, nextX);
+                e.Graphics.DrawImage(AHGraphics.GetFoodBitmap(),
+                    food.Position.X * realTileSize - offX,
+                    food.Position.Y * realTileSize - offY,
+                    realTileSize, realTileSize);
 
             //show queen
             if (Simulation.simulation.queen != null)
             {
                 e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.queen, Simulation.simulation.queen.Direction),
-             (Simulation.simulation.queen.Position.X - hScrollBar1.Value) * nextX, (Simulation.simulation.queen.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
-                if (Simulation.simulation.queen.FoodQuantity > 0)
-                    e.Graphics.DrawImage(AHGraphics.GetFoodBitmap(), (Simulation.simulation.queen.Position.X - hScrollBar1.Value) * nextX, (Simulation.simulation.queen.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
+                                    Simulation.simulation.queen.Position.X * realTileSize - offX,
+                                    Simulation.simulation.queen.Position.Y * realTileSize - offY,
+                                    realTileSize, realTileSize); 
+                if (Simulation.simulation.queen.FoodQuantity > 0)                                    
+                    e.Graphics.DrawImage(AHGraphics.GetFoodBitmap(),
+                                    Simulation.simulation.queen.Position.X * realTileSize - offX,
+                                    Simulation.simulation.queen.Position.Y * realTileSize - offY,
+                                    realTileSize, realTileSize);
             }
              //Show ants
-              foreach (Ant ant in Simulation.simulation.ants)
-                   if(ant is Warrior)
-                       e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.warrior, ant.Direction), (ant.Position.X - hScrollBar1.Value) * nextX, (ant.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
-                   else
-                       e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.worker, ant.Direction), (ant.Position.X - hScrollBar1.Value) * nextX, (ant.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
+            foreach (Ant ant in Simulation.simulation.ants)
+            {
+                if (ant is Warrior)
+                    e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.warrior, ant.Direction),
+                                         ant.Position.X * realTileSize - offX,
+                                         ant.Position.Y * realTileSize - offY,
+                                         realTileSize, realTileSize);
+                else
+                    e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.worker, ant.Direction),
+                                         ant.Position.X * realTileSize - offX,
+                                         ant.Position.Y * realTileSize - offY,
+                                         realTileSize, realTileSize);
+            }
                     
              //show spider
              foreach (Spider spider in Simulation.simulation.spiders)
-                e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.spider, spider.Direction), (spider.Position.X - hScrollBar1.Value) * nextX, (spider.Position.Y - vScrollBar1.Value) * nextX, nextX, nextX);
+                e.Graphics.DrawImage(AHGraphics.GetCreature(CreatureType.spider, spider.Direction),
+                                     spider.Position.X * realTileSize - offX,
+                                     spider.Position.Y * realTileSize - offY,
+                                     realTileSize, realTileSize);
             //show rain
             if (Simulation.simulation.rain != null)
-            {
-                e.Graphics.SetClip(new RectangleF(0, 0, Simulation.simulation.Map.Width * nextX, Simulation.simulation.Map.Height * nextX));
-                e.Graphics.DrawImage(AHGraphics.GetRainBitmap(), (Simulation.simulation.rain.Position.X - AntHillConfig.rainWidth / 2 - hScrollBar1.Value) * nextX, (Simulation.simulation.rain.Position.Y - AntHillConfig.rainWidth / 2 - vScrollBar1.Value) * nextX, AntHillConfig.rainWidth * nextX, AntHillConfig.rainWidth * nextX);
-                e.Graphics.ResetClip();
-            }
+                e.Graphics.DrawImage(AHGraphics.GetRainBitmap(),
+                        (Simulation.simulation.rain.Position.X - AntHillConfig.rainWidth / 2) * realTileSize - offX,
+                        (Simulation.simulation.rain.Position.Y - AntHillConfig.rainWidth / 2) * realTileSize - offY,
+                        AntHillConfig.rainWidth * realTileSize, AntHillConfig.rainWidth * realTileSize);
+        }        
+        
+        private void UpdateMap(object sender, EventArgs e)
+        {
+            RecalculateUI();
+            Invalidate();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void RecalculateUI()
         {
-            this.DoubleBuffered = true;
+            float mapWidth = Simulation.simulation.Map.Width,
+                mapHeight = Simulation.simulation.Map.Height,
+                tileSize = AntHillConfig.tileSize,
+                realWidth = mapWidth * tileSize,
+                realHeight = mapHeight * tileSize,
+                xRatio, yRatio, magnitude;
+
+            Point drawingRect = new Point(rightPanel.Location.X - 1 - ((vScrollBar1.Visible) ? vScrollBar1.Width : 0),
+                ClientSize.Height - ((hScrollBar1.Visible) ? hScrollBar1.Height : 0));
+
+            xRatio = ((float)drawingRect.X) / realWidth;
+            yRatio = ((float)drawingRect.Y) / realHeight;
+            magnitudeBar.Minimum = (int)(1000.0f * Math.Min(xRatio, yRatio));
+            magnitudeBar.Maximum = (int)(Math.Max(magnitudeBar.Minimum * 2, 2000));
+            if (AntHillConfig.curMagnitude < (float)magnitudeBar.Minimum / 1000.0f)
+                AntHillConfig.curMagnitude = (float)magnitudeBar.Minimum / 1000.0f;
+            else if (AntHillConfig.curMagnitude > (float)magnitudeBar.Maximum / 1000.0f)
+                AntHillConfig.curMagnitude = (float)magnitudeBar.Minimum / 1000.0f;
+            magnitude = AntHillConfig.curMagnitude;
+
+            hScrollBar1.Visible = (realWidth * magnitude > drawingRect.X);
+            vScrollBar1.Visible = (realHeight * magnitude > drawingRect.Y);
+
+            hScrollBar1.Maximum = (int)Math.Max(realWidth * magnitude - drawingRect.X, 0);
+            vScrollBar1.Maximum = (int)Math.Max(realHeight * magnitude - drawingRect.Y, 0);
+        }
+
+        private void speedBar_Scroll(object sender, EventArgs e)
+        {
+            timer.Interval = speedBar.Value;
         }
 
         private void magnitudeBar_Scroll(object sender, EventArgs e)
         {
-            Invalidate();
-        }
-
-        private void MainForm_ResizeEnd(object sender, EventArgs e)
-        {
+            AntHillConfig.curMagnitude = ((float)magnitudeBar.Value) / 1000.0f;
+            cf.RefreshData();
+            RecalculateUI();
             Invalidate();
         }
 
@@ -299,27 +261,7 @@ namespace AntHill.NET
             Invalidate();
         }
 
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            if (((ISimulationUser)Simulation.simulation).DoTurn() == false)
-            {
-                timer.Stop();
-                MessageBox.Show("symulacja skonczona");
-            }
-            Invalidate();
-        }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        private void speedBar_Scroll(object sender, EventArgs e)
-        {
-            timer.Interval = speedBar.Value;
-        }
-
-        private void MainForm_Resize(object sender, EventArgs e)
         {
             Invalidate();
         }
