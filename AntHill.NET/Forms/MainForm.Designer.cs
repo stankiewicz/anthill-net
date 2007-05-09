@@ -112,18 +112,17 @@ namespace AntHill.NET
             this.magnitudePanel.Name = "magnitudePanel";
             this.magnitudePanel.Size = new System.Drawing.Size(76, 134);
             this.magnitudePanel.TabIndex = 3;
-            this.magnitudePanel.Visible = false;
             // 
             // magnitudeBar
             // 
             this.magnitudeBar.Cursor = System.Windows.Forms.Cursors.SizeNS;
             this.magnitudeBar.Location = new System.Drawing.Point(14, 3);
-            this.magnitudeBar.Maximum = 10000;
+            this.magnitudeBar.Maximum = 2000;
             this.magnitudeBar.Minimum = 1000;
             this.magnitudeBar.Name = "magnitudeBar";
             this.magnitudeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.magnitudeBar.Size = new System.Drawing.Size(42, 104);
-            this.magnitudeBar.TabIndex = 3;
+            this.magnitudeBar.Size = new System.Drawing.Size(45, 104);
+            this.magnitudeBar.TabIndex = 1;
             this.magnitudeBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.magnitudeBar.Value = 1000;
             this.magnitudeBar.Scroll += new System.EventHandler(this.magnitudeBar_Scroll);
@@ -201,7 +200,7 @@ namespace AntHill.NET
             this.speedBar.Maximum = 1000;
             this.speedBar.Minimum = 10;
             this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(75, 42);
+            this.speedBar.Size = new System.Drawing.Size(75, 45);
             this.speedBar.TabIndex = 5;
             this.speedBar.Value = 500;
             this.speedBar.Scroll += new System.EventHandler(this.speedBar_Scroll);
@@ -228,22 +227,22 @@ namespace AntHill.NET
             // vScrollBar1
             // 
             this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.vScrollBar1.Enabled = false;
             this.vScrollBar1.Location = new System.Drawing.Point(493, 0);
             this.vScrollBar1.Name = "vScrollBar1";
             this.vScrollBar1.Size = new System.Drawing.Size(16, 449);
             this.vScrollBar1.TabIndex = 1;
+            this.vScrollBar1.Visible = false;
             this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
             // hScrollBar1
             // 
             this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Enabled = false;
             this.hScrollBar1.Location = new System.Drawing.Point(0, 433);
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(493, 16);
             this.hScrollBar1.TabIndex = 2;
             this.hScrollBar1.Value = 41;
+            this.hScrollBar1.Visible = false;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
             // timer
@@ -263,9 +262,7 @@ namespace AntHill.NET
             this.Name = "MainForm";
             this.Text = "AntHill";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
-            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.UpdateMap);
             this.rightPanel.ResumeLayout(false);
             this.simulationPanel.ResumeLayout(false);
             this.simulationPanel.PerformLayout();
