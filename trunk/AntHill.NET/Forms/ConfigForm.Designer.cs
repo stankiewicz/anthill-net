@@ -49,6 +49,7 @@ namespace AntHill.NET
             this.Controls.Add(this.txtConfig);
             this.Name = "ConfigForm";
             this.Text = "ConfigForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigForm_FormClosing);
             this.Load += new System.EventHandler(this.ConfigForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

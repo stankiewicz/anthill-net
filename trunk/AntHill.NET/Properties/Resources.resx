@@ -150,6 +150,9 @@
   <data name="rainBmp" xml:space="preserve">
     <value>rain.png</value>
   </data>
+  <data name="SimulationFinished" xml:space="preserve">
+    <value>Simulation finished.</value>
+  </data>
   <data name="spiderBmp" xml:space="preserve">
     <value>spider.png</value>
   </data>

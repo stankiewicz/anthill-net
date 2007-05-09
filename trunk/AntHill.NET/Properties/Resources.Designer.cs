@@ -160,6 +160,15 @@ namespace AntHill.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Simulation finished..
+        /// </summary>
+        internal static string SimulationFinished {
+            get {
+                return ResourceManager.GetString("SimulationFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to spider.png.
         /// </summary>
         internal static string spiderBmp {
