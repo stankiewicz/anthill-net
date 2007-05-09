@@ -84,24 +84,28 @@ namespace AntHill.NET
         {
             Matrix m = new Matrix();
             m.Scale(magnitude, magnitude);
-            float mXt = middleX * magnitude,
-                  mYt = middleY * magnitude;
+            float mXt = middleX,
+                  mYt = middleY;
 
             Region r = rOutdoor.Clone();
+            //todo:
+            //r translate to 0,0
+            //r zoom
+            //r translate to dest
             r.Transform(m);
             r.Translate(-mXt, -mYt);
             g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Replace);
-            g.DrawImage(bmpOutdoor, -mXt, -mYt, width, height);
+            g.DrawImage(bmpOutdoor, -mXt, -mYt, bmpOutdoor.Width * magnitude, bmpOutdoor.Height * magnitude);
             r = rIndoor.Clone();
             r.Transform(m);
             r.Translate(-mXt, -mYt);
             g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Replace);
-            g.DrawImage(bmpIndoor, -mXt, -mYt, width, height);
+            g.DrawImage(bmpIndoor, -mXt, -mYt, bmpIndoor.Width * magnitude, bmpIndoor.Height * magnitude);
             r = rWall.Clone();
             r.Transform(m);
             r.Translate(-mXt, -mYt);
             g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Replace);
-            g.DrawImage(bmpWall, -mYt, -mYt, width, height);
+            g.DrawImage(bmpWall, -mXt, -mYt, bmpWall.Width * magnitude, bmpWall.Height * magnitude);
             g.ResetClip();
         }
 
