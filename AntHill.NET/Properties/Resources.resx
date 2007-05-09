@@ -126,6 +126,12 @@
   <data name="antWorkerBmp" xml:space="preserve">
     <value>antWorker.png</value>
   </data>
+  <data name="errorFatal" xml:space="preserve">
+    <value>Fatal error occured. We're really sorry. Bye.</value>
+  </data>
+  <data name="errorGraphics" xml:space="preserve">
+    <value>Error during AHGraphics initialization. Check 'Graphics' folder for missing/corrupted files.</value>
+  </data>
   <data name="exceptionXmlNotValid" xml:space="preserve">
     <value>file is not valid. It generated exception: </value>
   </data>

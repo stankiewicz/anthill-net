@@ -88,6 +88,24 @@ namespace AntHill.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatal error occured. We&apos;re really sorry. Bye..
+        /// </summary>
+        internal static string errorFatal {
+            get {
+                return ResourceManager.GetString("errorFatal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error during AHGraphics initialization. Check &apos;Graphics&apos; folder for missing/corrupted files..
+        /// </summary>
+        internal static string errorGraphics {
+            get {
+                return ResourceManager.GetString("errorGraphics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to file is not valid. It generated exception: .
         /// </summary>
         internal static string exceptionXmlNotValid {

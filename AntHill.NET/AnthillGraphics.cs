@@ -24,13 +24,12 @@ namespace AntHill.NET
             outdoorTile = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.outdoorTileBmp));
             wallTile = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.wallTileBmp));
 
-            
-            rainBitmap=new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
-            foodBitmap=new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
+            rainBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
+            foodBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
             //For unknown (new) objects:
             unknown = new Bitmap(1, 1);
-            unknown.SetPixel(0, 0, Color.White);             
-            
+            unknown.SetPixel(0, 0, Color.White);
+
             creatureBitmaps[(int)CreatureType.queen, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antQueenBmp));
             creatureBitmaps[(int)CreatureType.warrior, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antWarriorBmp));
             creatureBitmaps[(int)CreatureType.worker, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antWorkerBmp));
