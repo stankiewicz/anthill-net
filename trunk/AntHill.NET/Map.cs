@@ -152,6 +152,12 @@ namespace AntHill.NET
         {
             t.TileType = TileType.Outdoor;
             wallTiles.Remove(t);
+            Rectangle rec = new Rectangle(t.Position.X * AntHillConfig.tileSize,
+                                         t.Position.Y * AntHillConfig.tileSize,
+                                         AntHillConfig.tileSize,
+                                         AntHillConfig.tileSize);
+            this.rWall.Exclude(rec);
+            this.rIndoor.Union(rec);
             indoorTiles.Add(t);
         }
     }
