@@ -11,7 +11,16 @@ namespace AntHill.NET
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            try
+            {
+                Application.Run(new MainForm());
+            }
+            catch
+            {
+                MessageBox.Show(Properties.Resources.errorFatal);
+                Application.Exit();
+            }
         }
     }
 }

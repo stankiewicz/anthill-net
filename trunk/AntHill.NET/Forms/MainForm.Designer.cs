@@ -30,16 +30,16 @@ namespace AntHill.NET
         {
             this.components = new System.ComponentModel.Container();
             this.rightPanel = new System.Windows.Forms.Panel();
+            this.cbVisualize = new System.Windows.Forms.CheckBox();
             this.buttonShowConfig = new System.Windows.Forms.Button();
             this.magnitudeBar = new System.Windows.Forms.TrackBar();
             this.magnitudeLabel = new System.Windows.Forms.Label();
+            this.speedBar = new System.Windows.Forms.TrackBar();
+            this.labelSpeed = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
-            this.labelSpeed = new System.Windows.Forms.Label();
             this.doTurnButton = new System.Windows.Forms.Button();
-            this.speedBar = new System.Windows.Forms.TrackBar();
             this.btnReset = new System.Windows.Forms.Button();
-            this.cbVisualize = new System.Windows.Forms.CheckBox();
             this.simulationXMLopenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
@@ -74,6 +74,20 @@ namespace AntHill.NET
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.Size = new System.Drawing.Size(143, 425);
             this.rightPanel.TabIndex = 0;
+            // 
+            // cbVisualize
+            // 
+            this.cbVisualize.AutoSize = true;
+            this.cbVisualize.Checked = true;
+            this.cbVisualize.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbVisualize.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbVisualize.Location = new System.Drawing.Point(0, 232);
+            this.cbVisualize.Name = "cbVisualize";
+            this.cbVisualize.Size = new System.Drawing.Size(143, 17);
+            this.cbVisualize.TabIndex = 6;
+            this.cbVisualize.Text = "Visualize simulation";
+            this.cbVisualize.UseVisualStyleBackColor = true;
+            this.cbVisualize.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // buttonShowConfig
             // 
@@ -111,6 +125,32 @@ namespace AntHill.NET
             this.magnitudeLabel.TabIndex = 3;
             this.magnitudeLabel.Text = "Magnitude:";
             // 
+            // speedBar
+            // 
+            this.speedBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
+            this.speedBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.speedBar.LargeChange = 1;
+            this.speedBar.Location = new System.Drawing.Point(0, 105);
+            this.speedBar.Maximum = 1000;
+            this.speedBar.Minimum = 10;
+            this.speedBar.Name = "speedBar";
+            this.speedBar.Size = new System.Drawing.Size(143, 45);
+            this.speedBar.TabIndex = 5;
+            this.speedBar.TickFrequency = 0;
+            this.speedBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.speedBar.Value = 500;
+            this.speedBar.Scroll += new System.EventHandler(this.speedBar_Scroll);
+            // 
+            // labelSpeed
+            // 
+            this.labelSpeed.AutoSize = true;
+            this.labelSpeed.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelSpeed.Location = new System.Drawing.Point(0, 92);
+            this.labelSpeed.Name = "labelSpeed";
+            this.labelSpeed.Size = new System.Drawing.Size(41, 13);
+            this.labelSpeed.TabIndex = 7;
+            this.labelSpeed.Text = "Speed:";
+            // 
             // btnStop
             // 
             this.btnStop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -133,16 +173,6 @@ namespace AntHill.NET
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
-            // labelSpeed
-            // 
-            this.labelSpeed.AutoSize = true;
-            this.labelSpeed.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelSpeed.Location = new System.Drawing.Point(0, 92);
-            this.labelSpeed.Name = "labelSpeed";
-            this.labelSpeed.Size = new System.Drawing.Size(41, 13);
-            this.labelSpeed.TabIndex = 7;
-            this.labelSpeed.Text = "Speed:";
-            // 
             // doTurnButton
             // 
             this.doTurnButton.Dock = System.Windows.Forms.DockStyle.Top;
@@ -154,22 +184,6 @@ namespace AntHill.NET
             this.doTurnButton.UseVisualStyleBackColor = true;
             this.doTurnButton.Click += new System.EventHandler(this.doTurnButton_Click);
             // 
-            // speedBar
-            // 
-            this.speedBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.speedBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.speedBar.LargeChange = 1;
-            this.speedBar.Location = new System.Drawing.Point(0, 105);
-            this.speedBar.Maximum = 1000;
-            this.speedBar.Minimum = 10;
-            this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(143, 45);
-            this.speedBar.TabIndex = 5;
-            this.speedBar.TickFrequency = 0;
-            this.speedBar.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.speedBar.Value = 500;
-            this.speedBar.Scroll += new System.EventHandler(this.speedBar_Scroll);
-            // 
             // btnReset
             // 
             this.btnReset.Dock = System.Windows.Forms.DockStyle.Top;
@@ -180,20 +194,6 @@ namespace AntHill.NET
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // cbVisualize
-            // 
-            this.cbVisualize.AutoSize = true;
-            this.cbVisualize.Checked = true;
-            this.cbVisualize.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbVisualize.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbVisualize.Location = new System.Drawing.Point(0, 232);
-            this.cbVisualize.Name = "cbVisualize";
-            this.cbVisualize.Size = new System.Drawing.Size(143, 17);
-            this.cbVisualize.TabIndex = 6;
-            this.cbVisualize.Text = "Visualize simulation";
-            this.cbVisualize.UseVisualStyleBackColor = true;
-            this.cbVisualize.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // vScrollBar1
             // 

@@ -28,8 +28,8 @@ namespace AntHill.NET
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
-                Application.Exit();
+                MessageBox.Show(Properties.Resources.errorGraphics);
+                throw new Exception();
             }
 
             cf = new ConfigForm();
@@ -290,5 +290,6 @@ namespace AntHill.NET
         {
             new About().ShowDialog();
         }
+
     }
 }
