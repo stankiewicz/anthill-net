@@ -132,6 +132,9 @@
   <data name="errorGraphics" xml:space="preserve">
     <value>Error during AHGraphics initialization. Check 'Graphics' folder for missing/corrupted files.</value>
   </data>
+  <data name="errorInitialization" xml:space="preserve">
+    <value>Error initializing simulation. Probably bad config.</value>
+  </data>
   <data name="exceptionXmlNotValid" xml:space="preserve">
     <value>file is not valid. It generated exception: </value>
   </data>

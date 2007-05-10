@@ -41,7 +41,7 @@ namespace AntHill.NET
             for(int i=0; i<msg.Count; i++)
                 this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
 
-            if (this.TurnsToBecomeHungry == 0)
+            if (this.TurnsToBecomeHungry <= 0)
                 if (this.foodQuantity > 0)
                 {
                     foodQuantity--;

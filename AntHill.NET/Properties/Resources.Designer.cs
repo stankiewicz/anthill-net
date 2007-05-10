@@ -106,6 +106,15 @@ namespace AntHill.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error initializing simulation. Probably bad config..
+        /// </summary>
+        internal static string errorInitialization {
+            get {
+                return ResourceManager.GetString("errorInitialization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to file is not valid. It generated exception: .
         /// </summary>
         internal static string exceptionXmlNotValid {
