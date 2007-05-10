@@ -11,8 +11,8 @@ namespace AntHill.NET
         private int height;
         private Tile[,] tiles;
 
-        private Bitmap bmpOutdoor, bmpIndoor, bmpWall;
-        private Region rOutdoor, rIndoor, rWall;
+        private Bitmap bmpOutdoorIndoor, bmpWall;
+        private Region rWall;
 
         private List<Tile> indoorTiles, outdoorTiles, wallTiles;
 
@@ -35,51 +35,44 @@ namespace AntHill.NET
             wallTiles = new List<Tile>();
 
             //Initialize bitmaps & tiles' lists
-            bmpIndoor = new Bitmap(width * AntHillConfig.tileSize, height * AntHillConfig.tileSize);
-            bmpOutdoor = new Bitmap(width * AntHillConfig.tileSize, height * AntHillConfig.tileSize);
+            bmpOutdoorIndoor = new Bitmap(width * AntHillConfig.tileSize, height * AntHillConfig.tileSize);
             bmpWall = new Bitmap(width * AntHillConfig.tileSize, height * AntHillConfig.tileSize);
-            (rIndoor = new Region()).MakeEmpty();
-            (rOutdoor = new Region()).MakeEmpty();
             (rWall = new Region()).MakeEmpty();
 
             Tile t;
-            List<Tile> tmpTile;
             Graphics gWall = Graphics.FromImage(bmpWall),
-                    gIndoor = Graphics.FromImage(bmpIndoor),
-                    gOutdoor = Graphics.FromImage(bmpOutdoor);
-            Region r;
-            Rectangle rect;
+                    gOutdoorIndoor = Graphics.FromImage(bmpOutdoorIndoor);
             for (int y = 0; y < this.height; y++)
             {
                 for (int x = 0; x < this.width; x++)
                 {
+                    Rectangle rect = new Rectangle(x * AntHillConfig.tileSize,
+                     y * AntHillConfig.tileSize,
+                     AntHillConfig.tileSize,
+                     AntHillConfig.tileSize);
+
                     switch ((t = tiles[x, y]).TileType)
                     {
-                        case TileType.Wall:
-                            tmpTile = wallTiles;
-                            r = rWall;
-                            break;
+                        //Indoor&Outdoor are on the same bitmap
+                        //because they're not overlapping
                         case TileType.Outdoor:
-                            tmpTile = outdoorTiles;
-                            r = rOutdoor;
+                            outdoorTiles.Add(t);
+                            gOutdoorIndoor.DrawImage(AHGraphics.GetTile(TileType.Outdoor), rect);
                             break;
                         case TileType.Indoor:
-                        default:
-                            tmpTile = indoorTiles;
-                            r = rIndoor;
+                            indoorTiles.Add(t);
+                            gOutdoorIndoor.DrawImage(AHGraphics.GetTile(TileType.Indoor), rect);
                             break;
-                    }
-                    rect = new Rectangle(x * AntHillConfig.tileSize,
-                                         y * AntHillConfig.tileSize,
-                                         AntHillConfig.tileSize,
-                                         AntHillConfig.tileSize);
-                    tmpTile.Add(t);
-                    r.Union(rect);
+                        //Wall's on a separate, clipped bitmap;
+                        //We also have to draw indoor under the wall
+                        case TileType.Wall:
+                            wallTiles.Add(t);
+                            rWall.Union(rect);
+                            gWall.DrawImage(AHGraphics.GetTile(TileType.Wall), rect);
+                            gOutdoorIndoor.DrawImage(AHGraphics.GetTile(TileType.Indoor), rect);
+                            break;
 
-                    //Draw appropriate tiles on each bitmap
-                    gIndoor.DrawImage(AHGraphics.GetTile(TileType.Indoor), rect);
-                    gOutdoor.DrawImage(AHGraphics.GetTile(TileType.Outdoor), rect);
-                    gWall.DrawImage(AHGraphics.GetTile(TileType.Wall), rect);
+                    }
                 }
             }
         }
@@ -92,27 +85,12 @@ namespace AntHill.NET
             float mXt = middleX,
                   mYt = middleY;
 
-            Region r;
-            //todo:
-            //r translate to 0,0
-            //r zoom
-            //r translate to dest
-            r = rOutdoor.Clone();
+            Region r = rWall.Clone();
             r.Transform(m);
             r.Translate(-mXt, -mYt);
+
             g.SetClip(drawingRect);
-            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Intersect);
-            g.DrawImage(bmpOutdoor, -mXt, -mYt, bmpOutdoor.Width * magnitude, bmpOutdoor.Height * magnitude);
-            r = rIndoor.Clone();
-            r.Transform(m);
-            r.Translate(-mXt, -mYt);
-            g.SetClip(drawingRect);
-            g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Intersect);
-            g.DrawImage(bmpIndoor, -mXt, -mYt, bmpIndoor.Width * magnitude, bmpIndoor.Height * magnitude);
-            r = rWall.Clone();
-            r.Transform(m);
-            r.Translate(-mXt, -mYt);
-            g.SetClip(drawingRect);
+            g.DrawImage(bmpOutdoorIndoor, -mXt, -mYt, bmpOutdoorIndoor.Width * magnitude, bmpOutdoorIndoor.Height * magnitude);
             g.SetClip(r, System.Drawing.Drawing2D.CombineMode.Intersect);
             g.DrawImage(bmpWall, -mXt, -mYt, bmpWall.Width * magnitude, bmpWall.Height * magnitude);
         }
@@ -163,8 +141,6 @@ namespace AntHill.NET
                                          AntHillConfig.tileSize,
                                          AntHillConfig.tileSize);
             this.rWall.Exclude(rec);
-            this.rIndoor.Union(rec);
-            
         }
     }
 }
