@@ -26,7 +26,7 @@ namespace AntHill.NET
             {
                 AHGraphics.Init();
             }
-            catch (Exception e)
+            catch
             {
                 MessageBox.Show(Properties.Resources.errorGraphics);
                 throw new Exception();
