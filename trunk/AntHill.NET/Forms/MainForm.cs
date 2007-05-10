@@ -67,6 +67,8 @@ namespace AntHill.NET
                 btnStop.Enabled = false;
                 btnReset.Enabled = true;
 
+                timer.Interval = speedBar.Maximum - speedBar.Value + speedBar.Minimum;
+
                 this.Resize += new EventHandler(UpdateMap);
                 RecalculateUI();
                 Invalidate();
@@ -221,7 +223,7 @@ namespace AntHill.NET
 
         private void speedBar_Scroll(object sender, EventArgs e)
         {
-            timer.Interval = speedBar.Value;
+            timer.Interval = speedBar.Maximum - speedBar.Value + speedBar.Minimum;
         }
 
         private void magnitudeBar_Scroll(object sender, EventArgs e)
@@ -288,7 +290,7 @@ namespace AntHill.NET
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new About().ShowDialog();
+            new AboutBox().ShowDialog();
         }
 
     }

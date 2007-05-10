@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AntHill.NET")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Created by:\r\n\r\nCzekala Tomasz\r\nJaworski Filip\r\nStankiewicz Radosław\r\nŚlesiński Kamil\r\nWojciechowski Robert")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Home")]
+[assembly: AssemblyCompany("PION:PL05@MiNI.PW")]
 [assembly: AssemblyProduct("AntHill.NET")]
 [assembly: AssemblyCopyright("Copyright © Home 2007")]
 [assembly: AssemblyTrademark("")]
