@@ -102,8 +102,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -120,9 +118,6 @@
     <Compile Include="Configuration\XmlReaderWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configuration\test-anthill-1.xml" />
-    <Content Include="Configuration\test-anthill-2.xml" />
-    <Content Include="Configuration\test-ASTAR-anthill.xml" />
     <Content Include="Graphics\ant.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -154,6 +149,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="nunit.framework.dll" />
+    <Content Include="tests\AntHill.Config.xml" />
+    <Content Include="tests\test-anthill-1.xml" />
+    <Content Include="tests\test-anthill-2.xml" />
+    <Content Include="tests\test-ASTAR-anthill.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

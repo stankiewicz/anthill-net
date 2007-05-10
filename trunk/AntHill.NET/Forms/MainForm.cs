@@ -34,6 +34,20 @@ namespace AntHill.NET
 
             cf = new ConfigForm();
             drawingRect = new Rectangle();
+
+            this.MouseWheel += new MouseEventHandler(MainForm_MouseWheel);
+        }
+
+        void MainForm_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (rightPanel.Enabled == false) return;
+
+            int zoom = magnitudeBar.Value + (e.Delta * (magnitudeBar.Maximum - magnitudeBar.Minimum) / 10 / 120);
+            if (zoom > magnitudeBar.Maximum) zoom = magnitudeBar.Maximum;
+            if (zoom < magnitudeBar.Minimum) zoom = magnitudeBar.Minimum;
+            magnitudeBar.Value = zoom;
+
+            magnitudeBar_Scroll(null, null);
         }
 
         private void loadData(object sender, EventArgs e)
@@ -51,12 +65,12 @@ namespace AntHill.NET
                     Simulation.DeInit();
                     Simulation.Init(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
                 }
-                catch (Exception exc)
+                catch
                 {
                     Invalidate();
                     rightPanel.Enabled = false;
 
-                    MessageBox.Show(exc.Message);
+                    MessageBox.Show(Properties.Resources.errorInitialization);
                     return;
                 }
 
@@ -142,7 +156,7 @@ namespace AntHill.NET
         {
             Graphics g = e.Graphics;
             //Faster drawing
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
             g.Clear(Color.Black);
 
             //Check whether we really need to draw the map
@@ -236,7 +250,10 @@ namespace AntHill.NET
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Invalidate(drawingRect);
+            Rectangle r = drawingRect;
+            r.Height += menuStrip1.Height;
+            Invalidate(r);
+
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -292,6 +309,5 @@ namespace AntHill.NET
         {
             new AboutBox().ShowDialog();
         }
-
     }
 }

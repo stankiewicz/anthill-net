@@ -48,7 +48,7 @@ namespace AntHill.NET
                 return true;
             }
             // teraz wcinamy
-            if (this.TurnsToBecomeHungry == 0)
+            if (this.TurnsToBecomeHungry <= 0)
             {
                 randomMovemenCount = 0;
                 List<Food> foods = isw.GetVisibleFood(this);
@@ -68,8 +68,8 @@ namespace AntHill.NET
                     if (trail.Count <= 1)
                         return true;
                     MoveOrRotate(trail[1]);
-                }
-                return true;
+                    return true;
+                }                
             }
             MoveRandomly(isw);            
             return true;

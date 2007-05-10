@@ -42,6 +42,8 @@ namespace AntHill.NET
             Tile t;
             Graphics gWall = Graphics.FromImage(bmpWall),
                     gOutdoorIndoor = Graphics.FromImage(bmpOutdoorIndoor);
+            gWall.SmoothingMode = SmoothingMode.None;
+            gOutdoorIndoor.SmoothingMode = SmoothingMode.None;
             for (int y = 0; y < this.height; y++)
             {
                 for (int x = 0; x < this.width; x++)
