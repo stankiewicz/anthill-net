@@ -41,7 +41,8 @@ namespace AntHill.NET
             }
             return spiders[i];
         }
-
+        private Spider lastSpider = null;
+        private Food lastFood = null;
         public override bool Maintain(ISimulationWorld isw)
         {
             if (!base.IsAlive())
@@ -57,7 +58,11 @@ namespace AntHill.NET
             if (spiders.Count != 0)
             {
                 Spider s = this.GetNearestSpider(spiders);
-                isw.CreateMessage(this.Position, MessageType.SpiderLocalization, s.Position);
+                if (s != lastSpider)
+                {
+                    isw.CreateMessage(this.Position, MessageType.SpiderLocalization, s.Position);
+                    lastSpider = s;
+                }
             }
             List<Message> msg = isw.GetVisibleMessages(this);
             for(int i=0; i<msg.Count; i++)
@@ -86,7 +91,11 @@ namespace AntHill.NET
                     }
                     else
                     {
-                        isw.CreateMessage(this.Position, MessageType.FoodLocalization,nearestFood.Position);
+                        if (nearestFood != lastFood)
+                        {
+                            isw.CreateMessage(this.Position, MessageType.FoodLocalization, nearestFood.Position);
+                            lastFood = nearestFood;
+                        }
                         // znajdujemy t¹ krótk¹ œcie¿kê - wyliczane co 'maintain'
                         List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(nearestFood.Position.X, nearestFood.Position.Y), new AstarOtherObject());
                         if (trail.Count >= 2)

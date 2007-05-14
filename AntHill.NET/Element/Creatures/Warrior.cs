@@ -48,7 +48,8 @@ namespace AntHill.NET
             }
             return false;
         }
-
+        private Spider lastSpider = null;
+        private Food lastFood = null;
         public override bool Maintain(ISimulationWorld isw)
         {//TODO malo:)
             if (!base.IsAlive())
@@ -65,7 +66,11 @@ namespace AntHill.NET
             if ((spiders = isw.GetVisibleSpiders(this)).Count != 0)
             {
                 Spider spider = GetNearestSpider(spiders);
-                isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
+                if (spider != lastSpider)
+                {
+                    isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
+                    lastSpider = spider;
+                }
                 MoveRotateOrAttack(this, spider, isw);
                 randomDestination.X = -1;
                 return true;
@@ -88,7 +93,11 @@ namespace AntHill.NET
             {
                 Food food = GetNearestFood(foods);
                 int distance = Distance(this.Position, food.Position);
-                isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
+                if (food != lastFood)
+                {
+                    isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
+                    lastFood = food;
+                }
                 if (this.TurnsToBecomeHungry <= 0)
                 {
                     if (distance == 0)
