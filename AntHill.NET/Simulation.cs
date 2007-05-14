@@ -361,9 +361,9 @@ namespace AntHill.NET
             {
                 for (int i = 0; i < messages.Count; i++)
                 {
-                    for (int j = 0; j < messages[i].points.Count; j++)
+                    for (int j = 0; j < messages[i].Points.Count; j++)
                     {
-                        if (c.Position == messages[i].points[j].Tile.Position)
+                        if (c.Position == messages[i].Points[j].Tile.Position)
                         {
                             res_messages.Add(messages[i]);
                             break;
@@ -375,10 +375,10 @@ namespace AntHill.NET
             {
                 for (int i = 0; i < messages.Count; i++)
                 {
-                    for (int j = 0; j < messages[i].points.Count; j++)
+                    for (int j = 0; j < messages[i].Points.Count; j++)
                     {
-                        if (messages[i].points[j].Tile.TileType == TileType.Outdoor &&
-                            c.Position == messages[i].points[j].Tile.Position)
+                        if (messages[i].Points[j].Tile.TileType == TileType.Outdoor &&
+                            c.Position == messages[i].Points[j].Tile.Position)
                         {
                             res_messages.Add(messages[i]);
                             break;
@@ -462,8 +462,7 @@ namespace AntHill.NET
                     {
                         if (map.Inside(i + pos.X, j + pos.Y))
                         {
-                            ms.points.Add(new PointWithIntensity(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime));
-                            map.AddMessage(mt, new Point(i + pos.X, j + pos.Y));
+                            ms.AddPoint(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime, map);
                         }
                     }
                 }
@@ -484,8 +483,7 @@ namespace AntHill.NET
                     {
                         if (map.Inside(i+pos.X, j+pos.Y))
                         {
-                            ms.points.Add(new PointWithIntensity(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime));
-                            map.AddMessage(mt, new Point(i + pos.X, j + pos.Y));
+                            ms.AddPoint(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime, map);
                         }
                     }
                 }

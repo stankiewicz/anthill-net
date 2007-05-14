@@ -57,13 +57,13 @@ namespace AntHill.NET
             {
                 foreach (Message m in lMessage)
                 {
-                    for (int j = 0; j < m.points.Count; )
+                    for (int j = 0; j < m.Points.Count; )
                     {
-                        if (Math.Abs(m.points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth
-                            && Math.Abs(m.points[j].Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth)
+                        if (Math.Abs(m.Points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth
+                            && Math.Abs(m.Points[j].Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth)
                         {
-                            isw.GetMap().RemoveMessage(m.GetMessageType, m.points[j].Tile.Position);
-                            m.points.RemoveAt(j);
+                            isw.GetMap().RemoveMessage(m.GetMessageType, m.Points[j].Tile.Position);
+                            m.Points.RemoveAt(j);
                         }
                         else
                             j++;
