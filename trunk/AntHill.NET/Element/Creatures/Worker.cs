@@ -54,10 +54,10 @@ namespace AntHill.NET
             List<Food> food;
             List<Spider> spiders;
             spiders = isw.GetVisibleSpiders(this);
-            if (spiders != null)
+            if (spiders.Count != 0)
             {
                 Spider s = this.GetNearestSpider(spiders);
-                isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
+                isw.CreateMessage(this.Position, MessageType.SpiderLocalization, s.Position);
             }
             List<Message> msg = isw.GetVisibleMessages(this);
             for(int i=0; i<msg.Count; i++)
