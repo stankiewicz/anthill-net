@@ -71,13 +71,10 @@ namespace AntHill.NET
             this.map = map;
 
             for (int i = AntHillConfig.workerStartCount; i > 0; i--)
-            {
                 this.CreateWorker(Map.GetRandomTile(TileType.Indoor).Position);
-            }
+
             for (int i = AntHillConfig.warriorStartCount; i > 0; i--)
-            {
                 this.CreateWarrior(Map.GetRandomTile(TileType.Indoor).Position);
-            }
         }
 
         public Map Map
@@ -88,15 +85,12 @@ namespace AntHill.NET
         bool CheckIfExists(TileType tt)
         {
             for (int i = 0; i < Map.Height; i++)
-            {
                 for (int j = 0; j < Map.Width; j++)
-                {
-                    if (Map.GetTile(j, i).TileType == tt) return true;
-                }
-            }
+                    if (Map.GetTile(j, i).TileType == tt)
+                        return true;
+
             return false;
         }
-
 
         Point GetRandomPoint()
         {
@@ -111,25 +105,12 @@ namespace AntHill.NET
         bool ISimulationUser.DoTurn()
         {
             if (queen == null) return false;
-            try
-            {
-                if (Randomizer.NextDouble() <= AntHillConfig.spiderProbability)
+
+            if (Randomizer.NextDouble() <= AntHillConfig.spiderProbability)
                     this.CreateSpider(Map.GetRandomTile(TileType.Outdoor).Position);
-            }
-            catch (Exception)
-            {
 
-            }
-
-            try
-            {
-                if (Randomizer.NextDouble() <= AntHillConfig.foodProbability)
-                    this.CreateFood(Map.GetRandomTile(TileType.Outdoor).Position, GetRandomFoodQuantity());
-            }
-            catch (Exception)
-            {
-                
-            }
+            if (Randomizer.NextDouble() <= AntHillConfig.foodProbability)
+                this.CreateFood(Map.GetRandomTile(TileType.Outdoor).Position, GetRandomFoodQuantity());
 
             if ((rain == null) && (Randomizer.NextDouble() <= AntHillConfig.rainProbability))
                 this.CreateRain(GetRandomPoint());
@@ -476,7 +457,7 @@ namespace AntHill.NET
 
         private int GetRandomFoodQuantity()
         {
-            return Randomizer.Next(20) + 1;
+            return Randomizer.Next(AntHillConfig.foodRandomMaxQuantity) + 1;
         }
 
         #endregion

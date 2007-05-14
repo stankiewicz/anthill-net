@@ -102,7 +102,7 @@
 <EnvironmentCharacteristics>
   <Rain cloudWidth="3" probability="0.1" maxDuration="2" /> 
   <Food probability="0.2" maxDensity="10"/> 
-  <Signal lifeTime="10" radius="3" /> 
+  <Signal lifeTime="10" radius="1" /> 
 </EnvironmentCharacteristics>
 
 </Anthill>
