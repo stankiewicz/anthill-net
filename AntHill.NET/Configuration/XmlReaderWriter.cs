@@ -143,7 +143,7 @@ namespace AntHill.NET
                             } break;
                     }
             }
-
+            textReader.Close();
             if (rowCount < AntHillConfig.mapRowCount)
                 throw new Exception("Not enough rows");
             //MessageBox.Show(rowCount.ToString());
