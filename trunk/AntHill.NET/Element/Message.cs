@@ -66,7 +66,16 @@ namespace AntHill.NET
             }
             return null;
         }
-
+        private int GetId(int x, int y)
+        {
+            int id = -1;
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (points[i].Tile.Position.X==x && points[i].Tile.Position.Y== y)
+                    return i;
+            }
+            return id;
+        }
         public override bool Maintain(ISimulationWorld isw)
         {
             for (int i = 0; i < points.Count; i++)
@@ -92,12 +101,13 @@ namespace AntHill.NET
                     {
                         if (map.Inside(i+point.X, j+point.Y))
                         {// czy wogole w srodku
+                            if (map.GetTile(i + point.X, j + point.Y).TileType == TileType.Wall) continue;
                             if (map.GetTile(i + point.X, j + point.Y).messages.Contains(this))
                             {// czy zawiera
-
-                                if (this.points.Contains(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0)))
+                                int idx;
+                                if ((idx = GetId(i + point.X, j + point.Y))!=-1)// this.points.Contains(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0)))
                                 {// czy punkt istnieje
-                                    int idx = points.IndexOf(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0));
+                                    //int idx = points.IndexOf(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0));
                                     if (points[idx].Intensity < intensity)
                                     {// czy zwiekszyc intensywnosc
                                         points[idx].Intensity = intensity;
