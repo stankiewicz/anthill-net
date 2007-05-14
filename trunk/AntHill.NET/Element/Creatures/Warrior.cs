@@ -75,7 +75,6 @@ namespace AntHill.NET
             return true;
         }
 
-
         public override void Destroy(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
