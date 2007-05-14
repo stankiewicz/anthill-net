@@ -197,19 +197,41 @@ namespace AntHill.NET
         {
 
             XmlReaderWriter reader = new XmlReaderWriter();
-            reader.ReadMe("..\\..\\Configuration\test-ASTAR-anthill.xml");
+            reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
 
             Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
 
             Spider test_spider = new Spider(new Point(5, 0));
-            Ant test_ant = new Warrior(new Point(5, 10));
+            Ant test_ant = new Warrior(new Point(5, 9));
             List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(test_spider.Position.X, test_spider.Position.Y), new KeyValuePair<int, int>(test_ant.Position.X, test_ant.Position.Y), new TestAstarObject(test_isw));
 
-//            List<KeyValuePair<int, int>> test_trail = new List<KeyValuePair<int,int>>
-//            foreach (KeyValuePair<int, int> key in trail)
+            List<KeyValuePair<int, int>> test_trail = new List<KeyValuePair<int, int>>();
+            /*
+              <Map row="sssssSssss" />
+              <Map row="sxooooooxs" />
+              <Map row="sxooooooxs" />
+              <Map row="sxooooooxs" />
+              <Map row="sxooooooxs" />
+              <Map row="sxooooooxs" />
+              <Map row="sxoooKooxs" />
+              <Map row="sxooooooxs" />
+              <Map row="sxooooooxs" />
+              <Map row="ssssssssss" />
+*/
+
+            test_trail.Add(new KeyValuePair<int, int>(5,0));
+            test_trail.Add(new KeyValuePair<int, int>(5,1));
+            test_trail.Add(new KeyValuePair<int, int>(5,2));
+            test_trail.Add(new KeyValuePair<int, int>(5,3));
+            test_trail.Add(new KeyValuePair<int, int>(5,4));
+            test_trail.Add(new KeyValuePair<int, int>(5,5));
+            test_trail.Add(new KeyValuePair<int, int>(5,6));
 
 
-
+            foreach (KeyValuePair<int, int> key in trail)
+            {
+                Assert.AreSame(key, test_trail[key.Key], "Astar problem");// %s,%s", key.ToString, test_trail[key.Key]);
+            }
         }
 
         class TestAstarObject: IAstar
