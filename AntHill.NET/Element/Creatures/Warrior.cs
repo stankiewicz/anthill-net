@@ -87,8 +87,7 @@ namespace AntHill.NET
                 List<Food> foods = isw.GetVisibleFood(this);
                 if (foods.Count != 0)
                 {
-                    Food food = GetNearestFood(foods);
-                    isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
+                    Food food = GetNearestFood(foods);                    
                     int distance = Distance(this.Position, food.Position);
                     if (distance == 0)
                     {
