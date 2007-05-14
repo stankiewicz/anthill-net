@@ -182,10 +182,12 @@ namespace AntHill.NET
             {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
             {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
 
-            Map test_map = new Map(3, 4, test_tiles);
+            Map test_map = new Map(2, 3, test_tiles);
 
             Simulation tmp_isw = new Simulation(test_map);
-            
+
+            AHGraphics.Init();            
+
             Assert.AreSame(test_map, tmp_isw.GetMap(), "Simulation.GetMap problem");
 
 //tu brakuje doœæ du¿o funkcji i do nich testów ;)
@@ -200,45 +202,68 @@ namespace AntHill.NET
             reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
 
             AHGraphics.Init();
+            Astar.Init(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
 
             Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
 
             Spider test_spider = new Spider(new Point(5, 0));
-            Ant test_ant = new Warrior(new Point(5, 9));
-            List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(test_spider.Position.X, test_spider.Position.Y), new KeyValuePair<int, int>(test_ant.Position.X, test_ant.Position.Y), new TestAstarObject(test_isw));
+            Ant test_ant1 = new Warrior(new Point(5, 8));
+            Ant test_ant2 = new Warrior(new Point(0, 3));
+            List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(test_spider.Position.X, test_spider.Position.Y), new KeyValuePair<int, int>(test_ant1.Position.X, test_ant1.Position.Y), new TestAstarObject(test_isw));
 
-            List<KeyValuePair<int, int>> test_trail = new List<KeyValuePair<int, int>>();
-            /*
+            List<KeyValuePair<int, int>> test_trail1 = new List<KeyValuePair<int, int>>();
+          
+/*
               <Map row="sssssSssss" />
               <Map row="sxooooooxs" />
               <Map row="sxooooooxs" />
-              <Map row="sxooooooxs" />
+              <Map row="Wxooooooxs" />
               <Map row="sxooooooxs" />
               <Map row="sxooooooxs" />
               <Map row="sxoooKooxs" />
               <Map row="sxooooooxs" />
-              <Map row="sxooooooxs" />
+              <Map row="sxoooWooxs" />
               <Map row="ssssssssss" />
 */
 
-            test_trail.Add(new KeyValuePair<int, int>(5,0));
-            test_trail.Add(new KeyValuePair<int, int>(5,1));
-            test_trail.Add(new KeyValuePair<int, int>(5,2));
-            test_trail.Add(new KeyValuePair<int, int>(5,3));
-            test_trail.Add(new KeyValuePair<int, int>(5,4));
-            test_trail.Add(new KeyValuePair<int, int>(5,5));
-            test_trail.Add(new KeyValuePair<int, int>(5,6));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 0));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 1));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 2));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 3));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 4));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 5));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 6));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 7));
+            test_trail1.Add(new KeyValuePair<int, int>(5, 8));
 
             Assert.IsNotNull(trail,"Trail is null");
-            Assert.AreEqual(test_trail.Count, trail.Count, "Trail {0} and trail_test {1} count is not equal",trail.Count,test_trail.Count);
+            Assert.AreEqual(test_trail1.Count, trail.Count, "Trail {0} and trail_test {1} count is not equal",trail.Count,test_trail1.Count);
 
-
-
-            for (int i=0; i< test_trail.Count; i++)
+            for (int i=0; i< test_trail1.Count; i++)
             {
-//                KeyValuePair<int, int> key in trail)
+                Assert.AreEqual(test_trail1[i], trail[i], "Astar_path element EQUAL problem - is {0}, should be {1}", trail[i],test_trail1[i]);
+            }
 
-                Assert.AreSame(test_trail[i], trail[i], "Astar problem");// %s,%s", key.ToString, test_trail[key.Key]);
+            trail = Astar.Search(new KeyValuePair<int, int>(test_spider.Position.X, test_spider.Position.Y), new KeyValuePair<int, int>(test_ant2.Position.X, test_ant2.Position.Y), new TestAstarObject(test_isw));
+
+            List<KeyValuePair<int, int>> test_trail2 = new List<KeyValuePair<int, int>>();
+
+            test_trail2.Add(new KeyValuePair<int, int>(5, 0));
+            test_trail2.Add(new KeyValuePair<int, int>(4, 0));
+            test_trail2.Add(new KeyValuePair<int, int>(3, 0));
+            test_trail2.Add(new KeyValuePair<int, int>(2, 0));
+            test_trail2.Add(new KeyValuePair<int, int>(1, 0));
+            test_trail2.Add(new KeyValuePair<int, int>(0, 0));
+            test_trail2.Add(new KeyValuePair<int, int>(0, 1));
+            test_trail2.Add(new KeyValuePair<int, int>(0, 2));
+            test_trail2.Add(new KeyValuePair<int, int>(0, 3));
+
+            Assert.IsNotNull(trail, "Trail is null");
+            Assert.AreEqual(test_trail2.Count, trail.Count, "Trail {0} and trail_test {1} count is not equal", trail.Count, test_trail2.Count);
+
+            for (int i = 0; i < test_trail2.Count; i++)
+            {
+                Assert.AreEqual(test_trail2[i], trail[i], "Astar_path element EQUAL problem - is {0}, should be {1}", trail[i], test_trail2[i]);
             }
         }
 
