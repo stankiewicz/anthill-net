@@ -236,6 +236,8 @@ namespace AntHill.NET
 
             hScrollBar1.Maximum = (int)Math.Max(realWidth * magnitude - drawingRect.Width, 0);
             vScrollBar1.Maximum = (int)Math.Max(realHeight * magnitude - drawingRect.Height, 0);
+            vScrollBar1.LargeChange = vScrollBar1.Maximum / 5;
+            hScrollBar1.LargeChange = hScrollBar1.Maximum / 5;
         }
 
         private void speedBar_Scroll(object sender, EventArgs e)

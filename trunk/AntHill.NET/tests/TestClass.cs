@@ -12,7 +12,7 @@ using astar;
  * SimulationTest - dopisaæ to co siê pojawi³o...
  * GetVisibleSthTest - napisaæ... (ant, food, spider, message)
  * Create and Delete sth Test (spider, message, food, ant, ...)
- * FeedQueneTest
+ * 
  * 
  * 
  * 
