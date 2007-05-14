@@ -24,7 +24,17 @@ namespace AntHill.NET
             set { location = value; }
         }
 
-        public List<PointWithIntensity> points;
+        private List<PointWithIntensity> points;
+        public List<PointWithIntensity> Points
+        {
+            get { return points; }
+        }
+        public void AddPoint(Tile t, int intensity, Map map)
+        {
+            points.Add(new PointWithIntensity(t, intensity));
+            map.AddMessage(this.GetMessageType, t.Position);
+        }
+
         public Message(Point pos, MessageType mt ):base(pos)
         {
             type = mt;
@@ -80,14 +90,14 @@ namespace AntHill.NET
                 {
                     if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
                     {
-                        if (map.Inside(i, j))
+                        if (map.Inside(i+point.X, j+point.Y))
                         {// czy wogole w srodku
-                            if (map.GetTile(i, j).messages.Contains(this))
+                            if (map.GetTile(i + point.X, j + point.Y).messages.Contains(this))
                             {// czy zawiera
 
-                                if (this.points.Contains(new PointWithIntensity(map.GetTile(i, j), 0)))
+                                if (this.points.Contains(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0)))
                                 {// czy punkt istnieje
-                                    int idx = points.IndexOf(new PointWithIntensity(map.GetTile(i, j), 0));
+                                    int idx = points.IndexOf(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0));
                                     if (points[idx].Intensity < intensity)
                                     {// czy zwiekszyc intensywnosc
                                         points[idx].Intensity = intensity;
@@ -96,17 +106,17 @@ namespace AntHill.NET
                                 }
                                 else
                                 {// nie ma punktu?? w sumie takiej sytuacji nie powinno byc
-                                    this.points.Add(new PointWithIntensity(map.GetTile(i, j), intensity));
+                                    this.points.Add(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
                                     //update map
-                                    map.AddMessage(this.GetMessageType, new Point(i, j));
+                                    map.AddMessage(this.GetMessageType, new Point(i + point.X, j + point.Y));
                                 }
                             }
                             else
                             {// nie ma w danym tile - wrzucamy
-                                map.GetTile(i, j).messages.Add(this);
-                                this.points.Add(new PointWithIntensity(map.GetTile(i, j), intensity));
+                                map.GetTile(i + point.X, j + point.Y).messages.Add(this);
+                                this.points.Add(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
                                 //update map
-                                map.AddMessage(this.GetMessageType, new Point(i, j));
+                                map.AddMessage(this.GetMessageType, new Point(i + point.X, j + point.Y));
                             }
                         }
                     }
