@@ -69,7 +69,7 @@ namespace AntHill.NET
                         List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(nearestFood.Position.X, nearestFood.Position.Y), new AstarOtherObject());
                         if (trail.Count >= 2)
                         {
-                            MoveOrRotate(trail[1]);
+                            MoveOrRotateOrDig(isw,trail[1]);
                             return true;
                         }
                     }
@@ -87,9 +87,7 @@ namespace AntHill.NET
                             return true;
                         }
                     }
-
                 }
-
             }
             else
             {
@@ -123,7 +121,7 @@ namespace AntHill.NET
             Tile t =isw.GetMap().GetTile(where.Key, where.Value);
             if (t.TileType == TileType.Wall)
             {// destroy wall nie ma zabawy z regionami
-                isw.GetMap().DestroyWall(t);
+                if(this.IsMoveOrRotate(where))isw.GetMap().DestroyWall(t);
                 return false;
             }
             return MoveOrRotate(where);

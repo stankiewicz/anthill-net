@@ -153,7 +153,61 @@ namespace AntHill.NET
         }
 
         public virtual Bitmap GetBitmap() { return new Bitmap(1, 1); }
-
+        
+        protected bool IsMoveOrRotate(KeyValuePair<int, int> pos)
+        {
+            if (Position.X == pos.Key)
+            {
+                if (Position.Y == pos.Value + 1) //ant 1 tile above
+                {
+                    if (Direction == Dir.N)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Dir.N;
+                    }
+                }
+                else
+                {
+                    if (Direction == Dir.S)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Dir.S;
+                    }
+                }
+            }
+            else
+            {
+                if (Position.X == pos.Key + 1) //ant 1 tile left
+                {
+                    if (Direction == Dir.W)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Dir.W;
+                    }
+                }
+                else
+                {
+                    if (Direction == Dir.E)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Direction = Dir.E;
+                    }
+                }
+            }
+            return false;
+        }
         protected bool MoveOrRotate(KeyValuePair<int, int> pos)
         {
             if (Position.X == pos.Key)

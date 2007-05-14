@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" total="16" failures="0" not-run="5" date="2007-04-23" time="13:46:21">
-  <environment nunit-version="2.4.0.2" clr-version="2.0.50727.42" os-version="Microsoft Windows NT 5.0.2195 Service Pack 4" platform="Win32NT" cwd="C:\Documents and Settings\jaworskif\Pulpit\anthill_project\tests" machine-name="PRACOWNIA12" user="jaworskif" user-domain="PRACOWNIA" />
+<test-results name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" total="16" failures="2" not-run="5" date="2007-05-14" time="11:47:56">
+  <environment nunit-version="2.4.0.2" clr-version="2.0.50727.42" os-version="Microsoft Windows NT 5.0.2195 Service Pack 4" platform="Win32NT" cwd="C:\Documents and Settings\stankiewiczr\Pulpit\anthill\tests" machine-name="PRACOWNIA10" user="stankiewiczr" user-domain="PRACOWNIA" />
   <culture-info current-culture="pl-PL" current-uiculture="pl-PL" />
-  <test-suite name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" success="True" time="0.188" asserts="0">
+  <test-suite name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" success="False" time="0.531" asserts="0">
     <results>
-      <test-suite name="AntHill" success="True" time="0.172" asserts="0">
+      <test-suite name="AntHill" success="False" time="0.484" asserts="0">
         <results>
-          <test-suite name="NET" success="True" time="0.172" asserts="0">
+          <test-suite name="NET" success="False" time="0.484" asserts="0">
             <results>
-              <test-suite name="TestClass" success="True" time="0.094" asserts="0">
+              <test-suite name="TestClass" success="False" time="0.422" asserts="0">
                 <results>
                   <test-case name="AntHill.NET.TestClass.AntTest" executed="False">
                     <reason>
                       <message><![CDATA[Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...]]></message>
                     </reason>
                   </test-case>
-                  <test-case name="AntHill.NET.TestClass.AstarTest" executed="True" success="True" time="0.016" asserts="0" />
+                  <test-case name="AntHill.NET.TestClass.AstarTest" executed="True" success="False" time="0.234" asserts="0">
+                    <failure>
+                      <message><![CDATA[System.ArgumentException : Niedozwolone znaki w ścieżce.]]></message>
+                      <stack-trace><![CDATA[   w System.IO.Path.CheckInvalidPathChars(String path)
+   w System.IO.Path.NormalizePathFast(String path, Boolean fullCheck)
+   w System.IO.Path.GetFullPathInternal(String path)
+   w System.IO.Path.GetFullPath(String path)
+   w System.Xml.XmlResolver.ResolveUri(Uri baseUri, String relativeUri)
+   w System.Xml.XmlUrlResolver.ResolveUri(Uri baseUri, String relativeUri)
+   w System.Xml.XmlTextReaderImpl..ctor(String url, XmlNameTable nt)
+   w System.Xml.XmlTextReader..ctor(String url)
+   w AntHill.NET.XmlReaderWriter.ReadMe(String filename) w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\Configuration\XmlReaderWriter.cs:wiersz 52
+   w AntHill.NET.TestClass.AstarTest() w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\tests\TestClass.cs:wiersz 200
+]]></stack-trace>
+                    </failure>
+                  </test-case>
                   <test-case name="AntHill.NET.TestClass.CitizenTest" executed="False">
                     <reason>
                       <message><![CDATA[Citizen class is abstract. NO TEST IN OTHER CLASS (yet?)...]]></message>
@@ -39,15 +54,22 @@
                   <test-case name="AntHill.NET.TestClass.GetVisibleSpiders" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.MapTest" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.MessageTest" executed="True" success="True" time="0.000" asserts="0" />
-                  <test-case name="AntHill.NET.TestClass.PointWithIntensityTest" executed="True" success="True" time="0.031" asserts="2" />
+                  <test-case name="AntHill.NET.TestClass.PointWithIntensityTest" executed="True" success="True" time="0.047" asserts="2" />
                   <test-case name="AntHill.NET.TestClass.QueenTest" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.RainTest" executed="False">
                     <reason>
                       <message><![CDATA[narazie brak zaimplementowanych metod (w klasie Simulation) niezbędnych do działania tej klasy]]></message>
                     </reason>
                   </test-case>
-                  <test-case name="AntHill.NET.TestClass.SimulationTest" executed="True" success="True" time="0.016" asserts="1" />
-                  <test-case name="AntHill.NET.TestClass.SpiderTest" executed="True" success="True" time="0.000" asserts="0" />
+                  <test-case name="AntHill.NET.TestClass.SimulationTest" executed="True" success="False" time="0.016" asserts="0">
+                    <failure>
+                      <message><![CDATA[System.IndexOutOfRangeException : Indeks wykraczał poza granice tablicy.]]></message>
+                      <stack-trace><![CDATA[   w AntHill.NET.Map..ctor(Int32 w, Int32 h, Tile[,] tiles) w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\Map.cs:wiersz 31
+   w AntHill.NET.TestClass.SimulationTest() w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\tests\TestClass.cs:wiersz 185
+]]></stack-trace>
+                    </failure>
+                  </test-case>
+                  <test-case name="AntHill.NET.TestClass.SpiderTest" executed="True" success="True" time="0.000" asserts="3" />
                   <test-case name="AntHill.NET.TestClass.TileTest" executed="True" success="True" time="0.000" asserts="1" />
                   <test-case name="AntHill.NET.TestClass.WarriorTest" executed="True" success="True" time="0.000" asserts="4" />
                   <test-case name="AntHill.NET.TestClass.WorkerTest" executed="True" success="True" time="0.000" asserts="5" />
