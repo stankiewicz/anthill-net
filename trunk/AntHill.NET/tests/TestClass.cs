@@ -199,6 +199,8 @@ namespace AntHill.NET
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
 
+            AHGraphics.Init();
+
             Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
 
             Spider test_spider = new Spider(new Point(5, 0));
@@ -227,10 +229,16 @@ namespace AntHill.NET
             test_trail.Add(new KeyValuePair<int, int>(5,5));
             test_trail.Add(new KeyValuePair<int, int>(5,6));
 
+            Assert.IsNotNull(trail,"Trail is null");
+            Assert.AreEqual(test_trail.Count, trail.Count, "Trail {0} and trail_test {1} count is not equal",trail.Count,test_trail.Count);
 
-            foreach (KeyValuePair<int, int> key in trail)
+
+
+            for (int i=0; i< test_trail.Count; i++)
             {
-                Assert.AreSame(key, test_trail[key.Key], "Astar problem");// %s,%s", key.ToString, test_trail[key.Key]);
+//                KeyValuePair<int, int> key in trail)
+
+                Assert.AreSame(test_trail[i], trail[i], "Astar problem");// %s,%s", key.ToString, test_trail[key.Key]);
             }
         }
 
