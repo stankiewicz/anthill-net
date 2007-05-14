@@ -142,7 +142,7 @@ namespace AntHill.NET
             Tile t;
             Graphics gWall = Graphics.FromImage(bmpWall),
                     gOutdoorIndoor = Graphics.FromImage(bmpOutdoorIndoor),
-                    gSignals = Graphics.FromImage(bmpMessages);
+                    gMessages = Graphics.FromImage(bmpMessages);
             
             for (int y = 0; y < this.height; y++)
             {
@@ -176,7 +176,7 @@ namespace AntHill.NET
 
                     }
 
-                    gSignals.DrawImage(AHGraphics.GetMessagesBitmap(), rect);
+                    gMessages.DrawImage(AHGraphics.GetMessagesBitmap(), rect);
                 }
             }
         }
@@ -276,13 +276,9 @@ namespace AntHill.NET
             
             if (messagesCount[x, y].IncreaseCount(mt) == true)
             {
-                float magnitude = AntHillConfig.curMagnitude;
-                Matrix m = new Matrix();
-                m.Scale(magnitude, magnitude);
-
                 Region r = new Region(GetMessageRect(mt));
-                r.Transform(m);
-                r.Translate(x * AntHillConfig.tileSize * magnitude, y * AntHillConfig.tileSize * magnitude);
+                r.Translate(x * AntHillConfig.tileSize,
+                            y * AntHillConfig.tileSize);
                 rMessages.Union(r);
             }
         }
@@ -293,13 +289,9 @@ namespace AntHill.NET
 
             if (messagesCount[x, y].LowerCount(mt) == true)
             {
-                float magnitude = AntHillConfig.curMagnitude;
-                Matrix m = new Matrix();
-                m.Scale(magnitude, magnitude);
-
                 Region r = new Region(GetMessageRect(mt));
-                r.Transform(m);
-                r.Translate(x * AntHillConfig.tileSize * magnitude, y * AntHillConfig.tileSize * magnitude);
+                r.Translate(x * AntHillConfig.tileSize,
+                            y * AntHillConfig.tileSize);
                 rMessages.Exclude(r);
             }
         }
