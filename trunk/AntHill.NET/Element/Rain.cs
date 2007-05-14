@@ -61,7 +61,10 @@ namespace AntHill.NET
                     {
                         if (Math.Abs(m.points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth
                             && Math.Abs(m.points[j].Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth)
+                        {
+                            isw.GetMap().RemoveMessage(m.GetMessageType, m.points[j].Tile.Position);
                             m.points.RemoveAt(j);
+                        }
                         else
                             j++;
                     }

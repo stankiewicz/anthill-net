@@ -13,6 +13,7 @@ namespace AntHill.NET
         static Bitmap[,] creatureBitmaps;
         static Bitmap rainBitmap;
         static Bitmap foodBitmap;
+        static Bitmap messagesBitmap;
         static Bitmap unknown;
 
         static public void Init()
@@ -26,6 +27,7 @@ namespace AntHill.NET
 
             rainBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
             foodBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
+            messagesBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.messagesBmp));
             //For unknown (new) objects:
             unknown = new Bitmap(1, 1);
             unknown.SetPixel(0, 0, Color.White);
@@ -80,6 +82,11 @@ namespace AntHill.NET
         static public Bitmap GetFoodBitmap()
         {
             return foodBitmap;
+        }
+
+        static public Bitmap GetMessagesBitmap()
+        {
+            return messagesBitmap;
         }
 
         static public CreatureType GetType(Creature c)

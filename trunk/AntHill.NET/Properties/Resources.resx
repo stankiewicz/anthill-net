@@ -147,6 +147,9 @@
   <data name="indoorTileBmp" xml:space="preserve">
     <value>sandTile.png</value>
   </data>
+  <data name="messagesBmp" xml:space="preserve">
+    <value>messagesTile.png</value>
+  </data>
   <data name="noIndoorTilesError" xml:space="preserve">
     <value>Map has no indoor tiles.</value>
   </data>

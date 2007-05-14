@@ -460,9 +460,10 @@ namespace AntHill.NET
                 {
                     if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
                     {
-                        if (map.Inside(i, j))
+                        if (map.Inside(i + pos.X, j + pos.Y))
                         {
-                            ms.points.Add(new PointWithIntensity(map.GetTile(i, j), AntHillConfig.messageLifeTime));
+                            ms.points.Add(new PointWithIntensity(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime));
+                            map.AddMessage(mt, new Point(i + pos.X, j + pos.Y));
                         }
                     }
                 }
@@ -481,9 +482,10 @@ namespace AntHill.NET
                 {
                     if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
                     {
-                        if (map.Inside(i, j))
+                        if (map.Inside(i+pos.X, j+pos.Y))
                         {
-                            ms.points.Add(new PointWithIntensity(map.GetTile(i, j), AntHillConfig.messageLifeTime));
+                            ms.points.Add(new PointWithIntensity(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime));
+                            map.AddMessage(mt, new Point(i + pos.X, j + pos.Y));
                         }
                     }
                 }
