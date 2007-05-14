@@ -15,13 +15,13 @@
 <CreaturesAbilities>
 - <Ant maxLife="100" maxLifeWithoutFood="30" turnNumberToBecomeHungry="15" strength="3" forgettingTime="5" sightRadius="2">
 - <Citizen>
-  <Warrior startCount="1" /> 
-  <Worker startCount="0" /> 
+  <Warrior startCount="3" /> 
+  <Worker startCount="5" /> 
   </Citizen>
-  <Queen layEggProbability="0" xPosition="5" yPosition="5" /> 
-  <Egg hatchWarriorProbability="0" hatchTime="1" /> 
+  <Queen layEggProbability="0.2" xPosition="5" yPosition="5" /> 
+  <Egg hatchWarriorProbability="0.5" hatchTime="1" /> 
   </Ant>
-  <Spider maxHealth="1" probability="0.01" foodQuantityAfterDeath="5" /> 
+  <Spider maxHealth="1" probability="0.1" foodQuantityAfterDeath="5" /> 
   </CreaturesAbilities>
 - <EnvironmentCharacteristics>
   <Rain cloudWidth="3" probability="0.1" maxDuration="2" /> 
