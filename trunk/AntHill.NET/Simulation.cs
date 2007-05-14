@@ -496,7 +496,7 @@ namespace AntHill.NET
 
         private int GetRandomFoodQuantity()
         {
-            return Randomizer.Next(20);
+            return Randomizer.Next(20) + 1;
         }
 
         #endregion

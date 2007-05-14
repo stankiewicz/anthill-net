@@ -19,7 +19,8 @@ namespace AntHill.NET
 
         public override bool Maintain(ISimulationWorld isw)
         {
-            if (quantity-- <= 0)
+            quantity--;
+            if (quantity <= 0)
             {
                 isw.DeleteFood(this);
                 return false;

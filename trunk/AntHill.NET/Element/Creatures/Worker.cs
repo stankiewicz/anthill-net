@@ -92,6 +92,7 @@ namespace AntHill.NET
                         if (trail.Count >= 2)
                         {
                             MoveOrRotateOrDig(isw,trail[1]);
+                            randomDestination.X = -1;
                             return true;
                         }
                     }
@@ -106,6 +107,7 @@ namespace AntHill.NET
                         if (trail.Count >= 2)
                         {
                             MoveOrRotateOrDig(isw,trail[1]);
+                            randomDestination.X = -1;
                             return true;
                         }
                     }
@@ -129,6 +131,7 @@ namespace AntHill.NET
                     {
                         if (MoveOrRotateOrDig(isw,path[1]))
                             path.RemoveAt(0);
+                        randomDestination.X = -1;
                         return true;
                     }
                 }
