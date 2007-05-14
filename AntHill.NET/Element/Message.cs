@@ -63,6 +63,7 @@ namespace AntHill.NET
             {
                 if (--points[i].Intensity == 0)
                 {
+                    isw.GetMap().RemoveMessage(this.GetMessageType, points[i].Tile.Position);
                     points[i].Tile.messages.Remove(this);
                     points.RemoveAt(i);
                     i--;
@@ -96,12 +97,16 @@ namespace AntHill.NET
                                 else
                                 {// nie ma punktu?? w sumie takiej sytuacji nie powinno byc
                                     this.points.Add(new PointWithIntensity(map.GetTile(i, j), intensity));
+                                    //update map
+                                    map.AddMessage(this.GetMessageType, new Point(i, j));
                                 }
                             }
                             else
                             {// nie ma w danym tile - wrzucamy
                                 map.GetTile(i, j).messages.Add(this);
                                 this.points.Add(new PointWithIntensity(map.GetTile(i, j), intensity));
+                                //update map
+                                map.AddMessage(this.GetMessageType, new Point(i, j));
                             }
                         }
                     }

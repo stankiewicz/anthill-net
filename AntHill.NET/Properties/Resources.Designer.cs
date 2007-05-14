@@ -151,6 +151,15 @@ namespace AntHill.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to messagesTile.png.
+        /// </summary>
+        internal static string messagesBmp {
+            get {
+                return ResourceManager.GetString("messagesBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Map has no indoor tiles..
         /// </summary>
         internal static string noIndoorTilesError {
