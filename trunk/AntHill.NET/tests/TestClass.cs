@@ -152,11 +152,10 @@ namespace AntHill.NET
 
             Assert.AreEqual(4, test_map.Width, "Bad witdth of map");
             Assert.AreEqual(3, test_map.Height, "Bad height of map");
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 4; j++)
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 3; j++)
                 {
-                    Assert.IsNotNull(1, "Bad tile type in test_tile ({0},{1}) is {2} should be {3} ", i, j, test_tiles[i, j].GetType(), test_map.GetTile(j, i).GetType()); 
-//                    Assert.AreEqual(test_tiles[i, j].GetType(), test_map.GetTile(j, i).GetType(), "Bad tile type in test_tile ({0},{1}) is {2} should be {3} ", i, j, test_tiles[i, j].GetType(), test_map.GetTile(j, i).GetType());
+                    Assert.AreEqual(test_tiles[i, j].TileType, test_map.GetTile(i,j).TileType, "Bad tile type in test_tile ({0},{1}) is {2} should be {3} ", i, j, test_tiles[i, j].TileType, test_map.GetTile(i, j).TileType);
                 }
         }
 
