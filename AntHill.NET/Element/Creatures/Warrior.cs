@@ -67,14 +67,17 @@ namespace AntHill.NET
                 Spider spider = GetNearestSpider(spiders);
                 isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
                 MoveRotateOrAttack(this, spider, isw);
+                randomDestination.X = -1;
                 return true;
             }
             if (MaintainSignals(MessageType.QueenInDanger))
-            {                
+            {
+                randomDestination.X = -1;
                 return true;
             }
             if (MaintainSignals(MessageType.SpiderLocalization))
-            {                
+            {
+                randomDestination.X = -1;
                 return true;
             }
                         
@@ -89,22 +92,33 @@ namespace AntHill.NET
                     int distance = Distance(this.Position, food.Position);
                     if (distance == 0)
                     {
-                        isw.DeleteFood(food);
-                        this.Eat();             
+                        food.Maintain(isw);                        
+                        this.Eat();
+                        if(food.GetQuantity > 0)
+                            isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
+                        randomDestination.X = -1;
                         return true;
                     }
                     List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(food.Position.X, food.Position.Y), new AstarOtherObject());
                     if (trail == null)
+                    {
+                        randomDestination.X = -1;
                         return true;
+                    }
                     if (trail.Count <= 1)
+                    {
+                        randomDestination.X = -1;
                         return true;
-                    MoveOrRotate(trail[1]);                    
+                    }
+                    MoveOrRotate(trail[1]);
+                    randomDestination.X = -1;
                     return true;
                 }
                 else
                 {
                     if (MaintainSignals(MessageType.FoodLocalization))
-                    {                        
+                    {
+                        randomDestination.X = -1;
                         return true;
                     }
                 }
