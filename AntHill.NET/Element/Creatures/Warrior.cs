@@ -48,7 +48,7 @@ namespace AntHill.NET
             }
             return false;
         }
-        
+
         public override bool Maintain(ISimulationWorld isw)
         {//TODO malo:)
             if (!base.IsAlive())
@@ -62,8 +62,8 @@ namespace AntHill.NET
                 this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
 
             List<Spider> spiders;
-            if ((spiders=isw.GetVisibleSpiders(this)).Count!=0)
-            {                
+            if ((spiders = isw.GetVisibleSpiders(this)).Count != 0)
+            {
                 Spider spider = GetNearestSpider(spiders);
                 isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
                 MoveRotateOrAttack(this, spider, isw);
@@ -80,21 +80,23 @@ namespace AntHill.NET
                 randomDestination.X = -1;
                 return true;
             }
-                        
+
             // teraz wcinamy
-            if (this.TurnsToBecomeHungry <= 0)
+
+            List<Food> foods = isw.GetVisibleFood(this);
+            if (foods.Count != 0)
             {
-                List<Food> foods = isw.GetVisibleFood(this);
-                if (foods.Count != 0)
+                Food food = GetNearestFood(foods);
+                int distance = Distance(this.Position, food.Position);
+                isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
+                if (this.TurnsToBecomeHungry <= 0)
                 {
-                    Food food = GetNearestFood(foods);                    
-                    int distance = Distance(this.Position, food.Position);
                     if (distance == 0)
                     {
-                        food.Maintain(isw);                        
+                        food.Maintain(isw);
                         this.Eat();
-                        if(food.GetQuantity > 0)
-                            isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
+
+
                         randomDestination.X = -1;
                         return true;
                     }
@@ -113,15 +115,16 @@ namespace AntHill.NET
                     randomDestination.X = -1;
                     return true;
                 }
-                else
+            }
+            else
+            {
+                if (MaintainSignals(MessageType.FoodLocalization))
                 {
-                    if (MaintainSignals(MessageType.FoodLocalization))
-                    {
-                        randomDestination.X = -1;
-                        return true;
-                    }
+                    randomDestination.X = -1;
+                    return true;
                 }
             }
+
             MoveRandomly(isw);
             return true;
         }
