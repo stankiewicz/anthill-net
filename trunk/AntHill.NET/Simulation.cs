@@ -7,7 +7,7 @@ namespace AntHill.NET
 {
     public class Simulation : ISimulationUser, ISimulationWorld
     {
-        public event EventHandler afterTurn = null;
+        //public event EventHandler afterTurn = null;
 
         public static Simulation singletonInstance = null;
 

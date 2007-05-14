@@ -88,7 +88,7 @@
 </WorldMap>
 
 <CreaturesAbilities>
- <Ant maxLife="10000" maxLifeWithoutFood="400" turnNumberToBecomeHungry="100" strength="1" forgettingTime="5" sightRadius="2">
+ <Ant maxLife="10000" maxLifeWithoutFood="400" turnNumberToBecomeHungry="100" strength="1" forgettingTime="5" sightRadius="5">
  <Citizen>
   <Warrior startCount="20" /> 
   <Worker startCount="80" /> 
