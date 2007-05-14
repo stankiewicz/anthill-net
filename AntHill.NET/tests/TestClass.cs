@@ -139,21 +139,25 @@ namespace AntHill.NET
         [Test]
         public void MapTest()
         {
-            /*
+
             Tile[,] test_tiles =
-            {{new Tile(TileType.Indoor), new Tile(TileType.Outdoor), new Tile(TileType.Wall)},
-            {new Tile(TileType.Wall), new Tile(TileType.Indoor), new Tile(TileType.Outdoor)},
-            {new Tile(TileType.Outdoor), new Tile(TileType.Indoor), new Tile(TileType.Wall)},
-            {new Tile(TileType.Indoor), new Tile(TileType.Wall), new Tile(TileType.Outdoor)}};
+            {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
+            {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
+            {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
+            {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
 
-            Map test_map = new Map(3, 4, test_tiles);
+            AHGraphics.Init();  
 
-            Assert.AreEqual(3, test_map.Width, "Bad witdth of map");
-            Assert.AreEqual(4, test_map.Height, "Bad height of map");
+            Map test_map = new Map(4, 3, test_tiles);
+
+            Assert.AreEqual(4, test_map.Width, "Bad witdth of map");
+            Assert.AreEqual(3, test_map.Height, "Bad height of map");
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 4; j++)
-                    Assert.AreEqual(test_tiles[j, i], test_map.GetTile(j, i), "Bad type in tile (" + j.ToString() + "," + i.ToString() + ").");
-            */
+                {
+                    Assert.IsNotNull(1, "Bad tile type in test_tile ({0},{1}) is {2} should be {3} ", i, j, test_tiles[i, j].GetType(), test_map.GetTile(j, i).GetType()); 
+//                    Assert.AreEqual(test_tiles[i, j].GetType(), test_map.GetTile(j, i).GetType(), "Bad tile type in test_tile ({0},{1}) is {2} should be {3} ", i, j, test_tiles[i, j].GetType(), test_map.GetTile(j, i).GetType());
+                }
         }
 
         [Test]
@@ -209,7 +213,7 @@ namespace AntHill.NET
             {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
             {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
 
-            Map tmp_map = new Map(3, 4, test_tiles);
+            Map tmp_map = new Map(4, 3, test_tiles);
 
             Simulation tmp_isw = new Simulation(tmp_map);
 
@@ -233,11 +237,13 @@ namespace AntHill.NET
             {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
             {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
 
-            Map test_map = new Map(2, 3, test_tiles);
+            Assert.IsNotNull(test_tiles, "TTT:{0} {1}", test_tiles.GetLength(0), test_tiles.GetLength(1));
 
+            Map test_map = new Map(4, 3, test_tiles);
+          
             Simulation tmp_isw = new Simulation(test_map);
 
-            AHGraphics.Init();            
+            AHGraphics.Init();  
 
             Assert.AreSame(test_map, tmp_isw.GetMap(), "Simulation.GetMap problem");
 
@@ -268,12 +274,12 @@ namespace AntHill.NET
               <Map row="sssssSssss" />
               <Map row="sxooooooxs" />
               <Map row="sxooooooxs" />
-              <Map row="Wxooooooxs" />
+              <Map row="2xooooooxs" />
               <Map row="sxooooooxs" />
               <Map row="sxooooooxs" />
               <Map row="sxoooKooxs" />
               <Map row="sxooooooxs" />
-              <Map row="sxoooWooxs" />
+              <Map row="sxooo1ooxs" />
               <Map row="ssssssssss" />
 */
 
