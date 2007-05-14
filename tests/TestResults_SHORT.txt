@@ -5,28 +5,11 @@ Copyright (C) 2000-2002 Philip Craig.
 All Rights Reserved.
 
 Runtime Environment - 
-   OS Version: Microsoft Windows NT 5.0.2195 Service Pack 4
+   OS Version: Microsoft Windows NT 5.1.2600 Service Pack 2
   CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
 
-.N.F.N.N.N..........N.F.....
-Tests run: 16, Failures: 2, Not run: 5, Time: 0.531 seconds
-
-Failures:
-1) AntHill.NET.TestClass.AstarTest : System.ArgumentException : Niedozwolone znaki w ˜cie¾ce.
-   w System.IO.Path.CheckInvalidPathChars(String path)
-   w System.IO.Path.NormalizePathFast(String path, Boolean fullCheck)
-   w System.IO.Path.GetFullPathInternal(String path)
-   w System.IO.Path.GetFullPath(String path)
-   w System.Xml.XmlResolver.ResolveUri(Uri baseUri, String relativeUri)
-   w System.Xml.XmlUrlResolver.ResolveUri(Uri baseUri, String relativeUri)
-   w System.Xml.XmlTextReaderImpl..ctor(String url, XmlNameTable nt)
-   w System.Xml.XmlTextReader..ctor(String url)
-   w AntHill.NET.XmlReaderWriter.ReadMe(String filename) w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\Configuration\XmlReaderWriter.cs:wiersz 52
-   w AntHill.NET.TestClass.AstarTest() w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\tests\TestClass.cs:wiersz 200
-
-2) AntHill.NET.TestClass.SimulationTest : System.IndexOutOfRangeException : Indeks wykraczaˆ poza granice tablicy.
-   w AntHill.NET.Map..ctor(Int32 w, Int32 h, Tile[,] tiles) w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\Map.cs:wiersz 31
-   w AntHill.NET.TestClass.SimulationTest() w C:\Documents and Settings\stankiewiczr\Pulpit\anthill\AntHill.NET\tests\TestClass.cs:wiersz 185
+.N..N.N.N..........N......
+Tests run: 16, Failures: 0, Not run: 5, Time: 0.991 seconds
 
 Tests not run:
 1) AntHill.NET.TestClass.AntTest : Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...
