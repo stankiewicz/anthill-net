@@ -33,12 +33,12 @@ namespace AntHill.NET
                 }
                 else
                 {
-                    isw.CreateMessage(this.Position, MessageType.QueenIsHungry);
+                    isw.CreateMessage(this.Position, MessageType.QueenIsHungry, this.Position);
                 }
             }
             if (isw.GetVisibleSpiders(this).Count != 0)
             {
-                isw.CreateMessage(this.Position, MessageType.QueenInDanger);
+                isw.CreateMessage(this.Position, MessageType.QueenInDanger,this.Position);
             }
             return true;
         }
