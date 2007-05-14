@@ -90,6 +90,21 @@ namespace AntHill.NET
         [Test]
         public void MessageTest()
         {
+/*
+            Tile[,] test_tiles =
+            {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
+            {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
+            {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
+            {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
+
+            Assert.IsNotNull(test_tiles, "TTT:{0} {1}", test_tiles.GetLength(0), test_tiles.GetLength(1));
+
+            Map test_map = new Map(4, 3, test_tiles);
+
+            Simulation tmp_isw = new Simulation(test_map);
+*/
+
+
 
         }
         [Test]
@@ -144,15 +159,12 @@ namespace AntHill.NET
 
             Assert.AreEqual(AntHillConfig.queenXPosition,5, "queen.Position.X problem");
             Assert.AreEqual(AntHillConfig.queenYPosition, 6, "queen.Position.Y problem");
-
-
         }
         
 
         [Test]
         public void MapTest()
         {
-
             Tile[,] test_tiles =
             {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
             {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
@@ -210,7 +222,6 @@ namespace AntHill.NET
             Assert.AreEqual(17, test_worker.FoodQuantity, "Worker.FoodQuantity problem");
             Assert.AreEqual(Dir.W, test_worker.Direction, "Worker.Direction problem");
             Assert.AreEqual(new System.Drawing.Point(321, 255), test_worker.Position, "Worker.Position problem");
-
         }
 
 
@@ -218,6 +229,9 @@ namespace AntHill.NET
         [Ignore("narazie brak zaimplementowanych metod (w klasie Simulation) niezbêdnych do dzia³ania tej klasy")]
         public void RainTest()
         {
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
+
 
             Tile[,] test_tiles =
             {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
@@ -229,14 +243,22 @@ namespace AntHill.NET
 
             Simulation tmp_isw = new Simulation(tmp_map);
 
-            Rain test_rain=new Rain(new System.Drawing.Point(155, 155));
-            test_rain.IsRainOver(155, 155);
-            Assert.AreEqual(new System.Drawing.Point(155, 155), test_rain.Position, "Rain.Position problem");
+//            Spider test_spider = new Spider(new Point(61, 71));
+            tmp_isw.CreateSpider(new Point(61,71));
+//            Ant test_ant1 = new Warrior(new Point(62, 72));
+            tmp_isw.CreateAnt(new Point(62,72));
+
+            Rain test_rain=new Rain(new Point(60, 70));
+            test_rain.IsRainOver(60, 70);
+            Assert.AreEqual(new Point(60, 70), test_rain.Position, "Rain.Position problem");
             Assert.IsTrue((test_rain.TimeToLive >= 0) && (test_rain.TimeToLive < AntHillConfig.rainMaxDuration + 1), "Rain.TimeToLive range problem");
             int tmp = test_rain.TimeToLive;
 
+//            Assert.IsNull(tmp_isw.ants.FindAll(new Warrior(new Point(62, 72))),"Find ant problem {0}",tmp_isw.ants.Find(new Ant(new Point(62, 72))).Position);
+
             test_rain.Maintain((ISimulationWorld)tmp_isw);
             Assert.AreEqual(tmp-1, test_rain.TimeToLive-1,"Rain.Maintain problem");
+
         }
 
         [Test]
