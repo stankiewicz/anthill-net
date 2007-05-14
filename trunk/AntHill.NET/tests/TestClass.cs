@@ -5,6 +5,19 @@ using NUnit.Framework;
 using System.Drawing;
 using astar;
 
+/* TODO:
+ * CitizenTest - dopisaæ o sygna³ach i inne...
+ * RainTest - to dopracowaæ...
+ * XmlReaderTest - testowanie mapy...
+ * SimulationTest - dopisaæ to co siê pojawi³o...
+ * GetVisibleSthTest - napisaæ... (ant, food, spider, message)
+ * Create and Delete sth Test (spider, message, food, ant, ...)
+ * FeedQueneTest
+ * 
+ * 
+ * 
+ */
+
 namespace AntHill.NET
 {
 
@@ -222,7 +235,6 @@ namespace AntHill.NET
             Assert.IsTrue((test_rain.TimeToLive >= 0) && (test_rain.TimeToLive < AntHillConfig.rainMaxDuration + 1), "Rain.TimeToLive range problem");
             int tmp = test_rain.TimeToLive;
 
-// jak bêd¹ funkcje symulacji to bêdzie dzia³a³o (jak mniemam...)
             test_rain.Maintain((ISimulationWorld)tmp_isw);
             Assert.AreEqual(tmp-1, test_rain.TimeToLive-1,"Rain.Maintain problem");
         }
@@ -354,30 +366,28 @@ namespace AntHill.NET
 
 //getvisible sth... - narazie nie ma funkcji:(
         [Test]
-        public void GetVisibleAnts()
+        public void GetVisibleAntsTest()
         {
 
         }
 
         [Test]
-        public void GetVisibleFood()
+        public void GetVisibleFoodTest()
         {
 
         }
 
         [Test]
-        public void GetVisibleSpiders()
+        public void GetVisibleSpidersTest()
         {
 
         }
 
         [Test]
-        public void GetVisibleMessages()
+        public void GetVisibleMessagesTest()
         {
 
         }
-
-
 
     }
 }
