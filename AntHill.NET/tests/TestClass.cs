@@ -39,6 +39,13 @@ namespace AntHill.NET
         [Test]
         public void QueenTest()
         {
+             XmlReaderWriter reader = new XmlReaderWriter();
+             reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
+
+            Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            Assert.AreEqual(test_isw.queen.TurnsToBecomeHungry, 3, "Queen has wrong TurnsToBecomeHungry");
+            Assert.AreEqual(test_isw.queen.TurnsWithoutFood, 100, "Queen has wrong TurnsWithoutFood");
+            Assert.AreEqual(new System.Drawing.Point(5, 6), test_isw.queen.Position, "queen.Position problem");
 
         }
         [Test]
@@ -61,6 +68,10 @@ namespace AntHill.NET
         [Test]
         public void FoodTest()
         {
+            Food test_food = new Food(new Point(7, 7), 8);
+            Assert.AreEqual(8, test_food.GetQuantity, "food.Quentity problem");
+            Assert.AreEqual(new System.Drawing.Point(7,7), test_food.Position, "food.Position problem");
+            
 
         }
         [Test]
@@ -81,6 +92,46 @@ namespace AntHill.NET
         [Test]
         public void XmlTest()
         {
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
+
+          
+            //ant
+            Assert.AreEqual(AntHillConfig.antTurnNumberToBecomeHungry,3, "problems ant TurnsToBecomeHungry");
+            Assert.AreEqual(AntHillConfig.antMaxLifeWithoutFood, 100, "problem ant.wrong TurnsWithoutFood");
+            Assert.AreEqual(AntHillConfig.antFoodQuantityAfterDeath,1,"problem ant.foodQuantityAfterDeath");
+            Assert.AreEqual(AntHillConfig.antMaxLife, 100, "problem antMaxLife");
+            Assert.AreEqual(AntHillConfig.antMaxHealth,1,"problem ant.MaxHealth");
+            Assert.AreEqual(AntHillConfig.antForgettingTime, 5, "problem ant.forgettingtime");
+            Assert.AreEqual(AntHillConfig.antSightRadius, 2, "problem antSightRadius");
+            Assert.AreEqual(AntHillConfig.antStrength, 3, "problem ant.Strength");
+            
+            Assert.AreEqual(AntHillConfig.curMagnitude, 1, "problem curMagnitude");
+            Assert.AreEqual(AntHillConfig.eggHatchTime, 10, "problem egg.HatchTime");
+            Assert.AreEqual(AntHillConfig.eggHatchWarriorProbability, 0.2, "problem eggHatchWarriorProbability");
+            Assert.AreEqual(AntHillConfig.foodProbability, 0.2, "problem foodProbability");
+            Assert.AreEqual(AntHillConfig.mapColCount, 10, "problem mapColCount");
+            Assert.AreEqual(AntHillConfig.mapRowCount, 10, "problem mapRowCount");
+            Assert.AreEqual(AntHillConfig.maxMagnitude, 2, "problem maxMagnitude");
+            Assert.AreEqual(AntHillConfig.messageLifeTime, 10, "problem messageLifeTime");
+            Assert.AreEqual(AntHillConfig.messageRadius,3,"problem messageRadius");
+            Assert.AreEqual(AntHillConfig.queenLayEggProbability, 0, "problem queenLayEggProbability");
+            Assert.AreEqual(AntHillConfig.queenXPosition, 5, "problem queenXPosition");
+            Assert.AreEqual(AntHillConfig.queenYPosition, 6, "problem queenYPosition");
+            Assert.AreEqual(AntHillConfig.rainMaxDuration, 2, "problem rainMaxDuration");
+            Assert.AreEqual(AntHillConfig.rainProbability, 0.1, "problem rainProbability");
+            Assert.AreEqual(AntHillConfig.rainWidth, 3, "problem rainWidth");
+            Assert.AreEqual(AntHillConfig.spiderFoodQuantityAfterDeath, 5, "problem spiderFoodQuantityAfterDeath");
+            Assert.AreEqual(AntHillConfig.spiderMaxHealth,10,"problem spiderMaxHealth");
+            Assert.AreEqual(AntHillConfig.spiderProbability, 0.5, "problem spiderProbability");
+            Assert.AreEqual(AntHillConfig.warriorStartCount, 0, "problem warrior startCount");
+            Assert.AreEqual(AntHillConfig.workerStartCount, 0, "problem workerStartCount");
+
+        
+
+            Assert.AreEqual(AntHillConfig.queenXPosition,5, "queen.Position.X problem");
+            Assert.AreEqual(AntHillConfig.queenYPosition, 6, "queen.Position.Y problem");
+
 
         }
         
