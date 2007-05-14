@@ -52,11 +52,12 @@ namespace AntHill.NET
 
         private void loadData(object sender, EventArgs e)
         {
+            pauseButton_Click(this, null);
             this.Resize -= new EventHandler(UpdateMap);
 
             string name;
             if (simulationXMLopenFileDialog.ShowDialog() == DialogResult.OK)
-            {
+            {                
                 name = simulationXMLopenFileDialog.FileName;
                 XmlReaderWriter reader = new XmlReaderWriter();
                 try
@@ -64,6 +65,7 @@ namespace AntHill.NET
                     reader.ReadMe(name);
                     Simulation.DeInit();
                     Simulation.Init(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+
                 }
                 catch
                 {
@@ -75,12 +77,13 @@ namespace AntHill.NET
                 }
 
                 rightPanel.Enabled = true;
-
+                /*
                 doTurnButton.Enabled = true;
                 startButton.Enabled = true;
                 btnStop.Enabled = false;
                 btnReset.Enabled = true;
-
+                */
+                
                 timer.Interval = speedBar.Maximum - speedBar.Value + speedBar.Minimum;
 
                 this.Resize += new EventHandler(UpdateMap);
