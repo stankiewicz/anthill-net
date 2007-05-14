@@ -29,8 +29,26 @@ namespace AntHill.NET
             return spiders[i];
         }
 
-        
 
+        private bool MaintainSignals(MessageType mT)
+        {
+            Message m = ReadMessage(mT);
+            if (m != null)
+            {
+                if (Distance(this.Position, m.Location) >= 0)
+                {
+                    List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(m.Location.X, m.Location.Y), new AstarOtherObject());
+                    if (trail == null)
+                        return true;
+                    if (trail.Count <= 1)
+                        return true;
+                    MoveOrRotate(trail[1]);
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         public override bool Maintain(ISimulationWorld isw)
         {//TODO malo:)
             if (!base.IsAlive())
@@ -39,27 +57,40 @@ namespace AntHill.NET
                 return false;
             }
             SpreadSignal(isw);
+            List<Message> msg = isw.GetVisibleMessages(this);
+            for (int i = 0; i < msg.Count; i++)
+                this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
+
             List<Spider> spiders;
             if ((spiders=isw.GetVisibleSpiders(this)).Count!=0)
-            {
-                randomMovemenCount = 0;
-                Spider spider = GetNearestSpider(spiders);                
+            {                
+                Spider spider = GetNearestSpider(spiders);
+                isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
                 MoveRotateOrAttack(this, spider, isw);
                 return true;
             }
+            if (MaintainSignals(MessageType.QueenInDanger))
+            {                
+                return true;
+            }
+            if (MaintainSignals(MessageType.SpiderLocalization))
+            {                
+                return true;
+            }
+                        
             // teraz wcinamy
             if (this.TurnsToBecomeHungry <= 0)
             {
-                randomMovemenCount = 0;
                 List<Food> foods = isw.GetVisibleFood(this);
                 if (foods.Count != 0)
                 {
                     Food food = GetNearestFood(foods);
+                    isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
                     int distance = Distance(this.Position, food.Position);
                     if (distance == 0)
                     {
                         isw.DeleteFood(food);
-                        this.Eat();
+                        this.Eat();             
                         return true;
                     }
                     List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(food.Position.X, food.Position.Y), new AstarOtherObject());
@@ -67,11 +98,18 @@ namespace AntHill.NET
                         return true;
                     if (trail.Count <= 1)
                         return true;
-                    MoveOrRotate(trail[1]);
+                    MoveOrRotate(trail[1]);                    
                     return true;
-                }                
+                }
+                else
+                {
+                    if (MaintainSignals(MessageType.FoodLocalization))
+                    {                        
+                        return true;
+                    }
+                }
             }
-            MoveRandomly(isw);            
+            MoveRandomly(isw);
             return true;
         }
 

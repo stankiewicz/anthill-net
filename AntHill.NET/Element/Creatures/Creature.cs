@@ -32,7 +32,14 @@ namespace AntHill.NET
         protected void MoveRandomly(ISimulationWorld isw)
         {            
             Point indoorDestination, outdoorDestination;
-            randomMovemenCount++;     
+            randomMovemenCount++;
+            try
+            {
+                if ((this.Position.X == currentTrail[randomMovemenCount].Key) && (this.Position.Y == currentTrail[randomMovemenCount].Value))
+                    randomMovemenCount++;
+            }
+            catch { }
+
             if ((randomMovemenCount >= currentTrail.Count) || (randomDestination.X < 0))
             {
                 randomMovemenCount = 0;
@@ -43,8 +50,7 @@ namespace AntHill.NET
                 else
                     randomDestination = indoorDestination;
                 currentTrail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y), new AstarOtherObject());
-            }
-            
+            }            
             if (currentTrail == null)
             {
                 randomDestination.X = -1;
