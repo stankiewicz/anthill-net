@@ -463,6 +463,7 @@ namespace AntHill.NET
                     {
                         if (map.Inside(i+pos.X, j+pos.Y))
                         {
+                            if(map.GetTile(i+pos.X,j+pos.Y).TileType!= TileType.Wall)
                             ms.AddPoint(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime, map);
                         }
                     }
