@@ -69,11 +69,22 @@ namespace AntHill.NET
         private int GetId(int x, int y)
         {
             int id = -1;
-            for (int i = 0; i < points.Count; i++)
+
+            List<PointWithIntensity>.Enumerator e = points.GetEnumerator();
+            int i = 0;
+            while (e.MoveNext())
             {
-                if (points[i].Tile.Position.X==x && points[i].Tile.Position.Y== y)
+                Tile t = e.Current.Tile;
+                if (t.Position.X == x && t.Position.Y == y)
                     return i;
+                i++;
             }
+            //for (int i = 0; i < points.Count; i++)
+            //{
+                
+            //    if (points[i].Tile.Position.X==x && points[i].Tile.Position.Y== y)
+            //        return i;
+            //}
             return id;
         }
         public override bool Maintain(ISimulationWorld isw)
