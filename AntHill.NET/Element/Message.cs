@@ -101,6 +101,7 @@ namespace AntHill.NET
                     {
                         if (map.Inside(i+point.X, j+point.Y))
                         {// czy wogole w srodku
+                            if (map.GetTile(i + pos.X, j + pos.Y).TileType == TileType.Wall) continue;
                             if (map.GetTile(i + point.X, j + point.Y).TileType == TileType.Wall) continue;
                             if (map.GetTile(i + point.X, j + point.Y).messages.Contains(this))
                             {// czy zawiera
