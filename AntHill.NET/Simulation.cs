@@ -451,27 +451,7 @@ namespace AntHill.NET
             return map;
         }
 
-        public bool CreateMessage(Point pos, MessageType mt)
-        {
-            Message ms = new Message(pos, mt);
-            for (int i = -AntHillConfig.messageRadius; i < AntHillConfig.messageRadius; i++)
-            {
-                for (int j = -AntHillConfig.messageRadius; j < AntHillConfig.messageRadius; j++)
-                {
-                    if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
-                    {
-                        if (map.Inside(i + pos.X, j + pos.Y))
-                        {
-                            ms.AddPoint(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime, map);
-                        }
-                    }
-                }
-
-            }
-            this.messages.Add(ms);
-
-            return true;
-        }
+        
         public bool CreateMessage(Point pos, MessageType mt, Point location)
         {
             Message ms = new Message(pos, mt,location);
@@ -487,7 +467,6 @@ namespace AntHill.NET
                         }
                     }
                 }
-
             }
             this.messages.Add(ms);
 
