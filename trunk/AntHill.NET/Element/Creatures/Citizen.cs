@@ -10,6 +10,7 @@ namespace AntHill.NET
         // odpowiednie Wiadomosci i ich intensywnosci
         List<Message> remembered=new List<Message>();
         List<int> rememberedIntensities=new List<int>();
+        List<int> forgetting = new List<int>();
         public Citizen(Point pos):base(pos)
         {
 
@@ -22,6 +23,7 @@ namespace AntHill.NET
                 remembered.Add(m);
                 
                 rememberedIntensities.Add(intensity);
+                forgetting.Add(AntHillConfig.antForgettingTime);
             }
         }
         
@@ -29,7 +31,7 @@ namespace AntHill.NET
         {
             for (int i = 0; i < remembered.Count; i++)
             {
-                if (--rememberedIntensities[i] == 0)
+                if (--rememberedIntensities[i] == 0 || --forgetting[i]<0)
                 {
                     remembered.RemoveAt(i);
                     rememberedIntensities.RemoveAt(i);
