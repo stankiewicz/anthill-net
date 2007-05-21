@@ -145,7 +145,7 @@ namespace AntHill.NET
 
         public override Bitmap GetBitmap()
         {
-            return AHGraphics.GetCreature(CreatureType.warrior, this.Direction);
+            return AHGraphics.GetCreature(CreatureType.warrior);
         }
     }
 }

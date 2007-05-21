@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Tao.OpenGl;
+using Tao.Platform.Windows;
 
 namespace AntHill.NET
 {
@@ -15,7 +17,15 @@ namespace AntHill.NET
 
             try
             {
-                Application.Run(new MainForm());
+                MainForm mainForm = new MainForm();
+                mainForm.Show();
+                while (!mainForm.done)
+                {                                                      // Loop That Runs While done = false
+                    Application.DoEvents();                      
+                    mainForm.DrawGLScene();
+                    Gdi.SwapBuffers(mainForm.hDC);
+                    //Application.Run(new MainForm());
+                }
             }
             catch
             {

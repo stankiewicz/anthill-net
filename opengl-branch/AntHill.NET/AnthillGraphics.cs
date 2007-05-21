@@ -10,48 +10,47 @@ namespace AntHill.NET
     static class AHGraphics
     {
         static Bitmap outdoorTile, indoorTile, wallTile;
-        static Bitmap[,] creatureBitmaps;
-        static Bitmap rainBitmap;
-        static Bitmap foodBitmap;
-        static Bitmap messagesBitmap;
-        static Bitmap unknown;
+        public static Bitmap rainBitmap, foodBitmap, messagesBitmap,
+                             bmpQueen, bmpWarrior, bmpWorker, bmpSpider;
+        
+        public static int textureQueen = 1;
+        public static int textureWorker = 2;
+        public static int textureWarrior = 3;
+        public static int textureSpider = 4;
+        public static int textureOutdoor = 5;
+        public static int textureWall = 6;
+        public static int textureIndoor = 7;
+        public static int textureRain = 8;
+        public static int textureFood =9;
+        public static int textureMessageQueenInDanger = 10;
+        public static int textureMessageQueenIsHungry = 11;
+        public static int textureMessageSpiderLocation = 12;
+        public static int textureMessageFoodLocation =13;
 
         static public void Init()
         {
-            //Create rectangular table creatures x directions
-            creatureBitmaps = new Bitmap[Enum.GetValues(typeof(CreatureType)).Length,
-                                         Enum.GetValues(typeof(Dir)).Length];
-            indoorTile = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.indoorTileBmp));
-            outdoorTile = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.outdoorTileBmp));
-            wallTile = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.wallTileBmp));
+            Create32bBitmap(ref indoorTile, Path.Combine(Resources.GraphicsPath, Resources.indoorTileBmp));
+            Create32bBitmap(ref outdoorTile, Path.Combine(Resources.GraphicsPath, Resources.outdoorTileBmp));
+            Create32bBitmap(ref wallTile, Path.Combine(Resources.GraphicsPath, Resources.wallTileBmp));
 
-            rainBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
-            foodBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
-            messagesBitmap = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.messagesBmp));
+            Create32bBitmap(ref rainBitmap, Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
+            Create32bBitmap(ref foodBitmap, Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
+            Create32bBitmap(ref messagesBitmap, Path.Combine(Resources.GraphicsPath, Resources.messagesBmp));
             //For unknown (new) objects:
-            unknown = new Bitmap(1, 1);
-            unknown.SetPixel(0, 0, Color.White);
 
-            creatureBitmaps[(int)CreatureType.queen, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antQueenBmp));
-            creatureBitmaps[(int)CreatureType.warrior, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antWarriorBmp));
-            creatureBitmaps[(int)CreatureType.worker, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.antWorkerBmp));
-            creatureBitmaps[(int)CreatureType.spider, (int)Dir.N] = new Bitmap(Path.Combine(Resources.GraphicsPath, Resources.spiderBmp));
+            Create32bBitmap(ref bmpQueen, Path.Combine(Resources.GraphicsPath, Resources.antQueenBmp));
+            Create32bBitmap(ref bmpWarrior, Path.Combine(Resources.GraphicsPath, Resources.antWarriorBmp));
+            Create32bBitmap(ref bmpWorker, Path.Combine(Resources.GraphicsPath, Resources.antWorkerBmp));
+            Create32bBitmap(ref bmpSpider, Path.Combine(Resources.GraphicsPath, Resources.spiderBmp));
+        }
 
-            (creatureBitmaps[(int)CreatureType.queen, (int)Dir.E] = new Bitmap(creatureBitmaps[(int)CreatureType.queen, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate90FlipNone);
-            (creatureBitmaps[(int)CreatureType.queen, (int)Dir.S] = new Bitmap(creatureBitmaps[(int)CreatureType.queen, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate180FlipNone);
-            (creatureBitmaps[(int)CreatureType.queen, (int)Dir.W] = new Bitmap(creatureBitmaps[(int)CreatureType.queen, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate270FlipNone);
-
-            (creatureBitmaps[(int)CreatureType.warrior, (int)Dir.E] = new Bitmap(creatureBitmaps[(int)CreatureType.warrior, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate90FlipNone);
-            (creatureBitmaps[(int)CreatureType.warrior, (int)Dir.S] = new Bitmap(creatureBitmaps[(int)CreatureType.warrior, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate180FlipNone);
-            (creatureBitmaps[(int)CreatureType.warrior, (int)Dir.W] = new Bitmap(creatureBitmaps[(int)CreatureType.warrior, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate270FlipNone);
-
-            (creatureBitmaps[(int)CreatureType.worker, (int)Dir.E] = new Bitmap(creatureBitmaps[(int)CreatureType.worker, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate90FlipNone);
-            (creatureBitmaps[(int)CreatureType.worker, (int)Dir.S] = new Bitmap(creatureBitmaps[(int)CreatureType.worker, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate180FlipNone);
-            (creatureBitmaps[(int)CreatureType.worker, (int)Dir.W] = new Bitmap(creatureBitmaps[(int)CreatureType.worker, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate270FlipNone);
-
-            (creatureBitmaps[(int)CreatureType.spider, (int)Dir.E] = new Bitmap(creatureBitmaps[(int)CreatureType.spider, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate90FlipNone);
-            (creatureBitmaps[(int)CreatureType.spider, (int)Dir.S] = new Bitmap(creatureBitmaps[(int)CreatureType.spider, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate180FlipNone);
-            (creatureBitmaps[(int)CreatureType.spider, (int)Dir.W] = new Bitmap(creatureBitmaps[(int)CreatureType.spider, (int)Dir.N])).RotateFlip(RotateFlipType.Rotate270FlipNone);
+        private static void Create32bBitmap(ref Bitmap bmp, string filename)
+        {
+            Graphics g;
+            Image img = Image.FromFile(filename);
+            bmp = new Bitmap(img.Width, img.Height, img.PixelFormat);
+            g = Graphics.FromImage(bmp);
+            g.DrawImageUnscaled(img, 0, 0);
         }
 
         static public Bitmap GetTile(TileType tt)
@@ -69,9 +68,9 @@ namespace AntHill.NET
             }
         }
 
-        static public Bitmap GetCreature(CreatureType ct, Dir d)
+        static public Bitmap GetCreature(CreatureType ct)
         {
-            return creatureBitmaps[(int)ct, (int)d];
+            return bmpQueen;
         }
 
         static public Bitmap GetRainBitmap()
@@ -101,9 +100,9 @@ namespace AntHill.NET
         static public Bitmap GetElementBitmap(Element e)
         {
             if (e is Food) return foodBitmap;
-            if (e is Creature) return GetCreature(GetType((Creature)e), ((Creature)e).Direction);
+            if (e is Creature) return GetCreature(GetType((Creature)e));
             if (e is Rain) return rainBitmap;
-            return unknown;
+            return bmpQueen;
         }
 
         static public void DrawElement(Graphics g, Element e, float realTileSize, float offX, float offY)
