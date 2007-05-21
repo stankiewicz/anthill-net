@@ -37,7 +37,7 @@ namespace AntHill.NET
         {
             get { return singletonInstance; }
         }
-
+        int turn = 0;
         private Map map;
         public List<Egg> eggs;
         public List<Message> messages;
@@ -105,7 +105,7 @@ namespace AntHill.NET
         bool ISimulationUser.DoTurn()
         {
             if (queen == null) return false;
-
+            turn++;
             if (Randomizer.NextDouble() <= AntHillConfig.spiderProbability)
                     this.CreateSpider(Map.GetRandomTile(TileType.Outdoor).Position);
 
@@ -158,6 +158,7 @@ namespace AntHill.NET
         void ISimulationUser.Reset()
         {
             Initialize();
+            turn = 0;
         }
 
         void ISimulationUser.Start()
@@ -458,6 +459,31 @@ namespace AntHill.NET
         private int GetRandomFoodQuantity()
         {
             return Randomizer.Next(AntHillConfig.foodRandomMaxQuantity) + 1;
+        }
+
+        #endregion
+
+        #region ISimulationUser Members
+
+
+        public int GetNAnts()
+        {
+            return (ants!=null)?ants.Count:0;
+        }
+
+        public int GetNSignals()
+        {
+            return (messages!=null)?messages.Count:0;
+        }
+
+        public int GetNTurns()
+        {
+            return turn;
+        }
+
+        public int GetNSpiders()
+        {
+            return (spiders!=null)?spiders.Count:0;
         }
 
         #endregion
