@@ -17,16 +17,6 @@ namespace AntHill.NET
 
             try
             {
-                /*
-                MainForm mainForm = new MainForm();
-                mainForm.Show();
-                while (!mainForm.done)
-                {                                                      // Loop That Runs While done = false
-                    Application.DoEvents();                      
-                    mainForm.DrawGLScene();
-                    Gdi.SwapBuffers(mainForm.hDC);
-                    
-                }*/
                 Application.Run(new MainForm());
             }
             catch

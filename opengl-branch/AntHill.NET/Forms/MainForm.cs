@@ -23,7 +23,6 @@ namespace AntHill.NET
         
         bool scrolling = false;
         Point mousePos;
-        Rectangle drawingRect;
 
         private bool InitGL()
         {
@@ -59,7 +58,6 @@ namespace AntHill.NET
             }
 
             cf = new ConfigForm();
-            drawingRect = new Rectangle();
 
             this.MouseWheel += new MouseEventHandler(MainForm_MouseWheel);
         }
@@ -223,11 +221,10 @@ namespace AntHill.NET
                 realWidth = mapWidth * tileSize,
                 realHeight = mapHeight * tileSize;
 
-            // drawingRect is not the exact position - just width & height
-            drawingRect = new Rectangle(0, 0, openGLControl.Width, openGLControl.Height);
             float magnitude = ((float)magnitudeBar.Value) / ((float)magnitudeBar.Maximum);
             float x = 1.0f + (float)(Simulation.simulation.Map.Width - 1) * magnitude;
             float y = 1.0f + (float)(Simulation.simulation.Map.Height - 1) * magnitude;            
+
             /*xRatio = ((float)drawingRect.Width) / realWidth;
             yRatio = ((float)drawingRect.Height) / realHeight;
             magnitudeBar.Minimum = (int)(1000.0f * Math.Min(xRatio, yRatio));
@@ -265,9 +262,7 @@ namespace AntHill.NET
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Rectangle r = drawingRect;
-            r.Height += menuStrip1.Height;
-            openGLControl.Invalidate(r);
+            openGLControl.Invalidate();
 
         }
 
@@ -305,14 +300,15 @@ namespace AntHill.NET
         {
             done = true;
         }
-        float moveX = 0, moveY = 0;   
+
+        float moveX = 0, moveY = 0;
         private void openGLControl_Paint(object sender, PaintEventArgs ea)
         {
-            Gl.glClearColor(0, 1, 0, 0);
+            Gl.glClearColor(0, 0, 0, 0);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
             Gl.glLoadIdentity();
-            if (Simulation.simulation == null) return;
 
+            if (Simulation.simulation == null) return;
             
             Gl.glColor4f(1, 1, 1, 1);
             

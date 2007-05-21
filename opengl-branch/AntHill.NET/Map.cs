@@ -157,50 +157,42 @@ namespace AntHill.NET
                 }
             }
 
-            public bool IncreaseCount(MessageType mt)
+            public void IncreaseCount(MessageType mt)
             {
-                bool flag = false;
                 switch (mt)
                 {
                     case MessageType.QueenIsHungry:
-                        if (queenIsHungry == 0) flag = true;
                         queenIsHungry++;
                         break;
                     case MessageType.QueenInDanger:
-                        if (queenInDanger == 0) flag = true;
                         queenInDanger++;
                         break;
                     case MessageType.FoodLocalization:
-                        if (foodLocation == 0) flag = true;
                         foodLocation++;
                         break;
                     case MessageType.SpiderLocalization:
-                        if (spiderLocation == 0) flag = true;
                         spiderLocation++;
                         break;
                 }
-                return flag;
             }
 
-            public bool LowerCount(MessageType mt)
+            public void LowerCount(MessageType mt)
             {
-                bool flag = false;
                 switch (mt)
                 {
                     case MessageType.QueenIsHungry:
-                        if (--queenIsHungry == 0) flag = true;
+                        --queenIsHungry;
                         break;
                     case MessageType.QueenInDanger:
-                        if (--queenInDanger == 0) flag = true;
+                        --queenInDanger;
                         break;
                     case MessageType.FoodLocalization:
-                        if (--foodLocation == 0) flag = true;
+                        --foodLocation;
                         break;
                     case MessageType.SpiderLocalization:
-                        if (--spiderLocation == 0) flag = true;
+                        --spiderLocation;
                         break;
                 }
-                return flag;
             }
         }
         #endregion
