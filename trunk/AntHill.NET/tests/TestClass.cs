@@ -98,9 +98,8 @@ namespace AntHill.NET
             Food test_food = new Food(new Point(7, 7), 8);
             Assert.AreEqual(8, test_food.GetQuantity, "food.Quentity problem");
             Assert.AreEqual(new System.Drawing.Point(7,7), test_food.Position, "food.Position problem");
-            
-
         }
+
         [Test]
         public void MessageTest()
         {
