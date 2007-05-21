@@ -129,6 +129,17 @@ namespace AntHill.NET
                     maxMagnitude = Simulation.simulation.Map.Height;
                 moveX = -(Simulation.simulation.Map.Width >> 1);
                 moveY = -(Simulation.simulation.Map.Height >> 1);
+
+                vScrollBar1.Minimum = 0;
+                vScrollBar1.LargeChange = 1;
+                vScrollBar1.Maximum = 10 * Simulation.simulation.Map.Height + vScrollBar1.LargeChange;
+                vScrollBar1.Value = 10 * (Simulation.simulation.Map.Height >> 1);
+                vScrollBar1.Enabled = true;
+                hScrollBar1.Minimum = 0;
+                hScrollBar1.LargeChange = 1;
+                hScrollBar1.Maximum = 10 * Simulation.simulation.Map.Width + hScrollBar1.LargeChange;
+                hScrollBar1.Value = 10 * (Simulation.simulation.Map.Width >> 1);
+                hScrollBar1.Enabled = true;
                 RecalculateUI(true);
                 openGLControl.Invalidate();
             }
@@ -273,31 +284,7 @@ namespace AntHill.NET
             openGLControl.Invalidate();
         }
 
-        private void MainForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                mousePos = e.Location;
-                scrolling = true;                
-            }
-        }
-
-        private void MainForm_MouseUp(object sender, MouseEventArgs e)
-        {
-            scrolling = false;
-        }
-
-        private void MainForm_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (scrolling)
-            {
-                int hVal = hScrollBar1.Value - (e.X - mousePos.X),
-                    vVal = vScrollBar1.Value - (e.Y - mousePos.Y);
-                hScrollBar1.Value = Math.Min(hScrollBar1.Maximum, Math.Max(0, hVal));
-                vScrollBar1.Value = Math.Min(vScrollBar1.Maximum, Math.Max(0, vVal));
-                mousePos = e.Location;
-            }
-        }
+        
 
         private void Scrolled(object sender, EventArgs e)
         {
@@ -366,9 +353,9 @@ namespace AntHill.NET
 
         private static void DrawElement(Point position, int texture, Dir direction, float moveX, float moveY)
         {
-            Gl.glPushMatrix();            
-            Gl.glTranslatef(moveX, moveY, 0);                        
-            Gl.glTranslatef(position.X, position.Y, 0);Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
+            Gl.glPushMatrix();                           
+            Gl.glTranslatef(position.X + moveX, position.Y + moveY, 0);
+            Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
             Gl.glBegin(Gl.GL_TRIANGLES);
             Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
@@ -379,6 +366,48 @@ namespace AntHill.NET
             Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-0.5f, 0.5f, 0.0f);
             Gl.glEnd();
             Gl.glPopMatrix();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            moveX = -((float)hScrollBar1.Value / 10);
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            moveY = -((float)vScrollBar1.Value / 10); 
+        }
+
+        private void openGLControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                mousePos = e.Location;
+                scrolling = true;
+            }
+        }        
+
+        private void openGLControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                scrolling = false;
+            }
+        }
+
+        private void openGLControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (scrolling)
+            {
+                int hVal = hScrollBar1.Value - (e.X - mousePos.X);
+                int vVal = vScrollBar1.Value - (e.Y - mousePos.Y);
+                hScrollBar1.Value = Math.Min(hScrollBar1.Maximum - hScrollBar1.LargeChange, Math.Max(0, hVal));
+                vScrollBar1.Value = Math.Min(vScrollBar1.Maximum - vScrollBar1.LargeChange, Math.Max(0, vVal));
+                moveX = -((float)hScrollBar1.Value / 10);
+                moveY = -((float)vScrollBar1.Value / 10);
+                openGLControl.Invalidate();
+                mousePos = e.Location;
+            }
         }
     }
     
