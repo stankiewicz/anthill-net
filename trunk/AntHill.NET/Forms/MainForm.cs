@@ -123,7 +123,7 @@ namespace AntHill.NET
                 Invalidate();
                 MessageBox.Show(Properties.Resources.SimulationFinished);
             }
-            
+            cf.RefreshData();
             Invalidate();
         }
 
@@ -146,6 +146,7 @@ namespace AntHill.NET
                 timer.Stop();
                 MessageBox.Show(Properties.Resources.SimulationFinished);
             }
+            cf.RefreshData();
             Invalidate();
         }
 
@@ -270,7 +271,7 @@ namespace AntHill.NET
             //btnReset.Enabled = true;
             doTurnButton.Enabled = true;
             btnStop.Enabled = false;
-
+            cf.RefreshData();
             Invalidate();
         }
 
