@@ -38,14 +38,14 @@ namespace AntHill.NET
             this.txtConfig.Location = new System.Drawing.Point(0, 0);
             this.txtConfig.Multiline = true;
             this.txtConfig.Name = "txtConfig";
-            this.txtConfig.Size = new System.Drawing.Size(463, 387);
+            this.txtConfig.Size = new System.Drawing.Size(463, 435);
             this.txtConfig.TabIndex = 0;
             // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 387);
+            this.ClientSize = new System.Drawing.Size(463, 435);
             this.Controls.Add(this.txtConfig);
             this.Name = "ConfigForm";
             this.Opacity = 0.75;

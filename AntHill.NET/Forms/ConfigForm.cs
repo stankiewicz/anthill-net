@@ -50,7 +50,12 @@ namespace AntHill.NET
                 "foodProbability = " + AntHillConfig.foodProbability + Environment.NewLine +
                 "messageLifeTime = " + AntHillConfig.messageLifeTime + Environment.NewLine +
                 "messageRadius = " + AntHillConfig.messageRadius + Environment.NewLine +
-                "magnitude = " + AntHillConfig.curMagnitude;
+                "magnitude = " + AntHillConfig.curMagnitude + Environment.NewLine +
+                "=====================================" + Environment.NewLine +
+                "turn = " + Simulation.simulation.GetNTurns() + Environment.NewLine +
+                "number of ants = " + Simulation.simulation.GetNAnts() + Environment.NewLine +
+                "number of spiders = " + Simulation.simulation.GetNSpiders() + Environment.NewLine +
+                "number of signals = " + Simulation.simulation.GetNSignals();
 
             //Type t = ((System.Object)AntHillConfig).GetType();
             //foreach (FieldInfo fi in t.GetFields())
