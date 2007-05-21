@@ -121,7 +121,7 @@ namespace AntHill.NET
         public void XmlTest()
         {
             XmlReaderWriter reader = new XmlReaderWriter();
-            reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
+            reader.ReadMe("..\\..\\tests\\test-XML-anthill.xml");
 
           
             //ant
@@ -146,7 +146,7 @@ namespace AntHill.NET
             Assert.AreEqual(AntHillConfig.queenLayEggProbability, 0, "problem queenLayEggProbability");
             Assert.AreEqual(AntHillConfig.queenXPosition, 5, "problem queenXPosition");
             Assert.AreEqual(AntHillConfig.queenYPosition, 6, "problem queenYPosition");
-            Assert.AreEqual(AntHillConfig.rainMaxDuration, 2, "problem rainMaxDuration");
+            Assert.AreEqual(AntHillConfig.rainMaxDuration, 20, "problem rainMaxDuration");
             Assert.AreEqual(AntHillConfig.rainProbability, 0.1, "problem rainProbability");
             Assert.AreEqual(AntHillConfig.rainWidth, 3, "problem rainWidth");
             Assert.AreEqual(AntHillConfig.spiderFoodQuantityAfterDeath, 5, "problem spiderFoodQuantityAfterDeath");
@@ -154,13 +154,23 @@ namespace AntHill.NET
             Assert.AreEqual(AntHillConfig.spiderProbability, 0.5, "problem spiderProbability");
             Assert.AreEqual(AntHillConfig.warriorStartCount, 0, "problem warrior startCount");
             Assert.AreEqual(AntHillConfig.workerStartCount, 0, "problem workerStartCount");
-
-        
-
             Assert.AreEqual(AntHillConfig.queenXPosition,5, "queen.Position.X problem");
             Assert.AreEqual(AntHillConfig.queenYPosition, 6, "queen.Position.Y problem");
+            for (int i = 0; i < AntHillConfig.mapColCount; i++)
+            {
+                Assert.AreEqual(AntHillConfig.tiles[i, 0].TileType, TileType.Outdoor, "Map xml problem in row 0");
+                Assert.AreEqual(AntHillConfig.tiles[i, 1].TileType, TileType.Wall, "Map xml problem in row 1 ");
+                Assert.AreEqual(AntHillConfig.tiles[i, 2].TileType, TileType.Indoor, "Map xml problem in row 2 ");
+                Assert.AreEqual(AntHillConfig.tiles[i, 3].TileType, TileType.Indoor, "Map xml problem in row 3 ");
+                Assert.AreEqual(AntHillConfig.tiles[i, 4].TileType, TileType.Indoor, "Map xml problem in row 4 ");
+                Assert.AreEqual(AntHillConfig.tiles[i, 5].TileType, TileType.Indoor, "Map xml problem in row 5 ");
+                Assert.AreEqual(AntHillConfig.tiles[i, 6].TileType, TileType.Indoor, "Map xml problem in row 6 ");
+                Assert.AreEqual(AntHillConfig.tiles[i, 7].TileType, TileType.Indoor, "Map xml problem in row 7");
+                Assert.AreEqual(AntHillConfig.tiles[i, 8].TileType, TileType.Wall, "Map xml problem in row 8 ");
+                Assert.AreEqual(AntHillConfig.tiles[i, 9].TileType, TileType.Outdoor, "Map xml problem in row 9");
+            }
         }
-        
+
 
         [Test]
         public void MapTest()

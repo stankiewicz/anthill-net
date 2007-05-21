@@ -158,6 +158,7 @@
     <Content Include="tests\test-anthill-3.xml" />
     <Content Include="tests\test-ASTAR-anthill.xml" />
     <Content Include="tests\test-RAIN-anthill.xml" />
+    <Content Include="tests\test-XML-anthill.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
