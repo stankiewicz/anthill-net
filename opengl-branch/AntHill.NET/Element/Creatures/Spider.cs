@@ -62,10 +62,5 @@ namespace AntHill.NET
         {
             throw new Exception("The method or operation is not implemented.");
         }
-
-        public override Bitmap GetBitmap()
-        {
-            return AHGraphics.GetCreature(CreatureType.spider);
-        }
     }
 }

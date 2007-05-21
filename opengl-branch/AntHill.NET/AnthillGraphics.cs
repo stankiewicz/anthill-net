@@ -4,88 +4,66 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using AntHill.NET.Properties;
+using Tao.OpenGl;
+using Tao.Platform;
+using System.Drawing.Imaging;
 
 namespace AntHill.NET
 {
     static class AHGraphics
     {
-        static Bitmap outdoorTile, indoorTile, wallTile;
-        public static Bitmap rainBitmap, foodBitmap, messagesBitmap,
-                             bmpQueen, bmpWarrior, bmpWorker, bmpSpider;
-        
-        public static int textureQueen = 1;
-        public static int textureWorker = 2;
-        public static int textureWarrior = 3;
-        public static int textureSpider = 4;
-        public static int textureOutdoor = 5;
-        public static int textureWall = 6;
-        public static int textureIndoor = 7;
-        public static int textureRain = 8;
-        public static int textureFood =9;
-        public static int textureMessageQueenInDanger = 10;
-        public static int textureMessageQueenIsHungry = 11;
-        public static int textureMessageSpiderLocation = 12;
-        public static int textureMessageFoodLocation =13;
+        /*
+        static Bitmap outdoorTile, indoorTile, wallTile,
+                      rainBitmap, foodBitmap, messagesBitmap,
+                      bmpQueen, bmpWarrior, bmpWorker, bmpSpider;
+         */
+
+        public enum Texture
+        {
+            Queen = 1, Worker, Warrior, Spider,
+            Outdoor, Wall, Indoor, Rain,
+            Food, MessageQueenInDanger, MessageQueenIsHungry,
+            MessageSpiderLocation, MessageFoodLocation
+        };
 
         static public void Init()
         {
-            Create32bBitmap(ref indoorTile, Path.Combine(Resources.GraphicsPath, Resources.indoorTileBmp));
-            Create32bBitmap(ref outdoorTile, Path.Combine(Resources.GraphicsPath, Resources.outdoorTileBmp));
-            Create32bBitmap(ref wallTile, Path.Combine(Resources.GraphicsPath, Resources.wallTileBmp));
+            Create32bTexture(Texture.Indoor, Path.Combine(Resources.GraphicsPath, Resources.indoorTileBmp));
+            Create32bTexture(Texture.Outdoor, Path.Combine(Resources.GraphicsPath, Resources.outdoorTileBmp));
+            Create32bTexture(Texture.Wall, Path.Combine(Resources.GraphicsPath, Resources.wallTileBmp));
 
-            Create32bBitmap(ref rainBitmap, Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
-            Create32bBitmap(ref foodBitmap, Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
-            Create32bBitmap(ref messagesBitmap, Path.Combine(Resources.GraphicsPath, Resources.messagesBmp));
-            //For unknown (new) objects:
+            Create32bTexture(Texture.Rain, Path.Combine(Resources.GraphicsPath, Resources.rainBmp));
+            Create32bTexture(Texture.Food, Path.Combine(Resources.GraphicsPath, Resources.foodBmp));
+            Create32bTexture(Texture.MessageFoodLocation, Path.Combine(Resources.GraphicsPath, Resources.bmpMessageFoodLocation));
+            Create32bTexture(Texture.MessageSpiderLocation, Path.Combine(Resources.GraphicsPath, Resources.bmpMessageSpiderLocation));
+            Create32bTexture(Texture.MessageQueenInDanger, Path.Combine(Resources.GraphicsPath, Resources.bmpMessageQueenInDanger));
+            Create32bTexture(Texture.MessageQueenIsHungry, Path.Combine(Resources.GraphicsPath, Resources.bmpMessageQueenIsHungry));
 
-            Create32bBitmap(ref bmpQueen, Path.Combine(Resources.GraphicsPath, Resources.antQueenBmp));
-            Create32bBitmap(ref bmpWarrior, Path.Combine(Resources.GraphicsPath, Resources.antWarriorBmp));
-            Create32bBitmap(ref bmpWorker, Path.Combine(Resources.GraphicsPath, Resources.antWorkerBmp));
-            Create32bBitmap(ref bmpSpider, Path.Combine(Resources.GraphicsPath, Resources.spiderBmp));
+            Create32bTexture(Texture.Queen, Path.Combine(Resources.GraphicsPath, Resources.antQueenBmp));
+            Create32bTexture(Texture.Warrior, Path.Combine(Resources.GraphicsPath, Resources.antWarriorBmp));
+            Create32bTexture(Texture.Worker, Path.Combine(Resources.GraphicsPath, Resources.antWorkerBmp));
+            Create32bTexture(Texture.Spider, Path.Combine(Resources.GraphicsPath, Resources.spiderBmp));
         }
 
-        private static void Create32bBitmap(ref Bitmap bmp, string filename)
+        private static void Create32bTexture(Texture t, string filename)
         {
+            /*
             Graphics g;
             Image img = Image.FromFile(filename);
             bmp = new Bitmap(img.Width, img.Height, img.PixelFormat);
             g = Graphics.FromImage(bmp);
             g.DrawImageUnscaled(img, 0, 0);
-        }
+             */
+            Bitmap bitmap = new Bitmap(filename);
 
-        static public Bitmap GetTile(TileType tt)
-        {
-            switch (tt)
-            {
-                case TileType.Wall:
-                    return wallTile;
-                case TileType.Outdoor:
-                    return outdoorTile;
-                case TileType.Indoor:
-                    return indoorTile;
-                default:
-                    return indoorTile;
-            }
-        }
-
-        static public Bitmap GetCreature(CreatureType ct)
-        {
-            return bmpQueen;
-        }
-
-        static public Bitmap GetRainBitmap()
-        {
-            return rainBitmap;
-        }
-
-        static public Bitmap GetFoodBitmap()
-        {
-            return foodBitmap;
-        }
-
-        static public Bitmap GetMessagesBitmap()
-        {
-            return messagesBitmap;
+            Rectangle rectangle = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            BitmapData bitmapData = bitmap.LockBits(rectangle, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)t);
+            Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR);
+            Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR);
+            Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA8, bitmap.Width, bitmap.Height, 0, Gl.GL_BGRA, Gl.GL_UNSIGNED_BYTE, bitmapData.Scan0);
+            bitmap.UnlockBits(bitmapData);
+            bitmap.Dispose();           
         }
 
         static public CreatureType GetType(Creature c)
@@ -97,36 +75,39 @@ namespace AntHill.NET
             return CreatureType.queen;            
         }
 
-        static public Bitmap GetElementBitmap(Element e)
+        static public int GetElementTexture(Element e)
         {
-            if (e is Food) return foodBitmap;
-            if (e is Creature) return GetCreature(GetType((Creature)e));
-            if (e is Rain) return rainBitmap;
-            return bmpQueen;
+            if (e is Food) return (int)Texture.Food;
+            if (e is Creature) return GetCreatureTexture(GetType((Creature)e));
+            if (e is Rain) return (int)Texture.Rain;
+            return -1;
         }
 
-        static public void DrawElement(Graphics g, Element e, float realTileSize, float offX, float offY)
+        public static int GetCreatureTexture(CreatureType creatureType)
         {
-            if (e is Queen)
-                if (((Queen)e).FoodQuantity > 0)
-                    g.DrawImage(foodBitmap,
-                        e.Position.X * realTileSize - offX,
-                        e.Position.Y * realTileSize - offY,
-                        realTileSize, realTileSize);
-
-            if (!(e is Rain))
+            switch (creatureType)
             {
-                g.DrawImage(GetElementBitmap(e),
-                        e.Position.X * realTileSize - offX,
-                        e.Position.Y * realTileSize - offY,
-                        realTileSize, realTileSize);
-                return;
+                case CreatureType.queen:
+                    return (int)Texture.Queen;
+                case CreatureType.warrior:
+                    return (int)Texture.Warrior;
+                case CreatureType.spider:
+                    return (int)Texture.Spider;
+                case CreatureType.worker:
+                    return (int)Texture.Worker;
+                default:
+                    return -1;
             }
+        }
 
-            g.DrawImage(rainBitmap,
-                    (e.Position.X - AntHillConfig.rainWidth / 2) * realTileSize - offX,
-                    (e.Position.Y - AntHillConfig.rainWidth / 2) * realTileSize - offY,
-                    AntHillConfig.rainWidth * realTileSize, AntHillConfig.rainWidth * realTileSize);
+        internal static int GetTile(TileType tileType)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        internal static int GetTileTexture(TileType tileType)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

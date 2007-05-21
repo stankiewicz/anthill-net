@@ -158,7 +158,10 @@ namespace AntHill.NET
             set { direction = value; }
         }
 
-        public virtual Bitmap GetBitmap() { return new Bitmap(1, 1); }
+        public virtual int GetTexture()
+        {
+            return AHGraphics.GetElementTexture(this);
+        }
         
         protected bool IsMoveOrRotate(KeyValuePair<int, int> pos)
         {

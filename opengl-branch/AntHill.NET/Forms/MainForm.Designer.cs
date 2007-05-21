@@ -50,6 +50,7 @@ namespace AntHill.NET
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGLControl = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.rightPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.magnitudeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
@@ -271,11 +272,30 @@ namespace AntHill.NET
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // openGLControl
+            // 
+            this.openGLControl.AccumBits = ((byte)(0));
+            this.openGLControl.AutoCheckErrors = false;
+            this.openGLControl.AutoFinish = false;
+            this.openGLControl.AutoMakeCurrent = true;
+            this.openGLControl.AutoSwapBuffers = true;
+            this.openGLControl.BackColor = System.Drawing.Color.Black;
+            this.openGLControl.ColorBits = ((byte)(32));
+            this.openGLControl.DepthBits = ((byte)(32));
+            this.openGLControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openGLControl.Location = new System.Drawing.Point(0, 24);
+            this.openGLControl.Name = "openGLControl";
+            this.openGLControl.Size = new System.Drawing.Size(430, 409);
+            this.openGLControl.StencilBits = ((byte)(0));
+            this.openGLControl.TabIndex = 4;
+            this.openGLControl.Paint += new System.Windows.Forms.PaintEventHandler(this.openGLControl_Paint);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(589, 449);
+            this.Controls.Add(this.openGLControl);
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.rightPanel);
@@ -285,7 +305,6 @@ namespace AntHill.NET
             this.Name = "MainForm";
             this.Text = "AntHill.NET";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseUp);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseMove);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
@@ -323,6 +342,7 @@ namespace AntHill.NET
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private Tao.Platform.Windows.SimpleOpenGlControl openGLControl;
     }
 }
 

@@ -32,9 +32,9 @@ namespace AntHill.NET
         private Point position;
         public Point Position { get { return position; } }
 
-        public Bitmap GetBitmap()
+        public int GetTexture()
         {
-            return AHGraphics.GetTile(this.TileType);
+            return AHGraphics.GetTileTexture(this.TileType);
         }
     }
 }

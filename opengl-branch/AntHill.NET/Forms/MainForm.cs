@@ -17,11 +17,7 @@ namespace AntHill.NET
 {
     public partial class MainForm : Form
     {
-        //OpenGl
-        public IntPtr hDC;                                              // Private GDI Device Context
-        private IntPtr hRC;
         public bool done = false;
-        //End of OpenGL
 
         private ConfigForm cf = null;
         
@@ -29,225 +25,29 @@ namespace AntHill.NET
         Point mousePos;
         Rectangle drawingRect;
 
-        #region bool CreateGLWindow(string title, int width, int height, int bits, bool fullscreenflag)
-        /// <summary>
-        ///     Creates our OpenGL Window.
-        /// </summary>
-        /// <param name="title">
-        ///     The title to appear at the top of the window.
-        /// </param>
-        /// <param name="width">
-        ///     The width of the GL window or fullscreen mode.
-        /// </param>
-        /// <param name="height">
-        ///     The height of the GL window or fullscreen mode.
-        /// </param>
-        /// <param name="bits">
-        ///     The number of bits to use for color (8/16/24/32).
-        /// </param>
-        /// <param name="fullscreenflag">
-        ///     Use fullscreen mode (<c>true</c>) or windowed mode (<c>false</c>).
-        /// </param>
-        /// <returns>
-        ///     <c>true</c> on successful window creation, otherwise <c>false</c>.
-        /// </returns>
-        private bool CreateGLWindow()
-        {
-            int pixelFormat;                                                    // Holds The Results After Searching For A Match                      
-            GC.Collect();                                                       // Request A Collection
-            // This Forces A Swap
-            
-            Kernel.SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1);
-                                                                                                 
-            this.FormBorderStyle = FormBorderStyle.Sizable;                 // Sizable
-                        
-            Gdi.PIXELFORMATDESCRIPTOR pfd = new Gdi.PIXELFORMATDESCRIPTOR();    // pfd Tells Windows How We Want Things To Be
-            pfd.nSize = (short)Marshal.SizeOf(pfd);                            // Size Of This Pixel Format Descriptor
-            pfd.nVersion = 1;                                                   // Version Number
-            pfd.dwFlags = Gdi.PFD_DRAW_TO_WINDOW |                              // Format Must Support Window
-                Gdi.PFD_SUPPORT_OPENGL |                                        // Format Must Support OpenGL
-                Gdi.PFD_DOUBLEBUFFER;                                           // Format Must Support Double Buffering
-            pfd.iPixelType = (byte)Gdi.PFD_TYPE_RGBA;                          // Request An RGBA Format
-            pfd.cColorBits = 32;                                       // Select Our Color Depth
-            pfd.cRedBits = 0;                                                   // Color Bits Ignored
-            pfd.cRedShift = 0;
-            pfd.cGreenBits = 0;
-            pfd.cGreenShift = 0;
-            pfd.cBlueBits = 0;
-            pfd.cBlueShift = 0;
-            pfd.cAlphaBits = 0;                                                 // No Alpha Buffer
-            pfd.cAlphaShift = 0;                                                // Shift Bit Ignored
-            pfd.cAccumBits = 0;                                                 // No Accumulation Buffer
-            pfd.cAccumRedBits = 0;                                              // Accumulation Bits Ignored
-            pfd.cAccumGreenBits = 0;
-            pfd.cAccumBlueBits = 0;
-            pfd.cAccumAlphaBits = 0;
-            pfd.cDepthBits = 16;                                                // 16Bit Z-Buffer (Depth Buffer)
-            pfd.cStencilBits = 0;                                               // No Stencil Buffer
-            pfd.cAuxBuffers = 0;                                                // No Auxiliary Buffer
-            pfd.iLayerType = (byte)Gdi.PFD_MAIN_PLANE;                         // Main Drawing Layer
-            pfd.bReserved = 0;                                                  // Reserved
-            pfd.dwLayerMask = 0;                                                // Layer Masks Ignored
-            pfd.dwVisibleMask = 0;
-            pfd.dwDamageMask = 0;
-
-            hDC = User.GetDC(this.Handle);                                      // Attempt To Get A Device Context
-            if (hDC == IntPtr.Zero)
-            {                                            // Did We Get A Device Context?
-                KillGLWindow();                                                 // Reset The Display
-                MessageBox.Show("Can't Create A GL Device Context.", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            pixelFormat = Gdi.ChoosePixelFormat(hDC, ref pfd);                  // Attempt To Find An Appropriate Pixel Format
-            if (pixelFormat == 0)
-            {                                              // Did Windows Find A Matching Pixel Format?
-                KillGLWindow();                                                 // Reset The Display
-                MessageBox.Show("Can't Find A Suitable PixelFormat.", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!Gdi.SetPixelFormat(hDC, pixelFormat, ref pfd))
-            {                // Are We Able To Set The Pixel Format?
-                KillGLWindow();                                                 // Reset The Display
-                MessageBox.Show("Can't Set The PixelFormat.", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            hRC = Wgl.wglCreateContext(hDC);                                    // Attempt To Get The Rendering Context
-            if (hRC == IntPtr.Zero)
-            {                                            // Are We Able To Get A Rendering Context?
-                KillGLWindow();                                                 // Reset The Display
-                MessageBox.Show("Can't Create A GL Rendering Context.", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!Wgl.wglMakeCurrent(hDC, hRC))
-            {                                 // Try To Activate The Rendering Context
-                KillGLWindow();                                                 // Reset The Display
-                MessageBox.Show("Can't Activate The GL Rendering Context.", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }                     
-            
-            ReSizeGLScene(this.ClientSize.Width, this.ClientSize.Height);                                       // Set Up Our Perspective GL Screen
-
-            if (!InitGL())
-            {                                                     // Initialize Our Newly Created GL Window
-                KillGLWindow();                                                 // Reset The Display
-                MessageBox.Show("Initialization Failed.", "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;                                                        // Success
-        }
-        #endregion bool CreateGLWindow(string title, int width, int height, int bits, bool fullscreenflag)
         private bool InitGL()
         {
-            if (!LoadGLTextures())
-            {                                             // Jump To Texture Loading Routine
-                return false;                                                   // If Texture Didn't Load Return False
-            }
-
             Gl.glEnable(Gl.GL_TEXTURE_2D);                                      // Enable Texture Mapping
+            Gl.glEnable(Gl.GL_BLEND);
             Gl.glShadeModel(Gl.GL_SMOOTH);                                      // Enable Smooth Shading
             Gl.glClearColor(1, 0, 0, 0.5f);                                     // Black Background
             Gl.glClearDepth(1);                                                 // Depth Buffer Setup
             //Gl.glEnable(Gl.GL_DEPTH_TEST);                                      // Enables Depth Testing
             Gl.glDepthFunc(Gl.GL_LEQUAL);                                       // The Type Of Depth Testing To Do                        
+            Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
+
+            ReSizeGLScene();
 
             return true;
         }
-        #region KillGLWindow()
-        /// <summary>
-        ///     Properly kill the window.
-        /// </summary>
-        private void KillGLWindow()
-        {            
-            if (hRC != IntPtr.Zero)
-            {                                            // Do We Have A Rendering Context?
-                if (!Wgl.wglMakeCurrent(IntPtr.Zero, IntPtr.Zero))
-                {             // Are We Able To Release The DC and RC Contexts?
-                    MessageBox.Show("Release Of DC And RC Failed.", "SHUTDOWN ERROR",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                if (!Wgl.wglDeleteContext(hRC))
-                {                                // Are We Able To Delete The RC?
-                    MessageBox.Show("Release Rendering Context Failed.", "SHUTDOWN ERROR",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                hRC = IntPtr.Zero;                                              // Set RC To Null
-            }
-
-            if (hDC != IntPtr.Zero)
-            {                                            // Do We Have A Device Context?
-                if (!this.IsDisposed)
-                {                          // Do We Have A Window?
-                    if (this.Handle != IntPtr.Zero)
-                    {                            // Do We Have A Window Handle?
-                        if (!User.ReleaseDC(this.Handle, hDC))
-                        {                 // Are We Able To Release The DC?
-                            MessageBox.Show("Release Device Context Failed.", "SHUTDOWN ERROR",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-
-                hDC = IntPtr.Zero;                                              // Set DC To Null
-            }            
-        }
-        #endregion KillGLWindow()
-
-        #region bool LoadGLTextures()
-        /// <summary>
-        ///     Load bitmaps and convert to textures.
-        /// </summary>
-        /// <returns>
-        ///     <c>true</c> on success, otherwise <c>false</c>.
-        /// </returns>
-        private bool LoadGLTextures()
-        {
-            LoadTexture(AHGraphics.bmpQueen, AHGraphics.textureQueen);
-            LoadTexture(AHGraphics.bmpWorker, AHGraphics.textureWorker);
-            LoadTexture(AHGraphics.bmpWarrior, AHGraphics.textureWarrior);
-            LoadTexture(AHGraphics.bmpSpider, AHGraphics.textureSpider);
-            LoadTexture(AHGraphics.GetFoodBitmap(), AHGraphics.textureFood);
-            LoadTexture(AHGraphics.GetTile(TileType.Indoor), AHGraphics.textureIndoor);
-            LoadTexture(AHGraphics.GetTile(TileType.Outdoor), AHGraphics.textureOutdoor);
-            LoadTexture(AHGraphics.GetTile(TileType.Wall), AHGraphics.textureWall);
-            LoadTexture(AHGraphics.GetRainBitmap(), AHGraphics.textureRain);
-            LoadTexture(AHGraphics.GetMessagesBitmap(), AHGraphics.textureIndoor);
-            return true;                                                      // Return The Status
-        }
-        private void LoadTexture(Bitmap bitmap, int textureNumber)
-        {
-            Rectangle rectangle = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-            BitmapData bitmapData = bitmap.LockBits(rectangle, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, textureNumber);
-            Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR);
-            Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR);
-            Gl.glTexImage2D(Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA8, bitmap.Width, bitmap.Height, 0, Gl.GL_BGRA, Gl.GL_UNSIGNED_BYTE, bitmapData.Scan0);
-            bitmap.UnlockBits(bitmapData);                     // Unlock The Pixel Data From Memory
-            bitmap.Dispose();                                  // Dispose The Bitmap                            
-        }
-        #endregion bool LoadGLTextures()
 
         public MainForm()
         {
             InitializeComponent();
-            this.CreateParams.ClassStyle = this.CreateParams.ClassStyle |       // Redraw On Size, And Own DC For Window.
-                User.CS_HREDRAW | User.CS_VREDRAW | User.CS_OWNDC;
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);            // No Need To Erase Form Background
-            this.SetStyle(ControlStyles.DoubleBuffer, true);                    // Buffer Control
-            this.SetStyle(ControlStyles.Opaque, true);                          // No Need To Draw Form Background
-            this.SetStyle(ControlStyles.ResizeRedraw, true);                    // Redraw On Resize
-            this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
+
+            openGLControl.InitializeContexts();
+            InitGL();
+
             try
             {
                 AHGraphics.Init();
@@ -260,11 +60,7 @@ namespace AntHill.NET
 
             cf = new ConfigForm();
             drawingRect = new Rectangle();
-            if (!CreateGLWindow())
-            {
-                KillGLWindow();
-                this.Dispose();
-            }
+
             this.MouseWheel += new MouseEventHandler(MainForm_MouseWheel);
         }
 
@@ -279,66 +75,13 @@ namespace AntHill.NET
 
             magnitudeBar_Scroll(null, null);
         }
-        public bool DrawGLScene()
+
+        private void ReSizeGLScene()
         {
-            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);        // Clear The Screen And The Depth Buffer
-            Gl.glLoadIdentity();                                                // Reset The View            
-            
-            //Gl.glBindTexture(Gl.GL_TEXTURE_2D, AHGraphics.textureWall);
-
-            Gl.glBegin(Gl.GL_QUADS);
-            // Front Face
-            Gl.glNormal3f(0, 0, 1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, -1, 1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, -1, 1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, 1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, 1);
-            // Back Face
-            Gl.glNormal3f(0, 0, -1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, -1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, 1, -1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, 1, -1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, -1);
-            // Top Face
-            Gl.glNormal3f(0, 1, 0);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, -1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, 1, 1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, 1, 1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, -1);
-            // Bottom Face
-            Gl.glNormal3f(0, -1, 0);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, -1, -1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, -1, -1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, 1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, 1);
-            // Right face
-            Gl.glNormal3f(1, 0, 0);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, -1, -1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, -1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, 1, 1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, 1);
-            // Left Face
-            Gl.glNormal3f(-1, 0, 0);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, -1, -1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, 1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, 1, 1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, -1);
-            Gl.glEnd();            
-
-            return true;                                                        // Keep Going
-        }
-
-        private void ReSizeGLScene(int width, int height)
-        {
-            if (height == 0)
-            {                                                   // Prevent A Divide By Zero...
-                height = 1;                                                     // By Making Height Equal To One
-            }
-
-            Gl.glViewport(0, 0, width, height);                                 // Reset The Current Viewport
+            Gl.glViewport(0, 0, openGLControl.Width, openGLControl.Height);
             Gl.glMatrixMode(Gl.GL_PROJECTION);                                  // Select The Projection Matrix
             Gl.glLoadIdentity();                                                // Reset The Projection Matrix
-            Gl.glOrtho(-100, 100, -100, 100, -100, 100);            
+            Gl.glOrtho(-2, 2, -2, 2, -100, 100);            
             Gl.glMatrixMode(Gl.GL_MODELVIEW);                                   // Select The Modelview Matrix
             Gl.glLoadIdentity();                                                // Reset The Modelview Matrix
         }
@@ -448,58 +191,11 @@ namespace AntHill.NET
             cf.Show();
         }
 
-        private void MainForm_Paint(object sender, PaintEventArgs e)
-        {
-            DrawGLScene();
-            Gdi.SwapBuffers(hDC);                                 
-            return;
-
-            Graphics g = e.Graphics;
-            //Faster drawing
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            g.Clear(Color.Black);
-
-            //Check whether we really need to draw the map
-            if ((Simulation.simulation == null) ||
-                !cbVisualize.Checked)
-                return;
-
-            Matrix mT = new Matrix();
-            mT.Translate(0, menuStrip1.Height);
-            g.Transform = mT;
-
-            //Init variables
-            float tileSize = AntHillConfig.tileSize,
-                realWidth = Simulation.simulation.Map.Width * tileSize,
-                realHeight = Simulation.simulation.Map.Height * tileSize,
-                magnitude = AntHillConfig.curMagnitude,
-                realTileSize = tileSize * magnitude,
-                offX = hScrollBar1.Value, offY = vScrollBar1.Value;
-
-            Simulation.simulation.Map.DrawMap(g, drawingRect,
-                offX, offY, magnitude);
-
-            g.SetClip(drawingRect);
-
-            foreach (Food f in Simulation.simulation.food)
-                AHGraphics.DrawElement(g, f, realTileSize, offX, offY);                
-
-            foreach (Ant ant in Simulation.simulation.ants)
-                AHGraphics.DrawElement(g, ant, realTileSize, offX, offY);
-
-            foreach (Spider spider in Simulation.simulation.spiders)
-                AHGraphics.DrawElement(g, spider, realTileSize, offX, offY);
-
-            if (Simulation.simulation.queen != null)
-                AHGraphics.DrawElement(g, Simulation.simulation.queen, realTileSize, offX, offY);
-
-            if (Simulation.simulation.rain != null)
-                AHGraphics.DrawElement(g, Simulation.simulation.rain, realTileSize, offX, offY);
-        }        
         
         private void UpdateMap(object sender, EventArgs e)
         {
             RecalculateUI();
+            ReSizeGLScene();
             Invalidate();
         }
 
@@ -513,9 +209,7 @@ namespace AntHill.NET
                 xRatio, yRatio, magnitude;
 
             // drawingRect is not the exact position - just width & height
-            drawingRect = new Rectangle(0, 0,
-                                    rightPanel.Location.X - 1 - vScrollBar1.Width,
-                                    ClientSize.Height - hScrollBar1.Height - menuStrip1.Height);
+            drawingRect = new Rectangle(0, 0, openGLControl.Width, openGLControl.Height);
 
             xRatio = ((float)drawingRect.Width) / realWidth;
             yRatio = ((float)drawingRect.Height) / realHeight;
@@ -536,7 +230,7 @@ namespace AntHill.NET
             vScrollBar1.LargeChange = vScrollBar1.Maximum / 5;
             hScrollBar1.LargeChange = hScrollBar1.Maximum / 5;
 
-            ReSizeGLScene(drawingRect.Width, drawingRect.Height);
+            ReSizeGLScene();
         }
 
         private void speedBar_Scroll(object sender, EventArgs e)
@@ -617,6 +311,56 @@ namespace AntHill.NET
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             done = true;
+        }
+
+        private void openGLControl_Paint(object sender, PaintEventArgs e)
+        {
+            Gl.glClearColor(0, 1, 0, 0);
+            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+            Gl.glLoadIdentity();                                                // Reset The View            
+
+            if (Simulation.simulation == null) return;
+
+            Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)AHGraphics.Texture.Warrior);
+            Gl.glColor4f(1, 1, 1, 1);
+            Gl.glBegin(Gl.GL_QUADS);
+            // Front Face
+            Gl.glNormal3f(0, 0, 1);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, -1, 1);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, -1, 1);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, 1);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, 1);
+            // Back Face
+            Gl.glNormal3f(0, 0, -1);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, -1);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, 1, -1);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, 1, -1);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, -1);
+            // Top Face
+            Gl.glNormal3f(0, 1, 0);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, -1);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, 1, 1);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, 1, 1);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, -1);
+            // Bottom Face
+            Gl.glNormal3f(0, -1, 0);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, -1, -1);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, -1, -1);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, 1);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, 1);
+            // Right face
+            Gl.glNormal3f(1, 0, 0);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, -1, -1);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, -1);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, 1, 1);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, 1);
+            // Left Face
+            Gl.glNormal3f(-1, 0, 0);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, -1, -1);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, 1);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, 1, 1);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, -1);
+            Gl.glEnd();
         }
     }
 }
