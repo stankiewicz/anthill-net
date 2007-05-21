@@ -1,0 +1,20 @@
+NUnit version 2.4.0
+Copyright (C) 2002-2007 Charlie Poole.
+Copyright (C) 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov.
+Copyright (C) 2000-2002 Philip Craig.
+All Rights Reserved.
+
+Runtime Environment - 
+   OS Version: Microsoft Windows NT 5.1.2600 Service Pack 2
+  CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
+
+.N..N.N.N..........N......
+Tests run: 16, Failures: 0, Not run: 5, Time: 0.991 seconds
+
+Tests not run:
+1) AntHill.NET.TestClass.AntTest : Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...
+2) AntHill.NET.TestClass.CitizenTest : Citizen class is abstract. NO TEST IN OTHER CLASS (yet?)...
+3) AntHill.NET.TestClass.CreatureTest : Creature class is abstract. Creature.Direction test in WorkerTest and WarriorTest...
+4) AntHill.NET.TestClass.ElementTest : Element class is abstract. Element.Position test in WorkerTest and WarriorTest...
+5) AntHill.NET.TestClass.RainTest : narazie brak zaimplementowanych metod (w klasie Simulation) niezb©dnych do dziaˆania tej klasy
+
