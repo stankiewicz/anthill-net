@@ -242,10 +242,11 @@ namespace AntHill.NET
 
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
-
+            
+            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
             AHGraphics.Init();
 
-            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            Assert.IsNotNull(tmp_isw, "Simulation is NULL problem!!!");
 
             Spider test_spider = new Spider(new Point(61,71));
             tmp_isw.spiders.Add(test_spider);
@@ -255,24 +256,27 @@ namespace AntHill.NET
             tmp_isw.ants.Add(test_ant2);
 
             Rain test_rain=new Rain(new Point(60, 70));
-            Assert.IsNull(test_rain, "Rain is NULL problem!!!1");
+            Assert.IsNotNull(test_rain, "Rain is NULL problem!!!");
+
             Assert.IsTrue(test_rain.IsRainOver(60, 70),"Rain.IsRainOver problem");
             Assert.AreEqual(new Point(60, 70), test_rain.Position, "Rain.Position problem");
             Assert.IsTrue((test_rain.TimeToLive >= 0) && (test_rain.TimeToLive < AntHillConfig.rainMaxDuration + 1), "Rain.TimeToLive range problem");
             int tmp = test_rain.TimeToLive;
 
-            Assert.IsNotNull(tmp_isw.spiders.Contains(test_spider), "Find spider problem");
-            Assert.IsNotNull(tmp_isw.ants.Contains(test_ant1), "Find warrior problem");
-            Assert.IsNotNull(tmp_isw.ants.Contains(test_ant2), "Find worker problem");
+            Assert.AreEqual(tmp, test_rain.TimeToLive, "Rain.TimeToLive problem should be {0}, but is {1}", tmp, test_rain.TimeToLive);
 
-            Assert.IsNull(test_rain, "Rain is NULL problem!!!2");
+            Assert.IsTrue(tmp_isw.spiders.Contains(test_spider), "Find spider problem");
+            Assert.IsTrue(tmp_isw.ants.Contains(test_ant1), "Find warrior problem");
+            Assert.IsTrue(tmp_isw.ants.Contains(test_ant2), "Find worker problem");
+
+            Assert.IsNotNull(test_rain, "Rain is NULL problem!!!");
 
             test_rain.Maintain((ISimulationWorld)tmp_isw);
-            Assert.AreEqual(tmp-1, test_rain.TimeToLive-1,"Rain.Maintain problem");
+            Assert.AreEqual(tmp - 1,test_rain.TimeToLive, "Rain.Maintain problem should be {0}, but is {1}", tmp - 1, test_rain.TimeToLive);
             
-            Assert.IsNull(tmp_isw.spiders.Contains(test_spider), "Rain destroy spider problem");
-            Assert.IsNull(tmp_isw.ants.Contains(test_ant1), "Rain destroy warrior problem");
-            Assert.IsNull(tmp_isw.ants.Contains(test_ant2), "Rain destroy worker problem");
+            Assert.IsFalse(tmp_isw.spiders.Contains(test_spider), "Rain destroy spider problem");
+            Assert.IsFalse(tmp_isw.ants.Contains(test_ant1), "Rain destroy warrior problem");
+            Assert.IsFalse(tmp_isw.ants.Contains(test_ant2), "Rain destroy worker problem");
 
 
         }
