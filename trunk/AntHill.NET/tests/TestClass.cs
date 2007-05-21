@@ -12,10 +12,6 @@ using astar;
  * SimulationTest - dopisaæ to co siê pojawi³o...
  * GetVisibleSthTest - napisaæ... (ant, food, spider, message)
  * Create and Delete sth Test (spider, message, food, ant, ...)
- * 
- * 
- * 
- * 
  */
 
 namespace AntHill.NET
@@ -236,7 +232,6 @@ namespace AntHill.NET
 
 
         [Test]
-//        [Ignore("narazie brak zaimplementowanych metod (w klasie Simulation) niezbêdnych do dzia³ania tej klasy")]
         public void RainTest()
         {
 
@@ -274,11 +269,9 @@ namespace AntHill.NET
             test_rain.Maintain((ISimulationWorld)tmp_isw);
             Assert.AreEqual(tmp - 1,test_rain.TimeToLive, "Rain.Maintain problem should be {0}, but is {1}", tmp - 1, test_rain.TimeToLive);
             
-            Assert.IsFalse(tmp_isw.spiders.Contains(test_spider), "Rain destroy spider problem");
-            Assert.IsFalse(tmp_isw.ants.Contains(test_ant1), "Rain destroy warrior problem");
-            Assert.IsFalse(tmp_isw.ants.Contains(test_ant2), "Rain destroy worker problem");
-
-
+            Assert.IsFalse(tmp_isw.spiders.Contains(test_spider), "Rain destroy spiders problem");
+            Assert.IsFalse(tmp_isw.ants.Contains(test_ant1), "Rain destroy warriors problem");
+            Assert.IsFalse(tmp_isw.ants.Contains(test_ant2), "Rain destroy workers problem");
         }
 
         [Test]
