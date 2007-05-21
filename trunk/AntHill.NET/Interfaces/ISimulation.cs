@@ -8,5 +8,9 @@ namespace AntHill.NET
         void Reset();
         void Start();
         void Stop();
+        int GetNAnts();
+        int GetNSignals();
+        int GetNTurns();
+        int GetNSpiders();
     }
 }
