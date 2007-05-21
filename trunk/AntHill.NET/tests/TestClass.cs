@@ -7,7 +7,6 @@ using astar;
 
 /* TODO:
  * CitizenTest - dopisaæ o sygna³ach i inne...
- * RainTest - to dopracowaæ...
  * XmlReaderTest - testowanie mapy...
  * SimulationTest - dopisaæ to co siê pojawi³o...
  * GetVisibleSthTest - napisaæ... (ant, food, spider, message)
@@ -253,7 +252,12 @@ namespace AntHill.NET
             Rain test_rain=new Rain(new Point(60, 70));
             Assert.IsNotNull(test_rain, "Rain is NULL problem!!!");
 
-            Assert.IsTrue(test_rain.IsRainOver(60, 70),"Rain.IsRainOver problem");
+            Assert.IsTrue(test_rain.IsRainOver(60, 70), "Rain isn't exist or Rain.IsRainOver problem");
+            Assert.IsTrue(test_rain.IsRainOver(62, 72), "Rain is too small or Rain.IsRainOver problem");
+            Assert.IsTrue(test_rain.IsRainOver(58, 68), "Rain is too small or Rain.IsRainOver problem");
+            Assert.IsFalse(test_rain.IsRainOver(63, 73), "Rain is too big or Rain.IsRainOver problem");
+            Assert.IsFalse(test_rain.IsRainOver(57, 67), "Rain is too big or Rain.IsRainOver problem");
+            
             Assert.AreEqual(new Point(60, 70), test_rain.Position, "Rain.Position problem");
             Assert.IsTrue((test_rain.TimeToLive >= 0) && (test_rain.TimeToLive < AntHillConfig.rainMaxDuration + 1), "Rain.TimeToLive range problem");
             int tmp = test_rain.TimeToLive;

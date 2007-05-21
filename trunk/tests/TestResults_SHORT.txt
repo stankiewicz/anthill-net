@@ -9,7 +9,7 @@ Runtime Environment -
   CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
 
 .N..N.N.N................
-Tests run: 17, Failures: 0, Not run: 4, Time: 5.203 seconds
+Tests run: 17, Failures: 0, Not run: 4, Time: 5.156 seconds
 
 Tests not run:
 1) AntHill.NET.TestClass.AntTest : Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...
