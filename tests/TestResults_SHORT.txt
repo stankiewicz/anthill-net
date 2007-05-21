@@ -8,14 +8,11 @@ Runtime Environment -
    OS Version: Microsoft Windows NT 5.0.2195 Service Pack 4
   CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
 
-.N..N.N.N..........F......F
-Tests run: 17, Failures: 2, Not run: 4, Time: 5.438 seconds
+.N..N.N.N................F
+Tests run: 17, Failures: 1, Not run: 4, Time: 5.234 seconds
 
 Failures:
-1) AntHill.NET.TestClass.RainTest : Rain is NULL problem!!!1
-   w AntHill.NET.TestClass.RainTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 248
-
-2) AntHill.NET.TestClass.XmlTest : problem rainMaxDuration 
+1) AntHill.NET.TestClass.XmlTest : problem rainMaxDuration 
 	expected:<20>
 	 but was:<2>
    w AntHill.NET.TestClass.XmlTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 149

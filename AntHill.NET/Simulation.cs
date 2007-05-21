@@ -51,10 +51,15 @@ namespace AntHill.NET
         {
             map = null;
             eggs = new List<Egg>();
+            eggs.Clear();
             messages = new List<Message>();
+            messages.Clear();
             food = new List<Food>();
+            food.Clear();
             spiders = new List<Spider>();
+            spiders.Clear();
             ants = new List<Ant>();
+            ants.Clear();
             rain = null;
             queen = new Queen(new Point(AntHillConfig.queenXPosition, AntHillConfig.queenYPosition));
         }
@@ -272,7 +277,7 @@ namespace AntHill.NET
                 for (int i = 0; i < ants.Count; i++)
                 {
                     if (map.GetTile(ants[i].Position.X, ants[i].Position.Y).TileType == TileType.Outdoor &&
-                        rain.IsRainOver(ants[i].Position.X, ants[i].Position.Y))
+                        ((Rain)c).IsRainOver(ants[i].Position.X, ants[i].Position.Y))
                         res_ants.Add(ants[i]);
                 }
             }
@@ -300,7 +305,7 @@ namespace AntHill.NET
                 for (int i = 0; i < food.Count; i++)
                 {
                     if (map.GetTile(food[i].Position.X, food[i].Position.Y).TileType == TileType.Outdoor &&
-                        rain.IsRainOver(food[i].Position.X, food[i].Position.Y))
+                        ((Rain)c).IsRainOver(food[i].Position.X, food[i].Position.Y))
                         res_food.Add(food[i]);
                 }
             }
@@ -328,7 +333,7 @@ namespace AntHill.NET
                 for (int i = 0; i < spiders.Count; i++)
                 {
                     if (map.GetTile(spiders[i].Position.X, spiders[i].Position.Y).TileType == TileType.Outdoor &&
-                        rain.IsRainOver(spiders[i].Position.X, spiders[i].Position.Y))
+                        ((Rain)c).IsRainOver(spiders[i].Position.X, spiders[i].Position.Y))
                         res_spiders.Add(spiders[i]);
                 }
             }
