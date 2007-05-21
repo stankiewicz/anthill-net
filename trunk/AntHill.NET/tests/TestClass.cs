@@ -243,21 +243,31 @@ namespace AntHill.NET
 
             Simulation tmp_isw = new Simulation(tmp_map);
 
-//            Spider test_spider = new Spider(new Point(61, 71));
-            tmp_isw.CreateSpider(new Point(61,71));
-//            Ant test_ant1 = new Warrior(new Point(62, 72));
-            tmp_isw.CreateAnt(new Point(62,72));
+
+            Spider test_spider = new Spider(new Point(61,71));
+            tmp_isw.spiders.Add(test_spider);
+            Ant test_ant1 = new Warrior(new Point(62, 71));
+            Ant test_ant2 = new Worker(new Point(61, 72));
+            tmp_isw.ants.Add(test_ant1);
+            tmp_isw.ants.Add(test_ant2);
 
             Rain test_rain=new Rain(new Point(60, 70));
-            test_rain.IsRainOver(60, 70);
+            Assert.IsTrue(test_rain.IsRainOver(60, 70),"Rain.IsRainOver problem");
             Assert.AreEqual(new Point(60, 70), test_rain.Position, "Rain.Position problem");
             Assert.IsTrue((test_rain.TimeToLive >= 0) && (test_rain.TimeToLive < AntHillConfig.rainMaxDuration + 1), "Rain.TimeToLive range problem");
             int tmp = test_rain.TimeToLive;
 
-//            Assert.IsNull(tmp_isw.ants.FindAll(new Warrior(new Point(62, 72))),"Find ant problem {0}",tmp_isw.ants.Find(new Ant(new Point(62, 72))).Position);
+            Assert.IsNull(tmp_isw.spiders.Contains(test_spider), "Find spider problem");
+            Assert.IsNull(tmp_isw.ants.Contains(test_ant1), "Find warrior problem");
+            Assert.IsNull(tmp_isw.ants.Contains(test_ant2), "Find worker problem");
 
             test_rain.Maintain((ISimulationWorld)tmp_isw);
             Assert.AreEqual(tmp-1, test_rain.TimeToLive-1,"Rain.Maintain problem");
+            
+            Assert.IsNull(tmp_isw.spiders.Contains(test_spider), "Rain destroy spider problem");
+            Assert.IsNull(tmp_isw.ants.Contains(test_ant1), "Rain destroy warrior problem");
+            Assert.IsNull(tmp_isw.ants.Contains(test_ant2), "Rain destroy worker problem");
+
 
         }
 

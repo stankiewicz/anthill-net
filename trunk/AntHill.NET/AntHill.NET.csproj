@@ -156,6 +156,7 @@
     <Content Include="tests\test-anthill-1.xml" />
     <Content Include="tests\test-anthill-2.xml" />
     <Content Include="tests\test-anthill-3.xml" />
+    <Content Include="tests\test-ASTAR-anthill.xml" />
     <Content Include="tests\test-RAIN-anthill.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
