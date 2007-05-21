@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" total="17" failures="1" not-run="4" date="2007-05-21" time="14:00:23">
+<test-results name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" total="17" failures="0" not-run="4" date="2007-05-21" time="14:06:36">
   <environment nunit-version="2.4.0.2" clr-version="2.0.50727.42" os-version="Microsoft Windows NT 5.0.2195 Service Pack 4" platform="Win32NT" cwd="C:\Documents and Settings\jaworskif\Pulpit\anthill_project\tests" machine-name="PRACOWNIA9" user="jaworskif" user-domain="PRACOWNIA" />
   <culture-info current-culture="pl-PL" current-uiculture="pl-PL" />
-  <test-suite name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" success="False" time="5.234" asserts="0">
+  <test-suite name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" success="True" time="5.203" asserts="0">
     <results>
-      <test-suite name="AntHill" success="False" time="5.234" asserts="0">
+      <test-suite name="AntHill" success="True" time="5.188" asserts="0">
         <results>
-          <test-suite name="NET" success="False" time="5.234" asserts="0">
+          <test-suite name="NET" success="True" time="5.188" asserts="0">
             <results>
-              <test-suite name="TestClass" success="False" time="5.203" asserts="0">
+              <test-suite name="TestClass" success="True" time="5.141" asserts="0">
                 <results>
                   <test-case name="AntHill.NET.TestClass.AntTest" executed="False">
                     <reason>
@@ -40,22 +40,14 @@
                   <test-case name="AntHill.NET.TestClass.MapTest" executed="True" success="True" time="0.063" asserts="14" />
                   <test-case name="AntHill.NET.TestClass.MessageTest" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.PointWithIntensityTest" executed="True" success="True" time="0.000" asserts="2" />
-                  <test-case name="AntHill.NET.TestClass.QueenTest" executed="True" success="True" time="0.063" asserts="3" />
-                  <test-case name="AntHill.NET.TestClass.RainTest" executed="True" success="True" time="4.391" asserts="14" />
+                  <test-case name="AntHill.NET.TestClass.QueenTest" executed="True" success="True" time="0.047" asserts="3" />
+                  <test-case name="AntHill.NET.TestClass.RainTest" executed="True" success="True" time="4.500" asserts="14" />
                   <test-case name="AntHill.NET.TestClass.SimulationTest" executed="True" success="True" time="0.063" asserts="2" />
                   <test-case name="AntHill.NET.TestClass.SpiderTest" executed="True" success="True" time="0.000" asserts="3" />
                   <test-case name="AntHill.NET.TestClass.TileTest" executed="True" success="True" time="0.000" asserts="1" />
                   <test-case name="AntHill.NET.TestClass.WarriorTest" executed="True" success="True" time="0.000" asserts="4" />
                   <test-case name="AntHill.NET.TestClass.WorkerTest" executed="True" success="True" time="0.000" asserts="5" />
-                  <test-case name="AntHill.NET.TestClass.XmlTest" executed="True" success="False" time="0.203" asserts="21">
-                    <failure>
-                      <message><![CDATA[problem rainMaxDuration 
-	expected:<20>
-	 but was:<2>]]></message>
-                      <stack-trace><![CDATA[   w AntHill.NET.TestClass.XmlTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 149
-]]></stack-trace>
-                    </failure>
-                  </test-case>
+                  <test-case name="AntHill.NET.TestClass.XmlTest" executed="True" success="True" time="0.031" asserts="130" />
                 </results>
               </test-suite>
             </results>
