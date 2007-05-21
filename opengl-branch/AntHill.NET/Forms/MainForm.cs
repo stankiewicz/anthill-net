@@ -81,7 +81,7 @@ namespace AntHill.NET
             Gl.glViewport(0, 0, openGLControl.Width, openGLControl.Height);
             Gl.glMatrixMode(Gl.GL_PROJECTION);                                  // Select The Projection Matrix
             Gl.glLoadIdentity();                                                // Reset The Projection Matrix
-            Gl.glOrtho(-2, 2, -2, 2, -100, 100);            
+            Gl.glOrtho(-10, 10, -10, 10, -100, 100);            
             Gl.glMatrixMode(Gl.GL_MODELVIEW);                                   // Select The Modelview Matrix
             Gl.glLoadIdentity();                                                // Reset The Modelview Matrix
         }
@@ -105,7 +105,7 @@ namespace AntHill.NET
                 }
                 catch
                 {
-                    Invalidate();
+                    openGLControl.Invalidate();
                     rightPanel.Enabled = false;
 
                     MessageBox.Show(Properties.Resources.errorInitialization);
@@ -124,7 +124,7 @@ namespace AntHill.NET
 
                 this.Resize += new EventHandler(UpdateMap);
                 RecalculateUI();
-                Invalidate();
+                openGLControl.Invalidate();
             }
         }
 
@@ -156,11 +156,11 @@ namespace AntHill.NET
 
             if (((ISimulationUser)Simulation.simulation).DoTurn() == false)
             {
-                Invalidate();
+                openGLControl.Invalidate();
                 MessageBox.Show(Properties.Resources.SimulationFinished);
             }
-            
-            Invalidate();
+
+            openGLControl.Invalidate();
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
@@ -182,7 +182,7 @@ namespace AntHill.NET
                 timer.Stop();
                 MessageBox.Show(Properties.Resources.SimulationFinished);
             }
-            Invalidate();
+            openGLControl.Invalidate();
         }
 
         private void buttonShowConfig_Click(object sender, EventArgs e)
@@ -196,7 +196,7 @@ namespace AntHill.NET
         {
             RecalculateUI();
             ReSizeGLScene();
-            Invalidate();
+            openGLControl.Invalidate();
         }
 
         private void RecalculateUI()
@@ -243,14 +243,14 @@ namespace AntHill.NET
             AntHillConfig.curMagnitude = ((float)magnitudeBar.Value) / 1000.0f;
             cf.RefreshData();
             RecalculateUI();
-            Invalidate();
+            openGLControl.Invalidate();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Rectangle r = drawingRect;
             r.Height += menuStrip1.Height;
-            Invalidate(r);
+            openGLControl.Invalidate(r);
 
         }
 
@@ -264,7 +264,7 @@ namespace AntHill.NET
             doTurnButton.Enabled = true;
             btnStop.Enabled = false;
 
-            Invalidate();
+            openGLControl.Invalidate();
         }
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e)
@@ -295,7 +295,7 @@ namespace AntHill.NET
 
         private void Scrolled(object sender, EventArgs e)
         {
-            Invalidate();
+            openGLControl.Invalidate();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -313,54 +313,67 @@ namespace AntHill.NET
             done = true;
         }
 
-        private void openGLControl_Paint(object sender, PaintEventArgs e)
+        private void openGLControl_Paint(object sender, PaintEventArgs ea)
         {
             Gl.glClearColor(0, 1, 0, 0);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
-            Gl.glLoadIdentity();                                                // Reset The View            
-
+            Gl.glLoadIdentity();
             if (Simulation.simulation == null) return;
 
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)AHGraphics.Texture.Warrior);
+            float moveX = -5, moveY = -5;            
             Gl.glColor4f(1, 1, 1, 1);
-            Gl.glBegin(Gl.GL_QUADS);
-            // Front Face
-            Gl.glNormal3f(0, 0, 1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, -1, 1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, -1, 1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, 1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, 1);
-            // Back Face
-            Gl.glNormal3f(0, 0, -1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, -1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, 1, -1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, 1, -1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, -1);
-            // Top Face
+            
             Gl.glNormal3f(0, 1, 0);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, -1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, 1, 1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, 1, 1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, -1);
-            // Bottom Face
-            Gl.glNormal3f(0, -1, 0);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, -1, -1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, -1, -1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, 1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, 1);
-            // Right face
-            Gl.glNormal3f(1, 0, 0);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(1, -1, -1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(1, 1, -1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(1, 1, 1);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(1, -1, 1);
-            // Left Face
-            Gl.glNormal3f(-1, 0, 0);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-1, -1, -1);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-1, -1, 1);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-1, 1, 1);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-1, 1, -1);
+            Map map = Simulation.simulation.Map;
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {     
+                    DrawElement(new Point(x, y), map.GetTile(x, map.Height - y - 1).GetTexture(), Dir.N, moveX, moveY);
+                }
+            }
+            Creature e;
+            Food f;
+            List<Ant>.Enumerator enumerator = Simulation.simulation.ants.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                e = enumerator.Current;
+                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+            }            
+            List<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
+            while (enumeratorSpider.MoveNext())
+            {
+                e = enumeratorSpider.Current;
+                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+            }
+            List<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
+            while (enumeratorFood.MoveNext())
+            {
+                f = enumeratorFood.Current;
+                DrawElement(f.Position, f.GetTexture(), Dir.S, moveX, moveY);
+            }
+
+            e = Simulation.simulation.queen;
+            if (e != null)
+                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+        }
+
+        private static void DrawElement(Point position, int texture, Dir direction, float moveX, float moveY)
+        {
+            Gl.glPushMatrix();            
+            Gl.glTranslatef(moveX, moveY, 0);                        
+            Gl.glTranslatef(position.X, position.Y, 0);Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
+            Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
+            Gl.glBegin(Gl.GL_TRIANGLES);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(0.5f, -0.5f, 0.0f);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-0.5f, 0.5f, 0.0f);
             Gl.glEnd();
+            Gl.glPopMatrix();
         }
     }
+    
 }

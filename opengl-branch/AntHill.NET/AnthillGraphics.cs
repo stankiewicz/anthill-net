@@ -80,7 +80,7 @@ namespace AntHill.NET
             if (e is Food) return (int)Texture.Food;
             if (e is Creature) return GetCreatureTexture(GetType((Creature)e));
             if (e is Rain) return (int)Texture.Rain;
-            return -1;
+            return 0;
         }
 
         public static int GetCreatureTexture(CreatureType creatureType)
@@ -96,18 +96,23 @@ namespace AntHill.NET
                 case CreatureType.worker:
                     return (int)Texture.Worker;
                 default:
-                    return -1;
+                    return 0;
             }
         }
 
-        internal static int GetTile(TileType tileType)
+        public static int GetTileTexture(TileType tileType)
         {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        internal static int GetTileTexture(TileType tileType)
-        {
-            throw new Exception("The method or operation is not implemented.");
+            switch (tileType)
+            {
+                case TileType.Wall:
+                    return (int)Texture.Wall;
+                case TileType.Outdoor:
+                    return (int)Texture.Outdoor;
+                case TileType.Indoor:
+                    return (int)Texture.Indoor;
+                default:
+                    return 0;
+            }
         }
     }
 }

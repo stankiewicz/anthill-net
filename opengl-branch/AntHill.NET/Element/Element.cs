@@ -35,6 +35,10 @@ namespace AntHill.NET
         {//TODO zle ;)
             this.Position = new Point(position.Key, position.Value);
         }
+        public virtual int GetTexture()
+        {
+            return AHGraphics.GetElementTexture(this);
+        }
         public abstract bool Maintain(ISimulationWorld isw);
         public abstract void Destroy(ISimulationWorld isw);
     }
