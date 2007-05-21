@@ -7,7 +7,7 @@ using astar;
 
 /* TODO:
  * CitizenTest - dopisaæ o sygna³ach i inne...
- * XmlReaderTest - testowanie mapy...
+ * 
  * SimulationTest - dopisaæ to co siê pojawi³o...
  * GetVisibleSthTest - napisaæ... (ant, food, spider, message)
  * Create and Delete sth Test (spider, message, food, ant, ...)
@@ -32,9 +32,28 @@ namespace AntHill.NET
         }
 
         [Test]
-        [Ignore("Citizen class is abstract. NO TEST IN OTHER CLASS (yet?)...")]
+        //[Ignore("Citizen class is abstract. NO TEST IN OTHER CLASS (yet?)...")]
         public void CitizenTest()
         {
+            Worker worker1 = new Worker(new Point(2, 2));
+            Worker worker2 = new Worker(new Point(3, 3));
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
+             
+
+            AHGraphics.Init();
+
+            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            Message message=new Message(new Point(2,2),MessageType.FoodLocalization);
+            tmp_isw.ants.Add(worker1);
+            tmp_isw.ants.Add(worker2);
+            tmp_isw.messages.Add(message);
+            worker1.AddToSet(message,2);
+            worker1.SpreadSignal(tmp_isw);
+            List<Message> list = tmp_isw.GetVisibleMessages(worker2);
+            bool check = list.Contains(message);
+            Assert.IsTrue(check, "problem with adding messages");
+           
 
         }
         [Test]
