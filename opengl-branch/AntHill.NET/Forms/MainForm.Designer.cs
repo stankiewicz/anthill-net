@@ -106,8 +106,7 @@ namespace AntHill.NET
             this.magnitudeBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.magnitudeBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.magnitudeBar.Location = new System.Drawing.Point(0, 160);
-            this.magnitudeBar.Maximum = 2000;
-            this.magnitudeBar.Minimum = 1000;
+            this.magnitudeBar.Maximum = 1000;
             this.magnitudeBar.Name = "magnitudeBar";
             this.magnitudeBar.Size = new System.Drawing.Size(143, 42);
             this.magnitudeBar.TabIndex = 1;
@@ -248,19 +247,19 @@ namespace AntHill.NET
             // loadDataToolStripMenuItem
             // 
             this.loadDataToolStripMenuItem.Name = "loadDataToolStripMenuItem";
-            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.loadDataToolStripMenuItem.Text = "Load Data";
             this.loadDataToolStripMenuItem.Click += new System.EventHandler(this.loadData);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(131, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(120, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

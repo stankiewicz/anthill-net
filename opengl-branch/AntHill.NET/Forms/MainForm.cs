@@ -36,7 +36,7 @@ namespace AntHill.NET
             Gl.glDepthFunc(Gl.GL_LEQUAL);                                       // The Type Of Depth Testing To Do                        
             Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
 
-            ReSizeGLScene();
+            ReSizeGLScene(maxMagnitude, maxMagnitude, true);
 
             return true;
         }
@@ -76,16 +76,16 @@ namespace AntHill.NET
             magnitudeBar_Scroll(null, null);
         }
 
-        private void ReSizeGLScene()
+        private void ReSizeGLScene(float width, float height, bool updateViewport)
         {
-            Gl.glViewport(0, 0, openGLControl.Width, openGLControl.Height);
+            if(updateViewport)
+                Gl.glViewport(0, 0, openGLControl.Width, openGLControl.Height);
             Gl.glMatrixMode(Gl.GL_PROJECTION);                                  // Select The Projection Matrix
             Gl.glLoadIdentity();                                                // Reset The Projection Matrix
-            Gl.glOrtho(-10, 10, -10, 10, -100, 100);            
+            Gl.glOrtho(-(0.5f * width), (0.5f * width), (0.5f * height), -(0.5f * height), -100, 100);            
             Gl.glMatrixMode(Gl.GL_MODELVIEW);                                   // Select The Modelview Matrix
             Gl.glLoadIdentity();                                                // Reset The Modelview Matrix
-        }
-
+        }        
         private void loadData(object sender, EventArgs e)
         {
             pauseButton_Click(this, null);
@@ -123,11 +123,17 @@ namespace AntHill.NET
                 timer.Interval = speedBar.Maximum - speedBar.Value + speedBar.Minimum;
 
                 this.Resize += new EventHandler(UpdateMap);
-                RecalculateUI();
+                if (Simulation.simulation.Map.Width > Simulation.simulation.Map.Height)
+                    maxMagnitude = Simulation.simulation.Map.Width;
+                else
+                    maxMagnitude = Simulation.simulation.Map.Height;
+                moveX = -(Simulation.simulation.Map.Width >> 1);
+                moveY = -(Simulation.simulation.Map.Height >> 1);
+                RecalculateUI(true);
                 openGLControl.Invalidate();
             }
         }
-
+        private int maxMagnitude = 0;
         private void startButton_Click(object sender, EventArgs e)
         {
             doTurnButton.Enabled = false;
@@ -194,24 +200,24 @@ namespace AntHill.NET
         
         private void UpdateMap(object sender, EventArgs e)
         {
-            RecalculateUI();
-            ReSizeGLScene();
+            RecalculateUI(true);            
             openGLControl.Invalidate();
         }
 
-        private void RecalculateUI()
+        private void RecalculateUI(bool recalculateViewport)
         {
             float mapWidth = Simulation.simulation.Map.Width,
                 mapHeight = Simulation.simulation.Map.Height,
                 tileSize = AntHillConfig.tileSize,
                 realWidth = mapWidth * tileSize,
-                realHeight = mapHeight * tileSize,
-                xRatio, yRatio, magnitude;
+                realHeight = mapHeight * tileSize;
 
             // drawingRect is not the exact position - just width & height
             drawingRect = new Rectangle(0, 0, openGLControl.Width, openGLControl.Height);
-
-            xRatio = ((float)drawingRect.Width) / realWidth;
+            float magnitude = ((float)magnitudeBar.Value) / ((float)magnitudeBar.Maximum);
+            float x = 1.0f + (float)(Simulation.simulation.Map.Width - 1) * magnitude;
+            float y = 1.0f + (float)(Simulation.simulation.Map.Height - 1) * magnitude;            
+            /*xRatio = ((float)drawingRect.Width) / realWidth;
             yRatio = ((float)drawingRect.Height) / realHeight;
             magnitudeBar.Minimum = (int)(1000.0f * Math.Min(xRatio, yRatio));
             magnitudeBar.Maximum = (int)(Math.Max(magnitudeBar.Minimum * 2, 2000));
@@ -229,20 +235,20 @@ namespace AntHill.NET
             vScrollBar1.Maximum = (int)Math.Max(realHeight * magnitude - drawingRect.Height, 0);
             vScrollBar1.LargeChange = vScrollBar1.Maximum / 5;
             hScrollBar1.LargeChange = hScrollBar1.Maximum / 5;
-
-            ReSizeGLScene();
+            */
+            ReSizeGLScene(x, y, recalculateViewport);
         }
 
         private void speedBar_Scroll(object sender, EventArgs e)
         {
             timer.Interval = speedBar.Maximum - speedBar.Value + speedBar.Minimum;
         }
-
+        
         private void magnitudeBar_Scroll(object sender, EventArgs e)
         {
             AntHillConfig.curMagnitude = ((float)magnitudeBar.Value) / 1000.0f;
             cf.RefreshData();
-            RecalculateUI();
+            RecalculateUI(false);
             openGLControl.Invalidate();
         }
 
@@ -312,7 +318,7 @@ namespace AntHill.NET
         {
             done = true;
         }
-
+        float moveX = 0, moveY = 0;   
         private void openGLControl_Paint(object sender, PaintEventArgs ea)
         {
             Gl.glClearColor(0, 1, 0, 0);
@@ -320,7 +326,7 @@ namespace AntHill.NET
             Gl.glLoadIdentity();
             if (Simulation.simulation == null) return;
 
-            float moveX = -5, moveY = -5;            
+            
             Gl.glColor4f(1, 1, 1, 1);
             
             Gl.glNormal3f(0, 1, 0);
@@ -329,7 +335,7 @@ namespace AntHill.NET
             {
                 for (int y = 0; y < map.Height; y++)
                 {     
-                    DrawElement(new Point(x, y), map.GetTile(x, map.Height - y - 1).GetTexture(), Dir.N, moveX, moveY);
+                    DrawElement(new Point(x, y), map.GetTile(x, y).GetTexture(), Dir.N, moveX, moveY);
                 }
             }
             Creature e;
@@ -350,7 +356,7 @@ namespace AntHill.NET
             while (enumeratorFood.MoveNext())
             {
                 f = enumeratorFood.Current;
-                DrawElement(f.Position, f.GetTexture(), Dir.S, moveX, moveY);
+                DrawElement(f.Position, f.GetTexture(), Dir.N, moveX, moveY);
             }
 
             e = Simulation.simulation.queen;
