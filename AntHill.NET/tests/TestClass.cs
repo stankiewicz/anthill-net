@@ -417,7 +417,6 @@ namespace AntHill.NET
             #endregion
         }
 
-//getvisible sth... - narazie nie ma funkcji:(
         [Test]
         public void GetVisibleAntsTest()
         {
@@ -521,6 +520,36 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleMessagesTest()
         {
+            Worker worker1 = new Worker(new Point(2, 2));
+            Warrior warrior1 = new Warrior(new Point(3, 3));
+            Message message1 = new Message(new Point(2, 2), MessageType.QueenIsHungry);
+            Message message2 = new Message(new Point(3, 3), MessageType.QueenInDanger);
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
+
+
+            AHGraphics.Init();
+
+            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            tmp_isw.ants.Add(worker1);
+            tmp_isw.ants.Add(warrior1);
+
+            tmp_isw.messages.Add(message1);
+            tmp_isw.messages.Add(message2);
+//            worker1.AddToSet(message, 2);
+//            worker1.SpreadSignal(tmp_isw);
+//            List<Message> list = tmp_isw.GetVisibleMessages(worker2);
+
+            Rain test_rain = new Rain(new Point(3, 3));
+            tmp_isw.rain = test_rain;
+
+            List<Message> list1 = tmp_isw.GetVisibleMessages(test_rain);
+            List<Message> list2 = tmp_isw.GetVisibleMessages(warrior1);
+            List<Message> list3 = tmp_isw.GetVisibleMessages(worker1);
+
+//            Assert.IsTrue(list1.Contains(message1), "GetVisibleMessagesTest problem to see message by rain");
+//            Assert.IsTrue(list2.Contains(message2), "GetVisibleMessagesTest problem to see message by warriror");
+//            Assert.IsTrue(list3.Contains(message1), "GetVisibleMessagesTest problem to see message by worker");
 
         }
 
