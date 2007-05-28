@@ -8,7 +8,6 @@ using astar;
 /* TODO:
  * CitizenTest - dopisaæ o sygna³ach i inne...
  * SimulationTest - dopisaæ to co siê pojawi³o...
- * GetVisibleSthTest - napisaæ... (ant, food, spider, message)
  * Create and Delete sth Test (spider, message, food, ant, ...)
  */
 
@@ -455,7 +454,34 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleFoodTest()
         {
+            Worker worker1 = new Worker(new Point(2, 2));
+            Warrior warrior1 = new Warrior(new Point(3, 3));
+            Spider spider1 = new Spider(new Point(2, 3));
+            Food food1 = new Food(new Point(3, 2), 10);
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
 
+
+            AHGraphics.Init();
+
+            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            tmp_isw.ants.Add(worker1);
+            tmp_isw.ants.Add(warrior1);
+            tmp_isw.spiders.Add(spider1);
+            tmp_isw.food.Add(food1);
+
+            Rain test_rain = new Rain(new Point(3, 3));
+            tmp_isw.rain = test_rain;
+
+            List<Food> list1 = tmp_isw.GetVisibleFood(test_rain);
+            List<Food> list2 = tmp_isw.GetVisibleFood(warrior1);
+            List<Food> list3 = tmp_isw.GetVisibleFood(worker1);
+            List<Food> list4 = tmp_isw.GetVisibleFood(spider1);
+
+            Assert.IsTrue(list1.Contains(food1), "GetVisibleAntsTest problem to see food by rain");
+            Assert.IsTrue(list2.Contains(food1), "GetVisibleAntsTest problem to see food by warriror");
+            Assert.IsTrue(list3.Contains(food1), "GetVisibleAntsTest problem to see food by worker");
+            Assert.IsTrue(list4.Contains(food1), "GetVisibleAntsTest problem to see food by rain");
         }
 
         [Test]
