@@ -18,6 +18,7 @@ namespace AntHill.NET
             int i=0;
             int min=Int32.MaxValue;
             int tmp;
+
             for (int j = 0; j < spiders.Count; j++)
 			{
                 if ((tmp = Distance(this.Position, spiders[i].Position)) < min)

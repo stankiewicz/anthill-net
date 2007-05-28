@@ -323,7 +323,7 @@ namespace AntHill.NET
             }
             //sygna³y
             int signal;
-            float maxSignal = 5.0f;
+            float maxSignal = 10.0f;
             for (int y = 0; y < Simulation.simulation.Map.Height; y++)
             {
                 for (int x = 0; x < Simulation.simulation.Map.Width; x++)
