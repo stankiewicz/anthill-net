@@ -170,6 +170,15 @@ namespace AntHill.NET
         {
             return AHGraphics.GetCreature(CreatureType.worker, this.Direction);
         }
+        public Food testGetNearestFood(List<Food> food)
+        {
+             return this.GetNearestFood(food);
+        }
+        /*return the strongest message of given type from particular ant's visiable messages*/
+        public Message testReadMessage(MessageType mt)
+        {
+            return this.ReadMessage(mt);
+        }
 
     }
 }

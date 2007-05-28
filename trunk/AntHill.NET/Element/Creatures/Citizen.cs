@@ -53,7 +53,7 @@ namespace AntHill.NET
             int tmp;
             for (int j = 0; j < foods.Count; j++)
             {
-                if ((tmp = Distance(this.Position, foods[i].Position)) < min)
+                if ((tmp = Distance(this.Position, foods[j].Position)) < min)
                 {
                     i = j;
                     min = tmp;
@@ -62,7 +62,7 @@ namespace AntHill.NET
             return foods[i];
         }
 
-        public virtual Message ReadMessage(MessageType mt)
+       protected virtual Message ReadMessage(MessageType mt)
         {
             int which=-1;
             int max = -1;
