@@ -565,7 +565,7 @@ namespace AntHill.NET
         }
 
         [Test]
-        public void CreareWorkerTest()
+        public void CreateWorkerTest()
         {
 
 
