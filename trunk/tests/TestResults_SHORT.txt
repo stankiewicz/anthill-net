@@ -8,7 +8,7 @@ Runtime Environment -
    OS Version: Microsoft Windows NT 5.0.2195 Service Pack 4
   CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
 
-.....................
-Tests run: 21, Failures: 0, Not run: 0, Time: 27.563 seconds
+..................
+Tests run: 18, Failures: 0, Not run: 0, Time: 27.391 seconds
 
 
