@@ -6,6 +6,7 @@ using System.Drawing;
 using astar;
 
 /* TODO:
+ * CitizenTest - dopisaæ o sygna³ach i inne...
  * SimulationTest - dopisaæ to co siê pojawi³o...
  * Create and Delete sth Test (spider, message, food, ant, ...)
  */
@@ -22,33 +23,42 @@ namespace AntHill.NET
         }
 
         [Test]
+        public void AntTest()
+        {
+            WorkerTest();
+            WarriorTest();
+
+        }
+
+        [Test]
         public void CitizenTest()
         {
             Worker worker1 = new Worker(new Point(2, 2));
             Worker worker2 = new Worker(new Point(3, 3));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
+             
 
             AHGraphics.Init();
             /*test AddSet() function*/
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
             Message message=new Message(new Point(2,2),MessageType.FoodLocalization);
-            tmp_isw.ants.Add(worker1);
-            tmp_isw.ants.Add(worker2);
-            tmp_isw.messages.Add(message);
+            tmp_isw.ants.AddLast(worker1);
+            tmp_isw.ants.AddLast(worker2);
+            tmp_isw.messages.AddLast(message);
             worker1.AddToSet(message,2);
             worker1.SpreadSignal(tmp_isw);
-            List<Message> list = tmp_isw.GetVisibleMessages(worker2);
+            LIList<Message> list = tmp_isw.GetVisibleMessages(worker2);
             bool check = list.Contains(message);
             Assert.IsTrue(check, "problem with adding messages");
 
             /*test GetNearestFood()*/
-            List<Food> foodList=new List<Food>();
-            foodList.Add(new Food(new Point(4,4),1));
-            foodList.Add(new Food(new Point(8,8),3));
-            foodList.Add(new Food(new Point(2,3),3));
-            foodList.Add(new Food(new Point(1,1),3));
-            Food nFood=worker1.testGetNearestFood(foodList);
+            LIList<Food> foodList = new LIList<Food>();
+            foodList.AddLast(new Food(new Point(4,4),1));
+            foodList.AddLast(new Food(new Point(8,8),3));
+            foodList.AddLast(new Food(new Point(2,3),3));
+            foodList.AddLast(new Food(new Point(1,1),3));
+            Food nFood = worker1.testGetNearestFood(foodList);
             Assert.AreEqual(new System.Drawing.Point(2, 3), nFood.Position, "finding nearest food problem");
 
             /*test ReadMessage()*/
@@ -60,6 +70,14 @@ namespace AntHill.NET
             Assert.AreEqual(new System.Drawing.Point(1, 1), nMessage.Position, "ReadMessage function problem in Citizen");
             
         }
+        [Test]
+        public void CreatureTest()
+        {
+            WorkerTest();
+            WarriorTest();
+            
+        }
+
         [Test]
         public void QueenTest()
         {
@@ -81,14 +99,20 @@ namespace AntHill.NET
             Assert.AreEqual(Dir.E, test_spider.Direction, "Spider.Direction problem");
             Assert.AreEqual(10, test_spider.Health, "Spider.Health problem");
             Assert.AreEqual(new System.Drawing.Point(110, 145), test_spider.Position, "spider.Position problem");
-            
+
+        }
+        [Test]
+        public void ElementTest()
+        {
+            WorkerTest();
+            WarriorTest();
         }
         [Test]
         public void FoodTest()
         {
             Food test_food = new Food(new Point(7, 7), 8);
             Assert.AreEqual(8, test_food.GetQuantity, "food.Quentity problem");
-            Assert.AreEqual(new Point(7,7), test_food.Position, "food.Position problem");
+            Assert.AreEqual(new System.Drawing.Point(7,7), test_food.Position, "food.Position problem");
         }
 
         [Test]
@@ -250,11 +274,11 @@ namespace AntHill.NET
             Assert.IsNotNull(tmp_isw, "Simulation is NULL problem!!!");
 
             Spider test_spider = new Spider(new Point(61,71));
-            tmp_isw.spiders.Add(test_spider);
+            tmp_isw.spiders.AddLast(test_spider);
             Ant test_ant1 = new Warrior(new Point(62, 71));
             Ant test_ant2 = new Worker(new Point(61, 72));
-            tmp_isw.ants.Add(test_ant1);
-            tmp_isw.ants.Add(test_ant2);
+            tmp_isw.ants.AddLast(test_ant1);
+            tmp_isw.ants.AddLast(test_ant2);
 
             Rain test_rain=new Rain(new Point(60, 70));
             Assert.IsNotNull(test_rain, "Rain is NULL problem!!!");
@@ -288,7 +312,6 @@ namespace AntHill.NET
         [Test]
         public void SimulationTest()
         {
-            /*Simulation.GetMap()*/
             Tile[,] test_tiles =
             {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
             {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
@@ -305,29 +328,7 @@ namespace AntHill.NET
 
             Assert.AreSame(test_map, tmp_isw.GetMap(), "Simulation.GetMap problem");
 
-            /* CheckIfExists(TileType.Wall) */
-            Tile[,] test_tiles2 =
-            {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Indoor, new Point())},
-            {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Outdoor, new Point())}};
-      
-            Map test_map2 = new Map(2, 3, test_tiles2);
-            Simulation tmp_isw2 = new Simulation(test_map2);
-            bool res1=tmp_isw2.testCheckIfExists(TileType.Wall);
-            Assert.AreEqual(res1, false, "CheckIfExists(TileType tt) problem");
-            bool res2 = tmp_isw2.testCheckIfExists(TileType.Indoor);
-            Assert.AreEqual(res2, true, "CheckIfExists( TileType tt) problem");
-
-
-            /*test FeedQueen()*/
-             XmlReaderWriter reader = new XmlReaderWriter();
-            reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
-            AHGraphics.Init();
-            Astar.Init(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
-            Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
-            Worker worker1=new Worker(new Point(5,6));
-            test_isw.ants.Add(worker1);
-            bool canFeed=tmp_isw2.FeedQueen(worker1);
-            Assert.AreEqual(canFeed, true, "FeedQueen()) problem");
+//tu brakuje doœæ du¿o funkcji i do nich testów ;)
 
         }
 
@@ -447,17 +448,17 @@ namespace AntHill.NET
             AHGraphics.Init();
 
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
-            tmp_isw.ants.Add(worker1);
-            tmp_isw.ants.Add(warrior1);
-            tmp_isw.spiders.Add(spider1);
+            tmp_isw.ants.AddLast(worker1);
+            tmp_isw.ants.AddLast(warrior1);
+            tmp_isw.spiders.AddLast(spider1);
             
             Rain test_rain = new Rain(new Point(3, 3));
             tmp_isw.rain = test_rain;
 
-            List<Ant> list1 = tmp_isw.GetVisibleAnts(test_rain);
-            List<Ant> list2 = tmp_isw.GetVisibleAnts(warrior1);
-            List<Ant> list3 = tmp_isw.GetVisibleAnts(worker1);
-            List<Ant> list4 = tmp_isw.GetVisibleAnts(spider1);
+            LIList<Ant> list1 = tmp_isw.GetVisibleAnts(test_rain);
+            LIList<Ant> list2 = tmp_isw.GetVisibleAnts(warrior1);
+            LIList<Ant> list3 = tmp_isw.GetVisibleAnts(worker1);
+            LIList<Ant> list4 = tmp_isw.GetVisibleAnts(spider1);
 
             Assert.IsTrue(list1.Contains(worker1), "GetVisibleAntsTest problem to see worker by rain");
             Assert.IsTrue(list1.Contains(warrior1), "GetVisibleAntsTest problem to see warrior by rain");
@@ -481,18 +482,18 @@ namespace AntHill.NET
             AHGraphics.Init();
 
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
-            tmp_isw.ants.Add(worker1);
-            tmp_isw.ants.Add(warrior1);
-            tmp_isw.spiders.Add(spider1);
-            tmp_isw.food.Add(food1);
+            tmp_isw.ants.AddLast(worker1);
+            tmp_isw.ants.AddLast(warrior1);
+            tmp_isw.spiders.AddLast(spider1);
+            tmp_isw.food.AddLast(food1);
 
             Rain test_rain = new Rain(new Point(3, 3));
             tmp_isw.rain = test_rain;
 
-            List<Food> list1 = tmp_isw.GetVisibleFood(test_rain);
-            List<Food> list2 = tmp_isw.GetVisibleFood(warrior1);
-            List<Food> list3 = tmp_isw.GetVisibleFood(worker1);
-            List<Food> list4 = tmp_isw.GetVisibleFood(spider1);
+            LIList<Food> list1 = tmp_isw.GetVisibleFood(test_rain);
+            LIList<Food> list2 = tmp_isw.GetVisibleFood(warrior1);
+            LIList<Food> list3 = tmp_isw.GetVisibleFood(worker1);
+            LIList<Food> list4 = tmp_isw.GetVisibleFood(spider1);
 
             Assert.IsTrue(list1.Contains(food1), "GetVisibleAntsTest problem to see food by rain");
             Assert.IsTrue(list2.Contains(food1), "GetVisibleAntsTest problem to see food by warriror");
@@ -514,18 +515,18 @@ namespace AntHill.NET
             AHGraphics.Init();
 
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
-            tmp_isw.ants.Add(worker1);
-            tmp_isw.ants.Add(warrior1);
-            tmp_isw.spiders.Add(spider1);
-            tmp_isw.spiders.Add(spider2);
+            tmp_isw.ants.AddLast(worker1);
+            tmp_isw.ants.AddLast(warrior1);
+            tmp_isw.spiders.AddLast(spider1);
+            tmp_isw.spiders.AddLast(spider2);
 
             Rain test_rain = new Rain(new Point(3, 3));
             tmp_isw.rain = test_rain;
 
-            List<Spider> list1 = tmp_isw.GetVisibleSpiders(test_rain);
-            List<Spider> list2 = tmp_isw.GetVisibleSpiders(warrior1);
-            List<Spider> list3 = tmp_isw.GetVisibleSpiders(worker1);
-            List<Spider> list4 = tmp_isw.GetVisibleSpiders(spider2);
+            LIList<Spider> list1 = tmp_isw.GetVisibleSpiders(test_rain);
+            LIList<Spider> list2 = tmp_isw.GetVisibleSpiders(warrior1);
+            LIList<Spider> list3 = tmp_isw.GetVisibleSpiders(worker1);
+            LIList<Spider> list4 = tmp_isw.GetVisibleSpiders(spider2);
 
             Assert.IsTrue(list1.Contains(spider1), "GetVisibleAntsTest problem to see spider by rain");
             Assert.IsTrue(list2.Contains(spider1), "GetVisibleAntsTest problem to see spider by warriror");
@@ -539,6 +540,8 @@ namespace AntHill.NET
         {
             Worker worker1 = new Worker(new Point(2, 2));
             Warrior warrior1 = new Warrior(new Point(3, 3));
+            Message message1 = new Message(new Point(2, 2), MessageType.QueenIsHungry);
+            Message message2 = new Message(new Point(3, 3), MessageType.QueenInDanger);
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
 
@@ -546,116 +549,25 @@ namespace AntHill.NET
             AHGraphics.Init();
 
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
-            tmp_isw.CreateMessage(new Point(2, 2), MessageType.QueenIsHungry, new Point(2, 2));
-            tmp_isw.CreateMessage(new Point(3, 3), MessageType.FoodLocalization, new Point(3, 3));
-            Message message1 = (tmp_isw.messages).Find(delegate(Message m) {return m.Position == new Point(2, 2);});
-            Message message2 = (tmp_isw.messages).Find(delegate(Message m) { return m.Position == new Point(3, 3); });
+            tmp_isw.ants.AddLast(worker1);
+            tmp_isw.ants.AddLast(warrior1);
 
-            Assert.IsNotNull(message1, "message1 is NULL in GetVisibleMessagesTest");
-            Assert.IsNotNull(message2, "message1 is NULL in GetVisibleMessagesTest");
+            tmp_isw.messages.AddLast(message1);
+            tmp_isw.messages.AddLast(message2);
+//            worker1.AddToSet(message, 2);
+//            worker1.SpreadSignal(tmp_isw);
+//            List<Message> list = tmp_isw.GetVisibleMessages(worker2);
 
-            tmp_isw.ants.Add(worker1);
-            tmp_isw.ants.Add(warrior1);
-            
             Rain test_rain = new Rain(new Point(3, 3));
             tmp_isw.rain = test_rain;
 
-            List<Message> list1 = tmp_isw.GetVisibleMessages(test_rain);
-            List<Message> list2 = tmp_isw.GetVisibleMessages(warrior1);
-            List<Message> list3 = tmp_isw.GetVisibleMessages(worker1);
+            LIList<Message> list1 = tmp_isw.GetVisibleMessages(test_rain);
+            LIList<Message> list2 = tmp_isw.GetVisibleMessages(warrior1);
+            LIList<Message> list3 = tmp_isw.GetVisibleMessages(worker1);
 
-            Assert.IsTrue(list1.Contains(message1), "GetVisibleMessagesTest problem to see message by rain");
-            Assert.IsTrue(list2.Contains(message2), "GetVisibleMessagesTest problem to see message by warriror");
-            Assert.IsTrue(list3.Contains(message1), "GetVisibleMessagesTest problem to see message by worker");
-
-        }
-        [Test]
-        public void CreateFoodTest()
-        {
-            XmlReaderWriter reader = new XmlReaderWriter();
-            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
-
-
-            AHGraphics.Init();
-
-            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
-            tmp_isw.CreateFood(new Point(2, 2), 23);
-            Food food1 = (tmp_isw.food).Find(delegate(Food f) { return f.Position == new Point(2, 2); });
-
-            Assert.IsNotNull(food1, "CreateFood problem");
-            Assert.AreEqual(food1.GetQuantity, 23, "CreateFood Quantity problem");
-            Assert.AreEqual(food1.Position, new Point(2, 2), "CreateFood Position problem");
-        }
-
-        [Test]
-        public void CreateWorkerTest()
-        {
-
-
-        }
-        [Test]
-        public void CreateWarriorTest()
-        {
-
-        }
-        [Test]
-        public void CreateSpiderTest()
-        {
-
-        }
-        [Test]
-        public void CreateSpider_WITH_POSITION_Test()
-        {
-
-        }
-        [Test]
-        public void CreateMessageTest()
-        {
-
-        }
-        [Test]
-        public void CreateEggTest()
-        {
-
-        }
-        [Test]
-        public void CreateAntTest()
-        {
-
-        }
-        [Test]
-        public void DeleteFoodTest()
-        {
-
-        }
-        [Test]
-        public void DeleteRainTest()
-        {
-
-        }
-        [Test]
-        public void DeleteEggTest()
-        {
-
-        }
-        [Test]
-        public void DeleteAntTest()
-        {
-
-        }
-        [Test]
-        public void DeleteSpiderTest()
-        {
-
-        }
-        [Test]
-        public void FeedQueenTest()
-        {
-
-        }
-        [Test]
-        public void AttackTest()
-        {
+//            Assert.IsTrue(list1.Contains(message1), "GetVisibleMessagesTest problem to see message by rain");
+//            Assert.IsTrue(list2.Contains(message2), "GetVisibleMessagesTest problem to see message by warriror");
+//            Assert.IsTrue(list3.Contains(message1), "GetVisibleMessagesTest problem to see message by worker");
 
         }
 

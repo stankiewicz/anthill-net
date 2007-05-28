@@ -20,24 +20,18 @@ namespace AntHill.NET
          * We can use this to speed-up searching for messages,
          * at the cost of memory.
          */
-        public List<Message> messages;
+        public LIList<Message> messages;
         private Point position;
         public Tile(TileType ttype, Point pos)
         {
             position = pos;
             tileType = ttype;
-            messages = new List<Message>();
+            messages = new LIList<Message>();
         }
         public Point Position
         {
-            get
-            {
-                return position;
-            }
-            set
-            {
-                position = value;
-            }
+            get { return position; }
+            set { position = value; }
         }
         public int GetTexture()
         {

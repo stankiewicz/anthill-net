@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Collections;
 
 namespace AntHill.NET
 {
@@ -11,7 +12,7 @@ namespace AntHill.NET
         private Tile[,] tiles;
         private MessageCount[,] messagesCount;
 
-        private List<Tile> indoorTiles, outdoorTiles, wallTiles;
+        private LIList<Tile> indoorTiles, outdoorTiles, wallTiles;
 
         public int GetIndoorCount { get { return indoorTiles.Count; } }
         public int GetOutdoorCount { get { return outdoorTiles.Count; } }
@@ -36,9 +37,9 @@ namespace AntHill.NET
 
             messagesCount = new MessageCount[width, height];
 
-            indoorTiles = new List<Tile>();
-            outdoorTiles = new List<Tile>();
-            wallTiles = new List<Tile>();
+            indoorTiles = new LIList<Tile>();
+            outdoorTiles = new LIList<Tile>();
+            wallTiles = new LIList<Tile>();
 
             Tile t;
             for (int y = 0; y < this.height; y++)
@@ -48,13 +49,13 @@ namespace AntHill.NET
                     switch ((t = tiles[x, y]).TileType)
                     {
                         case TileType.Outdoor:
-                            outdoorTiles.Add(t);
+                            outdoorTiles.AddLast(t);
                             break;
                         case TileType.Indoor:
-                            indoorTiles.Add(t);
+                            indoorTiles.AddLast(t);
                             break;
                         case TileType.Wall:
-                            wallTiles.Add(t);
+                            wallTiles.AddLast(t);
                             break;
                     }
                 }
@@ -106,7 +107,7 @@ namespace AntHill.NET
             wallTiles.Remove(t);
             t.TileType = TileType.Indoor;
             
-            indoorTiles.Add(t);
+            indoorTiles.AddLast(t);
         }
 
         public void AddMessage(MessageType mt, Point pos)

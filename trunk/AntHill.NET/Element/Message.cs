@@ -24,33 +24,33 @@ namespace AntHill.NET
             set { location = value; }
         }
 
-        private List<PointWithIntensity> points;
-        public List<PointWithIntensity> Points
+        private LIList<PointWithIntensity> points;
+        public LIList<PointWithIntensity> Points
         {
             get { return points; }
         }
         public void AddPoint(Tile t, int intensity, Map map)
         {
-            points.Add(new PointWithIntensity(t, intensity));
+            points.AddLast(new PointWithIntensity(t, intensity));
             map.AddMessage(this.GetMessageType, t.Position);
         }
 
         public Message(Point pos, MessageType mt ):base(pos)
         {
             type = mt;
-            points = new List<PointWithIntensity>();
+            points = new LIList<PointWithIntensity>();
         }
         public Message(Point pos, MessageType mt, Point location)
             : base(pos)
         {
             type = mt;
-            points = new List<PointWithIntensity>();
+            points = new LIList<PointWithIntensity>();
             this.location = location;
         }
-        public void AddPoint(List<PointWithIntensity> newPoint)
-        {
-            points.AddRange(newPoint);
-        }
+        //public void AddPoint(LIList<PointWithIntensity> newPoint)
+        //{
+        //    points.AddLast(newPoint);
+        //}
 
         public bool Empty { get { return points.Count == 0; } }
         public MessageType GetMessageType
@@ -70,7 +70,7 @@ namespace AntHill.NET
         {
             int id = -1;
 
-            List<PointWithIntensity>.Enumerator e = points.GetEnumerator();
+            LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();
             int i = 0;
             while (e.MoveNext())
             {
@@ -89,15 +89,26 @@ namespace AntHill.NET
         }
         public override bool Maintain(ISimulationWorld isw)
         {
-            for (int i = 0; i < points.Count; i++)
+            LinkedListNode<PointWithIntensity> msg = points.First;
+            LinkedListNode<PointWithIntensity> msgT;
+            while (msg != null)
             {
-                if (--points[i].Intensity == 0)
+                if (--msg.Value.Intensity == 0)
                 {
-                    isw.GetMap().RemoveMessage(this.GetMessageType, points[i].Tile.Position);
-                    points[i].Tile.messages.Remove(this);
-                    points.RemoveAt(i);
-                    i--;
+                    
+
+                    isw.GetMap().RemoveMessage(this.GetMessageType, msg.Value.Tile.Position);
+                    msg.Value.Tile.messages.Remove(this);
+
+                    msgT = msg;
+                    msg = msg.Next;
+                    points.Remove(msgT);
                 }
+                else
+                {
+                    msg = msg.Next;
+                }
+
             }
             return true;
         }
@@ -127,15 +138,15 @@ namespace AntHill.NET
                                 }
                                 else
                                 {// nie ma punktu?? w sumie takiej sytuacji nie powinno byc
-                                    this.points.Add(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
+                                    this.points.AddLast(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
                                     //update map
                                     map.AddMessage(this.GetMessageType, new Point(i + point.X, j + point.Y));
                                 }
                             }
                             else
                             {// nie ma w danym tile - wrzucamy
-                                map.GetTile(i + point.X, j + point.Y).messages.Add(this);
-                                this.points.Add(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
+                                map.GetTile(i + point.X, j + point.Y).messages.AddLast(this);
+                                this.points.AddLast(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
                                 //update map
                                 map.AddMessage(this.GetMessageType, new Point(i + point.X, j + point.Y));
                             }

@@ -13,7 +13,7 @@ namespace AntHill.NET
             
         }
 
-        Spider GetNearestSpider(List<Spider> spiders)
+        Spider GetNearestSpider(LIList<Spider> spiders)
         {
             int i=0;
             int min=Int32.MaxValue;
@@ -59,11 +59,11 @@ namespace AntHill.NET
                 return false;
             }
             SpreadSignal(isw);
-            List<Message> msg = isw.GetVisibleMessages(this);
+            LIList<Message> msg = isw.GetVisibleMessages(this);
             for (int i = 0; i < msg.Count; i++)
                 this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
 
-            List<Spider> spiders;
+            LIList<Spider> spiders;
             if ((spiders = isw.GetVisibleSpiders(this)).Count != 0)
             {
                 Spider spider = GetNearestSpider(spiders);
@@ -89,7 +89,7 @@ namespace AntHill.NET
 
             // teraz wcinamy
 
-            List<Food> foods = isw.GetVisibleFood(this);
+            LIList<Food> foods = isw.GetVisibleFood(this);
             if (foods.Count != 0)
             {
                 Food food = GetNearestFood(foods);
