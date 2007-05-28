@@ -546,6 +546,95 @@ namespace AntHill.NET
             Assert.IsTrue(list3.Contains(message1), "GetVisibleMessagesTest problem to see message by worker");
 
         }
+        [Test]
+        public void CreateFoodTest()
+        {
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
+
+
+            AHGraphics.Init();
+
+            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            tmp_isw.CreateFood(new Point(2, 2), 23);
+            Food food1 = (tmp_isw.food).Find(delegate(Food f) { return f.Position == new Point(2, 2); });
+
+            Assert.IsNotNull(food1, "CreateFood problem");
+            Assert.AreEqual(food1.GetQuantity, 23, "CreateFood Quantity problem");
+            Assert.AreEqual(food1.Position, new Point(2, 2), "CreateFood Position problem");
+        }
+
+        [Test]
+        public void CreareWorkerTest()
+        {
+
+
+        }
+        [Test]
+        public void CreateWarriorTest()
+        {
+
+        }
+        [Test]
+        public void CreateSpiderTest()
+        {
+
+        }
+        [Test]
+        public void CreateSpider_WITH_POSITION_Test()
+        {
+
+        }
+        [Test]
+        public void CreateMessageTest()
+        {
+
+        }
+        [Test]
+        public void CreateEggTest()
+        {
+
+        }
+        [Test]
+        public void CreateAntTest()
+        {
+
+        }
+        [Test]
+        public void DeleteFoodTest()
+        {
+
+        }
+        [Test]
+        public void DeleteRainTest()
+        {
+
+        }
+        [Test]
+        public void DeleteEggTest()
+        {
+
+        }
+        [Test]
+        public void DeleteAntTest()
+        {
+
+        }
+        [Test]
+        public void DeleteSpiderTest()
+        {
+
+        }
+        [Test]
+        public void FeedQueenTest()
+        {
+
+        }
+        [Test]
+        public void AttackTest()
+        {
+
+        }
 
     }
 }
