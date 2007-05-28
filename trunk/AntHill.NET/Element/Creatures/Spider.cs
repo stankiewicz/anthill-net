@@ -26,7 +26,7 @@ namespace AntHill.NET
                 return null;
             if (ants.Count == 0)
                 return null;
-            int minDistance = Distance(ants[0].Position, Position);
+            int minDistance = Distance(ants.First.Value.Position, Position);
 
             int distance;
             Ant bestAnt = null;
@@ -39,9 +39,8 @@ namespace AntHill.NET
                     minDistance = distance;
                 }                
             }
-            if (minDistance <= AntHillConfig.antSightRadius)
-                return bestAnt;
-            return null;
+           
+            return bestAnt;           
         }
 
       

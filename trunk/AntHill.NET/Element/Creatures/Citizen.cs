@@ -37,8 +37,9 @@ namespace AntHill.NET
             LinkedListNode<Message> msg3T;
             while (msg3 != null)
             {
-                if (msg3.Value.Empty)
+                if (--msg2.Value<=0 || --msg1.Value<=0)
                 {
+                    
                     msg1T = msg1;
                     msg2T = msg2;
                     msg3T = msg3;
