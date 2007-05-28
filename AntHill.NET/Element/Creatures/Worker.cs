@@ -61,8 +61,10 @@ namespace AntHill.NET
                 if (s != lastSpider)
                 {
                     if (!FindEqualSignal(MessageType.SpiderLocalization, s.Position))
-                    isw.CreateMessage(this.Position, MessageType.SpiderLocalization, s.Position);
-                    lastSpider = s;
+                    {
+                        isw.CreateMessage(this.Position, MessageType.SpiderLocalization, s.Position);
+                        lastSpider = s;
+                    }
                 }
             }
             LIList<Message> msg = isw.GetVisibleMessages(this);
@@ -94,9 +96,11 @@ namespace AntHill.NET
                     {
                         if (nearestFood != lastFood)
                         {
-                            if(!FindEqualSignal(MessageType.FoodLocalization,nearestFood.Position))
-                            isw.CreateMessage(this.Position, MessageType.FoodLocalization, nearestFood.Position);
-                            lastFood = nearestFood;
+                            if (!FindEqualSignal(MessageType.FoodLocalization, nearestFood.Position))
+                            {
+                                isw.CreateMessage(this.Position, MessageType.FoodLocalization, nearestFood.Position);
+                                lastFood = nearestFood;
+                            }
                         }
                         // znajdujemy t¹ krótk¹ œcie¿kê - wyliczane co 'maintain'
                         List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(nearestFood.Position.X, nearestFood.Position.Y), new AstarOtherObject());

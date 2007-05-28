@@ -11,6 +11,7 @@ namespace AntHill.NET
         LIList<Message> remembered = new LIList<Message>();
         LIList<int> rememberedIntensities = new LIList<int>();
         LIList<int> forgetting = new LIList<int>();
+
         public Citizen(Point pos):base(pos)
         {
 
@@ -29,7 +30,6 @@ namespace AntHill.NET
         protected bool FindEqualSignal(MessageType mt, Point location)
         {
             LinkedListNode<Message> msg1 = remembered.First;
-            LinkedListNode<Message> msg1T;
             while (msg1 != null)
             {
                 
@@ -50,11 +50,16 @@ namespace AntHill.NET
             LinkedListNode<int> msg2T;
             LinkedListNode<Message> msg3 = remembered.First;
             LinkedListNode<Message> msg3T;
+
+            Message[] rem = new Message[4];
+            int[] maxI = new int[4];
+            maxI[0] = maxI[1] = maxI[2] = maxI[3] = -1;
+
             while (msg3 != null)
             {
-                if (--msg2.Value<=0 || --msg1.Value<=0 || msg3.Value.Empty)
+                if (--msg2.Value <= 0 || --msg1.Value <= 0 || msg3.Value.Empty)
                 {
-                    
+
                     msg1T = msg1;
                     msg2T = msg2;
                     msg3T = msg3;
@@ -67,25 +72,22 @@ namespace AntHill.NET
                 }
                 else
                 {
-                    msg3.Value.Spread(isw, this.Position, msg1.Value);
+                    if (maxI[(int)msg3.Value.GetMessageType] > msg1.Value)
+                    {
+                        maxI[(int)msg3.Value.GetMessageType] = msg1.Value;
+                        rem[(int)msg3.Value.GetMessageType] = msg3.Value;
+                    }
+                    //msg3.Value.Spread(isw, this.Position, msg1.Value);
                     msg3 = msg3.Next;
                     msg2 = msg2.Next;
                     msg1 = msg1.Next;
                 }
             }
-            //for (int i = 0; i < remembered.Count; i++)
-            //{
-            //    if (--rememberedIntensities[i] <= 0 || --forgetting[i]<=0)
-            //    {
-            //        remembered.RemoveAt(i);
-            //        rememberedIntensities.RemoveAt(i);
-            //        i--;
-            //    }
-            //}
-            //for (int i = 0; i < remembered.Count; ++i)
-            //{
-            //    remembered[i].Spread(isw, this.Position, rememberedIntensities[i]);
-            //}
+            for (int i = 0; i < 4; i++)
+            {
+                if(rem[i]!=null && maxI[i]!=-1)
+                    rem[i].Spread(isw,this.Position,maxI[i]);
+            }
         }
 
         protected Food GetNearestFood(LIList<Food> foods)
