@@ -70,8 +70,10 @@ namespace AntHill.NET
                 if (spider != lastSpider)
                 {
                     if (!FindEqualSignal(MessageType.SpiderLocalization, spider.Position))
-                    isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
-                    lastSpider = spider;
+                    {
+                        isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
+                        lastSpider = spider;
+                    }
                 }
                 MoveRotateOrAttack(this, spider, isw);
                 randomDestination.X = -1;
@@ -98,8 +100,10 @@ namespace AntHill.NET
                 if (food != lastFood)
                 {
                     if (!FindEqualSignal(MessageType.FoodLocalization, food.Position))
-                    isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
-                    lastFood = food;
+                    {
+                        isw.CreateMessage(this.Position, MessageType.FoodLocalization, food.Position);
+                        lastFood = food;
+                    }
                 }
                 if (this.TurnsToBecomeHungry <= 0)
                 {
