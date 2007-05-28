@@ -24,7 +24,7 @@
   <Spider maxHealth="1" probability="0.1" foodQuantityAfterDeath="5" /> 
   </CreaturesAbilities>
 - <EnvironmentCharacteristics>
-  <Rain cloudWidth="3" probability="0.01" maxDuration="2" /> 
+  <Rain cloudWidth="3" probability="0.9" maxDuration="2" /> 
   <Food probability="0.2" />
   <Signal lifeTime="10" radius="1" /> 
   </EnvironmentCharacteristics>

@@ -60,16 +60,13 @@ namespace AntHill.NET
 
         public PointWithIntensity GetPoint(Point p)
         {
-            for (int i = 0; i < points.Count; i++)
-            {
-                if (points[i].Tile.Position == p) return points[i];
-            }
+            LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();
+            while(e.MoveNext())            
+                if (e.Current.Tile.Position == p) return e.Current;            
             return null;
         }
         private int GetId(int x, int y)
-        {
-            int id = -1;
-
+        {           
             LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();
             int i = 0;
             while (e.MoveNext())
@@ -78,14 +75,19 @@ namespace AntHill.NET
                 if (t.Position.X == x && t.Position.Y == y)
                     return i;
                 i++;
+            }            
+            return -1;
+        }
+        private PointWithIntensity GetPoint(int x, int y)
+        {
+            LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();           
+            while (e.MoveNext())
+            {
+                Tile t = e.Current.Tile;
+                if (t.Position.X == x && t.Position.Y == y)
+                    return e.Current;
             }
-            //for (int i = 0; i < points.Count; i++)
-            //{
-                
-            //    if (points[i].Tile.Position.X==x && points[i].Tile.Position.Y== y)
-            //        return i;
-            //}
-            return id;
+            return null;
         }
         public override bool Maintain(ISimulationWorld isw)
         {
@@ -113,49 +115,48 @@ namespace AntHill.NET
         public void Spread(ISimulationWorld isw, Point point, int intensity)
         {
             int radius = AntHillConfig.messageRadius, radius2 = radius * radius;
+            int x, y;
             Map map = isw.GetMap();
+            PointWithIntensity PwI;
             for (int i = -radius; i < radius; i++)
             {
                 for (int j = -radius; j < radius; j++)
                 {
                     if (i * i + j * j < radius2)
                     {
-                        if (map.Inside(i+point.X, j+point.Y))
+                        x = i + point.X;
+                        y = j + point.Y;
+                        if (map.Inside(x, y))
                         {// czy wogole w srodku
-                            if (map.GetTile(i + point.X, j + point.Y).TileType == TileType.Wall) continue;
-                            if (map.GetTile(i + point.X, j + point.Y).messages.Contains(this))
-                            {// czy zawiera
-                                int idx;
-                                if ((idx = GetId(i + point.X, j + point.Y))!=-1)// this.points.Contains(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0)))
-                                {// czy punkt istnieje
-                                    //int idx = points.IndexOf(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0));
-                                    if (points[idx].Intensity < intensity)
+                            if (map.GetTile(x, y).TileType == TileType.Wall) continue;
+                            if (map.GetTile(x, y).messages.Contains(this))
+                            {// czy zawiera                                
+                                if ((PwI = GetPoint(x, y)) != null)// this.points.Contains(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0)))
+                                {// czy punkt istnieje                                    
+                                    if (PwI.Intensity < intensity)
                                     {// czy zwiekszyc intensywnosc
-                                        points[idx].Intensity = intensity;
+                                        PwI.Intensity = intensity;
                                     }
                                 }
                                 else
                                 {// nie ma punktu?? w sumie takiej sytuacji nie powinno byc
-                                    this.points.AddLast(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
+                                    this.points.AddLast(new PointWithIntensity(map.GetTile(x, y), intensity));
                                     //update map
-                                    map.AddMessage(this.GetMessageType, new Point(i + point.X, j + point.Y));
+                                    map.AddMessage(this.GetMessageType, new Point(x, y));
                                 }
                             }
                             else
                             {// nie ma w danym tile - wrzucamy
-                                map.GetTile(i + point.X, j + point.Y).messages.AddLast(this);
-                                this.points.AddLast(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), intensity));
+                                map.GetTile(x, y).messages.AddLast(this);
+                                this.points.AddLast(new PointWithIntensity(map.GetTile(x, y), intensity));
                                 //update map
-                                map.AddMessage(this.GetMessageType, new Point(i + point.X, j + point.Y));
+                                map.AddMessage(this.GetMessageType, new Point(x, y));
                             }
                         }
                     }
                 }
-
             }
         }
-
-
 
         public override void Destroy(ISimulationWorld isw)
         {
