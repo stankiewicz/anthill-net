@@ -182,15 +182,15 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="messageFoodLocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Release\Graphics\messageFoodLocation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="messageSpiderLocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Release\Graphics\messageSpiderLocation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="messageQueenIsHungry" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Release\Graphics\messageQueenIsHungry.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\graphics\messagefoodlocation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="messageQueenInDanger" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Release\Graphics\messageQueenInDanger.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\graphics\messagequeenindanger.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="messageQueenIsHungry" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\messagequeenishungry.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="messageSpiderLocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\graphics\messagespiderlocation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

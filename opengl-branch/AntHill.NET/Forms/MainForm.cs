@@ -383,10 +383,10 @@ namespace AntHill.NET
                 Gl.glTranslatef(rain.Position.X + moveX, rain.Position.Y + moveY, 0);
                 Gl.glBindTexture(Gl.GL_TEXTURE_2D, rain.GetTexture());
                 Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-                Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-(AntHillConfig.rainWidth >> 1) - 0.5f, -(AntHillConfig.rainWidth >> 1) - 0.5f, 0.0f);
-                Gl.glTexCoord2f(1, 0); Gl.glVertex3f((AntHillConfig.rainWidth >> 1) + 0.5f, -(AntHillConfig.rainWidth >> 1) - 0.5f, 0.0f);
-                Gl.glTexCoord2f(1, 1); Gl.glVertex3f((AntHillConfig.rainWidth >> 1) + 0.5f, (AntHillConfig.rainWidth >> 1) + 0.5f, 0.0f);
-                Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-(AntHillConfig.rainWidth >> 1) - 0.5f, (AntHillConfig.rainWidth >> 1) + 0.5f, 0.0f);
+                Gl.glTexCoord2f(0, 0); Gl.glVertex3f(0.0f, 0.0f, 0.0f);
+                Gl.glTexCoord2f(1, 0); Gl.glVertex3f((AntHillConfig.rainWidth),0.0f, 0.0f);
+                Gl.glTexCoord2f(1, 1); Gl.glVertex3f(AntHillConfig.rainWidth, AntHillConfig.rainWidth, 0.0f);
+                Gl.glTexCoord2f(0, 1); Gl.glVertex3f(0.0f, AntHillConfig.rainWidth, 0.0f);
                 Gl.glEnd();
                 Gl.glPopMatrix();
             }

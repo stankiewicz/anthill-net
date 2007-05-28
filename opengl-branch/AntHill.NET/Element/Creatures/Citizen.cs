@@ -53,7 +53,7 @@ namespace AntHill.NET
             int tmp;
             for (int j = 0; j < foods.Count; j++)
             {
-                if ((tmp = Distance(this.Position, foods[i].Position)) < min)
+                if ((tmp = Distance(this.Position, foods[j].Position)) < min)
                 {
                     i = j;
                     min = tmp;
