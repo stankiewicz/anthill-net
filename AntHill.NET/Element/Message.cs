@@ -93,10 +93,8 @@ namespace AntHill.NET
             LinkedListNode<PointWithIntensity> msgT;
             while (msg != null)
             {
-                if (--msg.Value.Intensity == 0)
+                if (--msg.Value.Intensity <= 0)
                 {
-                    
-
                     isw.GetMap().RemoveMessage(this.GetMessageType, msg.Value.Tile.Position);
                     msg.Value.Tile.messages.Remove(this);
 
