@@ -69,7 +69,7 @@ namespace AntHill.NET
                 Spider spider = GetNearestSpider(spiders);
                 if (spider != lastSpider)
                 {
-                    if (!FindEqualSignal(MessageType.FoodLocalization, spider.Position))
+                    if (!FindEqualSignal(MessageType.SpiderLocalization, spider.Position))
                     isw.CreateMessage(this.Position, MessageType.SpiderLocalization, spider.Position);
                     lastSpider = spider;
                 }
