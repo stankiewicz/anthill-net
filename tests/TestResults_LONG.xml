@@ -1,45 +1,37 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" total="19" failures="0" not-run="2" date="2007-05-28" time="12:22:59">
+<test-results name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" total="21" failures="0" not-run="0" date="2007-05-28" time="12:35:44">
   <environment nunit-version="2.4.0.2" clr-version="2.0.50727.42" os-version="Microsoft Windows NT 5.0.2195 Service Pack 4" platform="Win32NT" cwd="C:\Documents and Settings\jaworskif\Pulpit\anthill_project\tests" machine-name="PRACOWNIA12" user="jaworskif" user-domain="PRACOWNIA" />
   <culture-info current-culture="pl-PL" current-uiculture="pl-PL" />
-  <test-suite name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" success="True" time="14.188" asserts="0">
+  <test-suite name="..\AntHill.Net\bin\Debug\AntHill.Net.exe" success="True" time="13.813" asserts="0">
     <results>
-      <test-suite name="AntHill" success="True" time="14.188" asserts="0">
+      <test-suite name="AntHill" success="True" time="13.797" asserts="0">
         <results>
-          <test-suite name="NET" success="True" time="14.109" asserts="0">
+          <test-suite name="NET" success="True" time="13.781" asserts="0">
             <results>
-              <test-suite name="TestClass" success="True" time="14.000" asserts="0">
+              <test-suite name="TestClass" success="True" time="13.750" asserts="0">
                 <results>
-                  <test-case name="AntHill.NET.TestClass.AntTest" executed="False">
-                    <reason>
-                      <message><![CDATA[Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...]]></message>
-                    </reason>
-                  </test-case>
+                  <test-case name="AntHill.NET.TestClass.AntTest" executed="True" success="True" time="0.016" asserts="9" />
                   <test-case name="AntHill.NET.TestClass.AstarTest" executed="True" success="True" time="0.375" asserts="22" />
-                  <test-case name="AntHill.NET.TestClass.CitizenTest" executed="True" success="True" time="4.813" asserts="1" />
-                  <test-case name="AntHill.NET.TestClass.CreatureTest" executed="False">
-                    <reason>
-                      <message><![CDATA[Creature class is abstract. Creature.Direction test in WorkerTest and WarriorTest...]]></message>
-                    </reason>
-                  </test-case>
-                  <test-case name="AntHill.NET.TestClass.ElementTest" executed="True" success="True" time="0.016" asserts="9" />
+                  <test-case name="AntHill.NET.TestClass.CitizenTest" executed="True" success="True" time="4.313" asserts="1" />
+                  <test-case name="AntHill.NET.TestClass.CreatureTest" executed="True" success="True" time="0.000" asserts="9" />
+                  <test-case name="AntHill.NET.TestClass.ElementTest" executed="True" success="True" time="0.000" asserts="9" />
                   <test-case name="AntHill.NET.TestClass.FoodTest" executed="True" success="True" time="0.000" asserts="2" />
-                  <test-case name="AntHill.NET.TestClass.GetVisibleAntsTest" executed="True" success="True" time="0.000" asserts="0" />
+                  <test-case name="AntHill.NET.TestClass.GetVisibleAntsTest" executed="True" success="True" time="4.344" asserts="4" />
                   <test-case name="AntHill.NET.TestClass.GetVisibleFoodTest" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.GetVisibleMessagesTest" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.GetVisibleSpidersTest" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.MapTest" executed="True" success="True" time="0.047" asserts="14" />
                   <test-case name="AntHill.NET.TestClass.MessageTest" executed="True" success="True" time="0.000" asserts="0" />
                   <test-case name="AntHill.NET.TestClass.PointWithIntensityTest" executed="True" success="True" time="0.000" asserts="2" />
-                  <test-case name="AntHill.NET.TestClass.QueenTest" executed="True" success="True" time="0.078" asserts="3" />
-                  <test-case name="AntHill.NET.TestClass.RainTest" executed="True" success="True" time="8.328" asserts="18" />
-                  <test-case name="AntHill.NET.TestClass.SimulationTest" executed="True" success="True" time="0.141" asserts="2" />
-                  <test-case name="AntHill.NET.TestClass.SpiderTest" executed="True" success="True" time="0.016" asserts="3" />
+                  <test-case name="AntHill.NET.TestClass.QueenTest" executed="True" success="True" time="0.047" asserts="3" />
+                  <test-case name="AntHill.NET.TestClass.RainTest" executed="True" success="True" time="4.359" asserts="18" />
+                  <test-case name="AntHill.NET.TestClass.SimulationTest" executed="True" success="True" time="0.063" asserts="2" />
+                  <test-case name="AntHill.NET.TestClass.SpiderTest" executed="True" success="True" time="0.000" asserts="3" />
                   <test-case name="AntHill.NET.TestClass.TileTest" executed="True" success="True" time="0.000" asserts="1" />
                   <test-case name="AntHill.NET.TestClass.WarriorTest" executed="True" success="True" time="0.000" asserts="4" />
                   <test-case name="AntHill.NET.TestClass.WorkerTest" executed="True" success="True" time="0.000" asserts="5" />
-                  <test-case name="AntHill.NET.TestClass.XmlTest" executed="True" success="True" time="0.047" asserts="130" />
+                  <test-case name="AntHill.NET.TestClass.XmlTest" executed="True" success="True" time="0.000" asserts="130" />
                 </results>
               </test-suite>
             </results>
