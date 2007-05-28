@@ -45,15 +45,22 @@ namespace AntHill.NET
             LIList<Spider> lSpider = isw.GetVisibleSpiders(this);
             LIList<Message> lMessage = isw.GetVisibleMessages(this);
 
-            for(int i = 0; i < lFood.Count;++i)
-                isw.DeleteFood(lFood[i]);
+            while(lFood.Count > 0)
+            {
+                isw.DeleteFood(lFood.First.Value);
+                lFood.RemoveFirst();
+            }
 
-            for (int i = 0; i < lAnt.Count; ++i)
-                isw.DeleteAnt(lAnt[i]);
-
-            for (int i = 0; i < lSpider.Count; ++i)
-                isw.DeleteSpider(lSpider[i]);
-
+            while (lAnt.Count > 0)
+            {
+                isw.DeleteAnt(lAnt.First.Value);
+                lAnt.RemoveFirst();
+            }
+            while (lSpider.Count > 0)
+            {
+                isw.DeleteSpider(lSpider.First.Value);
+                lSpider.RemoveFirst();
+            }
             
             if (lMessage!=null)
             {
