@@ -40,7 +40,7 @@ namespace AntHill.NET
              
 
             AHGraphics.Init();
-
+            /*test AddSet() function*/
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
             Message message=new Message(new Point(2,2),MessageType.FoodLocalization);
             tmp_isw.ants.Add(worker1);
@@ -51,6 +51,24 @@ namespace AntHill.NET
             List<Message> list = tmp_isw.GetVisibleMessages(worker2);
             bool check = list.Contains(message);
             Assert.IsTrue(check, "problem with adding messages");
+
+            /*test GetNearestFood()*/
+            List<Food> foodList=new List<Food>();
+            foodList.Add(new Food(new Point(4,4),1));
+            foodList.Add(new Food(new Point(8,8),3));
+            foodList.Add(new Food(new Point(2,3),3));
+            foodList.Add(new Food(new Point(1,1),3));
+            Food nFood=worker1.testGetNearestFood(foodList);
+            Assert.AreEqual(new System.Drawing.Point(2, 3), nFood.Position, "finding nearest food problem");
+
+            /*test ReadMessage()*/
+            Worker worker3 = new Worker(new Point(4, 4));
+            worker3.AddToSet(new Message(new Point(5,5),MessageType.FoodLocalization),1);
+            worker3.AddToSet(new Message(new Point(1,1),MessageType.FoodLocalization),3);
+            worker3.AddToSet(new Message(new Point(3,3),MessageType.FoodLocalization),2);
+            Message nMessage=worker3.testReadMessage(MessageType.FoodLocalization);
+            Assert.AreEqual(new System.Drawing.Point(1, 1), nMessage.Position, "ReadMessage function problem in Citizen");
+            
         }
         [Test]
         public void CreatureTest()
