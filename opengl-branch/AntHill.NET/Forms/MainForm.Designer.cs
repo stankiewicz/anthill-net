@@ -194,7 +194,7 @@ namespace AntHill.NET
             this.cbVisualize.Checked = true;
             this.cbVisualize.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbVisualize.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbVisualize.Location = new System.Drawing.Point(0, 232);
+            this.cbVisualize.Location = new System.Drawing.Point(0, 226);
             this.cbVisualize.Name = "cbVisualize";
             this.cbVisualize.Size = new System.Drawing.Size(143, 17);
             this.cbVisualize.TabIndex = 6;
@@ -205,7 +205,7 @@ namespace AntHill.NET
             // buttonShowConfig
             // 
             this.buttonShowConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonShowConfig.Location = new System.Drawing.Point(0, 208);
+            this.buttonShowConfig.Location = new System.Drawing.Point(0, 202);
             this.buttonShowConfig.Name = "buttonShowConfig";
             this.buttonShowConfig.Size = new System.Drawing.Size(143, 24);
             this.buttonShowConfig.TabIndex = 0;
@@ -217,10 +217,10 @@ namespace AntHill.NET
             // 
             this.magnitudeBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.magnitudeBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.magnitudeBar.Location = new System.Drawing.Point(0, 163);
+            this.magnitudeBar.Location = new System.Drawing.Point(0, 160);
             this.magnitudeBar.Maximum = 1000;
             this.magnitudeBar.Name = "magnitudeBar";
-            this.magnitudeBar.Size = new System.Drawing.Size(143, 45);
+            this.magnitudeBar.Size = new System.Drawing.Size(143, 42);
             this.magnitudeBar.TabIndex = 1;
             this.magnitudeBar.TickFrequency = 0;
             this.magnitudeBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -231,7 +231,7 @@ namespace AntHill.NET
             // 
             this.magnitudeLabel.AutoSize = true;
             this.magnitudeLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.magnitudeLabel.Location = new System.Drawing.Point(0, 150);
+            this.magnitudeLabel.Location = new System.Drawing.Point(0, 147);
             this.magnitudeLabel.Name = "magnitudeLabel";
             this.magnitudeLabel.Size = new System.Drawing.Size(60, 13);
             this.magnitudeLabel.TabIndex = 3;
@@ -244,9 +244,9 @@ namespace AntHill.NET
             this.speedBar.LargeChange = 1;
             this.speedBar.Location = new System.Drawing.Point(0, 105);
             this.speedBar.Maximum = 1000;
-            this.speedBar.Minimum = 10;
+            this.speedBar.Minimum = 50;
             this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(143, 45);
+            this.speedBar.Size = new System.Drawing.Size(143, 42);
             this.speedBar.TabIndex = 5;
             this.speedBar.TickFrequency = 0;
             this.speedBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -361,19 +361,19 @@ namespace AntHill.NET
             // loadDataToolStripMenuItem
             // 
             this.loadDataToolStripMenuItem.Name = "loadDataToolStripMenuItem";
-            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.loadDataToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.loadDataToolStripMenuItem.Text = "Load Data";
             this.loadDataToolStripMenuItem.Click += new System.EventHandler(this.loadData);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(131, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(120, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

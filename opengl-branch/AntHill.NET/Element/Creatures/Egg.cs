@@ -20,7 +20,7 @@ namespace AntHill.NET
         public override bool Maintain(ISimulationWorld isw)
         {
             if (--timeToHatch < 0)
-            {
+            {                
                 isw.CreateAnt(this.Position);
                 isw.DeleteEgg(this);
             }

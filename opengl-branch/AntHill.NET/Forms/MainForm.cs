@@ -125,8 +125,8 @@ namespace AntHill.NET
                     maxMagnitude = Simulation.simulation.Map.Width;
                 else
                     maxMagnitude = Simulation.simulation.Map.Height;
-                moveX = -(Simulation.simulation.Map.Width >> 1);
-                moveY = -(Simulation.simulation.Map.Height >> 1);
+                moveX = -(Simulation.simulation.Map.Width >> 1) + 0.5f;
+                moveY = -(Simulation.simulation.Map.Height >> 1) + 0.5f;
 
                 vScrollBar1.Minimum = 0;
                 vScrollBar1.LargeChange = 1;
@@ -203,6 +203,7 @@ namespace AntHill.NET
         private void buttonShowConfig_Click(object sender, EventArgs e)
         {
             cf.RefreshData();
+            cf.Owner = this;
             cf.Show();
         }
 

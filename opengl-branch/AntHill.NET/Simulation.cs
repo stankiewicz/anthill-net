@@ -117,7 +117,7 @@ namespace AntHill.NET
 
             if (rain != null)
                 rain.Maintain(this);
-
+            
             for (int i = 0; i < messages.Count; i++)
             {
                 messages[i].Maintain(this);
@@ -256,24 +256,24 @@ namespace AntHill.NET
         {
             List<Ant> res_ants = new List<Ant>();
             int radius;
+            List<Ant>.Enumerator ant = ants.GetEnumerator();
             if (c is Spider || c is Ant) //same radius
             {
-                radius = AntHillConfig.antSightRadius; //same as for ant
-                for (int i = 0; i < ants.Count; i++)
-                {
-                    //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(ants[i].Position.X - c.Position.X) <= radius &&
-                        Math.Abs(ants[i].Position.Y - c.Position.Y) <= radius)
-                        res_ants.Add(ants[i]);
+                radius = AntHillConfig.antSightRadius; //same as for ant                
+                while(ant.MoveNext())
+                {                    
+                    if (Math.Abs(ant.Current.Position.X - c.Position.X) <= radius &&
+                        Math.Abs(ant.Current.Position.Y - c.Position.Y) <= radius)
+                        res_ants.Add(ant.Current);
                 }
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < ants.Count; i++)
+                while(ant.MoveNext())
                 {
-                    if (map.GetTile(ants[i].Position.X, ants[i].Position.Y).TileType == TileType.Outdoor &&
-                        rain.IsRainOver(ants[i].Position.X, ants[i].Position.Y))
-                        res_ants.Add(ants[i]);
+                    if (map.GetTile(ant.Current.Position.X, ant.Current.Position.Y).TileType == TileType.Outdoor &&
+                        rain.IsRainOver(ant.Current.Position.X, ant.Current.Position.Y))
+                        res_ants.Add(ant.Current);
                 }
             }
                 
@@ -284,24 +284,24 @@ namespace AntHill.NET
         {
             List<Food> res_food = new List<Food>();
             int radius;
+            List<Food>.Enumerator f = food.GetEnumerator();
             if (c is Spider || c is Ant) //same radius
             {
                 radius = AntHillConfig.antSightRadius; //same as for ant
-                for (int i = 0; i < food.Count; i++)
-                {
-                    //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(food[i].Position.X - c.Position.X) <= radius &&
-                        Math.Abs(food[i].Position.Y - c.Position.Y) <= radius)
-                        res_food.Add(food[i]);
+                while(f.MoveNext())
+                {                    
+                    if (Math.Abs(f.Current.Position.X - c.Position.X) <= radius &&
+                        Math.Abs(f.Current.Position.Y - c.Position.Y) <= radius)
+                        res_food.Add(f.Current);
                 }
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < food.Count; i++)
+                while (f.MoveNext())
                 {
-                    if (map.GetTile(food[i].Position.X, food[i].Position.Y).TileType == TileType.Outdoor &&
-                        rain.IsRainOver(food[i].Position.X, food[i].Position.Y))
-                        res_food.Add(food[i]);
+                    if (map.GetTile(f.Current.Position.X, f.Current.Position.Y).TileType == TileType.Outdoor &&
+                        rain.IsRainOver(f.Current.Position.X, f.Current.Position.Y))
+                        res_food.Add(f.Current);
                 }
             }
             return res_food;
@@ -311,24 +311,24 @@ namespace AntHill.NET
         {
             List<Spider> res_spiders = new List<Spider>();
             int radius;
+            List<Spider>.Enumerator spider = spiders.GetEnumerator();
             if (c is Spider || c is Ant) //same radius
             {
                 radius = AntHillConfig.antSightRadius; //same as for ant
-                for (int i = 0; i < spiders.Count; i++)
-                {
-                    //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(spiders[i].Position.X - c.Position.X) <= radius &&
-                        Math.Abs(spiders[i].Position.Y - c.Position.Y) <= radius)
-                        res_spiders.Add(spiders[i]);
+                while(spider.MoveNext())
+                {                    
+                    if (Math.Abs(spider.Current.Position.X - c.Position.X) <= radius &&
+                        Math.Abs(spider.Current.Position.Y - c.Position.Y) <= radius)
+                        res_spiders.Add(spider.Current);
                 }
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < spiders.Count; i++)
+                while(spider.MoveNext())
                 {
-                    if (map.GetTile(spiders[i].Position.X, spiders[i].Position.Y).TileType == TileType.Outdoor &&
-                        rain.IsRainOver(spiders[i].Position.X, spiders[i].Position.Y))
-                        res_spiders.Add(spiders[i]);
+                    if (map.GetTile(spider.Current.Position.X, spider.Current.Position.Y).TileType == TileType.Outdoor &&
+                        rain.IsRainOver(spider.Current.Position.X, spider.Current.Position.Y))
+                        res_spiders.Add(spider.Current);
                 }
             }
 
@@ -338,15 +338,18 @@ namespace AntHill.NET
         public List<Message> GetVisibleMessages(Element c)
         {
             List<Message> res_messages =  new List<Message>();
+            List<Message>.Enumerator message = messages.GetEnumerator();
+            List<PointWithIntensity>.Enumerator point;
             if (c is Ant)
             {
-                for (int i = 0; i < messages.Count; i++)
+                while(message.MoveNext())
                 {
-                    for (int j = 0; j < messages[i].Points.Count; j++)
+                    point = message.Current.Points.GetEnumerator();
+                    while(point.MoveNext())
                     {
-                        if (c.Position == messages[i].Points[j].Tile.Position)
+                        if (c.Position == point.Current.Tile.Position)
                         {
-                            res_messages.Add(messages[i]);
+                            res_messages.Add(message.Current);
                             break;
                         }
                     }
@@ -354,14 +357,15 @@ namespace AntHill.NET
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < messages.Count; i++)
+                while (message.MoveNext())
                 {
-                    for (int j = 0; j < messages[i].Points.Count; j++)
+                    point = message.Current.Points.GetEnumerator();
+                    while (point.MoveNext())
                     {
-                        if (messages[i].Points[j].Tile.TileType == TileType.Outdoor &&
-                            c.Position == messages[i].Points[j].Tile.Position)
+                        if (point.Current.Tile.TileType == TileType.Outdoor &&
+                            c.Position == point.Current.Tile.Position)
                         {
-                            res_messages.Add(messages[i]);
+                            res_messages.Add(message.Current);
                             break;
                         }
                     }

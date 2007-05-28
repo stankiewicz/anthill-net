@@ -90,18 +90,18 @@
 <CreaturesAbilities>
  <Ant maxLife="10000" maxLifeWithoutFood="400" turnNumberToBecomeHungry="100" strength="1" forgettingTime="5" sightRadius="5">
  <Citizen>
-  <Warrior startCount="20" /> 
-  <Worker startCount="80" /> 
+  <Warrior startCount="100" /> 
+  <Worker startCount="100" /> 
 </Citizen>
-  <Queen layEggProbability="0.5" xPosition="50" yPosition="37" /> 
-  <Egg hatchWarriorProbability="0.5" hatchTime="10" /> 
+  <Queen layEggProbability="0.9" xPosition="50" yPosition="37" /> 
+  <Egg hatchWarriorProbability="0.7" hatchTime="10" /> 
   </Ant>
-  <Spider maxHealth="3" probability="0.1" foodQuantityAfterDeath="5" /> 
+  <Spider maxHealth="3" probability="0.5" foodQuantityAfterDeath="5" /> 
 </CreaturesAbilities>
 
 <EnvironmentCharacteristics>
-  <Rain cloudWidth="3" probability="0.1" maxDuration="2" /> 
-  <Food probability="0.2" maxDensity="10"/> 
+  <Rain cloudWidth="20" probability="0.5" maxDuration="5" /> 
+  <Food probability="0.9" maxDensity="10"/> 
   <Signal lifeTime="10" radius="1" /> 
 </EnvironmentCharacteristics>
 
