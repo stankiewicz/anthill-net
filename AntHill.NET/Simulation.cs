@@ -490,6 +490,11 @@ namespace AntHill.NET
             return (spiders!=null)?spiders.Count:0;
         }
 
+        public bool testCheckIfExists(TileType tt)
+        {
+            return this.CheckIfExists(tt);
+        }
+
         #endregion
     }
 }
