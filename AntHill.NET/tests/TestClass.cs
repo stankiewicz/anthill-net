@@ -81,7 +81,7 @@ namespace AntHill.NET
             Assert.AreEqual(Dir.E, test_spider.Direction, "Spider.Direction problem");
             Assert.AreEqual(10, test_spider.Health, "Spider.Health problem");
             Assert.AreEqual(new System.Drawing.Point(110, 145), test_spider.Position, "spider.Position problem");
-
+            
         }
         [Test]
         public void FoodTest()
@@ -288,6 +288,7 @@ namespace AntHill.NET
         [Test]
         public void SimulationTest()
         {
+            /*Simulation.GetMap()*/
             Tile[,] test_tiles =
             {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
             {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
@@ -304,7 +305,29 @@ namespace AntHill.NET
 
             Assert.AreSame(test_map, tmp_isw.GetMap(), "Simulation.GetMap problem");
 
-//tu brakuje doœæ du¿o funkcji i do nich testów ;)
+            /* CheckIfExists(TileType.Wall) */
+            Tile[,] test_tiles2 =
+            {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Indoor, new Point())},
+            {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Outdoor, new Point())}};
+      
+            Map test_map2 = new Map(2, 3, test_tiles2);
+            Simulation tmp_isw2 = new Simulation(test_map2);
+            bool res1=tmp_isw2.testCheckIfExists(TileType.Wall);
+            Assert.AreEqual(res1, false, "CheckIfExists(TileType tt) problem");
+            bool res2 = tmp_isw2.testCheckIfExists(TileType.Indoor);
+            Assert.AreEqual(res2, true, "CheckIfExists( TileType tt) problem");
+
+
+            /*test FeedQueen()*/
+             XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-ASTAR-anthill.xml");
+            AHGraphics.Init();
+            Astar.Init(AntHillConfig.mapColCount, AntHillConfig.mapRowCount);
+            Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            Worker worker1=new Worker(new Point(5,6));
+            test_isw.ants.Add(worker1);
+            bool canFeed=tmp_isw2.FeedQueen(worker1);
+            Assert.AreEqual(canFeed, true, "FeedQueen()) problem");
 
         }
 
