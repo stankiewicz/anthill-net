@@ -422,6 +422,29 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleAntsTest()
         {
+            Worker worker1 = new Worker(new Point(2, 2));
+            Warrior warrior1 = new Warrior(new Point(3, 3));
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
+
+
+            AHGraphics.Init();
+
+            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            tmp_isw.ants.Add(worker1);
+            tmp_isw.ants.Add(warrior1);
+            
+            Rain test_rain = new Rain(new Point(3, 3));
+            tmp_isw.rain = test_rain;
+
+            List<Ant> list1 = tmp_isw.GetVisibleAnts(test_rain);
+            List<Ant> list2 = tmp_isw.GetVisibleAnts(warrior1);
+            List<Ant> list3 = tmp_isw.GetVisibleAnts(worker1);
+
+            Assert.IsTrue(list1.Contains(worker1), "GetVisibleAntsTest problem to see worker by rain");
+            Assert.IsTrue(list1.Contains(warrior1), "GetVisibleAntsTest problem to see warrior by rain");
+            Assert.IsTrue(list2.Contains(worker1), "GetVisibleAntsTest problem to see worker by warriror");
+            Assert.IsTrue(list3.Contains(warrior1), "GetVisibleAntsTest problem to see warrior by worker");
 
         }
 
