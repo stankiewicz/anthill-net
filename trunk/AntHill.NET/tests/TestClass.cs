@@ -424,6 +424,7 @@ namespace AntHill.NET
         {
             Worker worker1 = new Worker(new Point(2, 2));
             Warrior warrior1 = new Warrior(new Point(3, 3));
+            Spider spider1 = new Spider(new Point(2, 3));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
 
@@ -433,6 +434,7 @@ namespace AntHill.NET
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
             tmp_isw.ants.Add(worker1);
             tmp_isw.ants.Add(warrior1);
+            tmp_isw.spiders.Add(spider1);
             
             Rain test_rain = new Rain(new Point(3, 3));
             tmp_isw.rain = test_rain;
@@ -440,12 +442,14 @@ namespace AntHill.NET
             List<Ant> list1 = tmp_isw.GetVisibleAnts(test_rain);
             List<Ant> list2 = tmp_isw.GetVisibleAnts(warrior1);
             List<Ant> list3 = tmp_isw.GetVisibleAnts(worker1);
+            List<Ant> list4 = tmp_isw.GetVisibleAnts(spider1);
 
             Assert.IsTrue(list1.Contains(worker1), "GetVisibleAntsTest problem to see worker by rain");
             Assert.IsTrue(list1.Contains(warrior1), "GetVisibleAntsTest problem to see warrior by rain");
             Assert.IsTrue(list2.Contains(worker1), "GetVisibleAntsTest problem to see worker by warriror");
             Assert.IsTrue(list3.Contains(warrior1), "GetVisibleAntsTest problem to see warrior by worker");
-
+            Assert.IsTrue(list4.Contains(worker1), "GetVisibleAntsTest problem to see worker by rain");
+            Assert.IsTrue(list4.Contains(warrior1), "GetVisibleAntsTest problem to see warrior by rain");
         }
 
         [Test]
@@ -457,6 +461,34 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleSpidersTest()
         {
+            Worker worker1 = new Worker(new Point(2, 2));
+            Warrior warrior1 = new Warrior(new Point(3, 3));
+            Spider spider1 = new Spider(new Point(2, 3));
+            Spider spider2 = new Spider(new Point(3, 2));
+            XmlReaderWriter reader = new XmlReaderWriter();
+            reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
+
+
+            AHGraphics.Init();
+
+            Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
+            tmp_isw.ants.Add(worker1);
+            tmp_isw.ants.Add(warrior1);
+            tmp_isw.spiders.Add(spider1);
+            tmp_isw.spiders.Add(spider2);
+
+            Rain test_rain = new Rain(new Point(3, 3));
+            tmp_isw.rain = test_rain;
+
+            List<Spider> list1 = tmp_isw.GetVisibleSpiders(test_rain);
+            List<Spider> list2 = tmp_isw.GetVisibleSpiders(warrior1);
+            List<Spider> list3 = tmp_isw.GetVisibleSpiders(worker1);
+            List<Spider> list4 = tmp_isw.GetVisibleSpiders(spider2);
+
+            Assert.IsTrue(list1.Contains(spider1), "GetVisibleAntsTest problem to see spider by rain");
+            Assert.IsTrue(list2.Contains(spider1), "GetVisibleAntsTest problem to see spider by warriror");
+            Assert.IsTrue(list3.Contains(spider1), "GetVisibleAntsTest problem to see spider by worker");
+            Assert.IsTrue(list4.Contains(spider1), "GetVisibleAntsTest problem to see spider by rain");
 
         }
 
