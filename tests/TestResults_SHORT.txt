@@ -8,7 +8,20 @@ Runtime Environment -
    OS Version: Microsoft Windows NT 5.0.2195 Service Pack 4
   CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
 
-.................................
-Tests run: 33, Failures: 0, Not run: 0, Time: 36.469 seconds
+...................F.F..F.....F......
+Tests run: 33, Failures: 4, Not run: 0, Time: 4.563 seconds
+
+Failures:
+1) AntHill.NET.TestClass.GetVisibleAntsTest : GetVisibleAntsTest problem to see worker by rain
+   w AntHill.NET.TestClass.GetVisibleAntsTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 439
+
+2) AntHill.NET.TestClass.GetVisibleFoodTest : GetVisibleAntsTest problem to see food by rain
+   w AntHill.NET.TestClass.GetVisibleFoodTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 474
+
+3) AntHill.NET.TestClass.GetVisibleSpidersTest : GetVisibleAntsTest problem to see spider by rain
+   w AntHill.NET.TestClass.GetVisibleSpidersTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 507
+
+4) AntHill.NET.TestClass.RainTest : Rain is too small or Rain.IsRainOver problem
+   w AntHill.NET.TestClass.RainTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 264
 
 
