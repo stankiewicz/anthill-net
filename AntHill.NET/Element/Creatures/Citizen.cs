@@ -26,6 +26,21 @@ namespace AntHill.NET
                 forgetting.AddLast(AntHillConfig.antForgettingTime);
             }
         }
+        protected bool FindEqualSignal(MessageType mt, Point location)
+        {
+            LinkedListNode<Message> msg1 = remembered.First;
+            LinkedListNode<Message> msg1T;
+            while (msg1 != null)
+            {
+                
+                if (msg1.Value.Location == location && msg1.Value.GetMessageType == mt)
+                {
+                    return true;
+                }
+                msg1 = msg1.Next;
+            }
+            return false;
+        }
         
         public virtual void SpreadSignal(ISimulationWorld isw)
         {
@@ -37,7 +52,7 @@ namespace AntHill.NET
             LinkedListNode<Message> msg3T;
             while (msg3 != null)
             {
-                if (--msg2.Value<=0 || --msg1.Value<=0)
+                if (--msg2.Value<=0 || --msg1.Value<=0 || msg3.Value.Empty)
                 {
                     
                     msg1T = msg1;
