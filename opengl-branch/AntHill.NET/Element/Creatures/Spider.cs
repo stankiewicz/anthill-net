@@ -28,19 +28,19 @@ namespace AntHill.NET
                 return null;
             int minDistance = Distance(ants[0].Position, Position);
 
-            int index = 0;
-            int distance, bestIndex = 0;
-            foreach (Ant ant in ants)
+            int distance;
+            Ant bestAnt = null;
+            List<Ant>.Enumerator ant = ants.GetEnumerator();
+            while(ant.MoveNext())
             {
-                if ((distance = Distance(this.Position, ant.Position)) < minDistance)
+                if ((distance = Distance(this.Position, ant.Current.Position)) < minDistance)
                 {
-                    bestIndex = index;
+                    bestAnt = ant.Current;                    
                     minDistance = distance;
-                }
-                index++;
+                }                
             }
             if (minDistance <= AntHillConfig.antSightRadius)
-                return ants[bestIndex];
+                return bestAnt;
             return null;
         }
 

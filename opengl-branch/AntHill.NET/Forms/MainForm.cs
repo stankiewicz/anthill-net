@@ -321,34 +321,10 @@ namespace AntHill.NET
                     DrawElement(new Point(x, y), map.GetTile(x, y).GetTexture(), Dir.N, moveX, moveY);
                 }
             }
-            Creature e;
-            Food f;
-            List<Ant>.Enumerator enumerator = Simulation.simulation.ants.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                e = enumerator.Current;
-                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
-            }            
-            List<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
-            while (enumeratorSpider.MoveNext())
-            {
-                e = enumeratorSpider.Current;
-                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
-            }
-            List<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
-            while (enumeratorFood.MoveNext())
-            {
-                f = enumeratorFood.Current;
-                DrawElement(f.Position, f.GetTexture(), Dir.N, moveX, moveY);
-            }
-
-            e = Simulation.simulation.queen;
-            if (e != null)
-                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
             //sygna³y
             int signal;
             float maxSignal = 5.0f;
-            for(int y = 0; y < Simulation.simulation.Map.Height; y++)            
+            for (int y = 0; y < Simulation.simulation.Map.Height; y++)
             {
                 for (int x = 0; x < Simulation.simulation.Map.Width; x++)
                 {
@@ -375,6 +351,31 @@ namespace AntHill.NET
                 }
             }
             Gl.glColor4f(1, 1, 1, 1);
+            Creature e;
+            Food f;
+            List<Ant>.Enumerator enumerator = Simulation.simulation.ants.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                e = enumerator.Current;
+                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+            }            
+            List<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
+            while (enumeratorSpider.MoveNext())
+            {
+                e = enumeratorSpider.Current;
+                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+            }
+            List<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
+            while (enumeratorFood.MoveNext())
+            {
+                f = enumeratorFood.Current;
+                DrawElement(f.Position, f.GetTexture(), Dir.N, moveX, moveY);
+            }
+
+            e = Simulation.simulation.queen;
+            if (e != null)
+                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+            
             //deszcz
             Rain rain = Simulation.simulation.rain;
             if (rain != null)
