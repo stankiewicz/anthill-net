@@ -22,21 +22,12 @@ namespace AntHill.NET
         }
 
         [Test]
-        public void AntTest()
-        {
-            WorkerTest();
-            WarriorTest();
-
-        }
-
-        [Test]
         public void CitizenTest()
         {
             Worker worker1 = new Worker(new Point(2, 2));
             Worker worker2 = new Worker(new Point(3, 3));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
-             
 
             AHGraphics.Init();
             /*test AddSet() function*/
@@ -70,14 +61,6 @@ namespace AntHill.NET
             
         }
         [Test]
-        public void CreatureTest()
-        {
-            WorkerTest();
-            WarriorTest();
-            
-        }
-
-        [Test]
         public void QueenTest()
         {
              XmlReaderWriter reader = new XmlReaderWriter();
@@ -101,17 +84,11 @@ namespace AntHill.NET
 
         }
         [Test]
-        public void ElementTest()
-        {
-            WorkerTest();
-            WarriorTest();
-        }
-        [Test]
         public void FoodTest()
         {
             Food test_food = new Food(new Point(7, 7), 8);
             Assert.AreEqual(8, test_food.GetQuantity, "food.Quentity problem");
-            Assert.AreEqual(new System.Drawing.Point(7,7), test_food.Position, "food.Position problem");
+            Assert.AreEqual(new Point(7,7), test_food.Position, "food.Position problem");
         }
 
         [Test]
