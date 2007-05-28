@@ -7,7 +7,6 @@ using astar;
 
 /* TODO:
  * CitizenTest - dopisaæ o sygna³ach i inne...
- * 
  * SimulationTest - dopisaæ to co siê pojawi³o...
  * GetVisibleSthTest - napisaæ... (ant, food, spider, message)
  * Create and Delete sth Test (spider, message, food, ant, ...)
@@ -25,14 +24,14 @@ namespace AntHill.NET
         }
 
         [Test]
-        [Ignore("Ant class is abstract. Ant.TurnsWithoutFood and Ant.TurnsToBecomeHungry test in WorkerTest andWarriorTest...")]
         public void AntTest()
         {
+            WorkerTest();
+            WarriorTest();
 
         }
 
         [Test]
-        //[Ignore("Citizen class is abstract. NO TEST IN OTHER CLASS (yet?)...")]
         public void CitizenTest()
         {
             Worker worker1 = new Worker(new Point(2, 2));
@@ -53,13 +52,12 @@ namespace AntHill.NET
             List<Message> list = tmp_isw.GetVisibleMessages(worker2);
             bool check = list.Contains(message);
             Assert.IsTrue(check, "problem with adding messages");
-           
-
         }
         [Test]
-        [Ignore("Creature class is abstract. Creature.Direction test in WorkerTest and WarriorTest...")]
         public void CreatureTest()
         {
+            WorkerTest();
+            WarriorTest();
             
         }
 
@@ -87,10 +85,10 @@ namespace AntHill.NET
 
         }
         [Test]
-        [Ignore("Element class is abstract. Element.Position test in WorkerTest and WarriorTest...")]
         public void ElementTest()
         {
-
+            WorkerTest();
+            WarriorTest();
         }
         [Test]
         public void FoodTest()
@@ -116,8 +114,6 @@ namespace AntHill.NET
 
             Simulation tmp_isw = new Simulation(test_map);
 */
-
-
 
         }
         [Test]
@@ -338,14 +334,15 @@ namespace AntHill.NET
 
             List<KeyValuePair<int, int>> test_trail1 = new List<KeyValuePair<int, int>>();
           
-/*
+/* Laduje ponizsza mape, gdzie uzywam oznaczen:
+ * S - spider; Q-Queen; 1,2 - Ants i standardowych...
               <Map row="sssssSssss" />
               <Map row="sxooooooxs" />
               <Map row="sxooooooxs" />
               <Map row="2xooooooxs" />
               <Map row="sxooooooxs" />
               <Map row="sxooooooxs" />
-              <Map row="sxoooKooxs" />
+              <Map row="sxoooQooxs" />
               <Map row="sxooooooxs" />
               <Map row="sxooo1ooxs" />
               <Map row="ssssssssss" />
