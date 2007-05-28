@@ -17,6 +17,11 @@ namespace AntHill.NET
         public int GetOutdoorCount { get { return outdoorTiles.Count; } }
         public int GetWallCount { get { return wallTiles.Count; } }
 
+        public MessageCount[,] MsgCount
+        {
+            get { return messagesCount; }
+        }
+
         public Map(int w, int h, Tile[,] tiles)
         {
             int tilesSize = AntHillConfig.tileSize;
@@ -115,7 +120,7 @@ namespace AntHill.NET
         }
 
         #region MessageCount
-        struct MessageCount
+        public struct MessageCount
         {
             int queenInDanger,
                 queenIsHungry,

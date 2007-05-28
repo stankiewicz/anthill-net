@@ -304,7 +304,6 @@ namespace AntHill.NET
                         res_food.Add(food[i]);
                 }
             }
-
             return res_food;
         }
 

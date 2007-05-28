@@ -345,6 +345,51 @@ namespace AntHill.NET
             e = Simulation.simulation.queen;
             if (e != null)
                 DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+            //sygna³y
+            int signal;
+            float maxSignal = 5.0f;
+            for(int y = 0; y < Simulation.simulation.Map.Height; y++)            
+            {
+                for (int x = 0; x < Simulation.simulation.Map.Width; x++)
+                {
+                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.FoodLocalization)) > 0)
+                    {
+                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, moveX, moveY);
+                    }
+                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.QueenInDanger)) > 0)
+                    {
+                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, moveX, moveY);
+                    }
+                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.QueenIsHungry)) > 0)
+                    {
+                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, moveX, moveY);
+                    }
+                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.SpiderLocalization)) > 0)
+                    {
+                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, moveX, moveY);
+                    }
+                }
+            }
+            Gl.glColor4f(1, 1, 1, 1);
+            //deszcz
+            Rain rain = Simulation.simulation.rain;
+            if (rain != null)
+            {
+                Gl.glPushMatrix();
+                Gl.glTranslatef(rain.Position.X + moveX, rain.Position.Y + moveY, 0);
+                Gl.glBindTexture(Gl.GL_TEXTURE_2D, rain.GetTexture());
+                Gl.glBegin(Gl.GL_TRIANGLE_FAN);
+                Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-(AntHillConfig.rainWidth >> 1) - 0.5f, -(AntHillConfig.rainWidth >> 1) - 0.5f, 0.0f);
+                Gl.glTexCoord2f(1, 0); Gl.glVertex3f((AntHillConfig.rainWidth >> 1) + 0.5f, -(AntHillConfig.rainWidth >> 1) - 0.5f, 0.0f);
+                Gl.glTexCoord2f(1, 1); Gl.glVertex3f((AntHillConfig.rainWidth >> 1) + 0.5f, (AntHillConfig.rainWidth >> 1) + 0.5f, 0.0f);
+                Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-(AntHillConfig.rainWidth >> 1) - 0.5f, (AntHillConfig.rainWidth >> 1) + 0.5f, 0.0f);
+                Gl.glEnd();
+                Gl.glPopMatrix();
+            }
         }
 
         private static void DrawElement(Point position, int texture, Dir direction, float moveX, float moveY)
