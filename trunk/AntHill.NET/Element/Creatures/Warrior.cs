@@ -18,6 +18,7 @@ namespace AntHill.NET
             int i=0;
             int min=Int32.MaxValue;
             int tmp;
+
             for (int j = 0; j < spiders.Count; j++)
 			{
                 if ((tmp = Distance(this.Position, spiders[i].Position)) < min)
@@ -141,11 +142,6 @@ namespace AntHill.NET
         public override void Destroy(ISimulationWorld isw)
         {
             throw new Exception("The method or operation is not implemented.");
-        }
-
-        public override Bitmap GetBitmap()
-        {
-            return AHGraphics.GetCreature(CreatureType.warrior, this.Direction);
         }
     }
 }
