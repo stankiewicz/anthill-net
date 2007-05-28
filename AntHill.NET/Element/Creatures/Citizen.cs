@@ -94,37 +94,40 @@ namespace AntHill.NET
         {
             if (foods.Count == 0) return null;
 
-            int i = 0;
+            Food bestFood = null;
             int min = Int32.MaxValue;
             int tmp;
-            for (int j = 0; j < foods.Count; j++)
+            LIList<Food>.Enumerator e = foods.GetEnumerator();
+            while(e.MoveNext())
             {
-                if ((tmp = Distance(this.Position, foods[j].Position)) < min)
+                if ((tmp = Distance(this.Position, e.Current.Position)) < min)
                 {
-                    i = j;
+                    bestFood = e.Current;
                     min = tmp;
                 }
             }
-            return foods[i];
+            return bestFood;
         }
 
-       protected virtual Message ReadMessage(MessageType mt)
-        {
-            int which=-1;
+        protected virtual Message ReadMessage(MessageType mt)
+        {            
             int max = -1;
-            for (int i = 0; i < remembered.Count; i++)
+            Message bestMessage = null;
+            LIList<Message>.Enumerator e = remembered.GetEnumerator();
+            LIList<int>.Enumerator eInt = rememberedIntensities.GetEnumerator();
+            while(e.MoveNext())
             {
-                if (remembered[i].GetMessageType == mt)
+                eInt.MoveNext();
+                if (e.Current.GetMessageType == mt)
                 {
-                    if (rememberedIntensities[i] > max)
+                    if (eInt.Current > max)
                     {
-                        max = rememberedIntensities[i];
-                        which = i;
+                        max = eInt.Current;
+                        bestMessage = e.Current;
                     }
                 }
-            }
-            if (which == -1) return null;
-            return remembered[which];
+            }            
+            return bestMessage;
         }
     }
 }

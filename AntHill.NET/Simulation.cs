@@ -137,26 +137,47 @@ namespace AntHill.NET
                 else
                     msg = msg.Next;
             }
-
-            for (int i = 0; i < ants.Count; i++)
+            LinkedListNode<Ant> ant = ants.First;
+            LinkedListNode<Ant> antTemp;            
+            while(ant != null)
             {
-                if (!ants[i].Maintain(this))
+                if (!ant.Value.Maintain(this))
                 {
-                    --i;
+                    antTemp = ant;
+                    ant = ant.Next;
+                    ants.Remove(antTemp);
                 }
+                else
+                    ant = ant.Next;
+            }
+            LinkedListNode<Spider> spider = spiders.First;
+            LinkedListNode<Spider> spiderTemp;
+            while (spider != null)
+            {
+                if (!spider.Value.Maintain(this))
+                {
+                    spiderTemp = spider;
+                    spider = spider.Next;
+                    spiders.Remove(spiderTemp);
+                }
+                else
+                    spider = spider.Next;
             }
 
-            for (int i = 0; i < spiders.Count; i++)
+            LinkedListNode<Egg> egg = eggs.First;
+            LinkedListNode<Egg> eggTemp;
+            while (egg != null)
             {
-                if (!spiders[i].Maintain(this))
-                    --i;
+                if (!egg.Value.Maintain(this))
+                {
+                    eggTemp = egg;
+                    egg = egg.Next;
+                    eggs.Remove(eggTemp);
+                }
+                else
+                    egg = egg.Next;
             }
-
-            for (int i = 0; i < eggs.Count; ++i)
-            {
-                if (!eggs[i].Maintain(this))
-                    --i;
-            }
+            
             if (queen!=null && !queen.Maintain(this))
             {
                 queen = null;

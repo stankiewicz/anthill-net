@@ -66,6 +66,23 @@ namespace AntHill.NET
             if (randomMovemenCount >= 10)            
                 randomDestination.X = -1;            
         }
+        public Spider GetNearestSpider(LIList<Spider> spiders)
+        {            
+            int min = Int32.MaxValue;
+            int tmp;
+            LIList<Spider>.Enumerator e = spiders.GetEnumerator();
+            Spider bestSpider = null;
+            while(e.MoveNext())
+            {
+                if ((tmp = Distance(this.Position, e.Current.Position)) < min)
+                {
+                    bestSpider = e.Current;
+                    min = tmp;
+                }
+            }
+            return bestSpider;
+        }
+
         public void MoveRotateOrAttack(Creature aggresor, Creature prey, ISimulationWorld isw)
         {
             int distance = Distance(aggresor.Position, prey.Position);
@@ -148,7 +165,6 @@ namespace AntHill.NET
         {
             int i = Randomizer.Next(Enum.GetValues(typeof(Dir)).Length);
             direction = (Dir)i;
-
             path = new List<KeyValuePair<int, int>>();
         }
         

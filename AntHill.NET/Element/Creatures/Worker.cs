@@ -26,28 +26,13 @@ namespace AntHill.NET
             isw.DeleteFood(f);
             foodQuantity += f.GetQuantity;
         }
-        Spider GetNearestSpider(LIList<Spider> spiders)
-        {
-            int i = 0;
-            int min = Int32.MaxValue;
-            int tmp;
-            for (int j = 0; j < spiders.Count; j++)
-            {
-                if ((tmp = Distance(this.Position, spiders[i].Position)) < min)
-                {
-                    i = j;
-                    min = tmp;
-                }
-            }
-            return spiders[i];
-        }
+        
         private Spider lastSpider = null;
         private Food lastFood = null;
         public override bool Maintain(ISimulationWorld isw)
         {
             if (!base.IsAlive())
-            {
-                isw.DeleteAnt(this);
+            {                
                 return false;
             }
             
@@ -67,9 +52,9 @@ namespace AntHill.NET
                     }
                 }
             }
-            LIList<Message> msg = isw.GetVisibleMessages(this);
-            for(int i=0; i<msg.Count; i++)
-                this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
+            LIList<Message>.Enumerator msg = isw.GetVisibleMessages(this).GetEnumerator();
+            while(msg.MoveNext())
+                this.AddToSet(msg.Current, msg.Current.GetPoint(this.Position).Intensity);
 
             if (this.TurnsToBecomeHungry <= 0)
                 if (this.foodQuantity > 0)

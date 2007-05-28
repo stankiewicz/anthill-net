@@ -88,7 +88,7 @@
 </WorldMap>
 
 <CreaturesAbilities>
- <Ant maxLife="10000" maxLifeWithoutFood="400" turnNumberToBecomeHungry="100" strength="1" forgettingTime="5" sightRadius="5">
+ <Ant maxLife="10000" maxLifeWithoutFood="40" turnNumberToBecomeHungry="10" strength="1" forgettingTime="5" sightRadius="5">
  <Citizen>
   <Warrior startCount="20" /> 
   <Worker startCount="80" /> 
@@ -96,7 +96,7 @@
   <Queen layEggProbability="0.5" xPosition="50" yPosition="37" /> 
   <Egg hatchWarriorProbability="0.5" hatchTime="10" /> 
   </Ant>
-  <Spider maxHealth="3" probability="0.1" foodQuantityAfterDeath="5" /> 
+  <Spider maxHealth="3" probability="0.0" foodQuantityAfterDeath="5" /> 
 </CreaturesAbilities>
 
 <EnvironmentCharacteristics>
