@@ -186,6 +186,34 @@ namespace AntHill.NET.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap messageFoodLocation {
+            get {
+                object obj = ResourceManager.GetObject("messageFoodLocation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap messageQueenInDanger {
+            get {
+                object obj = ResourceManager.GetObject("messageQueenInDanger", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap messageQueenIsHungry {
+            get {
+                object obj = ResourceManager.GetObject("messageQueenIsHungry", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap messageSpiderLocation {
+            get {
+                object obj = ResourceManager.GetObject("messageSpiderLocation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Map has no indoor tiles..
         /// </summary>

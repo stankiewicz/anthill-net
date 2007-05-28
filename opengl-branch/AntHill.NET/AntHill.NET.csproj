@@ -120,6 +120,10 @@
     <Compile Include="Configuration\XmlReaderWriter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Release\Graphics\messageFoodLocation.png" />
+    <None Include="bin\Release\Graphics\messageSpiderLocation.png" />
+    <None Include="bin\Release\Graphics\messageQueenIsHungry.png" />
+    <None Include="bin\Release\Graphics\messageQueenInDanger.png" />
     <Content Include="Graphics\ant.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
