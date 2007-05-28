@@ -5,7 +5,7 @@ using astar;
 
 namespace AntHill.NET
 {
-    public enum Dir { S, W, E, N }
+    public enum Dir { S = 2, W = 3, E = 1, N = 0 }
     public enum CreatureType { queen, warrior, spider, worker }
     public enum AddsType { rain=0,food=1 }
     class DeathException : Exception
@@ -156,9 +156,7 @@ namespace AntHill.NET
         {
             get { return direction; }
             set { direction = value; }
-        }
-
-        public virtual Bitmap GetBitmap() { return new Bitmap(1, 1); }
+        }        
         
         protected bool IsMoveOrRotate(KeyValuePair<int, int> pos)
         {

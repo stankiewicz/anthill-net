@@ -88,6 +88,42 @@ namespace AntHill.NET.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to messageFoodLocation.png.
+        /// </summary>
+        internal static string bmpMessageFoodLocation {
+            get {
+                return ResourceManager.GetString("bmpMessageFoodLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to messageQueenInDanger.png.
+        /// </summary>
+        internal static string bmpMessageQueenInDanger {
+            get {
+                return ResourceManager.GetString("bmpMessageQueenInDanger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to messageQueenIsHungry.png.
+        /// </summary>
+        internal static string bmpMessageQueenIsHungry {
+            get {
+                return ResourceManager.GetString("bmpMessageQueenIsHungry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to messageSpiderLocation.png.
+        /// </summary>
+        internal static string bmpMessageSpiderLocation {
+            get {
+                return ResourceManager.GetString("bmpMessageSpiderLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fatal error occured. We&apos;re really sorry. Bye..
         /// </summary>
         internal static string errorFatal {
@@ -150,12 +186,31 @@ namespace AntHill.NET.Properties {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to messagesTile.png.
-        /// </summary>
-        internal static string messagesBmp {
+        internal static System.Drawing.Bitmap messageFoodLocation {
             get {
-                return ResourceManager.GetString("messagesBmp", resourceCulture);
+                object obj = ResourceManager.GetObject("messageFoodLocation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap messageQueenInDanger {
+            get {
+                object obj = ResourceManager.GetObject("messageQueenInDanger", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap messageQueenIsHungry {
+            get {
+                object obj = ResourceManager.GetObject("messageQueenIsHungry", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap messageSpiderLocation {
+            get {
+                object obj = ResourceManager.GetObject("messageSpiderLocation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -31,7 +31,7 @@ namespace AntHill.NET
         {
             for (int i = 0; i < remembered.Count; i++)
             {
-                if (--rememberedIntensities[i] == 0 || --forgetting[i]<0)
+                if (--rememberedIntensities[i] <= 0 || --forgetting[i]<=0)
                 {
                     remembered.RemoveAt(i);
                     rememberedIntensities.RemoveAt(i);

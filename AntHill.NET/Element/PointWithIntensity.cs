@@ -29,6 +29,7 @@ namespace AntHill.NET
         {
             if (obj is PointWithIntensity)
             {
+                //LOL... a wyj¹tki? ----------------------------\/ tu siê bêdzie sypaæ :-P
                 if (this.tile.Equals(((PointWithIntensity)obj).Tile)) return true;
             }
             return false;

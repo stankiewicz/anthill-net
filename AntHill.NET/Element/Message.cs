@@ -101,14 +101,15 @@ namespace AntHill.NET
             }
             return true;
         }
-        public void Spread(ISimulationWorld isw,Point point,int intensity)
+        public void Spread(ISimulationWorld isw, Point point, int intensity)
         {
+            int radius = AntHillConfig.messageRadius, radius2 = radius * radius;
             Map map = isw.GetMap();
-            for (int i = -AntHillConfig.messageRadius; i < AntHillConfig.messageRadius; i++)
+            for (int i = -radius; i < radius; i++)
             {
-                for (int j = -AntHillConfig.messageRadius; j < AntHillConfig.messageRadius; j++)
+                for (int j = -radius; j < radius; j++)
                 {
-                    if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
+                    if (i * i + j * j < radius2)
                     {
                         if (map.Inside(i+point.X, j+point.Y))
                         {// czy wogole w srodku
@@ -123,7 +124,6 @@ namespace AntHill.NET
                                     {// czy zwiekszyc intensywnosc
                                         points[idx].Intensity = intensity;
                                     }
-
                                 }
                                 else
                                 {// nie ma punktu?? w sumie takiej sytuacji nie powinno byc

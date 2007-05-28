@@ -24,8 +24,10 @@ namespace AntHill.NET
 
         public bool IsRainOver(int x, int y)
         {
-            if (Math.Abs(x - Position.X) <= AntHillConfig.rainWidth / 2 &&
-                Math.Abs(y - Position.Y) <= AntHillConfig.rainWidth / 2)
+            if ((x - Position.X) <= AntHillConfig.rainWidth  &&
+                (x - Position.X) >=0 &&
+                (y - Position.Y) <= AntHillConfig.rainWidth
+                && (y - Position.Y) >=0)
                 return true;
             return false;
         }
@@ -59,8 +61,10 @@ namespace AntHill.NET
                 {
                     for (int j = 0; j < m.Points.Count; )
                     {
-                        if (Math.Abs(m.Points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth
-                            && Math.Abs(m.Points[j].Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth)
+                        if ((m.Points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth &&
+                            (m.Points[j].Tile.Position.X - rainPos.X) >=0 
+                            && (m.Points[j].Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth
+                            && (m.Points[j].Tile.Position.Y - rainPos.Y) >=0)
                         {
                             isw.GetMap().RemoveMessage(m.GetMessageType, m.Points[j].Tile.Position);
                             m.Points.RemoveAt(j);

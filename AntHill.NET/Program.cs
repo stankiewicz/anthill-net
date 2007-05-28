@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Tao.OpenGl;
+using Tao.Platform.Windows;
 
 namespace AntHill.NET
 {
