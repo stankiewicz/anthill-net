@@ -20,8 +20,8 @@ namespace AntHill.NET
                 return null;
             if (AntHillConfig.antSightRadius >= Distance(Simulation.simulation.queen.Position, this.Position))                                          
                 return Simulation.simulation.queen;
-            
-            List<Ant> ants = Simulation.simulation.GetVisibleAnts(this);
+
+            LIList<Ant> ants = Simulation.simulation.GetVisibleAnts(this);
             if (ants == null)
                 return null;
             if (ants.Count == 0)
@@ -30,7 +30,7 @@ namespace AntHill.NET
 
             int distance;
             Ant bestAnt = null;
-            List<Ant>.Enumerator ant = ants.GetEnumerator();
+            LIList<Ant>.Enumerator ant = ants.GetEnumerator();
             while(ant.MoveNext())
             {
                 if ((distance = Distance(this.Position, ant.Current.Position)) < minDistance)

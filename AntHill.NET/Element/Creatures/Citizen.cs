@@ -8,9 +8,9 @@ namespace AntHill.NET
     public abstract class Citizen : Ant
     {
         // odpowiednie Wiadomosci i ich intensywnosci
-        List<Message> remembered=new List<Message>();
-        List<int> rememberedIntensities=new List<int>();
-        List<int> forgetting = new List<int>();
+        LIList<Message> remembered = new LIList<Message>();
+        LIList<int> rememberedIntensities = new LIList<int>();
+        LIList<int> forgetting = new LIList<int>();
         public Citizen(Point pos):base(pos)
         {
 
@@ -20,31 +20,59 @@ namespace AntHill.NET
         {
             if (!remembered.Contains(m))
             {
-                remembered.Add(m);
+                remembered.AddLast(m);
                 
-                rememberedIntensities.Add(intensity);
-                forgetting.Add(AntHillConfig.antForgettingTime);
+                rememberedIntensities.AddLast(intensity);
+                forgetting.AddLast(AntHillConfig.antForgettingTime);
             }
         }
         
         public virtual void SpreadSignal(ISimulationWorld isw)
         {
-            for (int i = 0; i < remembered.Count; i++)
+            LinkedListNode<int> msg1 = rememberedIntensities.First;
+            LinkedListNode<int> msg1T;
+            LinkedListNode<int> msg2 = forgetting.First;
+            LinkedListNode<int> msg2T;
+            LinkedListNode<Message> msg3 = remembered.First;
+            LinkedListNode<Message> msg3T;
+            while (msg3 != null)
             {
-                if (--rememberedIntensities[i] <= 0 || --forgetting[i]<=0)
+                if (msg3.Value.Empty)
                 {
-                    remembered.RemoveAt(i);
-                    rememberedIntensities.RemoveAt(i);
-                    i--;
+                    msg1T = msg1;
+                    msg2T = msg2;
+                    msg3T = msg3;
+                    msg1 = msg1.Next;
+                    msg2 = msg2.Next;
+                    msg3 = msg3.Next;
+                    rememberedIntensities.Remove(msg1T);
+                    forgetting.Remove(msg2T);
+                    remembered.Remove(msg3T);
+                }
+                else
+                {
+                    msg3.Value.Spread(isw, this.Position, msg1.Value);
+                    msg3 = msg3.Next;
+                    msg2 = msg2.Next;
+                    msg1 = msg1.Next;
                 }
             }
-            for (int i = 0; i < remembered.Count; ++i)
-            {
-                remembered[i].Spread(isw, this.Position, rememberedIntensities[i]);
-            }
+            //for (int i = 0; i < remembered.Count; i++)
+            //{
+            //    if (--rememberedIntensities[i] <= 0 || --forgetting[i]<=0)
+            //    {
+            //        remembered.RemoveAt(i);
+            //        rememberedIntensities.RemoveAt(i);
+            //        i--;
+            //    }
+            //}
+            //for (int i = 0; i < remembered.Count; ++i)
+            //{
+            //    remembered[i].Spread(isw, this.Position, rememberedIntensities[i]);
+            //}
         }
 
-        protected Food GetNearestFood(List<Food> foods)
+        protected Food GetNearestFood(LIList<Food> foods)
         {
             if (foods.Count == 0) return null;
 

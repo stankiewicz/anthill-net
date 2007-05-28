@@ -23,10 +23,10 @@ namespace AntHill.NET
         bool FeedQueen(Worker w);
 
         //'Creature c' is a creature that wants to get some info
-        List<Ant> GetVisibleAnts(Element c);
-        List<Food> GetVisibleFood(Element c);
-        List<Spider> GetVisibleSpiders(Element c);
-        List<Message> GetVisibleMessages(Element c);
+        LIList<Ant> GetVisibleAnts(Element c);
+        LIList<Food> GetVisibleFood(Element c);
+        LIList<Spider> GetVisibleSpiders(Element c);
+        LIList<Message> GetVisibleMessages(Element c);
 
         bool DeleteEgg(Egg egg);
         bool DeleteRain();

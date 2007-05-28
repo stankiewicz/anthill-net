@@ -40,10 +40,10 @@ namespace AntHill.NET
                 return false;
             }
 
-            List<Food> lFood = isw.GetVisibleFood(this);
-            List<Ant> lAnt = isw.GetVisibleAnts(this);
-            List<Spider> lSpider = isw.GetVisibleSpiders(this);
-            List<Message>lMessage = isw.GetVisibleMessages(this);
+            LIList<Food> lFood = isw.GetVisibleFood(this);
+            LIList<Ant> lAnt = isw.GetVisibleAnts(this);
+            LIList<Spider> lSpider = isw.GetVisibleSpiders(this);
+            LIList<Message> lMessage = isw.GetVisibleMessages(this);
 
             for(int i = 0; i < lFood.Count;++i)
                 isw.DeleteFood(lFood[i]);
@@ -54,24 +54,30 @@ namespace AntHill.NET
             for (int i = 0; i < lSpider.Count; ++i)
                 isw.DeleteSpider(lSpider[i]);
 
-
+            
             if (lMessage!=null)
             {
-                foreach (Message m in lMessage)
+                LinkedListNode<Message> enumMsg = lMessage.First;
+                LinkedListNode<PointWithIntensity> enumPwI, enumPwItemp;
+                while (enumMsg != null)
                 {
-                    for (int j = 0; j < m.Points.Count; )
+                    enumPwI = enumMsg.Value.Points.First;
+                    while (enumPwI != null)
                     {
-                        if ((m.Points[j].Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth &&
-                            (m.Points[j].Tile.Position.X - rainPos.X) >=0 
-                            && (m.Points[j].Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth
-                            && (m.Points[j].Tile.Position.Y - rainPos.Y) >=0)
+                        if ((enumPwI.Value.Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth &&
+                            (enumPwI.Value.Tile.Position.X - rainPos.X) >= 0
+                            && (enumPwI.Value.Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth
+                            && (enumPwI.Value.Tile.Position.Y - rainPos.Y) >= 0)
                         {
-                            isw.GetMap().RemoveMessage(m.GetMessageType, m.Points[j].Tile.Position);
-                            m.Points.RemoveAt(j);
+                            isw.GetMap().RemoveMessage(enumMsg.Value.GetMessageType, enumPwI.Value.Tile.Position);
+                            enumPwItemp = enumPwI;
+                            enumPwI = enumPwI.Next;
+                            enumMsg.Value.Points.Remove(enumPwItemp);
                         }
                         else
-                            j++;
+                            enumPwI = enumPwI.Next;
                     }
+                    enumMsg = enumMsg.Next;
                 } 
             }
 

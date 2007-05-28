@@ -353,19 +353,19 @@ namespace AntHill.NET
             Gl.glColor4f(1, 1, 1, 1);
             Creature e;
             Food f;
-            List<Ant>.Enumerator enumerator = Simulation.simulation.ants.GetEnumerator();
+            LIList<Ant>.Enumerator enumerator = Simulation.simulation.ants.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 e = enumerator.Current;
                 DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
-            }            
-            List<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
+            }
+            LIList<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
             while (enumeratorSpider.MoveNext())
             {
                 e = enumeratorSpider.Current;
                 DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
             }
-            List<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
+            LIList<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
             while (enumeratorFood.MoveNext())
             {
                 f = enumeratorFood.Current;

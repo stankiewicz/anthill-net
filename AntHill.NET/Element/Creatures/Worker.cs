@@ -26,7 +26,7 @@ namespace AntHill.NET
             isw.DeleteFood(f);
             foodQuantity += f.GetQuantity;
         }
-        Spider GetNearestSpider(List<Spider> spiders)
+        Spider GetNearestSpider(LIList<Spider> spiders)
         {
             int i = 0;
             int min = Int32.MaxValue;
@@ -52,8 +52,8 @@ namespace AntHill.NET
             }
             
             SpreadSignal(isw);
-            List<Food> food;
-            List<Spider> spiders;
+            LIList<Food> food;
+            LIList<Spider> spiders;
             spiders = isw.GetVisibleSpiders(this);
             if (spiders.Count != 0)
             {
@@ -64,7 +64,7 @@ namespace AntHill.NET
                     lastSpider = s;
                 }
             }
-            List<Message> msg = isw.GetVisibleMessages(this);
+            LIList<Message> msg = isw.GetVisibleMessages(this);
             for(int i=0; i<msg.Count; i++)
                 this.AddToSet(msg[i], msg[i].GetPoint(this.Position).Intensity);
 
@@ -166,7 +166,7 @@ namespace AntHill.NET
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public Food testGetNearestFood(List<Food> food)
+        public Food testGetNearestFood(LIList<Food> food)
         {
              return this.GetNearestFood(food);
         }
