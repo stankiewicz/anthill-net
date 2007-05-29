@@ -7,18 +7,28 @@ namespace AntHill.NET
 
     public abstract class Citizen : Ant
     {
+        /*
         // odpowiednie Wiadomosci i ich intensywnosci
         LIList<Message> remembered = new LIList<Message>();
         LIList<int> rememberedIntensities = new LIList<int>();
         LIList<int> forgetting = new LIList<int>();
+        */
+        Message[] messages = new Message[4];
+        int[] intensities = new int[4];
+        int[] forgetting = new int[4];
 
-        public Citizen(Point pos):base(pos)
+        public Citizen(Point pos)
+            : base(pos)
         {
-
+            for (int i = 0; i < 4; i++)
+            {
+                messages[i] = null;
+            }
         }
 
         public virtual void AddToSet(Message m, int intensity)
         {
+            /*
             if (!remembered.Contains(m))
             {
                 remembered.AddLast(m);
@@ -26,9 +36,19 @@ namespace AntHill.NET
                 rememberedIntensities.AddLast(intensity);
                 forgetting.AddLast(AntHillConfig.antForgettingTime);
             }
+             */
+            int t = (int)m.GetMessageType;
+            if (intensities[t] < intensity)
+            {
+                intensities[t] = intensity;
+                forgetting[t] = AntHillConfig.antForgettingTime;
+                messages[t] = m;
+            }
         }
         protected bool FindEqualSignal(MessageType mt, Point location)
         {
+            return (messages[(int)mt] != null ? messages[(int)mt].Location == location : false);
+            /*
             LinkedListNode<Message> msg1 = remembered.First;
             while (msg1 != null)
             {
@@ -40,10 +60,14 @@ namespace AntHill.NET
                 msg1 = msg1.Next;
             }
             return false;
+             */
+
         }
         
         public virtual void SpreadSignal(ISimulationWorld isw)
         {
+            MaintainRememberedMessages();
+            /*
             LinkedListNode<int> msg1 = rememberedIntensities.First;
             LinkedListNode<int> msg1T;
             LinkedListNode<int> msg2 = forgetting.First;
@@ -83,10 +107,20 @@ namespace AntHill.NET
                     msg1 = msg1.Next;
                 }
             }
+             */
             for (int i = 0; i < 4; i++)
             {
-                if(rem[i]!=null && maxI[i]!=-1)
-                    rem[i].Spread(isw,this.Position,maxI[i]);
+                if(messages[i] != null)
+                    messages[i].Spread(isw, this.Position, intensities[i]);
+            }
+        }
+
+        void MaintainRememberedMessages()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (--intensities[i] < 0 || --forgetting[i]<0 || messages[i].Empty)
+                    messages[i] = null;
             }
         }
 
@@ -110,7 +144,9 @@ namespace AntHill.NET
         }
 
         protected virtual Message ReadMessage(MessageType mt)
-        {            
+        {
+            return messages[(int)mt];
+            /*
             int max = -1;
             Message bestMessage = null;
             LIList<Message>.Enumerator e = remembered.GetEnumerator();
@@ -128,6 +164,7 @@ namespace AntHill.NET
                 }
             }            
             return bestMessage;
+             */
         }
     }
 }

@@ -118,11 +118,11 @@ namespace AntHill.NET
             int x, y;
             Map map = isw.GetMap();
             PointWithIntensity PwI;
-            for (int i = -radius; i < radius; i++)
+            for (int i = -radius; i <= radius; i++)
             {
-                for (int j = -radius; j < radius; j++)
+                for (int j = -radius; j <= radius; j++)
                 {
-                    if (i * i + j * j < radius2)
+                    if (i * i + j * j <= radius2)
                     {
                         x = i + point.X;
                         y = j + point.Y;
