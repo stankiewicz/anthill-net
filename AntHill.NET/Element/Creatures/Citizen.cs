@@ -112,6 +112,7 @@ namespace AntHill.NET
             {
                 if(messages[i] != null)
                     messages[i].Spread(isw, this.Position, intensities[i]);
+                
             }
         }
 

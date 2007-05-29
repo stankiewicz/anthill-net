@@ -228,7 +228,7 @@ namespace AntHill.NET
             this.speedBar.LargeChange = 1;
             this.speedBar.Location = new System.Drawing.Point(0, 105);
             this.speedBar.Maximum = 1000;
-            this.speedBar.Minimum = 10;
+            this.speedBar.Minimum = 1;
             this.speedBar.Name = "speedBar";
             this.speedBar.Size = new System.Drawing.Size(143, 45);
             this.speedBar.TabIndex = 5;
