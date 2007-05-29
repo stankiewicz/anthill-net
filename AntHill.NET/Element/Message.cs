@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace AntHill.NET
 {
@@ -16,12 +17,12 @@ namespace AntHill.NET
     public class Message : Element
     {
         private MessageType type;
-        private Point location;
+        private Point targetLocation;
 
         public Point Location
         {
-            get { return location; }
-            set { location = value; }
+            get { return targetLocation; }
+            set { targetLocation = value; }
         }
 
         private LIList<PointWithIntensity> points;
@@ -45,7 +46,7 @@ namespace AntHill.NET
         {
             type = mt;
             points = new LIList<PointWithIntensity>();
-            this.location = location;
+            this.targetLocation = location;
         }
         //public void AddPoint(LIList<PointWithIntensity> newPoint)
         //{
@@ -115,20 +116,23 @@ namespace AntHill.NET
         public void Spread(ISimulationWorld isw, Point point, int intensity)
         {
             int radius = AntHillConfig.messageRadius, radius2 = radius * radius;
-            int x, y;
+            int x, y, i2, j2;
             Map map = isw.GetMap();
-            PointWithIntensity PwI;
+            //PointWithIntensity PwI;
             for (int i = -radius; i <= radius; i++)
             {
+                x = i + point.X;
+                i2 = i * i;
                 for (int j = -radius; j <= radius; j++)
                 {
-                    if (i * i + j * j <= radius2)
+                    j2 = j * j;
+                    if (i2 + j2 <= radius2)
                     {
-                        x = i + point.X;
                         y = j + point.Y;
                         if (map.Inside(x, y))
                         {// czy wogole w srodku
                             if (map.GetTile(x, y).TileType == TileType.Wall) continue;
+                            /*
                             if (map.GetTile(x, y).messages.Contains(this))
                             {// czy zawiera                                
                                 if ((PwI = GetPoint(x, y)) != null)// this.points.Contains(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0)))
@@ -146,6 +150,8 @@ namespace AntHill.NET
                                 }
                             }
                             else
+                             */
+                            if (!map.GetTile(x, y).messages.Contains(this))
                             {// nie ma w danym tile - wrzucamy
                                 map.GetTile(x, y).messages.AddLast(this);
                                 this.points.AddLast(new PointWithIntensity(map.GetTile(x, y), intensity));
