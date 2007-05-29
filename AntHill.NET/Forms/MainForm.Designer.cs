@@ -39,7 +39,6 @@ namespace AntHill.NET
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.cbVisualize = new System.Windows.Forms.CheckBox();
             this.buttonShowConfig = new System.Windows.Forms.Button();
             this.magnitudeBar = new System.Windows.Forms.TrackBar();
             this.magnitudeLabel = new System.Windows.Forms.Label();
@@ -74,7 +73,6 @@ namespace AntHill.NET
             // rightPanel
             // 
             this.rightPanel.Controls.Add(this.groupBox1);
-            this.rightPanel.Controls.Add(this.cbVisualize);
             this.rightPanel.Controls.Add(this.buttonShowConfig);
             this.rightPanel.Controls.Add(this.magnitudeBar);
             this.rightPanel.Controls.Add(this.magnitudeLabel);
@@ -187,20 +185,6 @@ namespace AntHill.NET
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // cbVisualize
-            // 
-            this.cbVisualize.AutoSize = true;
-            this.cbVisualize.Checked = true;
-            this.cbVisualize.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbVisualize.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbVisualize.Location = new System.Drawing.Point(0, 232);
-            this.cbVisualize.Name = "cbVisualize";
-            this.cbVisualize.Size = new System.Drawing.Size(143, 17);
-            this.cbVisualize.TabIndex = 6;
-            this.cbVisualize.Text = "Visualize simulation";
-            this.cbVisualize.UseVisualStyleBackColor = true;
-            this.cbVisualize.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // buttonShowConfig
             // 
@@ -447,7 +431,6 @@ namespace AntHill.NET
         private System.Windows.Forms.TrackBar speedBar;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button startButton;
-        private System.Windows.Forms.CheckBox cbVisualize;
         private System.Windows.Forms.OpenFileDialog simulationXMLopenFileDialog;
         private System.Windows.Forms.Button buttonShowConfig;
         private System.Windows.Forms.VScrollBar vScrollBar1;

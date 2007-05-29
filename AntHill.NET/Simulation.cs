@@ -102,6 +102,12 @@ namespace AntHill.NET
             return new Point(Randomizer.Next(Map.Width), Randomizer.Next(Map.Height));
         }
 
+        Point GetRandomPointForRain()
+        {
+            return new Point(Randomizer.Next(Map.Width - AntHillConfig.rainWidth),
+                             Randomizer.Next(Map.Height - AntHillConfig.rainWidth));
+        }
+
 	    #region ISimulation Members
 
         /// <summary>
@@ -118,7 +124,7 @@ namespace AntHill.NET
                 this.CreateFood(Map.GetRandomTile(TileType.Outdoor).Position, GetRandomFoodQuantity());
 
             if ((rain == null) && (Randomizer.NextDouble() <= AntHillConfig.rainProbability))
-                this.CreateRain(GetRandomPoint());
+                this.CreateRain(GetRandomPointForRain());
 
             if (rain != null)
                 rain.Maintain(this);
@@ -378,44 +384,32 @@ namespace AntHill.NET
         public LIList<Message> GetVisibleMessages(Element c)
         {
             LIList<Message> res_messages = new LIList<Message>();
-            LinkedListNode<Message> messageNode = messages.First;
-            LinkedListNode<PointWithIntensity> pwiNode;
+            LinkedListNode<Message> messageNode;
             if (c is Ant)
             {
+                messageNode = Map.GetTile(c.Position).messages.First;
                 while (messageNode != null)
                 {
-                    pwiNode = messageNode.Value.Points.First;
-                    while (pwiNode != null)
-                    {
-                        if (c.Position == pwiNode.Value.Tile.Position)
-                        {
-                            res_messages.AddLast(messageNode.Value);
-                            break;
-                        }
-                        pwiNode = pwiNode.Next;
-                    }
+                    res_messages.AddLast(messageNode.Value);
                     messageNode = messageNode.Next;
                 }
             }
             else if (c is Rain)
             {
-                while (messageNode != null)
+                for (int i = 0; i < AntHillConfig.rainWidth; i++)
                 {
-                    pwiNode = messageNode.Value.Points.First;
-                    while (pwiNode != null)
+                    for (int j = 0; j < AntHillConfig.rainWidth; j++)
                     {
-                        if (pwiNode.Value.Tile.TileType == TileType.Outdoor &&
-                            c.Position == pwiNode.Value.Tile.Position)
+                        messageNode = Map.GetTile(c.Position.X + i, c.Position.Y + j).messages.First;
+                        while (messageNode != null)
                         {
-                            res_messages.AddLast(messageNode.Value);
-                            break;
+                            if (!res_messages.Contains(messageNode.Value))
+                                res_messages.AddLast(messageNode.Value);
+                            messageNode = messageNode.Next;
                         }
-                        pwiNode = pwiNode.Next;
                     }
-                    messageNode = messageNode.Next;
                 }
             }
-
             return res_messages;
         }
 

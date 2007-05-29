@@ -12,7 +12,8 @@ namespace AntHill.NET
         private Tile[,] tiles;
         private MessageCount[,] messagesCount;
 
-        private LIList<Tile> indoorTiles, outdoorTiles, wallTiles;
+        private List<Tile> indoorTiles, wallTiles, outdoorTiles;
+        
 
         public int GetIndoorCount { get { return indoorTiles.Count; } }
         public int GetOutdoorCount { get { return outdoorTiles.Count; } }
@@ -37,9 +38,9 @@ namespace AntHill.NET
 
             messagesCount = new MessageCount[width, height];
 
-            indoorTiles = new LIList<Tile>();
-            outdoorTiles = new LIList<Tile>();
-            wallTiles = new LIList<Tile>();
+            indoorTiles = new List<Tile>();
+            outdoorTiles = new List<Tile>();
+            wallTiles = new List<Tile>();
 
             Tile t;
             for (int y = 0; y < this.height; y++)
@@ -49,13 +50,13 @@ namespace AntHill.NET
                     switch ((t = tiles[x, y]).TileType)
                     {
                         case TileType.Outdoor:
-                            outdoorTiles.AddLast(t);
+                            outdoorTiles.Add(t);
                             break;
                         case TileType.Indoor:
-                            indoorTiles.AddLast(t);
+                            indoorTiles.Add(t);
                             break;
                         case TileType.Wall:
-                            wallTiles.AddLast(t);
+                            wallTiles.Add(t);
                             break;
                     }
                 }
@@ -83,6 +84,7 @@ namespace AntHill.NET
         }
 
         public Tile GetTile(int x, int y) { return tiles[x, y]; }
+        public Tile GetTile(Point pos) { return tiles[pos.X, pos.Y]; }
 
         public Tile GetRandomTile(TileType tt)
         {
@@ -107,7 +109,7 @@ namespace AntHill.NET
             wallTiles.Remove(t);
             t.TileType = TileType.Indoor;
             
-            indoorTiles.AddLast(t);
+            indoorTiles.Add(t);
         }
 
         public void AddMessage(MessageType mt, Point pos)

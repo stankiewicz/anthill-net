@@ -15,13 +15,13 @@ namespace AntHill.NET
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            try
+            //try
             {
                 Application.Run(new MainForm());
             }
-            catch
+            //catch
             {
-                MessageBox.Show(Properties.Resources.errorFatal);
+              //  MessageBox.Show(Properties.Resources.errorFatal);
                 Application.Exit();
             }
         }

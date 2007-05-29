@@ -7,8 +7,7 @@ using AntHill.NET;
 namespace astar
 {
     static class Astar
-    {
-        
+    {        
         class AstarNode : IComparable
         {
             

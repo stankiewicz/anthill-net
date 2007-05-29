@@ -119,8 +119,11 @@ namespace AntHill.NET
         {
             for (int i = 0; i < 4; i++)
             {
-                if (--intensities[i] < 0 || --forgetting[i]<0 || messages[i].Empty)
-                    messages[i] = null;
+                if (messages[i] != null)
+                {
+                    if (--intensities[i] < 0 || --forgetting[i] < 0 || messages[i].Empty)
+                        messages[i] = null;
+                }
             }
         }
 
