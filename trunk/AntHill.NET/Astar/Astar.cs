@@ -87,7 +87,6 @@ namespace astar
 
         }
         const int max_deep = 10;
-
         static Heap OpenHeap = new Heap();
         static List<AstarNode> Closed = new List<AstarNode>();
         static System.Collections.Generic.Dictionary<KeyValuePair<int, int>, AstarNode> dict = new Dictionary<KeyValuePair<int, int>, AstarNode>();
@@ -129,17 +128,20 @@ namespace astar
         static public List<KeyValuePair<int, int>> Search(KeyValuePair<int, int> start, KeyValuePair<int, int> goal, IAstar ia)
         {
             //int counter = 0;
-            OpenHeap.Clear();
-            Closed.Clear();
+            OpenHeap = new Heap(); //.Clear();
+            Closed = new List<AstarNode>();//.Clear();
             AstarNode StartNode = new AstarNode(start, ia.GetWeight(start.Key, start.Value),0,0);
             StartNode.Parent = null;
             StartNode.Calc(goal);
-            dict.Clear();
+            dict=new Dictionary<KeyValuePair<int,int>,AstarNode>();//.Clear();
             int idx;
             OpenHeap.Add(StartNode);
             dict.Add(StartNode.Loc, StartNode);
             bool inClosed;
             bool flag;
+            List<AstarNode> near;
+            List<AstarNode>.Enumerator e;
+            AstarNode other;
             while (OpenHeap.Count != 0)
             {
                 AstarNode node = (AstarNode)OpenHeap.Pop();
@@ -148,9 +150,11 @@ namespace astar
                 {
                     return CreatePath(node);
                 }
-
-                foreach (AstarNode other in NearNodes(node,ia))
+                near = NearNodes(node, ia);
+                e = near.GetEnumerator();
+                while(e.MoveNext())
                 {
+                    other = e.Current;
                     if (other.IsObstacle) { Closed.Add(other); continue; }
                     inClosed = false;
                     other.Calc(goal);
