@@ -6,11 +6,7 @@ namespace AntHill.NET
 {
     class AstarOtherObject : IAstar
     {
-        public AstarOtherObject()
-        {
-
-        }
-        #region IAstar Members
+        public AstarOtherObject() { }
 
         int IAstar.GetWeight(int x, int y)
         {
@@ -31,9 +27,6 @@ namespace AntHill.NET
                     break;
             }
             return 0;
-
         }
-
-        #endregion
     }
 }

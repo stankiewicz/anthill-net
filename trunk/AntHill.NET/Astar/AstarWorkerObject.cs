@@ -6,9 +6,6 @@ namespace AntHill.NET
 {
     class AstarWorkerObject:IAstar
     {
-
-        #region IAstar Members
-
         int IAstar.GetWeight(int x, int y)
         {
             bool rain=false;
@@ -29,7 +26,5 @@ namespace AntHill.NET
             }
             return 0;
         }
-
-        #endregion
     }
 }

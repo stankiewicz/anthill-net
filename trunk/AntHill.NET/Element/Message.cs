@@ -66,7 +66,7 @@ namespace AntHill.NET
                 if (e.Current.Tile.Position == p) return e.Current;            
             return null;
         }
-        private int GetId(int x, int y)
+        private int GetPointIndex(int x, int y)
         {           
             LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();
             int i = 0;
@@ -121,13 +121,13 @@ namespace AntHill.NET
             //PointWithIntensity PwI;
             for (int i = -radius; i <= radius; i++)
             {
-                x = i + point.X;
                 i2 = i * i;
                 for (int j = -radius; j <= radius; j++)
                 {
                     j2 = j * j;
                     if (i2 + j2 <= radius2)
                     {
+                        x = i + point.X;
                         y = j + point.Y;
                         if (map.Inside(x, y))
                         {// czy wogole w srodku

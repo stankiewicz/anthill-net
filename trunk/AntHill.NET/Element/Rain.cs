@@ -61,7 +61,9 @@ namespace AntHill.NET
                 isw.DeleteSpider(lSpider.First.Value);
                 lSpider.RemoveFirst();
             }
-            
+
+            Map map = isw.GetMap();
+
             if (lMessage!=null)
             {
                 LinkedListNode<Message> enumMsg = lMessage.First;
@@ -71,12 +73,12 @@ namespace AntHill.NET
                     enumPwI = enumMsg.Value.Points.First;
                     while (enumPwI != null)
                     {
-                        if ((enumPwI.Value.Tile.Position.X - rainPos.X) <= AntHillConfig.rainWidth &&
-                            (enumPwI.Value.Tile.Position.X - rainPos.X) >= 0
-                            && (enumPwI.Value.Tile.Position.Y - rainPos.Y) <= AntHillConfig.rainWidth
-                            && (enumPwI.Value.Tile.Position.Y - rainPos.Y) >= 0)
+                        if ((enumPwI.Value.Position.X - rainPos.X) < AntHillConfig.rainWidth &&
+                            (enumPwI.Value.Position.X - rainPos.X) >= 0
+                            && (enumPwI.Value.Position.Y - rainPos.Y) < AntHillConfig.rainWidth
+                            && (enumPwI.Value.Position.Y - rainPos.Y) >= 0)
                         {
-                            isw.GetMap().RemoveMessage(enumMsg.Value.GetMessageType, enumPwI.Value.Tile.Position);
+                            map.RemoveMessage(enumMsg.Value.GetMessageType, enumPwI.Value.Position);
                             enumPwItemp = enumPwI;
                             enumPwI = enumPwI.Next;
                             enumMsg.Value.Points.Remove(enumPwItemp);
@@ -86,15 +88,14 @@ namespace AntHill.NET
                     }
                     enumMsg = enumMsg.Next;
                 } 
-            }
+            }            
 
-            Map map = isw.GetMap();
-
-            for (int i = 0; i < AntHillConfig.rainWidth && i+this.Position.X <isw.GetMap().Width; i++)
+            // Rain is always on the map
+            for (int i = 0; i < AntHillConfig.rainWidth; i++) // && i+this.Position.X < map.Width; i++)
             {
-                for (int j = 0; j < AntHillConfig.rainWidth && j+this.Position.Y < isw.GetMap().Height; j++)
+                for (int j = 0; j < AntHillConfig.rainWidth; j++) // && j+this.Position.Y < map.Height; j++)
                 {
-                    map.GetTile(i, j).messages.Clear();
+                    map.GetTile(this.Position.X + i, this.Position.Y + j).messages.Clear();
                 }
             }
             return true;

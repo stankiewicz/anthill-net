@@ -16,7 +16,7 @@ namespace AntHill.NET
     {
         public List<KeyValuePair<int, int>> path = new List<KeyValuePair<int,int>>();
         protected int health;
-        protected int randomMovemenCount = 0;
+        protected int randomMovementCount = 0;
         protected Dir direction;
         protected Point randomDestination = new Point(-1, 0);
         public int Health
@@ -32,17 +32,17 @@ namespace AntHill.NET
         protected void MoveRandomly(ISimulationWorld isw)
         {            
             Point indoorDestination, outdoorDestination;
-            randomMovemenCount++;
-            try
-            {
-                if ((this.Position.X == currentTrail[randomMovemenCount].Key) && (this.Position.Y == currentTrail[randomMovemenCount].Value))
-                    randomMovemenCount++;
-            }
-            catch { }
+            randomMovementCount++;
 
-            if ((randomMovemenCount >= currentTrail.Count) || (randomDestination.X < 0))
+            if (randomMovementCount < currentTrail.Count) /* instead of: try { } catch { } */
+            {   
+                if ((this.Position.X == currentTrail[randomMovementCount].Key) && (this.Position.Y == currentTrail[randomMovementCount].Value))
+                    randomMovementCount++;
+            }
+
+            if ((randomMovementCount >= currentTrail.Count) || (randomDestination.X < 0))
             {
-                randomMovemenCount = 0;
+                randomMovementCount = 0;
                 indoorDestination = isw.GetMap().GetRandomTile(TileType.Indoor).Position;
                 outdoorDestination = isw.GetMap().GetRandomTile(TileType.Outdoor).Position;
                 if (Randomizer.Next(2) == 0)
@@ -61,11 +61,12 @@ namespace AntHill.NET
                 randomDestination.X = -1;
                 return;
             }
-            if (!MoveOrRotate(currentTrail[randomMovemenCount]))
-                randomMovemenCount--;
-            if (randomMovemenCount >= 10)            
+            if (!MoveOrRotate(currentTrail[randomMovementCount]))
+                randomMovementCount--;
+            if (randomMovementCount >= 10)            
                 randomDestination.X = -1;            
         }
+
         public Spider GetNearestSpider(LIList<Spider> spiders)
         {            
             int min = Int32.MaxValue;
