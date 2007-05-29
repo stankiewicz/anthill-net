@@ -285,27 +285,29 @@ namespace AntHill.NET
 
         public LIList<Ant> GetVisibleAnts(Element c)
         {
-
             LIList<Ant> res_ants = new LIList<Ant>();
+            LinkedListNode<Ant> antNode = ants.First;
             int radius;
             if (c is Spider || c is Ant) //same radius
             {
                 radius = AntHillConfig.antSightRadius; //same as for ant
-                for (int i = 0; i < ants.Count; i++)
+                while (antNode != null)
                 {
                     //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(ants[i].Position.X - c.Position.X) <= radius &&
-                        Math.Abs(ants[i].Position.Y - c.Position.Y) <= radius)
-                        res_ants.AddLast(ants[i]);
+                    if (Math.Abs(antNode.Value.Position.X - c.Position.X) <= radius &&
+                        Math.Abs(antNode.Value.Position.Y - c.Position.Y) <= radius)
+                        res_ants.AddLast(antNode.Value);
+                    antNode = antNode.Next;
                 }
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < ants.Count; i++)
+                while (antNode != null)
                 {
-                    if (map.GetTile(ants[i].Position.X, ants[i].Position.Y).TileType == TileType.Outdoor &&
-                        ((Rain)c).IsRainOver(ants[i].Position.X, ants[i].Position.Y))
-                        res_ants.AddLast(ants[i]);
+                    if (map.GetTile(antNode.Value.Position.X, antNode.Value.Position.Y).TileType == TileType.Outdoor &&
+                        ((Rain)c).IsRainOver(antNode.Value.Position.X, antNode.Value.Position.Y))
+                        res_ants.AddLast(antNode.Value);
+                    antNode = antNode.Next;
                 }
             }
                 
@@ -315,25 +317,28 @@ namespace AntHill.NET
         public LIList<Food> GetVisibleFood(Element c)
         {
             LIList<Food> res_food = new LIList<Food>();
+            LinkedListNode<Food> foodNode = food.First;
             int radius;
             if (c is Spider || c is Ant) //same radius
             {
                 radius = AntHillConfig.antSightRadius; //same as for ant
-                for (int i = 0; i < food.Count; i++)
+                while (foodNode != null)
                 {
                     //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(food[i].Position.X - c.Position.X) <= radius &&
-                        Math.Abs(food[i].Position.Y - c.Position.Y) <= radius)
-                        res_food.AddLast(food[i]);
+                    if (Math.Abs(foodNode.Value.Position.X - c.Position.X) <= radius &&
+                        Math.Abs(foodNode.Value.Position.Y - c.Position.Y) <= radius)
+                        res_food.AddLast(foodNode.Value);
+                    foodNode = foodNode.Next;
                 }
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < food.Count; i++)
+                while (foodNode != null)
                 {
-                    if (map.GetTile(food[i].Position.X, food[i].Position.Y).TileType == TileType.Outdoor &&
-                        ((Rain)c).IsRainOver(food[i].Position.X, food[i].Position.Y))
-                        res_food.AddLast(food[i]);
+                    if (map.GetTile(foodNode.Value.Position.X, foodNode.Value.Position.Y).TileType == TileType.Outdoor &&
+                        ((Rain)c).IsRainOver(foodNode.Value.Position.X, foodNode.Value.Position.Y))
+                        res_food.AddLast(foodNode.Value);
+                    foodNode = foodNode.Next;
                 }
             }
             return res_food;
@@ -342,25 +347,28 @@ namespace AntHill.NET
         public LIList<Spider> GetVisibleSpiders(Element c)
         {
             LIList<Spider> res_spiders = new LIList<Spider>();
+            LinkedListNode<Spider> spiderNode = spiders.First;
             int radius;
             if (c is Spider || c is Ant) //same radius
             {
                 radius = AntHillConfig.antSightRadius; //same as for ant
-                for (int i = 0; i < spiders.Count; i++)
+                while (spiderNode != null)
                 {
                     //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(spiders[i].Position.X - c.Position.X) <= radius &&
-                        Math.Abs(spiders[i].Position.Y - c.Position.Y) <= radius)
-                        res_spiders.AddLast(spiders[i]);
+                    if (Math.Abs(spiderNode.Value.Position.X - c.Position.X) <= radius &&
+                        Math.Abs(spiderNode.Value.Position.Y - c.Position.Y) <= radius)
+                        res_spiders.AddLast(spiderNode.Value);
+                    spiderNode = spiderNode.Next;
                 }
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < spiders.Count; i++)
+                while (spiderNode != null)
                 {
-                    if (map.GetTile(spiders[i].Position.X, spiders[i].Position.Y).TileType == TileType.Outdoor &&
-                        ((Rain)c).IsRainOver(spiders[i].Position.X, spiders[i].Position.Y))
-                        res_spiders.AddLast(spiders[i]);
+                    if (map.GetTile(spiderNode.Value.Position.X, spiderNode.Value.Position.Y).TileType == TileType.Outdoor &&
+                        ((Rain)c).IsRainOver(spiderNode.Value.Position.X, spiderNode.Value.Position.Y))
+                        res_spiders.AddLast(spiderNode.Value);
+                    spiderNode = spiderNode.Next;
                 }
             }
 
@@ -370,33 +378,41 @@ namespace AntHill.NET
         public LIList<Message> GetVisibleMessages(Element c)
         {
             LIList<Message> res_messages = new LIList<Message>();
+            LinkedListNode<Message> messageNode = messages.First;
+            LinkedListNode<PointWithIntensity> pwiNode;
             if (c is Ant)
             {
-                for (int i = 0; i < messages.Count; i++)
+                while (messageNode != null)
                 {
-                    for (int j = 0; j < messages[i].Points.Count; j++)
+                    pwiNode = messageNode.Value.Points.First;
+                    while (pwiNode != null)
                     {
-                        if (c.Position == messages[i].Points[j].Tile.Position)
+                        if (c.Position == pwiNode.Value.Tile.Position)
                         {
-                            res_messages.AddLast(messages[i]);
+                            res_messages.AddLast(messageNode.Value);
                             break;
                         }
+                        pwiNode = pwiNode.Next;
                     }
+                    messageNode = messageNode.Next;
                 }
             }
             else if (c is Rain)
             {
-                for (int i = 0; i < messages.Count; i++)
+                while (messageNode != null)
                 {
-                    for (int j = 0; j < messages[i].Points.Count; j++)
+                    pwiNode = messageNode.Value.Points.First;
+                    while (pwiNode != null)
                     {
-                        if (messages[i].Points[j].Tile.TileType == TileType.Outdoor &&
-                            c.Position == messages[i].Points[j].Tile.Position)
+                        if (pwiNode.Value.Tile.TileType == TileType.Outdoor &&
+                            c.Position == pwiNode.Value.Tile.Position)
                         {
-                            res_messages.AddLast(messages[i]);
+                            res_messages.AddLast(messageNode.Value);
                             break;
                         }
+                        pwiNode = pwiNode.Next;
                     }
+                    messageNode = messageNode.Next;
                 }
             }
 
@@ -468,11 +484,12 @@ namespace AntHill.NET
         public bool CreateMessage(Point pos, MessageType mt, Point location)
         {
             Message ms = new Message(pos, mt,location);
-            for (int i = -AntHillConfig.messageRadius; i < AntHillConfig.messageRadius; i++)
+            /*
+            for (int i = -AntHillConfig.messageRadius; i <= AntHillConfig.messageRadius; i++)
             {
-                for (int j = -AntHillConfig.messageRadius; j < AntHillConfig.messageRadius; j++)
+                for (int j = -AntHillConfig.messageRadius; j <= AntHillConfig.messageRadius; j++)
                 {
-                    if (i * i + j * j < AntHillConfig.messageRadius * AntHillConfig.messageRadius)
+                    if (i * i + j * j <= AntHillConfig.messageRadius * AntHillConfig.messageRadius)
                     {
                         if (map.Inside(i+pos.X, j+pos.Y))
                         {
@@ -482,7 +499,9 @@ namespace AntHill.NET
                     }
                 }
             }
+             */
             this.messages.AddLast(ms);
+            ms.Spread(this, pos, AntHillConfig.messageLifeTime);
 
             return true;
         }
