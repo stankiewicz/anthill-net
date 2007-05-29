@@ -24,10 +24,10 @@ namespace AntHill.NET
 
         public bool IsRainOver(int x, int y)
         {
-            if ((x - Position.X) <= AntHillConfig.rainWidth  &&
-                (x - Position.X) >=0 &&
-                (y - Position.Y) <= AntHillConfig.rainWidth
-                && (y - Position.Y) >=0)
+            if ((x - Position.X) < AntHillConfig.rainWidth &&
+                (x - Position.X) >= 0 &&
+                (y - Position.Y) < AntHillConfig.rainWidth &&
+                (y - Position.Y) >= 0)
                 return true;
             return false;
         }

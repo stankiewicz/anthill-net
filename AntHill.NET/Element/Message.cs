@@ -109,7 +109,6 @@ namespace AntHill.NET
                 {
                     msg = msg.Next;
                 }
-
             }
             return true;
         }
