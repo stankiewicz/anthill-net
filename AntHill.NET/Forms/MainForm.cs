@@ -23,6 +23,7 @@ namespace AntHill.NET
         
         bool scrolling = false;
         Point mousePos;
+        Counter counter = new Counter();
 
         private bool InitGL()
         {
@@ -199,6 +200,8 @@ namespace AntHill.NET
                 timer.Stop();
                 MessageBox.Show(Properties.Resources.SimulationFinished);
             }
+            counter.FrameTick();
+            this.Text = "fps:"+counter.FPS + " rps:" + counter.RPS;
             openGLControl.Invalidate();
         }
 
@@ -314,6 +317,8 @@ namespace AntHill.NET
         float moveX = 0, moveY = 0;
         private void openGLControl_Paint(object sender, PaintEventArgs ea)
         {
+            counter.RoundTick();
+            this.Text = "fps:" + counter.FPS + " rps:" + counter.RPS;
             Gl.glClearColor(0, 0, 0, 0);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
             Gl.glLoadIdentity();
