@@ -20,7 +20,7 @@ namespace AntHill.NET
                 case TileType.Wall:
                     return int.MaxValue;
                 case TileType.Outdoor:
-                    return rain ? 1 : 1;//int.MaxValue;
+                    return rain ? int.MaxValue : 1;//int.MaxValue;
                 case TileType.Indoor:
                     return 1;
                 default:

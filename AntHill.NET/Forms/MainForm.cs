@@ -265,12 +265,6 @@ namespace AntHill.NET
             openGLControl.Invalidate();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            openGLControl.Invalidate();
-
-        }
-
         private void btnReset_Click(object sender, EventArgs e)
         {
             Simulation.DeInit();
