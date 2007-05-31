@@ -104,12 +104,11 @@ namespace AntHill.NET
             }
         }
 
-        public Tile GetRandomIndoorOrOutdoor()
+        public Tile GetRandomIndoorOrOutdoorTile()
         {
             int c = Randomizer.Next(outdoorTiles.Count + indoorTiles.Count);
             if (c < outdoorTiles.Count)
                 return outdoorTiles[c];
-
             return indoorTiles[c - outdoorTiles.Count];
         }
 

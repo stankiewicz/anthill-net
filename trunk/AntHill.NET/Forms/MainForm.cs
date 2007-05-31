@@ -398,10 +398,10 @@ namespace AntHill.NET
 
         private void DrawElement(Point position, int texture, Dir direction, float moveX, float moveY)
         {
-            //if (position.X - moveX > sceneWidth / 2.0f) return;
-            //if (position.X + moveX > (sceneWidth / 2.0f) + 1.0f) return;
-            //if (position.Y + moveY < sceneHeight / 2.0f) return;
-            //if (position.Y + moveY > (sceneHeight / 2.0f) + 1.0f) return;
+            if (position.X + moveX + 1 < -sceneWidth / 2.0f) return;
+            if (position.X + moveX - 1 > sceneWidth / 2.0f) return;
+            if (position.Y + moveY + 1 < -sceneHeight / 2.0f) return;
+            if (position.Y + moveY - 1 > sceneHeight / 2.0f) return;
             Gl.glPushMatrix();                           
             Gl.glTranslatef(position.X + moveX, position.Y + moveY, 0);
             Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
