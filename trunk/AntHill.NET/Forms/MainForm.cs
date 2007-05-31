@@ -254,7 +254,7 @@ namespace AntHill.NET
 
         private void speedBar_Scroll(object sender, EventArgs e)
         {
-            timer.Interval = speedBar.Maximum - speedBar.Value + speedBar.Minimum;
+            timer.Interval = 10000 / (speedBar.Value);
         }
         
         private void magnitudeBar_Scroll(object sender, EventArgs e)
