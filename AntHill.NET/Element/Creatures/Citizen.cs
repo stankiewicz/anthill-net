@@ -111,7 +111,7 @@ namespace AntHill.NET
             for (int i = 0; i < 4; i++)
             {
                 if(messages[i] != null)
-                    messages[i].Spread(isw, this.Position, intensities[i]);
+                    messages[i].Spread(isw, this.Position, intensities[i] - 1);
                 
             }
         }
@@ -122,7 +122,7 @@ namespace AntHill.NET
             {
                 if (messages[i] != null)
                 {
-                    if (--intensities[i] < 0 || --forgetting[i] < 0 || messages[i].Empty)
+                    if (--intensities[i] <= 0 || --forgetting[i] <= 0 || messages[i].Empty)
                         messages[i] = null;
                 }
             }

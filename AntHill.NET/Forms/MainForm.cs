@@ -73,14 +73,16 @@ namespace AntHill.NET
 
             magnitudeBar_Scroll(null, null);
         }
-
+        float sceneWidth, sceneHeight;
         private void ReSizeGLScene(float width, float height, bool updateViewport)
         {
-            if(updateViewport)
-                Gl.glViewport(0, 0, openGLControl.Width, openGLControl.Height);
+            if (updateViewport)            
+                Gl.glViewport(0, 0, openGLControl.Width, openGLControl.Height);                            
             Gl.glMatrixMode(Gl.GL_PROJECTION);                                  // Select The Projection Matrix
             Gl.glLoadIdentity();                                                // Reset The Projection Matrix
-            Gl.glOrtho(-(0.5f * width), (0.5f * width), (0.5f * height), -(0.5f * height), -100, 100);            
+            Gl.glOrtho(-(0.5f * width), (0.5f * width), (0.5f * height), -(0.5f * height), -100, 100);
+            sceneWidth = width;
+            sceneHeight = height;
             Gl.glMatrixMode(Gl.GL_MODELVIEW);                                   // Select The Modelview Matrix
             Gl.glLoadIdentity();                                                // Reset The Modelview Matrix
         }        
@@ -324,28 +326,29 @@ namespace AntHill.NET
             //sygna³y
             int signal;
             float maxSignal = 10.0f;
+            int initialAlpha = 2;
             for (int y = 0; y < Simulation.simulation.Map.Height; y++)
             {
                 for (int x = 0; x < Simulation.simulation.Map.Width; x++)
                 {
                     if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.FoodLocalization)) > 0)
                     {
-                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
                         DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, moveX, moveY);
                     }
                     if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.QueenInDanger)) > 0)
                     {
-                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
                         DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, moveX, moveY);
                     }
                     if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.QueenIsHungry)) > 0)
                     {
-                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
                         DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, moveX, moveY);
                     }
                     if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.SpiderLocalization)) > 0)
                     {
-                        Gl.glColor4f(1, 1, 1, (float)signal / maxSignal);
+                        Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
                         DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, moveX, moveY);
                     }
                 }
@@ -393,18 +396,20 @@ namespace AntHill.NET
             }
         }
 
-        private static void DrawElement(Point position, int texture, Dir direction, float moveX, float moveY)
+        private void DrawElement(Point position, int texture, Dir direction, float moveX, float moveY)
         {
+            //if (position.X - moveX > sceneWidth / 2.0f) return;
+            //if (position.X + moveX > (sceneWidth / 2.0f) + 1.0f) return;
+            //if (position.Y + moveY < sceneHeight / 2.0f) return;
+            //if (position.Y + moveY > (sceneHeight / 2.0f) + 1.0f) return;
             Gl.glPushMatrix();                           
             Gl.glTranslatef(position.X + moveX, position.Y + moveY, 0);
             Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-            Gl.glBegin(Gl.GL_TRIANGLES);
+            Gl.glBegin(Gl.GL_TRIANGLE_FAN);
             Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
             Gl.glTexCoord2f(1, 0); Gl.glVertex3f(0.5f, -0.5f, 0.0f);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);            
             Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-0.5f, 0.5f, 0.0f);
             Gl.glEnd();
             Gl.glPopMatrix();

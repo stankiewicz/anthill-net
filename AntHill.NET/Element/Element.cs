@@ -7,7 +7,7 @@ namespace AntHill.NET
     public abstract class Element
     {
         public Element(Point pos)
-        {
+        {            
             position = pos;
         }
         private Point position;
