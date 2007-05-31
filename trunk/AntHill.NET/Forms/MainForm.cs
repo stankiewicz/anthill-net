@@ -303,6 +303,14 @@ namespace AntHill.NET
             done = true;
         }
 
+        private bool ShouldOmitDrawing(int x, int y)
+        {
+            return ((x + moveX + 1 < -sceneWidth / 2.0f) ||
+                       (x + moveX - 1 > sceneWidth / 2.0f) ||
+                       (y + moveY + 1 < -sceneHeight / 2.0f) ||
+                       (y + moveY - 1 > sceneHeight / 2.0f));
+        }
+
         float moveX = 0, moveY = 0;
         private void openGLControl_Paint(object sender, PaintEventArgs ea)
         {
@@ -312,47 +320,52 @@ namespace AntHill.NET
 
             if (Simulation.simulation == null) return;
             
-            Gl.glColor4f(1, 1, 1, 1);
-            
             Gl.glNormal3f(0, 1, 0);
             Map map = Simulation.simulation.Map;
-            for (int x = 0; x < map.Width; x++)
-            {
-                for (int y = 0; y < map.Height; y++)
-                {     
-                    DrawElement(new Point(x, y), map.GetTile(x, y).GetTexture(), Dir.N, moveX, moveY);
-                }
-            }
-            //sygna³y
+
             int signal;
             float maxSignal = 10.0f;
             int initialAlpha = 2;
-            for (int y = 0; y < Simulation.simulation.Map.Height; y++)
+
+            Gl.glColor4f(1, 1, 1, 1);
+            for (int x = 0; x < map.Width; x++)
             {
-                for (int x = 0; x < Simulation.simulation.Map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
                 {
-                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.FoodLocalization)) > 0)
+                    if (ShouldOmitDrawing(x, y)) continue;
+                    DrawElement(x, y, map.GetTile(x, y).GetTexture(), Dir.N, moveX, moveY);
+                }
+            }
+
+            for (int x = 0; x < map.Width; x++)
+            {
+                for (int y = 0; y < map.Height; y++)
+                {
+                    if (ShouldOmitDrawing(x, y)) continue;
+
+                    if ((signal = map.MsgCount[x, y].GetCount(MessageType.FoodLocalization)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
-                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, moveX, moveY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, moveX, moveY);
                     }
-                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.QueenInDanger)) > 0)
+                    if ((signal = map.MsgCount[x, y].GetCount(MessageType.QueenInDanger)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
-                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, moveX, moveY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, moveX, moveY);
                     }
-                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.QueenIsHungry)) > 0)
+                    if ((signal = map.MsgCount[x, y].GetCount(MessageType.QueenIsHungry)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
-                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, moveX, moveY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, moveX, moveY);
                     }
-                    if ((signal = Simulation.simulation.Map.MsgCount[x, y].GetCount(MessageType.SpiderLocalization)) > 0)
+                    if ((signal = map.MsgCount[x, y].GetCount(MessageType.SpiderLocalization)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + initialAlpha) / maxSignal);
-                        DrawElement(new Point(x, y), (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, moveX, moveY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, moveX, moveY);
                     }
                 }
             }
+
             Gl.glColor4f(1, 1, 1, 1);
             Creature e;
             Food f;
@@ -360,24 +373,27 @@ namespace AntHill.NET
             while (enumerator.MoveNext())
             {
                 e = enumerator.Current;
-                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+                if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, moveX, moveY);
             }
             LIList<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
             while (enumeratorSpider.MoveNext())
             {
                 e = enumeratorSpider.Current;
-                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+                if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, moveX, moveY);
             }
             LIList<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
             while (enumeratorFood.MoveNext())
             {
                 f = enumeratorFood.Current;
-                DrawElement(f.Position, f.GetTexture(), Dir.N, moveX, moveY);
+                if (ShouldOmitDrawing(f.Position.X, f.Position.Y)) continue;
+                DrawElement(f.Position.X, f.Position.Y, f.GetTexture(), Dir.N, moveX, moveY);
             }
 
             e = Simulation.simulation.queen;
-            if (e != null)
-                DrawElement(e.Position, e.GetTexture(), e.Direction, moveX, moveY);
+            if (e != null && !ShouldOmitDrawing(e.Position.X, e.Position.Y))
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, moveX, moveY);
             
             //deszcz
             Rain rain = Simulation.simulation.rain;
@@ -396,14 +412,10 @@ namespace AntHill.NET
             }
         }
 
-        private void DrawElement(Point position, int texture, Dir direction, float moveX, float moveY)
+        private void DrawElement(int x, int y, int texture, Dir direction, float moveX, float moveY)
         {
-            if (position.X + moveX + 1 < -sceneWidth / 2.0f) return;
-            if (position.X + moveX - 1 > sceneWidth / 2.0f) return;
-            if (position.Y + moveY + 1 < -sceneHeight / 2.0f) return;
-            if (position.Y + moveY - 1 > sceneHeight / 2.0f) return;
             Gl.glPushMatrix();                           
-            Gl.glTranslatef(position.X + moveX, position.Y + moveY, 0);
+            Gl.glTranslatef(x + moveX, y + moveY, 0);
             Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
             Gl.glBegin(Gl.GL_TRIANGLE_FAN);
