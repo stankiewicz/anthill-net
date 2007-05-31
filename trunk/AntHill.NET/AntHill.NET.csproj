@@ -47,6 +47,7 @@
     <Compile Include="Astar\Heeeap.cs" />
     <Compile Include="Astar\IAstar.cs" />
     <Compile Include="Configuration\AntHillConfig.cs" />
+    <Compile Include="Counter.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
