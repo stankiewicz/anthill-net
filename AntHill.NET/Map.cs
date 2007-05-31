@@ -12,7 +12,7 @@ namespace AntHill.NET
         private Tile[,] tiles;
         private MessageCount[,] messagesCount;
 
-        private List<Tile> indoorTiles, wallTiles, outdoorTiles;
+        private LIList<Tile> indoorTiles, wallTiles, outdoorTiles;
         
 
         public int GetIndoorCount { get { return indoorTiles.Count; } }
@@ -38,9 +38,9 @@ namespace AntHill.NET
 
             messagesCount = new MessageCount[width, height];
 
-            indoorTiles = new List<Tile>();
-            outdoorTiles = new List<Tile>();
-            wallTiles = new List<Tile>();
+            indoorTiles = new LIList<Tile>();
+            outdoorTiles = new LIList<Tile>();
+            wallTiles = new LIList<Tile>();
 
             Tile t;
             for (int y = 0; y < this.height; y++)
@@ -50,13 +50,13 @@ namespace AntHill.NET
                     switch ((t = tiles[x, y]).TileType)
                     {
                         case TileType.Outdoor:
-                            outdoorTiles.Add(t);
+                            outdoorTiles.AddLast(t);
                             break;
                         case TileType.Indoor:
-                            indoorTiles.Add(t);
+                            indoorTiles.AddLast(t);
                             break;
                         case TileType.Wall:
-                            wallTiles.Add(t);
+                            wallTiles.AddLast(t);
                             break;
                     }
                 }
@@ -104,12 +104,21 @@ namespace AntHill.NET
             }
         }
 
+        public Tile GetRandomIndoorOrOutdoor()
+        {
+            int c = Randomizer.Next(outdoorTiles.Count + indoorTiles.Count);
+            if (c < outdoorTiles.Count)
+                return outdoorTiles[c];
+
+            return indoorTiles[c - outdoorTiles.Count];
+        }
+
         public void DestroyWall(Tile t)
         {
             wallTiles.Remove(t);
             t.TileType = TileType.Indoor;
             
-            indoorTiles.Add(t);
+            indoorTiles.AddLast(t);
         }
 
         public void AddMessage(MessageType mt, Point pos)
