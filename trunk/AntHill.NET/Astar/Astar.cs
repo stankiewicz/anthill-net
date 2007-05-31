@@ -7,8 +7,8 @@ using AntHill.NET;
 namespace astar
 {
     static class Astar
-    {        
-        class AstarNode : IComparable
+    {
+        class AstarNode : IComparable, AntHill.NET.Heap.IEquality<AstarNode>
         {
             
             private AstarNode parent;
@@ -85,10 +85,22 @@ namespace astar
                 GoalEstimate = Math.Sqrt(Math.Pow(this.loc.Key - goal.Key, 2) + Math.Pow(this.loc.Value - goal.Value, 2));
             }
 
+
+            #region IEquality<AstarNode> Members
+
+            public bool EqualTo(AstarNode to)
+            {
+                return this.loc.Key ==to.loc.Key && this.loc.Value==to.loc.Value;
+            }
+
+            #endregion
         }
         const int max_deep = 10;
-        static Heap OpenHeap = new Heap();
-        static List<AstarNode> Closed = new List<AstarNode>();
+        
+        //static Heap OpenHeap = new Heap();
+        static AntHill.NET.Heap.Heap<AstarNode> openHeap = new AntHill.NET.Heap.Heap<AstarNode>();
+        static AntHill.NET.Heap.Heap<AstarNode> closedHeap = new AntHill.NET.Heap.Heap<AstarNode>();
+        //static List<AstarNode> Closed = new List<AstarNode>();
         static System.Collections.Generic.Dictionary<KeyValuePair<int, int>, AstarNode> dict = new Dictionary<KeyValuePair<int, int>, AstarNode>();
         static private int width;
         static private int height;
@@ -128,23 +140,26 @@ namespace astar
         static public List<KeyValuePair<int, int>> Search(KeyValuePair<int, int> start, KeyValuePair<int, int> goal, IAstar ia)
         {
             //int counter = 0;
-            OpenHeap = new Heap(); //.Clear();
-            Closed = new List<AstarNode>();//.Clear();
+            //OpenHeap = new Heap(); //.Clear();
+            openHeap = new AntHill.NET.Heap.Heap<AstarNode>();
+            closedHeap = new AntHill.NET.Heap.Heap<AstarNode>();
+            //Closed = new List<AstarNode>();//.Clear();
             AstarNode StartNode = new AstarNode(start, ia.GetWeight(start.Key, start.Value),0,0);
             StartNode.Parent = null;
             StartNode.Calc(goal);
             dict=new Dictionary<KeyValuePair<int,int>,AstarNode>();//.Clear();
             int idx;
-            OpenHeap.Add(StartNode);
+            //OpenHeap.Add(StartNode);
+            openHeap.Insert(StartNode);
             dict.Add(StartNode.Loc, StartNode);
             bool inClosed;
             bool flag;
             List<AstarNode> near;
             List<AstarNode>.Enumerator e;
             AstarNode other;
-            while (OpenHeap.Count != 0)
+            while (openHeap.Count != 0)
             {
-                AstarNode node = (AstarNode)OpenHeap.Pop();
+                AstarNode node = openHeap.DeleteMax(); //= (AstarNode)OpenHeap.Pop();
                 dict.Remove(node.Loc);
                 if (node.Loc.Equals(goal) || node.Deep ==  max_deep)
                 {
@@ -155,7 +170,7 @@ namespace astar
                 while(e.MoveNext())
                 {
                     other = e.Current;
-                    if (other.IsObstacle) { Closed.Add(other); continue; }
+                    if (other.IsObstacle) { closedHeap.Insert(other); /*Closed.Add(other)*/; continue; }
                     inClosed = false;
                     other.Calc(goal);
                     flag = false;
@@ -164,28 +179,30 @@ namespace astar
                         if (dict[other.Loc].TotalCost < other.TotalCost) continue;
                         flag = true;
                     }
-                    else if (Closed.Contains(other))
+                    else if ((idx= closedHeap.Contains(other))!=-1)// Closed.Contains(other))
                     {
                         inClosed = true;
-                        idx = Closed.IndexOf(other);
-                        if (Closed[idx].TotalCost < other.TotalCost) continue;
+                        //idx = Closed.IndexOf(other);
+                        if (closedHeap[idx].TotalCost < other.TotalCost) continue;
                     }
                     other.Parent = node;
-                    if (inClosed) Closed.Remove(other);
+                    if (inClosed) closedHeap.Remove(other); //Closed.Remove(other);
                     else
                     {
                         if (flag)
                         {
-                            OpenHeap.Remove(dict[other.Loc]);
+                            openHeap.Remove(dict[other.Loc]);
+                            //OpenHeap.Remove(dict[other.Loc]);
                             dict.Remove(other.Loc);
                         }
-
-                        OpenHeap.Add(other);
+                        openHeap.Insert(other);
+                        //OpenHeap.Add(other);
                         dict.Add(other.Loc, other);
                     }
 
                 }//foreach
-                Closed.Add(node);
+                closedHeap.Insert(node);
+                //Closed.Add(node);
             }
             List<KeyValuePair<int, int>> l=new List<KeyValuePair<int,int>>();
             return l;
