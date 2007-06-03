@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Tanis.Collections;
 using AntHill.NET;
 
 namespace astar
@@ -95,12 +94,9 @@ namespace astar
 
             #endregion
         }
-        const int max_deep = 10;
-        
-        //static Heap OpenHeap = new Heap();
+        public const int max_depth = 10;
         static AntHill.NET.Heap.Heap<AstarNode> openHeap = new AntHill.NET.Heap.Heap<AstarNode>();
         static AntHill.NET.Heap.Heap<AstarNode> closedHeap = new AntHill.NET.Heap.Heap<AstarNode>();
-        //static List<AstarNode> Closed = new List<AstarNode>();
         static System.Collections.Generic.Dictionary<KeyValuePair<int, int>, AstarNode> dict = new Dictionary<KeyValuePair<int, int>, AstarNode>();
         static private int width;
         static private int height;
@@ -139,17 +135,13 @@ namespace astar
 
         static public List<KeyValuePair<int, int>> Search(KeyValuePair<int, int> start, KeyValuePair<int, int> goal, IAstar ia)
         {
-            //int counter = 0;
-            //OpenHeap = new Heap(); //.Clear();
             openHeap = new AntHill.NET.Heap.Heap<AstarNode>();
             closedHeap = new AntHill.NET.Heap.Heap<AstarNode>();
-            //Closed = new List<AstarNode>();//.Clear();
             AstarNode StartNode = new AstarNode(start, ia.GetWeight(start.Key, start.Value),0,0);
             StartNode.Parent = null;
             StartNode.Calc(goal);
-            dict=new Dictionary<KeyValuePair<int,int>,AstarNode>();//.Clear();
+            dict=new Dictionary<KeyValuePair<int,int>,AstarNode>();
             int idx;
-            //OpenHeap.Add(StartNode);
             openHeap.Insert(StartNode);
             dict.Add(StartNode.Loc, StartNode);
             bool inClosed;
@@ -159,9 +151,9 @@ namespace astar
             AstarNode other;
             while (openHeap.Count != 0)
             {
-                AstarNode node = openHeap.DeleteMax(); //= (AstarNode)OpenHeap.Pop();
+                AstarNode node = openHeap.DeleteMax();
                 dict.Remove(node.Loc);
-                if (node.Loc.Equals(goal) || node.Deep ==  max_deep)
+                if (node.Loc.Equals(goal) || node.Deep ==  max_depth)
                 {
                     return CreatePath(node);
                 }
@@ -179,30 +171,26 @@ namespace astar
                         if (dict[other.Loc].TotalCost < other.TotalCost) continue;
                         flag = true;
                     }
-                    else if ((idx= closedHeap.Contains(other))!=-1)// Closed.Contains(other))
+                    else if ((idx= closedHeap.Contains(other))!=-1)
                     {
                         inClosed = true;
-                        //idx = Closed.IndexOf(other);
                         if (closedHeap[idx].TotalCost < other.TotalCost) continue;
                     }
                     other.Parent = node;
-                    if (inClosed) closedHeap.Remove(other); //Closed.Remove(other);
+                    if (inClosed) closedHeap.Remove(other);
                     else
                     {
                         if (flag)
                         {
                             openHeap.Remove(dict[other.Loc]);
-                            //OpenHeap.Remove(dict[other.Loc]);
                             dict.Remove(other.Loc);
                         }
                         openHeap.Insert(other);
-                        //OpenHeap.Add(other);
                         dict.Add(other.Loc, other);
                     }
 
                 }//foreach
                 closedHeap.Insert(node);
-                //Closed.Add(node);
             }
             List<KeyValuePair<int, int>> l=new List<KeyValuePair<int,int>>();
             return l;
@@ -212,18 +200,10 @@ namespace astar
         {
             List<AstarNode> list = new List<AstarNode>();
             KeyValuePair<int, int> loc;
-            //if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key - 1, center.Loc.Value - 1)))
-            //{
-            //    list.Add(new AstarNode(loc, map[center.Loc.Key - 1, center.Loc.Value - 1]));
-            //}
             if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key, center.Loc.Value - 1)))
             {
                 list.Add(new AstarNode(loc,ia.GetWeight(center.Loc.Key, center.Loc.Value - 1),center.Cost,center.Deep));
             }
-            //if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key + 1, center.Loc.Value - 1)))
-            //{
-            //    list.Add(new AstarNode(loc, map[center.Loc.Key + 1, center.Loc.Value - 1]));
-            //}
             if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key - 1, center.Loc.Value)))
             {
                 list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key - 1, center.Loc.Value), center.Cost, center.Deep));
@@ -232,19 +212,10 @@ namespace astar
             {
                 list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key + 1, center.Loc.Value), center.Cost, center.Deep));
             }
-            //if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key - 1, center.Loc.Value + 1)))
-            //{
-            //    list.Add(new AstarNode(loc, map[center.Loc.Key - 1, center.Loc.Value + 1]));
-            //}
             if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key, center.Loc.Value + 1)))
             {
                 list.Add(new AstarNode(loc, ia.GetWeight(center.Loc.Key, center.Loc.Value + 1), center.Cost, center.Deep));
             }
-            //if (Inside(loc = new KeyValuePair<int, int>(center.Loc.Key + 1, center.Loc.Value + 1)))
-            //{
-            //    list.Add(new AstarNode(loc, map[center.Loc.Key + 1, center.Loc.Value + 1]));
-            //}
-
             return list;
         }
 
