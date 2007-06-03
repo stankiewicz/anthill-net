@@ -12,21 +12,21 @@ namespace AntHill.NET
     /// </summary>
     public interface ISimulationWorld
     {
-        bool CreateAnt(Point position);
-        bool CreateWarrior(Point position);
-        bool CreateWorker(Point position);
-        bool CreateSpider(Point position);    //This might be unnecessary because only Simulation creates Spiders
-        bool CreateFood(Point position, int quantity);      //This might be used in Ants' Destroy() function, or at Simulation level -  after creature's death
-        bool CreateMessage(Point pos, MessageType mt, Point location);
-        bool CreateEgg(Point pos);
-        bool Attack(Creature cA, Creature cB);
+        bool CreateAnt(Position position);
+        bool CreateWarrior(Position position);
+        bool CreateWorker(Position position);
+        bool CreateSpider(Position position);    //This might be unnecessary because only Simulation creates Spiders
+        bool CreateFood(Position position, int quantity);      //This might be used in Ants' Destroy() function, or at Simulation level -  after creature's death
+        bool CreateMessage(Position position, MessageType mt, Position targetLocation);
+        bool CreateEgg(Position position);
+        bool Attack(Creature cAttacking, Creature cAttacked);
         bool FeedQueen(Worker w);
 
-        //'Creature c' is a creature that wants to get some info
-        LIList<Ant> GetVisibleAnts(Element c);
-        LIList<Food> GetVisibleFood(Element c);
-        LIList<Spider> GetVisibleSpiders(Element c);
-        LIList<Message> GetVisibleMessages(Element c);
+        //Element wants to get some info...
+        LIList<Ant> GetVisibleAnts(Element e);
+        LIList<Food> GetVisibleFood(Element e);
+        LIList<Spider> GetVisibleSpiders(Element e);
+        LIList<Message> GetVisibleMessages(Element e);
 
         bool DeleteEgg(Egg egg);
         bool DeleteRain();

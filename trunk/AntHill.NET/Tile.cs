@@ -8,31 +8,28 @@ namespace AntHill.NET
 
     public class Tile
     {
+        private Position position;
+        public LIList<Message> messages; /* List of references to messages active on this tile. */
         private TileType tileType;
+
+        public Tile(TileType ttype, Position pos)
+        {
+            position = new Position(pos);
+            tileType = ttype;
+            messages = new LIList<Message>();
+        }
+
+        public Position Position
+        {
+            get { return position; }
+        }
+
         public TileType TileType
         {
             get { return tileType; }
             set { tileType = value; }
         }
-        
-        /*
-         * List of references to messages active on this tile.
-         * We can use this to speed-up searching for messages,
-         * at the cost of memory.
-         */
-        public LIList<Message> messages;
-        private Point position;
-        public Tile(TileType ttype, Point pos)
-        {
-            position = pos;
-            tileType = ttype;
-            messages = new LIList<Message>();
-        }
-        public Point Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
+
         public int GetTexture()
         {
             return AHGraphics.GetTileTexture(this.TileType);

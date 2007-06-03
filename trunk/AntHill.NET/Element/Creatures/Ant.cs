@@ -1,50 +1,42 @@
 using System;
-using System.Drawing;
 
 namespace AntHill.NET
 {
     public abstract class Ant : Creature
     {
-        private int turnsWithoutFood;
-        private int turnsToBecomeHungry;
+        private int _turnsWithoutFood;
+        private int _turnsToBecomeHungry;
 
-        public Ant(Point pos):base(pos)
+        public Ant(Position pos) : base(pos)
         {
             health = AntHillConfig.antMaxLife;
-            turnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
-            turnsWithoutFood = AntHillConfig.antMaxLifeWithoutFood;
+            _turnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
+            _turnsWithoutFood = AntHillConfig.antMaxLifeWithoutFood;
         }
 
         public int TurnsWithoutFood
         {
-            get { return turnsWithoutFood; }
-            set { turnsWithoutFood = value; }
+            get { return _turnsWithoutFood; }
+            set { _turnsWithoutFood = value; }
         }
-
         
         public int TurnsToBecomeHungry
         {
-            get
-            {
-                return turnsToBecomeHungry;
-            }
-            set
-            {
-                turnsToBecomeHungry = value;
-            }
+            get { return _turnsToBecomeHungry; }
+            set { _turnsToBecomeHungry = value; }
         }
 
         public virtual bool IsAlive()
         {
-            if (turnsToBecomeHungry >= 0)
+            if (_turnsToBecomeHungry >= 0)
             {
-                turnsToBecomeHungry--;
+                _turnsToBecomeHungry--;
                 return true;
             }
 
-            if (turnsWithoutFood >= 0)
+            if (_turnsWithoutFood >= 0)
             {
-                turnsWithoutFood--;
+                _turnsWithoutFood--;
                 return true;
             }
             
@@ -54,7 +46,7 @@ namespace AntHill.NET
         public virtual void Eat()
         {
             TurnsToBecomeHungry = AntHillConfig.antTurnNumberToBecomeHungry;
-            turnsWithoutFood = AntHillConfig.antMaxLifeWithoutFood;
+            _turnsWithoutFood = AntHillConfig.antMaxLifeWithoutFood;
         }
     }
 }

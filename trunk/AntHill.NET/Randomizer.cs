@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace AntHill.NET
+namespace AntHill.NET.Utilities
 {
     static class Randomizer
     {

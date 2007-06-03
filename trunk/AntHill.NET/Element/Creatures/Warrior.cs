@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
 using astar;
+using AntHill.NET.Utilities;
 
 namespace AntHill.NET
 {
     class Warrior: Citizen
     {
-        public Warrior(Point pos):base(pos)
-        {
-            
-        }
+        private Spider lastSpider = null;
+        private Food lastFood = null;
+
+        public Warrior(Position pos) : base(pos) { }
 
         private bool MaintainSignals(MessageType mT)
         {
-            Message m = ReadMessage(mT);
+            Message m = _messages[(int)mT];
             if (m != null)
             {
-                if (Distance(this.Position, m.Location) >= 0)
+                if (DistanceMeasurer.Taxi(this.Position, m.TargetPosition) >= 0)
                 {
-                    List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(m.Location.X, m.Location.Y), new AstarOtherObject());
+                    List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(m.TargetPosition.X, m.TargetPosition.Y), new AstarOtherObject());
                     if (trail == null)
                         return true;
                     if (trail.Count <= 1)
@@ -31,18 +30,17 @@ namespace AntHill.NET
             }
             return false;
         }
-        private Spider lastSpider = null;
-        private Food lastFood = null;
+
+        
         public override bool Maintain(ISimulationWorld isw)
         {//TODO malo:)
             if (!base.IsAlive())
-            {                
                 return false;
-            }
+
             SpreadSignal(isw);
             LIList<Message>.Enumerator msg = isw.GetVisibleMessages(this).GetEnumerator();
             while(msg.MoveNext())
-                this.AddToSet(msg.Current, msg.Current.GetPoint(this.Position).Intensity);
+                this.AddToSet(msg.Current, msg.Current.GetPointWithIntensity(this.Position).Intensity);
 
             LIList<Spider> spiders;
             if ((spiders = isw.GetVisibleSpiders(this)).Count != 0)
@@ -77,7 +75,7 @@ namespace AntHill.NET
             if (foods.Count != 0)
             {
                 Food food = GetNearestFood(foods);
-                int distance = Distance(this.Position, food.Position);
+                int distance = DistanceMeasurer.Taxi(this.Position, food.Position);
                 if (food != lastFood)
                 {
                     if (!FindEqualSignal(MessageType.FoodLocalization, food.Position))
@@ -92,7 +90,6 @@ namespace AntHill.NET
                     {
                         food.Maintain(isw);
                         this.Eat();
-
 
                         randomDestination.X = -1;
                         return true;
@@ -124,11 +121,6 @@ namespace AntHill.NET
 
             MoveRandomly(isw);
             return true;
-        }
-
-        public override void Destroy(ISimulationWorld isw)
-        {
-            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

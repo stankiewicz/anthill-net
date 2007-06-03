@@ -1,5 +1,5 @@
 using System;
-using System.Drawing;
+using AntHill.NET.Utilities;
 
 namespace AntHill.NET
 {
@@ -7,7 +7,7 @@ namespace AntHill.NET
     {
         private int foodQuantity = 0;
 
-        public Queen(Point pos):base(pos) {}       
+        public Queen(Position pos) : base(pos) { }       
 
         public int FoodQuantity
         {
@@ -41,11 +41,6 @@ namespace AntHill.NET
                 isw.CreateMessage(this.Position, MessageType.QueenInDanger,this.Position);
             }
             return true;
-        }
-
-        public override void Destroy(ISimulationWorld isw)
-        {
-            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
-using System.Reflection;
+using System.Windows.Forms;
 
 namespace AntHill.NET
 {
@@ -52,10 +46,10 @@ namespace AntHill.NET
                 "messageRadius = " + AntHillConfig.messageRadius + Environment.NewLine +
                 "magnitude = " + AntHillConfig.curMagnitude + Environment.NewLine +
                 "=====================================" + Environment.NewLine +
-                "turn = " + Simulation.simulation.GetNTurns() + Environment.NewLine +
-                "number of ants = " + Simulation.simulation.GetNAnts() + Environment.NewLine +
-                "number of spiders = " + Simulation.simulation.GetNSpiders() + Environment.NewLine +
-                "number of signals = " + Simulation.simulation.GetNSignals();
+                "turn = " + Simulation.simulation.GetTurnsCount() + Environment.NewLine +
+                "number of ants = " + Simulation.simulation.GetAntsCount() + Environment.NewLine +
+                "number of spiders = " + Simulation.simulation.GetSpidersCount() + Environment.NewLine +
+                "number of signals = " + Simulation.simulation.GetSignalsCount();
 
             //Type t = ((System.Object)AntHillConfig).GetType();
             //foreach (FieldInfo fi in t.GetFields())

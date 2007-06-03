@@ -33,8 +33,8 @@ namespace AntHill.NET
         [Test]
         public void CitizenTest()
         {
-            Worker worker1 = new Worker(new Point(2, 2));
-            Worker worker2 = new Worker(new Point(3, 3));
+            Worker worker1 = new Worker(new Position(2, 2));
+            Worker worker2 = new Worker(new Position(3, 3));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
              
@@ -42,7 +42,7 @@ namespace AntHill.NET
             AHGraphics.Init();
             /*test AddSet() function*/
             Simulation tmp_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
-            Message message=new Message(new Point(2,2),MessageType.FoodLocalization);
+            Message message = new Message(new Position(2, 2), MessageType.FoodLocalization, new Position(0,0));
             tmp_isw.ants.AddLast(worker1);
             tmp_isw.ants.AddLast(worker2);
             tmp_isw.messages.AddLast(message);
@@ -54,18 +54,18 @@ namespace AntHill.NET
 
             /*test GetNearestFood()*/
             LIList<Food> foodList = new LIList<Food>();
-            foodList.AddLast(new Food(new Point(4,4),1));
-            foodList.AddLast(new Food(new Point(8,8),3));
-            foodList.AddLast(new Food(new Point(2,3),3));
-            foodList.AddLast(new Food(new Point(1,1),3));
+            foodList.AddLast(new Food(new Position(4, 4), 1));
+            foodList.AddLast(new Food(new Position(8, 8), 3));
+            foodList.AddLast(new Food(new Position(2, 3), 3));
+            foodList.AddLast(new Food(new Position(1, 1), 3));
             Food nFood = worker1.testGetNearestFood(foodList);
             Assert.AreEqual(new System.Drawing.Point(2, 3), nFood.Position, "finding nearest food problem");
 
             /*test ReadMessage()*/
-            Worker worker3 = new Worker(new Point(4, 4));
-            worker3.AddToSet(new Message(new Point(5,5),MessageType.FoodLocalization),1);
-            worker3.AddToSet(new Message(new Point(1,1),MessageType.FoodLocalization),3);
-            worker3.AddToSet(new Message(new Point(3,3),MessageType.FoodLocalization),2);
+            Worker worker3 = new Worker(new Position(4, 4));
+            worker3.AddToSet(new Message(new Position(5, 5), MessageType.FoodLocalization, new Position(0,0)), 1);
+            worker3.AddToSet(new Message(new Position(1, 1), MessageType.FoodLocalization, new Position(0,0)), 3);
+            worker3.AddToSet(new Message(new Position(3, 3), MessageType.FoodLocalization, new Position(0,0)), 2);
             Message nMessage=worker3.testReadMessage(MessageType.FoodLocalization);
             Assert.AreEqual(new System.Drawing.Point(1, 1), nMessage.Position, "ReadMessage function problem in Citizen");
             
@@ -93,12 +93,12 @@ namespace AntHill.NET
         [Test]
         public void SpiderTest()
         {
-            Spider test_spider = new Spider(new System.Drawing.Point(110, 145));
+            Spider test_spider = new Spider(new Position(110, 145));
             test_spider.Health = 10;
             test_spider.Direction = Dir.E;
             Assert.AreEqual(Dir.E, test_spider.Direction, "Spider.Direction problem");
             Assert.AreEqual(10, test_spider.Health, "Spider.Health problem");
-            Assert.AreEqual(new System.Drawing.Point(110, 145), test_spider.Position, "spider.Position problem");
+            Assert.AreEqual(new Position(110, 145), test_spider.Position, "spider.Position problem");
 
         }
         [Test]
@@ -110,9 +110,9 @@ namespace AntHill.NET
         [Test]
         public void FoodTest()
         {
-            Food test_food = new Food(new Point(7, 7), 8);
+            Food test_food = new Food(new Position(7, 7), 8);
             Assert.AreEqual(8, test_food.GetQuantity, "food.Quentity problem");
-            Assert.AreEqual(new System.Drawing.Point(7,7), test_food.Position, "food.Position problem");
+            Assert.AreEqual(new Position(7, 7), test_food.Position, "food.Position problem");
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace AntHill.NET
         public void PointWithIntensityTest()
         {
             //doda³em Point(3,4) - mo¿e nie dzia³aæ czasem - Kamil
-            Tile test_tile = new Tile(TileType.Wall, new Point(3, 4));
+            Tile test_tile = new Tile(TileType.Wall, new Position(3, 4));
             PointWithIntensity test_pointwithintensity = new PointWithIntensity(test_tile, 23);
             Assert.AreEqual(test_pointwithintensity.Intensity, 23, "PointWithIntensity.Intensity problem");
             Assert.AreEqual(test_pointwithintensity.Tile, test_tile, "PointWithIntensity.Tile problem");
@@ -166,7 +166,6 @@ namespace AntHill.NET
             Assert.AreEqual(AntHillConfig.foodProbability, 0.2, "problem foodProbability");
             Assert.AreEqual(AntHillConfig.mapColCount, 10, "problem mapColCount");
             Assert.AreEqual(AntHillConfig.mapRowCount, 10, "problem mapRowCount");
-            Assert.AreEqual(AntHillConfig.maxMagnitude, 2, "problem maxMagnitude");
             Assert.AreEqual(AntHillConfig.messageLifeTime, 10, "problem messageLifeTime");
             Assert.AreEqual(AntHillConfig.messageRadius,3,"problem messageRadius");
             Assert.AreEqual(AntHillConfig.queenLayEggProbability, 0, "problem queenLayEggProbability");
@@ -202,10 +201,10 @@ namespace AntHill.NET
         public void MapTest()
         {
             Tile[,] test_tiles =
-            {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
-            {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
-            {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
-            {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
+            {{new Tile(TileType.Indoor, new Position()), new Tile(TileType.Outdoor, new Position()), new Tile(TileType.Wall, new Position())},
+            {new Tile(TileType.Wall, new Position()), new Tile(TileType.Indoor, new Position()), new Tile(TileType.Outdoor, new Position())},
+            {new Tile(TileType.Outdoor, new Position()), new Tile(TileType.Indoor, new Position()), new Tile(TileType.Wall, new Position())},
+            {new Tile(TileType.Indoor, new Position()), new Tile(TileType.Wall, new Position()), new Tile(TileType.Outdoor, new Position())}};
 
             AHGraphics.Init();  
 
@@ -223,7 +222,7 @@ namespace AntHill.NET
         [Test]
         public void TileTest()
         {
-            Tile test_tile = new Tile(TileType.Indoor, new Point());
+            Tile test_tile = new Tile(TileType.Indoor, new Position());
             Assert.AreEqual(TileType.Indoor, test_tile.TileType, "Tile.TileType problem");
             
         }
@@ -232,7 +231,7 @@ namespace AntHill.NET
         [Test]
         public void WarriorTest()
         {
-            Warrior test_warrior = new Warrior(new System.Drawing.Point(123, 345));
+            Warrior test_warrior = new Warrior(new Position(123, 345));
             test_warrior.TurnsToBecomeHungry = 43;
             test_warrior.Direction = Dir.E;
            
@@ -247,7 +246,7 @@ namespace AntHill.NET
         [Test]
         public void WorkerTest()
         {
-            Worker test_worker = new Worker(new System.Drawing.Point(321, 255));
+            Worker test_worker = new Worker(new Position(321, 255));
             test_worker.TurnsToBecomeHungry = 34;
             test_worker.Direction = Dir.W;
             test_worker.TurnsWithoutFood = 35;
@@ -273,14 +272,14 @@ namespace AntHill.NET
 
             Assert.IsNotNull(tmp_isw, "Simulation is NULL problem!!!");
 
-            Spider test_spider = new Spider(new Point(61,71));
+            Spider test_spider = new Spider(new Position(61, 71));
             tmp_isw.spiders.AddLast(test_spider);
-            Ant test_ant1 = new Warrior(new Point(62, 71));
-            Ant test_ant2 = new Worker(new Point(61, 72));
+            Ant test_ant1 = new Warrior(new Position(62, 71));
+            Ant test_ant2 = new Worker(new Position(61, 72));
             tmp_isw.ants.AddLast(test_ant1);
             tmp_isw.ants.AddLast(test_ant2);
 
-            Rain test_rain=new Rain(new Point(60, 70));
+            Rain test_rain = new Rain(new Position(60, 70));
             Assert.IsNotNull(test_rain, "Rain is NULL problem!!!");
 
             Assert.IsTrue(test_rain.IsRainOver(60, 70), "Rain isn't exist or Rain.IsRainOver problem");
@@ -313,10 +312,10 @@ namespace AntHill.NET
         public void SimulationTest()
         {
             Tile[,] test_tiles =
-            {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
-            {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
-            {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
-            {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
+            {{new Tile(TileType.Indoor, new Position()), new Tile(TileType.Outdoor, new Position()), new Tile(TileType.Wall, new Position())},
+            {new Tile(TileType.Wall, new Position()), new Tile(TileType.Indoor, new Position()), new Tile(TileType.Outdoor, new Position())},
+            {new Tile(TileType.Outdoor, new Position()), new Tile(TileType.Indoor, new Position()), new Tile(TileType.Wall, new Position())},
+            {new Tile(TileType.Indoor, new Position()), new Tile(TileType.Wall, new Position()), new Tile(TileType.Outdoor, new Position())}};
 
             Assert.IsNotNull(test_tiles, "TTT:{0} {1}", test_tiles.GetLength(0), test_tiles.GetLength(1));
 
@@ -344,9 +343,9 @@ namespace AntHill.NET
 
             Simulation test_isw = new Simulation(new Map(AntHillConfig.mapColCount, AntHillConfig.mapRowCount, AntHillConfig.tiles));
 
-            Spider test_spider = new Spider(new Point(5, 0));
-            Ant test_ant1 = new Warrior(new Point(5, 8));
-            Ant test_ant2 = new Warrior(new Point(0, 3));
+            Spider test_spider = new Spider(new Position(5, 0));
+            Ant test_ant1 = new Warrior(new Position(5, 8));
+            Ant test_ant2 = new Warrior(new Position(0, 3));
             List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(test_spider.Position.X, test_spider.Position.Y), new KeyValuePair<int, int>(test_ant1.Position.X, test_ant1.Position.Y), new TestAstarObject(test_isw));
 
             List<KeyValuePair<int, int>> test_trail1 = new List<KeyValuePair<int, int>>();
@@ -438,9 +437,9 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleAntsTest()
         {
-            Worker worker1 = new Worker(new Point(2, 2));
-            Warrior warrior1 = new Warrior(new Point(3, 3));
-            Spider spider1 = new Spider(new Point(2, 3));
+            Worker worker1 = new Worker(new Position(2, 2));
+            Warrior warrior1 = new Warrior(new Position(3, 3));
+            Spider spider1 = new Spider(new Position(2, 3));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
 
@@ -451,8 +450,8 @@ namespace AntHill.NET
             tmp_isw.ants.AddLast(worker1);
             tmp_isw.ants.AddLast(warrior1);
             tmp_isw.spiders.AddLast(spider1);
-            
-            Rain test_rain = new Rain(new Point(3, 3));
+
+            Rain test_rain = new Rain(new Position(3, 3));
             tmp_isw.rain = test_rain;
 
             LIList<Ant> list1 = tmp_isw.GetVisibleAnts(test_rain);
@@ -471,10 +470,10 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleFoodTest()
         {
-            Worker worker1 = new Worker(new Point(2, 2));
-            Warrior warrior1 = new Warrior(new Point(3, 3));
-            Spider spider1 = new Spider(new Point(2, 3));
-            Food food1 = new Food(new Point(3, 2), 10);
+            Worker worker1 = new Worker(new Position(2, 2));
+            Warrior warrior1 = new Warrior(new Position(3, 3));
+            Spider spider1 = new Spider(new Position(2, 3));
+            Food food1 = new Food(new Position(3, 2), 10);
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
 
@@ -487,7 +486,7 @@ namespace AntHill.NET
             tmp_isw.spiders.AddLast(spider1);
             tmp_isw.food.AddLast(food1);
 
-            Rain test_rain = new Rain(new Point(3, 3));
+            Rain test_rain = new Rain(new Position(3, 3));
             tmp_isw.rain = test_rain;
 
             LIList<Food> list1 = tmp_isw.GetVisibleFood(test_rain);
@@ -504,10 +503,10 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleSpidersTest()
         {
-            Worker worker1 = new Worker(new Point(2, 2));
-            Warrior warrior1 = new Warrior(new Point(3, 3));
-            Spider spider1 = new Spider(new Point(2, 3));
-            Spider spider2 = new Spider(new Point(3, 2));
+            Worker worker1 = new Worker(new Position(2, 2));
+            Warrior warrior1 = new Warrior(new Position(3, 3));
+            Spider spider1 = new Spider(new Position(2, 3));
+            Spider spider2 = new Spider(new Position(3, 2));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
 
@@ -520,7 +519,7 @@ namespace AntHill.NET
             tmp_isw.spiders.AddLast(spider1);
             tmp_isw.spiders.AddLast(spider2);
 
-            Rain test_rain = new Rain(new Point(3, 3));
+            Rain test_rain = new Rain(new Position(3, 3));
             tmp_isw.rain = test_rain;
 
             LIList<Spider> list1 = tmp_isw.GetVisibleSpiders(test_rain);
@@ -538,10 +537,10 @@ namespace AntHill.NET
         [Test]
         public void GetVisibleMessagesTest()
         {
-            Worker worker1 = new Worker(new Point(2, 2));
-            Warrior warrior1 = new Warrior(new Point(3, 3));
-            Message message1 = new Message(new Point(2, 2), MessageType.QueenIsHungry);
-            Message message2 = new Message(new Point(3, 3), MessageType.QueenInDanger);
+            Worker worker1 = new Worker(new Position(2, 2));
+            Warrior warrior1 = new Warrior(new Position(3, 3));
+            Message message1 = new Message(new Position(2, 2), MessageType.QueenIsHungry, new Position(0,0));
+            Message message2 = new Message(new Position(3, 3), MessageType.QueenInDanger, new Position(0,0));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
 
@@ -558,7 +557,7 @@ namespace AntHill.NET
 //            worker1.SpreadSignal(tmp_isw);
 //            List<Message> list = tmp_isw.GetVisibleMessages(worker2);
 
-            Rain test_rain = new Rain(new Point(3, 3));
+            Rain test_rain = new Rain(new Position(3, 3));
             tmp_isw.rain = test_rain;
 
             LIList<Message> list1 = tmp_isw.GetVisibleMessages(test_rain);

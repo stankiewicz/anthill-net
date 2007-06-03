@@ -52,9 +52,10 @@ namespace AntHill.NET
         static public int antFoodQuantityAfterDeath = 1;
         static public int foodRandomMaxQuantity = 4;
 
-        static public int tileSize = 32;
-        static public float maxMagnitude = 2.0f;
         static public float curMagnitude = 1.0f;
+        static public float signalHighestDensity = 10.0f;
+        static public int signalInitialAlpha = 2;
+
         #endregion
     }
 }
