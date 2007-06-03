@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 
 namespace AntHill.NET
 {
@@ -7,7 +6,7 @@ namespace AntHill.NET
     {
         private int quantity;
 
-        public Food(Point pos, int quantity) : base(pos)
+        public Food(Position pos, int quantity) : base(pos)
         {
             this.quantity = quantity;
         }
@@ -26,11 +25,6 @@ namespace AntHill.NET
                 return false;
             }
             return true;
-        }
-
-        public override void Destroy(ISimulationWorld isw)
-        {
-            //throw new Exception("The method or operation is not implemented.");
         }
     }
 }

@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using astar;
+using AntHill.NET.Utilities;
 
 namespace AntHill.NET
 {
     public class Simulation : ISimulationUser, ISimulationWorld
     {
-        //public event EventHandler afterTurn = null;
-
+        #region Static Members
         public static Simulation singletonInstance = null;
 
         public static bool Init(Map map)
@@ -37,8 +36,9 @@ namespace AntHill.NET
         {
             get { return singletonInstance; }
         }
-        int turn = 0;
-        private Map map;
+        #endregion
+
+        private Map _map;
         public LIList<Egg> eggs;
         public LIList<Message> messages;
         public LIList<Food> food;
@@ -47,9 +47,11 @@ namespace AntHill.NET
         public Rain rain;
         public Queen queen;
 
+        private int _turnCounter = 0;
+
         private void Initialize()
         {
-            map = null;
+            _map = null;
             eggs = new LIList<Egg>();
             eggs.Clear();
             messages = new LIList<Message>();
@@ -61,19 +63,14 @@ namespace AntHill.NET
             ants = new LIList<Ant>();
             ants.Clear();
             rain = null;
-            queen = new Queen(new Point(AntHillConfig.queenXPosition, AntHillConfig.queenYPosition));
+            queen = new Queen(new Position(AntHillConfig.queenXPosition, AntHillConfig.queenYPosition));
         }
 
 	    public Simulation(Map map)
         {
             Initialize();
 
-            if (map.GetIndoorCount == 0)
-                throw new Exception(Properties.Resources.noIndoorTilesError);
-            if (map.GetOutdoorCount == 0)
-                throw new Exception(Properties.Resources.noOutdoorTilesError);
-
-            this.map = map;
+            _map = map;
 
             for (int i = AntHillConfig.workerStartCount; i > 0; i--)
                 this.CreateWorker(Map.GetRandomTile(TileType.Indoor).Position);
@@ -84,28 +81,18 @@ namespace AntHill.NET
 
         public Map Map
         {
-            get { return map; }
+            get { return _map; }
         }
 
-        bool CheckIfExists(TileType tt)
+        Position GetRandomPosition()
         {
-            for (int i = 0; i < Map.Height; i++)
-                for (int j = 0; j < Map.Width; j++)
-                    if (Map.GetTile(j, i).TileType == tt)
-                        return true;
-
-            return false;
+            return new Position(Randomizer.Next(Map.Width), Randomizer.Next(Map.Height));
         }
 
-        Point GetRandomPoint()
+        Position GetRandomPositionForRain()
         {
-            return new Point(Randomizer.Next(Map.Width), Randomizer.Next(Map.Height));
-        }
-
-        Point GetRandomPointForRain()
-        {
-            return new Point(Randomizer.Next(Map.Width - AntHillConfig.rainWidth),
-                             Randomizer.Next(Map.Height - AntHillConfig.rainWidth));
+            return new Position(Randomizer.Next(Map.Width - AntHillConfig.rainWidth),
+                                Randomizer.Next(Map.Height - AntHillConfig.rainWidth));
         }
 
 	    #region ISimulation Members
@@ -116,7 +103,7 @@ namespace AntHill.NET
         bool ISimulationUser.DoTurn()
         {
             if (queen == null) return false;
-            turn++;
+            _turnCounter++;
             if (Randomizer.NextDouble() <= AntHillConfig.spiderProbability)
                     this.CreateSpider(Map.GetRandomTile(TileType.Outdoor).Position);
 
@@ -124,7 +111,7 @@ namespace AntHill.NET
                 this.CreateFood(Map.GetRandomTile(TileType.Outdoor).Position, GetRandomFoodQuantity());
 
             if ((rain == null) && (Randomizer.NextDouble() <= AntHillConfig.rainProbability))
-                this.CreateRain(GetRandomPointForRain());
+                this.CreateRain(GetRandomPositionForRain());
 
             if (rain != null)
                 rain.Maintain(this);
@@ -143,6 +130,7 @@ namespace AntHill.NET
                 else
                     msg = msg.Next;
             }
+
             LinkedListNode<Ant> ant = ants.First;
             LinkedListNode<Ant> antTemp;            
             while(ant != null)
@@ -156,6 +144,7 @@ namespace AntHill.NET
                 else
                     ant = ant.Next;
             }
+
             LinkedListNode<Spider> spider = spiders.First;
             LinkedListNode<Spider> spiderTemp;
             while (spider != null)
@@ -184,7 +173,7 @@ namespace AntHill.NET
                     egg = egg.Next;
             }
             
-            if (queen!=null && !queen.Maintain(this))
+            if (queen != null && !queen.Maintain(this))
             {
                 queen = null;
                 return false;
@@ -195,49 +184,42 @@ namespace AntHill.NET
         void ISimulationUser.Reset()
         {
             Initialize();
-            turn = 0;
+            _turnCounter = 0;
         }
 
-        void ISimulationUser.Start()
-        {
-
-        }
-
-        void ISimulationUser.Stop()
-        {
-            
-        }
+        void ISimulationUser.Start() { }
+        void ISimulationUser.Stop() { }
 
         #endregion
 
         #region ISimulationWorld Members
 
-        private bool CreateRain(Point point)
+        private bool CreateRain(Position point)
         {
             rain = new Rain(point);
             return true;
         }
 
-        public bool CreateFood(Point point, int quantity)
+        public bool CreateFood(Position point, int quantity)
         {
             food.AddLast(new Food(point, quantity));
             return true;
         }
 
-        public bool CreateSpider(Point point)
+        public bool CreateSpider(Position point)
         {
             spiders.AddLast(new Spider(point));
             return true;
         }
 
 
-        public bool CreateWarrior(Point pos)
+        public bool CreateWarrior(Position pos)
         {
             ants.AddLast(new Warrior(pos));
             return true;
         }
 
-        public bool CreateWorker(Point pos)
+        public bool CreateWorker(Position pos)
         {
             ants.AddLast(new Worker(pos));
             return true;
@@ -249,60 +231,43 @@ namespace AntHill.NET
             return true;
         }
 
-
         //returns true if cD is killed
-        public bool Attack(Creature cA, Creature cD)
+        public bool Attack(Creature cAttacking, Creature cDefending)
         {
-            if (cA is Spider)
+            if (cAttacking is Spider)
             {
-                if (cD is Queen) queen = null;
-                else if (cD is Ant)
-                    this.DeleteAnt((Ant)cD);
+                if (cDefending is Queen) queen = null;
+                else if (cDefending is Ant)
+                    this.DeleteAnt((Ant)cDefending);
 
                 return true;
             }
-            else if (cA is Warrior && cD is Spider)
+            else if (cAttacking is Warrior && cDefending is Spider)
             {
-                try
-                {
-                    ((Spider)cD).Health -= AntHillConfig.antStrength;
-                }
-                catch (Exception)
-                {
-                    this.DeleteSpider((Spider)cD);
-                    return true;
-                }
+                Spider s = (Spider)cDefending;
+                s.Health -= AntHillConfig.antStrength;
+                if (s.Health <= 0)
+                    this.DeleteSpider(s);
+                return true;
             }
-
             return false;
-        }
-
-        private bool IsVisible(Point p1, Point p2)
-        {
-            //not ready
-            return true;
-        }
-
-        private bool IsInRect(Point pt, Point pos, int width, int height)
-        {
-            //not ready
-            return true;
         }
 
         public LIList<Ant> GetVisibleAnts(Element c)
         {
             LIList<Ant> res_ants = new LIList<Ant>();
             LinkedListNode<Ant> antNode = ants.First;
-            int radius;
+            
             if (c is Spider || c is Ant) //same radius
             {
-                radius = AntHillConfig.antSightRadius; //same as for ant
+                int radius2 = AntHillConfig.antSightRadius * AntHillConfig.antSightRadius;
                 while (antNode != null)
                 {
-                    //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(antNode.Value.Position.X - c.Position.X) <= radius &&
-                        Math.Abs(antNode.Value.Position.Y - c.Position.Y) <= radius)
-                        res_ants.AddLast(antNode.Value);
+                    int dx = antNode.Value.Position.X - c.Position.X;
+                    int dy = antNode.Value.Position.Y - c.Position.Y;
+                    if (dx * dx + dy * dy <= radius2)
+                        if (_map.CheckVisibility(c.Position, antNode.Value.Position))
+                            res_ants.AddLast(antNode.Value);
                     antNode = antNode.Next;
                 }
             }
@@ -310,13 +275,12 @@ namespace AntHill.NET
             {
                 while (antNode != null)
                 {
-                    if (map.GetTile(antNode.Value.Position.X, antNode.Value.Position.Y).TileType == TileType.Outdoor &&
-                        ((Rain)c).IsRainOver(antNode.Value.Position.X, antNode.Value.Position.Y))
+                    if (_map.GetTile(antNode.Value.Position).TileType == TileType.Outdoor &&
+                        ((Rain)c).IsRainOver(antNode.Value.Position))
                         res_ants.AddLast(antNode.Value);
                     antNode = antNode.Next;
                 }
-            }
-                
+            }                
             return res_ants;
         }
 
@@ -324,16 +288,17 @@ namespace AntHill.NET
         {
             LIList<Food> res_food = new LIList<Food>();
             LinkedListNode<Food> foodNode = food.First;
-            int radius;
+
             if (c is Spider || c is Ant) //same radius
             {
-                radius = AntHillConfig.antSightRadius; //same as for ant
+                int radius2 = AntHillConfig.antSightRadius * AntHillConfig.antSightRadius;
                 while (foodNode != null)
                 {
-                    //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(foodNode.Value.Position.X - c.Position.X) <= radius &&
-                        Math.Abs(foodNode.Value.Position.Y - c.Position.Y) <= radius)
-                        res_food.AddLast(foodNode.Value);
+                    int dx = foodNode.Value.Position.X - c.Position.X;
+                    int dy = foodNode.Value.Position.Y - c.Position.Y;
+                    if (dx * dx + dy * dy <= radius2)
+                        if (_map.CheckVisibility(c.Position, foodNode.Value.Position))
+                            res_food.AddLast(foodNode.Value);
                     foodNode = foodNode.Next;
                 }
             }
@@ -341,8 +306,8 @@ namespace AntHill.NET
             {
                 while (foodNode != null)
                 {
-                    if (map.GetTile(foodNode.Value.Position.X, foodNode.Value.Position.Y).TileType == TileType.Outdoor &&
-                        ((Rain)c).IsRainOver(foodNode.Value.Position.X, foodNode.Value.Position.Y))
+                    if (_map.GetTile(foodNode.Value.Position).TileType == TileType.Outdoor &&
+                        ((Rain)c).IsRainOver(foodNode.Value.Position))
                         res_food.AddLast(foodNode.Value);
                     foodNode = foodNode.Next;
                 }
@@ -354,16 +319,17 @@ namespace AntHill.NET
         {
             LIList<Spider> res_spiders = new LIList<Spider>();
             LinkedListNode<Spider> spiderNode = spiders.First;
-            int radius;
+
             if (c is Spider || c is Ant) //same radius
             {
-                radius = AntHillConfig.antSightRadius; //same as for ant
+                int radius2 = AntHillConfig.antSightRadius * AntHillConfig.antSightRadius;
                 while (spiderNode != null)
                 {
-                    //as for name - simple, implement Bresenham's alg. in the future
-                    if (Math.Abs(spiderNode.Value.Position.X - c.Position.X) <= radius &&
-                        Math.Abs(spiderNode.Value.Position.Y - c.Position.Y) <= radius)
-                        res_spiders.AddLast(spiderNode.Value);
+                    int dx = spiderNode.Value.Position.X - c.Position.X;
+                    int dy = spiderNode.Value.Position.Y - c.Position.Y;
+                    if (dx * dx + dy * dy <= radius2)
+                        if (_map.CheckVisibility(c.Position, spiderNode.Value.Position))
+                            res_spiders.AddLast(spiderNode.Value);
                     spiderNode = spiderNode.Next;
                 }
             }
@@ -371,13 +337,12 @@ namespace AntHill.NET
             {
                 while (spiderNode != null)
                 {
-                    if (map.GetTile(spiderNode.Value.Position.X, spiderNode.Value.Position.Y).TileType == TileType.Outdoor &&
-                        ((Rain)c).IsRainOver(spiderNode.Value.Position.X, spiderNode.Value.Position.Y))
+                    if (_map.GetTile(spiderNode.Value.Position).TileType == TileType.Outdoor &&
+                        ((Rain)c).IsRainOver(spiderNode.Value.Position))
                         res_spiders.AddLast(spiderNode.Value);
                     spiderNode = spiderNode.Next;
                 }
             }
-
             return res_spiders;
         }
 
@@ -415,19 +380,19 @@ namespace AntHill.NET
 
         public bool FeedQueen(Worker w)
         {
-            if (w.Position != queen.Position) return false;
+            if (w.Position != queen.Position)
+                return false;
             queen.FoodQuantity += w.FoodQuantity;
             w.FoodQuantity = 0;
             return true;
         }
 
-        public bool CreateAnt(System.Drawing.Point position)
+        public bool CreateAnt(Position position)
         {
             if (Randomizer.NextDouble() < AntHillConfig.eggHatchWarriorProbability)
                 ants.AddLast(new Warrior(position));
             else
                 ants.AddLast(new Worker(position));
-
             return true;
         }
 
@@ -443,7 +408,7 @@ namespace AntHill.NET
             return true;
         }
 
-        public bool CreateEgg(Point pos)
+        public bool CreateEgg(Position pos)
         {
             eggs.AddLast(new Egg(pos));
             return true;
@@ -471,31 +436,14 @@ namespace AntHill.NET
 
         public Map GetMap()
         {
-            return map;
+            return _map;
         }
 
-        
-        public bool CreateMessage(Point pos, MessageType mt, Point location)
+        public bool CreateMessage(Position position, MessageType mt, Position tagetPosition)
         {
-            Message ms = new Message(pos, mt,location);
-            /*
-            for (int i = -AntHillConfig.messageRadius; i <= AntHillConfig.messageRadius; i++)
-            {
-                for (int j = -AntHillConfig.messageRadius; j <= AntHillConfig.messageRadius; j++)
-                {
-                    if (i * i + j * j <= AntHillConfig.messageRadius * AntHillConfig.messageRadius)
-                    {
-                        if (map.Inside(i+pos.X, j+pos.Y))
-                        {
-                            if(map.GetTile(i+pos.X,j+pos.Y).TileType!= TileType.Wall)
-                            ms.AddPoint(map.GetTile(i + pos.X, j + pos.Y), AntHillConfig.messageLifeTime, map);
-                        }
-                    }
-                }
-            }
-             */
+            Message ms = new Message(position, mt,tagetPosition);
             this.messages.AddLast(ms);
-            ms.Spread(this, pos, AntHillConfig.messageLifeTime);
+            ms.Spread(this, position, AntHillConfig.messageLifeTime);
 
             return true;
         }
@@ -504,37 +452,28 @@ namespace AntHill.NET
         {
             return Randomizer.Next(AntHillConfig.foodRandomMaxQuantity) + 1;
         }
-
         #endregion
 
         #region ISimulationUser Members
-
-
-        public int GetNAnts()
+        public int GetAntsCount()
         {
             return (ants!=null)?ants.Count:0;
         }
 
-        public int GetNSignals()
+        public int GetSignalsCount()
         {
             return (messages!=null)?messages.Count:0;
         }
 
-        public int GetNTurns()
+        public int GetTurnsCount()
         {
-            return turn;
+            return _turnCounter;
         }
 
-        public int GetNSpiders()
+        public int GetSpidersCount()
         {
             return (spiders!=null)?spiders.Count:0;
         }
-
-        public bool testCheckIfExists(TileType tt)
-        {
-            return this.CheckIfExists(tt);
-        }
-
         #endregion
     }
 }

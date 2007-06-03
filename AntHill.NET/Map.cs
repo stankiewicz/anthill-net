@@ -1,104 +1,121 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Collections;
+using AntHill.NET.Utilities;
 
 namespace AntHill.NET
 {
     public class Map
     {
-        private int width, height;
-        private Tile[,] tiles;
-        private MessageCount[,] messagesCount;
-
-        private LIList<Tile> indoorTiles, wallTiles, outdoorTiles;
-        
-
-        public int GetIndoorCount { get { return indoorTiles.Count; } }
-        public int GetOutdoorCount { get { return outdoorTiles.Count; } }
-        public int GetWallCount { get { return wallTiles.Count; } }
-
-        public MessageCount[,] MsgCount
-        {
-            get { return messagesCount; }
-        }
-
+        #region Private Memebers
+        private int _width,
+                    _height;
+        private Tile[,] _tiles;
+        private Tile[] _indoorTiles,
+                       _wallTiles,
+                       _outdoorTiles;
+        private int _indoorTilesCount,
+                    _wallTilesCount,
+                    _outdoorTilesCount;
+        private MessageCount[,] _messagesCount;
+        #endregion
+        #region Constructor
         public Map(int w, int h, Tile[,] tiles)
         {
-            int tilesSize = AntHillConfig.tileSize;
+            this._width = w;
+            this._height = h;
 
-            this.width = w;
-            this.height = h;
-
-            this.tiles = new Tile[w, h];
+            this._tiles = new Tile[w, h];
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
-                    this.tiles[x, y] = new Tile(tiles[x, y].TileType, tiles[x, y].Position);
+                    this._tiles[x, y] = new Tile(tiles[x, y].TileType, tiles[x, y].Position);
 
-            messagesCount = new MessageCount[width, height];
+            _messagesCount = new MessageCount[_width, _height];
 
-            indoorTiles = new LIList<Tile>();
-            outdoorTiles = new LIList<Tile>();
-            wallTiles = new LIList<Tile>();
-
+            LIList<Tile> indoorTilesTemp = new LIList<Tile>(),
+                         wallTilesTemp = new LIList<Tile>(),
+                         outdoorTilesTemp = new LIList<Tile>();
             Tile t;
-            for (int y = 0; y < this.height; y++)
+            for (int y = 0; y < this._height; y++)
             {
-                for (int x = 0; x < this.width; x++)
+                for (int x = 0; x < this._width; x++)
                 {
                     switch ((t = tiles[x, y]).TileType)
                     {
                         case TileType.Outdoor:
-                            outdoorTiles.AddLast(t);
+                            outdoorTilesTemp.AddLast(t);
                             break;
                         case TileType.Indoor:
-                            indoorTiles.AddLast(t);
+                            indoorTilesTemp.AddLast(t);
                             break;
                         case TileType.Wall:
-                            wallTiles.AddLast(t);
+                            wallTilesTemp.AddLast(t);
                             break;
                     }
                 }
             }
 
-            if (outdoorTiles.Count == 0)
+            if (outdoorTilesTemp.Count == 0)
                 throw new Exception(Properties.Resources.noOutdoorTilesError);
-            if (indoorTiles.Count == 0)
+            if (indoorTilesTemp.Count == 0)
                 throw new Exception(Properties.Resources.noIndoorTilesError);
-        }
 
-        public bool Inside(int x, int y)
+            _indoorTiles = new Tile[indoorTilesTemp.Count + wallTilesTemp.Count];
+            _wallTiles = new Tile[indoorTilesTemp.Count + wallTilesTemp.Count];
+            _outdoorTiles = new Tile[outdoorTilesTemp.Count];
+            _indoorTilesCount = indoorTilesTemp.Count;
+            _wallTilesCount = wallTilesTemp.Count;
+            _outdoorTilesCount = outdoorTilesTemp.Count;
+
+            RewriteTiles(_indoorTiles, indoorTilesTemp);
+            RewriteTiles(_outdoorTiles, outdoorTilesTemp);
+            RewriteTiles(_wallTiles, wallTilesTemp);
+        }
+        #endregion
+        #region Properties
+        public int GetIndoorCount { get { return _indoorTilesCount; } }
+        public int GetOutdoorCount { get { return _outdoorTilesCount; } }
+        public int GetWallCount { get { return _wallTilesCount; } }
+        public int Width { get { return _width; } }
+        public int Height { get { return _height; } }
+        public MessageCount[,] MsgCount { get { return _messagesCount; } }
+        #endregion
+
+        private void RewriteTiles(Tile[] destTiles, LIList<Tile> srcTiles)
         {
-            return (x >= 0) && (x < width) && (y >= 0) && (y < height);
+            LinkedListNode<Tile> node = srcTiles.First;
+            int i = 0;
+            while (node != null)
+            {
+                destTiles[i++] = node.Value;
+                node = node.Next;
+            }
         }
 
-        public int Width
+        public bool IsInside(int x, int y)
         {
-            get { return width; }
+            return (x >= 0) && (x < _width) && (y >= 0) && (y < _height);
         }
-
-        public int Height
+        public bool IsInside(Position pos)
         {
-            get { return height; }
+            return (pos.X >= 0) && (pos.X < _width) && (pos.Y >= 0) && (pos.Y < _height);
         }
 
-        public Tile GetTile(int x, int y) { return tiles[x, y]; }
-        public Tile GetTile(Point pos) { return tiles[pos.X, pos.Y]; }
+        public Tile GetTile(int x, int y) { return _tiles[x, y]; }
+        public Tile GetTile(Position pos) { return _tiles[pos.X, pos.Y]; }
 
         public Tile GetRandomTile(TileType tt)
         {
             switch (tt)
             {
                 case TileType.Wall:
-                    if (wallTiles.Count == 0) return null;
-                    return wallTiles[Randomizer.Next(wallTiles.Count)];
+                    if (_wallTilesCount == 0) return null;
+                    return _wallTiles[Randomizer.Next(_wallTilesCount)];
                 case TileType.Outdoor:
-                    if (outdoorTiles.Count == 0) return null;
-                    return outdoorTiles[Randomizer.Next(outdoorTiles.Count)];
+                    if (_outdoorTilesCount == 0) return null;
+                    return _outdoorTiles[Randomizer.Next(_outdoorTilesCount)];
                 case TileType.Indoor:
-                    if (indoorTiles.Count == 0) return null;
-                    return indoorTiles[Randomizer.Next(indoorTiles.Count)];
+                    if (_indoorTilesCount == 0) return null;
+                    return _indoorTiles[Randomizer.Next(_indoorTilesCount)];
                 default:
                     return null;
             }
@@ -106,30 +123,44 @@ namespace AntHill.NET
 
         public Tile GetRandomIndoorOrOutdoorTile()
         {
-            int c = Randomizer.Next(outdoorTiles.Count + indoorTiles.Count);
-            if (c < outdoorTiles.Count)
-                return outdoorTiles[c];
-            return indoorTiles[c - outdoorTiles.Count];
+            int c = Randomizer.Next(_outdoorTilesCount + _indoorTilesCount);
+            if (c < _outdoorTilesCount)
+                return _outdoorTiles[c];
+            return _indoorTiles[c - _outdoorTilesCount];
         }
 
         public void DestroyWall(Tile t)
         {
-            wallTiles.Remove(t);
+            if (t.TileType != TileType.Wall) return;
+            int i=0;
+            while (i < _wallTilesCount)
+            {
+                if (_wallTiles[i].Position == t.Position)
+                    break;
+                i++;
+            }
+            if (i == _wallTilesCount) return; /* it might happen if this "t" is a fake! */
+
             t.TileType = TileType.Indoor;
-            
-            indoorTiles.AddLast(t);
+            _indoorTiles[_indoorTilesCount++] = t;
+            _wallTiles[i] = _wallTiles[--_wallTilesCount];
         }
 
-        public void AddMessage(MessageType mt, Point pos)
+        #region MessageCount-Specific
+        public void AddMessage(MessageType mt, Position pos)
         {
-            messagesCount[pos.X, pos.Y].IncreaseCount(mt);
+            _messagesCount[pos.X, pos.Y].IncreaseCount(mt);
         }
-
-        public void RemoveMessage(MessageType mt, Point pos)
+        public void AddMessage(MessageType mt, int x, int y)
         {
-            messagesCount[pos.X, pos.Y].LowerCount(mt);
+            _messagesCount[x, y].IncreaseCount(mt);
         }
 
+        public void RemoveMessage(MessageType mt, Position pos)
+        {
+            _messagesCount[pos.X, pos.Y].LowerCount(mt);
+        }
+        #endregion
         #region MessageCount
         public struct MessageCount
         {
@@ -212,5 +243,68 @@ namespace AntHill.NET
             }
         }
         #endregion
+
+        /// <summary>
+        /// Basically, it's BresenhamsAlgorithm with map visibility check.
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
+        public bool CheckVisibility(Position src, Position dest)
+        {            
+            int x1 = src.X, y1 = src.Y, x2 = dest.X, y2 = dest.Y;
+            int delta_x = Math.Abs(x2 - x1) << 1;
+            int delta_y = Math.Abs(y2 - y1) << 1;
+
+            // if x1 == x2 or y1 == y2, then it does not matter what we set here
+            int ix = x2 > x1 ? 1 : -1;
+            int iy = y2 > y1 ? 1 : -1;
+
+            if (delta_x >= delta_y)
+            {
+                int error = delta_y - (delta_x >> 1); // error may go below zero
+
+                while (x1 != x2)
+                {
+                    if (error >= 0)
+                    {
+                        if ((error > 0) || (ix > 0))
+                        {
+                            y1 += iy;
+                            error -= delta_x;
+                        }
+                    }
+
+                    x1 += ix;
+                    error += delta_y;
+
+                    if (this.GetTile(x1, y1).TileType == TileType.Wall)
+                        return false;
+                }
+            }
+            else
+            {
+                int error = delta_x - (delta_y >> 1);
+
+                while (y1 != y2)
+                {
+                    if (error >= 0)
+                    {
+                        if ((error > 0) || (iy > 0))
+                        {
+                            x1 += ix;
+                            error -= delta_y;
+                        }
+                    }
+
+                    y1 += iy;
+                    error += delta_x;
+
+                    if (this.GetTile(x1, y1).TileType == TileType.Wall)
+                        return false;
+                }
+            }
+            return true; //There's no wall in line-of-sight
+        }
     }
 }

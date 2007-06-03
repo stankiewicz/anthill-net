@@ -1,40 +1,39 @@
 using System;
-using System.Drawing;
 using System.Collections.Generic;
 using astar;
+using AntHill.NET.Utilities;
 
 namespace AntHill.NET
 {
     public class Worker : Citizen
     {
         private int foodQuantity;
+        private Spider lastSpider = null;
+        private Food lastFood = null;
+        
         public int FoodQuantity
         {
             get { return foodQuantity; }
             set { foodQuantity = value; }
         }
 
-        public Worker(Point pos):base(pos) {}
+        public Worker(Position pos) : base(pos) { }
 
-        public void Dig(ISimulationWorld isw, Point pos)
+        public void Dig(ISimulationWorld isw, Position pos)
         {
-            isw.GetMap().DestroyWall(isw.GetMap().GetTile(pos.X, pos.Y));
+            isw.GetMap().DestroyWall(isw.GetMap().GetTile(pos));
         }
 
         public void LoadFood(ISimulationWorld isw, Food f)
         {
             isw.DeleteFood(f);
             foodQuantity += f.GetQuantity;
-        }
+        }        
         
-        private Spider lastSpider = null;
-        private Food lastFood = null;
         public override bool Maintain(ISimulationWorld isw)
         {
             if (!base.IsAlive())
-            {                
                 return false;
-            }
             
             SpreadSignal(isw);
             LIList<Food> food;
@@ -54,7 +53,7 @@ namespace AntHill.NET
             }
             LIList<Message>.Enumerator msg = isw.GetVisibleMessages(this).GetEnumerator();
             while(msg.MoveNext())
-                this.AddToSet(msg.Current, msg.Current.GetPoint(this.Position).Intensity);
+                this.AddToSet(msg.Current, msg.Current.GetPointWithIntensity(this.Position).Intensity);
 
             if (this.TurnsToBecomeHungry <= 0)
                 if (this.foodQuantity > 0)
@@ -71,7 +70,7 @@ namespace AntHill.NET
                 if (food.Count != 0)
                 {// idzie do jedzenia
                     Food nearestFood = this.GetNearestFood(food);
-                    int dist = this.Distance(this.Position, nearestFood.Position);
+                    int dist = DistanceMeasurer.Taxi(this.Position, nearestFood.Position);
                     if (dist == 0)
                     {
                         this.FoodQuantity = nearestFood.GetQuantity;
@@ -99,14 +98,14 @@ namespace AntHill.NET
                 }
                 else
                 {// nie widzi
-                    Message m = ReadMessage(MessageType.FoodLocalization);
+                    Message m = _messages[(int)MessageType.FoodLocalization];
                     if (m != null)
                     {
                         // ma sygnal o najwiekszej intensywnosci
                         List<KeyValuePair<int, int>> trail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y), new KeyValuePair<int, int>(m.Position.X, m.Position.Y), new AstarWorkerObject());
                         if (trail.Count >= 2)
                         {
-                            MoveOrRotateOrDig(isw,trail[1]);
+                            MoveOrRotateOrDig(isw, trail[1]);
                             randomDestination.X = -1;
                             return true;
                         }
@@ -115,7 +114,7 @@ namespace AntHill.NET
             }
             else
             {
-                int dist = this.Distance(this.Position, Simulation.simulation.queen.Position);
+                int dist = DistanceMeasurer.Taxi(this.Position, Simulation.simulation.queen.Position);
                 if (dist == 0)
                 {
                     isw.FeedQueen(this);
@@ -141,22 +140,19 @@ namespace AntHill.NET
 
             return true;
         }
-        bool MoveOrRotateOrDig(ISimulationWorld isw,KeyValuePair<int, int> where)
+        bool MoveOrRotateOrDig(ISimulationWorld isw, KeyValuePair<int, int> where)
         {// nie chce mi sie obrotu zrobic do kopania.. 
-            Tile t =isw.GetMap().GetTile(where.Key, where.Value);
+            Tile t = isw.GetMap().GetTile(where.Key, where.Value);
             if (t.TileType == TileType.Wall)
             {// destroy wall nie ma zabawy z regionami
-                if(this.IsMoveOrRotate(where))isw.GetMap().DestroyWall(t);
+                if(this.IsMoveOrRotate(where))
+                    isw.GetMap().DestroyWall(t);
                 return false;
             }
             return MoveOrRotate(where);
         }
 
-        public override void Destroy(ISimulationWorld isw)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
+        #region TEST
         public Food testGetNearestFood(LIList<Food> food)
         {
              return this.GetNearestFood(food);
@@ -164,8 +160,8 @@ namespace AntHill.NET
         /*return the strongest message of given type from particular ant's visiable messages*/
         public Message testReadMessage(MessageType mt)
         {
-            return this.ReadMessage(mt);
+            return _messages[(int)mt];
         }
-
+        #endregion
     }
 }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AntHill.NET
 {
@@ -12,13 +10,14 @@ namespace AntHill.NET
         int frameTick;
         int fps=0;
         int rps=0;
+
         public Counter()
         {
             roundTick = frameTick = Environment.TickCount-1;
         }
+
         public void FrameTick()
         {
-            
             if (Environment.TickCount - frameTick > 1000)
             {
                 fps = frames;

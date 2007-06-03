@@ -100,7 +100,7 @@
 </CreaturesAbilities>
 
 <EnvironmentCharacteristics>
-  <Rain cloudWidth="30" probability="0.1" maxDuration="100" /> 
+  <Rain cloudWidth="30" probability="0.1" maxDuration="20" /> 
   <Food probability="0.2" maxDensity="10"/> 
   <Signal lifeTime="15" radius="2" /> 
 </EnvironmentCharacteristics>

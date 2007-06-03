@@ -1,118 +1,45 @@
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+using AntHill.NET.Utilities;
 
 namespace AntHill.NET
 {
-
     public abstract class Citizen : Ant
     {
-        /*
-        // odpowiednie Wiadomosci i ich intensywnosci
-        LIList<Message> remembered = new LIList<Message>();
-        LIList<int> rememberedIntensities = new LIList<int>();
-        LIList<int> forgetting = new LIList<int>();
-        */
-        Message[] messages = new Message[4];
-        int[] intensities = new int[4];
-        int[] forgetting = new int[4];
+        protected Message[] _messages = new Message[4];
+        protected int[] _intensities = new int[4];
+        protected int[] _forgetting = new int[4];
 
-        public Citizen(Point pos)
-            : base(pos)
+        public Citizen(Position pos) : base(pos)
         {
             for (int i = 0; i < 4; i++)
-            {
-                messages[i] = null;
-            }
+                _messages[i] = null;
         }
 
         public virtual void AddToSet(Message m, int intensity)
         {
-            /*
-            if (!remembered.Contains(m))
-            {
-                remembered.AddLast(m);
-                
-                rememberedIntensities.AddLast(intensity);
-                forgetting.AddLast(AntHillConfig.antForgettingTime);
-            }
-             */
             int t = (int)m.GetMessageType;
-            if (intensities[t] < intensity)
+            if (_intensities[t] < intensity)
             {
-                intensities[t] = intensity;
-                forgetting[t] = AntHillConfig.antForgettingTime;
-                messages[t] = m;
+                _intensities[t] = intensity;
+                _forgetting[t] = AntHillConfig.antForgettingTime;
+                _messages[t] = m;
             }
         }
-        protected bool FindEqualSignal(MessageType mt, Point location)
-        {
-            return (messages[(int)mt] != null ? messages[(int)mt].Location == location : false);
-            /*
-            LinkedListNode<Message> msg1 = remembered.First;
-            while (msg1 != null)
-            {
-                
-                if (msg1.Value.Location == location && msg1.Value.GetMessageType == mt)
-                {
-                    return true;
-                }
-                msg1 = msg1.Next;
-            }
-            return false;
-             */
 
+        protected bool FindEqualSignal(MessageType mt, Position location)
+        {
+            return (_messages[(int)mt] != null ? _messages[(int)mt].TargetPosition == location : false);
         }
         
         public virtual void SpreadSignal(ISimulationWorld isw)
         {
             MaintainRememberedMessages();
-            /*
-            LinkedListNode<int> msg1 = rememberedIntensities.First;
-            LinkedListNode<int> msg1T;
-            LinkedListNode<int> msg2 = forgetting.First;
-            LinkedListNode<int> msg2T;
-            LinkedListNode<Message> msg3 = remembered.First;
-            LinkedListNode<Message> msg3T;
 
-            Message[] rem = new Message[4];
-            int[] maxI = new int[4];
-            maxI[0] = maxI[1] = maxI[2] = maxI[3] = -1;
-
-            while (msg3 != null)
-            {
-                if (--msg2.Value <= 0 || --msg1.Value <= 0 || msg3.Value.Empty)
-                {
-
-                    msg1T = msg1;
-                    msg2T = msg2;
-                    msg3T = msg3;
-                    msg1 = msg1.Next;
-                    msg2 = msg2.Next;
-                    msg3 = msg3.Next;
-                    rememberedIntensities.Remove(msg1T);
-                    forgetting.Remove(msg2T);
-                    remembered.Remove(msg3T);
-                }
-                else
-                {
-                    if (maxI[(int)msg3.Value.GetMessageType] > msg1.Value)
-                    {
-                        maxI[(int)msg3.Value.GetMessageType] = msg1.Value;
-                        rem[(int)msg3.Value.GetMessageType] = msg3.Value;
-                    }
-                    //msg3.Value.Spread(isw, this.Position, msg1.Value);
-                    msg3 = msg3.Next;
-                    msg2 = msg2.Next;
-                    msg1 = msg1.Next;
-                }
-            }
-             */
             for (int i = 0; i < 4; i++)
             {
-                if(messages[i] != null)
-                    messages[i].Spread(isw, this.Position, intensities[i] - 1);
-                
+                if(_messages[i] != null)
+                    _messages[i].Spread(isw, this.Position, _intensities[i] - 1);                
             }
         }
 
@@ -120,10 +47,10 @@ namespace AntHill.NET
         {
             for (int i = 0; i < 4; i++)
             {
-                if (messages[i] != null)
+                if (_messages[i] != null)
                 {
-                    if (--intensities[i] <= 0 || --forgetting[i] <= 0 || messages[i].Empty)
-                        messages[i] = null;
+                    if (--_intensities[i] <= 0 || --_forgetting[i] <= 0 || _messages[i].Empty)
+                        _messages[i] = null;
                 }
             }
         }
@@ -138,37 +65,13 @@ namespace AntHill.NET
             LIList<Food>.Enumerator e = foods.GetEnumerator();
             while(e.MoveNext())
             {
-                if ((tmp = Distance(this.Position, e.Current.Position)) < min)
+                if ((tmp = DistanceMeasurer.Taxi(this.Position, e.Current.Position)) < min)
                 {
                     bestFood = e.Current;
                     min = tmp;
                 }
             }
             return bestFood;
-        }
-
-        protected virtual Message ReadMessage(MessageType mt)
-        {
-            return messages[(int)mt];
-            /*
-            int max = -1;
-            Message bestMessage = null;
-            LIList<Message>.Enumerator e = remembered.GetEnumerator();
-            LIList<int>.Enumerator eInt = rememberedIntensities.GetEnumerator();
-            while(e.MoveNext())
-            {
-                eInt.MoveNext();
-                if (e.Current.GetMessageType == mt)
-                {
-                    if (eInt.Current > max)
-                    {
-                        max = eInt.Current;
-                        bestMessage = e.Current;
-                    }
-                }
-            }            
-            return bestMessage;
-             */
         }
     }
 }

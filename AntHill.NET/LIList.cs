@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace AntHill.NET
 {
@@ -15,7 +14,6 @@ namespace AntHill.NET
                     e.MoveNext();
                 return e.Current;
             }
-            //set { /* set the specified index to value here */ }
         }
     }
 }

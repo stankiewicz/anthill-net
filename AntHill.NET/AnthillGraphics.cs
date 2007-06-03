@@ -1,23 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 using System.IO;
 using AntHill.NET.Properties;
 using Tao.OpenGl;
-using Tao.Platform;
 using System.Drawing.Imaging;
 
 namespace AntHill.NET
 {
     static class AHGraphics
     {
-        /*
-        static Bitmap outdoorTile, indoorTile, wallTile,
-                      rainBitmap, foodBitmap, messagesBitmap,
-                      bmpQueen, bmpWarrior, bmpWorker, bmpSpider;
-         */
-
         public enum Texture
         {
             Queen = 1, Worker, Warrior, Spider,
@@ -47,15 +38,7 @@ namespace AntHill.NET
 
         private static void Create32bTexture(Texture t, string filename)
         {
-            /*
-            Graphics g;
-            Image img = Image.FromFile(filename);
-            bmp = new Bitmap(img.Width, img.Height, img.PixelFormat);
-            g = Graphics.FromImage(bmp);
-            g.DrawImageUnscaled(img, 0, 0);
-             */
             Bitmap bitmap = new Bitmap(filename);
-
             Rectangle rectangle = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             BitmapData bitmapData = bitmap.LockBits(rectangle, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)t);

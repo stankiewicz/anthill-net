@@ -51,7 +51,7 @@ namespace AntHill.NET
 
             XmlTextReader textReader = new XmlTextReader(filename);
             textReader.Read();
-            CultureInfo ci = new CultureInfo("en-US");
+            CultureInfo ci = CultureInfo.InvariantCulture;
             while (textReader.Read())
             {
                 if (textReader.HasAttributes)
@@ -80,13 +80,13 @@ namespace AntHill.NET
                                     switch(s[i])
                                     {                                
                                         case 'o':
-                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Indoor, new Point(i, rowCount));
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Indoor, new Position(i, rowCount));
                                             break;
                                         case 'x':
-                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Wall, new Point(i, rowCount));
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Wall, new Position(i, rowCount));
                                             break;
                                         case 's':
-                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Outdoor, new Point(i, rowCount));
+                                            AntHillConfig.tiles[i, rowCount] = new Tile(TileType.Outdoor, new Position(i, rowCount));
                                             break;
                                     }
                                 }

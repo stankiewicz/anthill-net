@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace AntHill.NET
 {
-
     public enum MessageType
     {
         QueenIsHungry,
@@ -17,55 +14,36 @@ namespace AntHill.NET
     public class Message : Element
     {
         private MessageType type;
-        private Point targetLocation;
-
-        public Point Location
-        {
-            get { return targetLocation; }
-            set { targetLocation = value; }
-        }
-
+        private Position targetPosition;
         private LIList<PointWithIntensity> points;
-        public LIList<PointWithIntensity> Points
-        {
-            get { return points; }
-        }
-        public void AddPoint(Tile t, int intensity, Map map)
+
+        public Position TargetPosition { get { return targetPosition; } }
+        public LIList<PointWithIntensity> Points { get { return points; } }
+        public MessageType GetMessageType { get { return type; } }
+        public bool Empty { get { return points.Count == 0; } }
+
+        public void AddPointWithIntensity(Tile t, int intensity, Map map)
         {
             points.AddLast(new PointWithIntensity(t, intensity));
             map.AddMessage(this.GetMessageType, t.Position);
         }
 
-        public Message(Point pos, MessageType mt ):base(pos)
+        public Message(Position pos, MessageType mt, Position targetPosition) : base(pos)
         {
             type = mt;
             points = new LIList<PointWithIntensity>();
-        }
-        public Message(Point pos, MessageType mt, Point location)
-            : base(pos)
-        {
-            type = mt;
-            points = new LIList<PointWithIntensity>();
-            this.targetLocation = location;
-        }
-        //public void AddPoint(LIList<PointWithIntensity> newPoint)
-        //{
-        //    points.AddLast(newPoint);
-        //}
-
-        public bool Empty { get { return points.Count == 0; } }
-        public MessageType GetMessageType
-        {
-            get { return type; }
+            this.targetPosition = new Position(targetPosition);
         }
 
-        public PointWithIntensity GetPoint(Point p)
+        public PointWithIntensity GetPointWithIntensity(Position p)
         {
             LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();
             while(e.MoveNext())            
                 if (e.Current.Tile.Position == p) return e.Current;            
             return null;
         }
+
+        /*
         private int GetPointIndex(int x, int y)
         {           
             LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();
@@ -79,17 +57,8 @@ namespace AntHill.NET
             }            
             return -1;
         }
-        private PointWithIntensity GetPoint(int x, int y)
-        {
-            LIList<PointWithIntensity>.Enumerator e = points.GetEnumerator();           
-            while (e.MoveNext())
-            {
-                Tile t = e.Current.Tile;
-                if (t.Position.X == x && t.Position.Y == y)
-                    return e.Current;
-            }
-            return null;
-        }
+         */
+        
         public override bool Maintain(ISimulationWorld isw)
         {
             LinkedListNode<PointWithIntensity> msg = points.First;
@@ -112,12 +81,14 @@ namespace AntHill.NET
             }
             return true;
         }
-        public void Spread(ISimulationWorld isw, Point point, int intensity)
+
+        public void Spread(ISimulationWorld isw, Position point, int intensity)
         {
             int radius = AntHillConfig.messageRadius, radius2 = radius * radius;
-            int x, y, i2, j2;
+            int i2, j2;
             Map map = isw.GetMap();
-            //PointWithIntensity PwI;
+            Tile t;
+            Position p;
             for (int i = -radius; i <= radius; i++)
             {
                 i2 = i * i;
@@ -126,46 +97,23 @@ namespace AntHill.NET
                     j2 = j * j;
                     if (i2 + j2 <= radius2)
                     {
-                        x = i + point.X;
-                        y = j + point.Y;
-                        if (map.Inside(x, y))
+                        p = new Position(i + point.X, j + point.Y);
+                        if (map.IsInside(p))
                         {// czy wogole w srodku
-                            if (map.GetTile(x, y).TileType == TileType.Wall) continue;
-                            /*
-                            if (map.GetTile(x, y).messages.Contains(this))
-                            {// czy zawiera                                
-                                if ((PwI = GetPoint(x, y)) != null)// this.points.Contains(new PointWithIntensity(map.GetTile(i + point.X, j + point.Y), 0)))
-                                {// czy punkt istnieje                                    
-                                    if (PwI.Intensity < intensity)
-                                    {// czy zwiekszyc intensywnosc
-                                        PwI.Intensity = intensity;
-                                    }
-                                }
-                                else
-                                {// nie ma punktu?? w sumie takiej sytuacji nie powinno byc
-                                    this.points.AddLast(new PointWithIntensity(map.GetTile(x, y), intensity));
-                                    //update map
-                                    map.AddMessage(this.GetMessageType, new Point(x, y));
-                                }
-                            }
-                            else
-                             */
-                            if (!map.GetTile(x, y).messages.Contains(this))
+                            t = map.GetTile(p);
+                            if (t.TileType == TileType.Wall)
+                                continue;
+                            if (!t.messages.Contains(this))
                             {// nie ma w danym tile - wrzucamy
-                                map.GetTile(x, y).messages.AddLast(this);
-                                this.points.AddLast(new PointWithIntensity(map.GetTile(x, y), intensity));
+                                t.messages.AddLast(this);
+                                this.points.AddLast(new PointWithIntensity(t, intensity));
                                 //update map
-                                map.AddMessage(this.GetMessageType, new Point(x, y));
+                                map.AddMessage(this.GetMessageType, p);
                             }
                         }
                     }
                 }
             }
-        }
-
-        public override void Destroy(ISimulationWorld isw)
-        {
-            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

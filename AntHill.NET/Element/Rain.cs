@@ -1,26 +1,24 @@
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+using AntHill.NET.Utilities;
 
 namespace AntHill.NET
 {
     public class Rain : Element
     {
-        Point rainPos;
         private int timeToLive;
+
+        public Rain(Position pos)
+            : base(pos)
+        {
+            timeToLive = Randomizer.Next(AntHillConfig.rainMaxDuration + 1);
+        }
 
         public int TimeToLive
         {
             get { return timeToLive; }
             set { timeToLive = value; }
-        }
-
-
-        public Rain(Point pos):base(pos)
-        {
-            rainPos = pos;
-            timeToLive = Randomizer.Next(AntHillConfig.rainMaxDuration + 1);
-        }
+        }        
 
         public bool IsRainOver(int x, int y)
         {
@@ -28,6 +26,15 @@ namespace AntHill.NET
                 (x - Position.X) >= 0 &&
                 (y - Position.Y) < AntHillConfig.rainWidth &&
                 (y - Position.Y) >= 0)
+                return true;
+            return false;
+        }
+        public bool IsRainOver(Position pos)
+        {
+            if ((pos.X - Position.X) < AntHillConfig.rainWidth &&
+                (pos.X - Position.X) >= 0 &&
+                (pos.Y - Position.Y) < AntHillConfig.rainWidth &&
+                (pos.Y - Position.Y) >= 0)
                 return true;
             return false;
         }
@@ -73,10 +80,7 @@ namespace AntHill.NET
                     enumPwI = enumMsg.Value.Points.First;
                     while (enumPwI != null)
                     {
-                        if ((enumPwI.Value.Position.X - rainPos.X) < AntHillConfig.rainWidth &&
-                            (enumPwI.Value.Position.X - rainPos.X) >= 0
-                            && (enumPwI.Value.Position.Y - rainPos.Y) < AntHillConfig.rainWidth
-                            && (enumPwI.Value.Position.Y - rainPos.Y) >= 0)
+                        if (IsRainOver(enumPwI.Value.Position))
                         {
                             map.RemoveMessage(enumMsg.Value.GetMessageType, enumPwI.Value.Position);
                             enumPwItemp = enumPwI;
@@ -99,11 +103,6 @@ namespace AntHill.NET
                 }
             }
             return true;
-        }
-         
-        public override void Destroy(ISimulationWorld isw)
-        {
-            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

@@ -8,9 +8,9 @@ namespace AntHill.NET
         void Reset();
         void Start();
         void Stop();
-        int GetNAnts();
-        int GetNSignals();
-        int GetNTurns();
-        int GetNSpiders();
+        int GetAntsCount();
+        int GetSignalsCount();
+        int GetTurnsCount();
+        int GetSpidersCount();
     }
 }

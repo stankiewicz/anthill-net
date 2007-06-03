@@ -48,6 +48,7 @@
     <Compile Include="Astar\IAstar.cs" />
     <Compile Include="Configuration\AntHillConfig.cs" />
     <Compile Include="Counter.cs" />
+    <Compile Include="DistanceMeasurer.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +85,7 @@
     </Compile>
     <Compile Include="LIList.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AboutBox.resx">
@@ -117,11 +119,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Randomizer.cs" />
     <Compile Include="Simulation.cs" />
     <Compile Include="tests\TestClass.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Configuration\XmlReaderWriter.cs" />
+    <Compile Include="Randomizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Release\Graphics\messageFoodLocation.png" />
