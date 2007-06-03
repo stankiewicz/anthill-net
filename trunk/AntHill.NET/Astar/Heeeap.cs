@@ -6,7 +6,7 @@ namespace AntHill.NET.Heap
 {
     class Heap  < T > where T : IComparable,IEquality<T>
     {
-        static int N = 50;
+        static int N = (int)(astar.Astar.max_depth * astar.Astar.max_depth * Math.PI/2);
         private T [] elements;
         private int len;
         private int count = 0;
@@ -77,6 +77,7 @@ namespace AntHill.NET.Heap
                 }
                 len *= 2;
                 elements = tab;
+                System.Console.Out.WriteLine("reallokacja do {0}", len);
             }
             elements[count++] = element;
             UpHeap(count - 1);
