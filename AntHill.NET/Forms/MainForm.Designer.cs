@@ -228,13 +228,13 @@ namespace AntHill.NET
             this.speedBar.LargeChange = 1;
             this.speedBar.Location = new System.Drawing.Point(0, 105);
             this.speedBar.Maximum = 2000;
-            this.speedBar.Minimum = 1;
+            this.speedBar.Minimum = 10;
             this.speedBar.Name = "speedBar";
             this.speedBar.Size = new System.Drawing.Size(143, 42);
             this.speedBar.TabIndex = 5;
             this.speedBar.TickFrequency = 0;
             this.speedBar.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.speedBar.Value = 750;
+            this.speedBar.Value = 100;
             this.speedBar.Scroll += new System.EventHandler(this.speedBar_Scroll);
             // 
             // labelSpeed
@@ -318,7 +318,7 @@ namespace AntHill.NET
             // 
             // timer
             // 
-            this.timer.Interval = 350;
+            this.timer.Interval = 10;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // menuStrip1
