@@ -228,6 +228,7 @@ namespace AntHill.NET
 
         private void speedBar_Scroll(object sender, EventArgs e)
         {
+            //timer.Interval = speedBar.Value;
             timer.Interval = 10000 / (speedBar.Value);
         }
         
@@ -273,11 +274,11 @@ namespace AntHill.NET
         }
 
         private bool ShouldOmitDrawing(int x, int y)
-        {
-            return ((x + offsetX + 1 < -sceneWidth / 2.0f) ||
-                       (x + offsetX - 1 > sceneWidth / 2.0f) ||
-                       (y + offsetY + 1 < -sceneHeight / 2.0f) ||
-                       (y + offsetY - 1 > sceneHeight / 2.0f));
+        {            
+            return ((x + offsetX + 1 < -sceneWidth * 0.5f) ||
+                       (x + offsetX - 1 > sceneWidth * 0.5f) ||
+                       (y + offsetY + 1 < -sceneHeight * 0.5f) ||
+                       (y + offsetY - 1 > sceneHeight * 0.5f));
         }
 
         private void openGLControl_Paint(object sender, PaintEventArgs ea)
@@ -299,7 +300,8 @@ namespace AntHill.NET
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    if (ShouldOmitDrawing(x, y)) continue;
+                    if (ShouldOmitDrawing(x, y))
+                        continue;
                     DrawElement(x, y, map.GetTile(x, y).GetTexture(), Dir.N, offsetX, offsetY, 1, 1);
                 }
             }
@@ -385,7 +387,7 @@ namespace AntHill.NET
             public float []uv = new float[2 * 4];
             public UInt16[] indices = new UInt16[4];            
             public IntPtr []intPointers = new IntPtr[3];
-            private GCHandle[] handles = new GCHandle[3];
+            public GCHandle[] handles = new GCHandle[3];
             public VertexData()
             {
                 handles[0] = GCHandle.Alloc(vertex, GCHandleType.Pinned);
@@ -415,9 +417,10 @@ namespace AntHill.NET
             Gl.glVertexPointer(3, Gl.GL_FLOAT, 0, vertexData.vertex);
             Gl.glTexCoordPointer(2, Gl.GL_FLOAT, 0, vertexData.uv);
             Gl.glEnable(Gl.GL_VERTEX_ARRAY);
-            Gl.glEnable(Gl.GL_TEXTURE_COORD_ARRAY);            
-            
+            Gl.glEnable(Gl.GL_TEXTURE_COORD_ARRAY);
+            startingTick = Environment.TickCount;
         }
+        int startingTick;
         private void DrawElement(int x, int y, int texture, Dir direction, float moveX, float moveY, int width, int height)
         {
             width--;
@@ -466,9 +469,11 @@ namespace AntHill.NET
                     vertexData.uv[4] = 0; vertexData.uv[5] = 1;
                     break;
             }
-            
 
-            Gl.glDrawElements(Gl.GL_TRIANGLE_FAN,4 ,Gl.GL_UNSIGNED_SHORT, vertexData.indices);
+            //Gl.glPushMatrix();
+            //Gl.glRotatef((float)(Environment.TickCount - startingTick) * 0.02f, 1, 1, 1);
+            Gl.glDrawElements(Gl.GL_TRIANGLE_FAN,4 ,Gl.GL_UNSIGNED_SHORT, vertexData.intPointers[2]);
+            //Gl.glPopMatrix();
             /*Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
             Gl.glTexCoord2f(1, 0); Gl.glVertex3f(0.5f, -0.5f, 0.0f);
             Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
