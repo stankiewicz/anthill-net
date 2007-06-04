@@ -88,7 +88,7 @@
 </WorldMap>
 
 <CreaturesAbilities>
- <Ant maxLife="1000" maxLifeWithoutFood="200" turnNumberToBecomeHungry="50" strength="1" forgettingTime="10" sightRadius="5">
+ <Ant maxLife="1000" maxLifeWithoutFood="200" turnNumberToBecomeHungry="50" strength="1" forgettingTime="20" sightRadius="5">
  <Citizen>
   <Warrior startCount="20" /> 
   <Worker startCount="80" /> 
@@ -102,7 +102,7 @@
 <EnvironmentCharacteristics>
   <Rain cloudWidth="30" probability="0.1" maxDuration="20" /> 
   <Food probability="0.2" maxDensity="10"/> 
-  <Signal lifeTime="15" radius="2" /> 
+  <Signal lifeTime="25" radius="2" /> 
 </EnvironmentCharacteristics>
 
 </Anthill>
