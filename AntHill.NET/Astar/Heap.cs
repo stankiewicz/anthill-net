@@ -77,7 +77,7 @@ namespace AntHill.NET.Heap
                 }
                 len *= 2;
                 elements = tab;
-                System.Console.Out.WriteLine("reallokacja do {0}", len);
+                //System.Console.Out.WriteLine("reallokacja do {0}", len);
             }
             elements[count++] = element;
             UpHeap(count - 1);

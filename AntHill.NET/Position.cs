@@ -34,7 +34,15 @@ namespace AntHill.NET
             get { return x; }
             set { x = value; }
         }
-        
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         static public bool operator == (Position pos1, Position pos2)
         {
             return ((pos1.x == pos2.x) && (pos1.y == pos2.y));
