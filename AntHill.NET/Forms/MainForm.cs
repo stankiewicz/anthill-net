@@ -31,7 +31,7 @@ namespace AntHill.NET
             Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
 
             ReSizeGLScene(maxMagnitude, maxMagnitude, true);
-
+            
             return true;
         }
 
@@ -288,8 +288,7 @@ namespace AntHill.NET
             Gl.glLoadIdentity();
 
             if (Simulation.simulation == null) return;
-            
-            Gl.glNormal3f(0, 1, 0);
+                        
             Map map = Simulation.simulation.Map;
 
             int signal;
@@ -341,26 +340,26 @@ namespace AntHill.NET
             {
                 e = enumerator.Current;
                 if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
-                DrawElement(e.Position, e.GetTexture(), e.Direction, offsetX, offsetY);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY);
             }
             LIList<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
             while (enumeratorSpider.MoveNext())
             {
                 e = enumeratorSpider.Current;
                 if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
-                DrawElement(e.Position, e.GetTexture(), e.Direction, offsetX, offsetY);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY);
             }
             LIList<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
             while (enumeratorFood.MoveNext())
             {
                 f = enumeratorFood.Current;
                 if (ShouldOmitDrawing(f.Position.X, f.Position.Y)) continue;
-                DrawElement(f.Position, f.GetTexture(), Dir.N, offsetX, offsetY);
+                DrawElement(f.Position.X, f.Position.Y, f.GetTexture(), Dir.N, offsetX, offsetY);
             }
 
             e = Simulation.simulation.queen;
             if (e != null && !ShouldOmitDrawing(e.Position.X, e.Position.Y))
-                DrawElement(e.Position, e.GetTexture(), e.Direction, offsetX, offsetY);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY);
             
             //deszcz
             Rain rain = Simulation.simulation.rain;
@@ -378,35 +377,64 @@ namespace AntHill.NET
                 Gl.glPopMatrix();
             }
         }
-
+        static Vertex[] v = new Vertex[4];
+        class VertexData
+        {            
+            public float []vertex = new float[3 * 4];
+            public float []uv = new float[2 * 4];
+            public UInt16[] indices = new UInt16[4];
+        }
+        VertexData vertexData = new VertexData();
         private void DrawElement(int x, int y, int texture, Dir direction, float moveX, float moveY)
         {
-            Gl.glPushMatrix();                           
-            Gl.glTranslatef(x + moveX, y + moveY, 0);
-            Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-            Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(0.5f, -0.5f, 0.0f);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);            
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-0.5f, 0.5f, 0.0f);
-            Gl.glEnd();
-            Gl.glPopMatrix();
-        }
-        private void DrawElement(Position pos, int texture, Dir direction, float moveX, float moveY)
-        {
             Gl.glPushMatrix();
-            Gl.glTranslatef(pos.X + moveX, pos.Y + moveY, 0);
-            Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
+            Gl.glTranslatef(x + moveX, y + moveY, 0);            
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-            Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
+            //Gl.glBegin(Gl.GL_TRIANGLE_FAN);
+            Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
+            vertexData.vertex[0] = -0.5f;// +x + moveX;
+            vertexData.vertex[1] = -0.5f;// +y + moveY;
+            vertexData.vertex[2] = 0.0f;
+            vertexData.uv[0] = 0; vertexData.uv[1] = 0;
+
+            vertexData.vertex[3] = 0.5f;// +x + moveX;
+            vertexData.vertex[4] = -0.5f;// +y + moveY;
+            vertexData.vertex[5] = 0.0f;
+            vertexData.uv[2] = 1; vertexData.uv[3] = 0;
+
+            vertexData.vertex[6] = 0.5f;// +x + moveX;
+            vertexData.vertex[7] = 0.5f;// +y + moveY;
+            vertexData.vertex[8] = 0.0f;
+            vertexData.uv[4] = 1; vertexData.uv[5] = 1;
+
+            vertexData.vertex[9] = -0.5f;// +x + moveX;
+            vertexData.vertex[10] = 0.5f;// +y + moveY;
+            vertexData.vertex[11] = 0.0f;
+            vertexData.uv[6] = 0; vertexData.uv[7] = 1;
+
+            vertexData.indices[0] = 0;
+            vertexData.indices[1] = 1;
+            vertexData.indices[2] = 2;
+            vertexData.indices[3] = 3;
+            
+            Gl.glVertexPointer(3, Gl.GL_FLOAT, 0, vertexData.vertex);
+            Gl.glTexCoordPointer(2, Gl.GL_FLOAT, 0, vertexData.uv);
+            Gl.glEnable(Gl.GL_VERTEX_ARRAY);
+            Gl.glEnable(Gl.GL_TEXTURE_COORD_ARRAY);            
+            Gl.glDrawElements(Gl.GL_TRIANGLE_FAN,4 ,Gl.GL_UNSIGNED_SHORT, vertexData.indices);
+            /*Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
             Gl.glTexCoord2f(1, 0); Gl.glVertex3f(0.5f, -0.5f, 0.0f);
             Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
             Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-0.5f, 0.5f, 0.0f);
-            Gl.glEnd();
+            Gl.glEnd();*/
             Gl.glPopMatrix();
         }
+        struct Vertex  
+        {   
+            public float u, v;   
+            public float nx, ny, nz;   
+            public float x, y, z;   
+        }        
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
@@ -417,6 +445,7 @@ namespace AntHill.NET
         {
             offsetY = -((float)vScrollBar1.Value / 10); 
         }
+
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
