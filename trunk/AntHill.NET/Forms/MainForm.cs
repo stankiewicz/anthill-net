@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using AntHill.NET.Forms;
 using Tao.OpenGl;
+using System.Runtime.InteropServices;
 
 namespace AntHill.NET
 {
@@ -31,7 +32,7 @@ namespace AntHill.NET
             Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
 
             ReSizeGLScene(maxMagnitude, maxMagnitude, true);
-            
+            InitDrawing();
             return true;
         }
 
@@ -299,7 +300,7 @@ namespace AntHill.NET
                 for (int y = 0; y < map.Height; y++)
                 {
                     if (ShouldOmitDrawing(x, y)) continue;
-                    DrawElement(x, y, map.GetTile(x, y).GetTexture(), Dir.N, offsetX, offsetY);
+                    DrawElement(x, y, map.GetTile(x, y).GetTexture(), Dir.N, offsetX, offsetY, 1, 1);
                 }
             }
 
@@ -312,22 +313,22 @@ namespace AntHill.NET
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.FoodLocalization)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, offsetX, offsetY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, offsetX, offsetY, 1, 1);
                     }
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.QueenInDanger)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, offsetX, offsetY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, offsetX, offsetY, 1, 1);
                     }
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.QueenIsHungry)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, offsetX, offsetY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, offsetX, offsetY, 1, 1);
                     }
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.SpiderLocalization)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, offsetX, offsetY);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, offsetX, offsetY, 1, 1);
                     }
                 }
             }
@@ -340,32 +341,33 @@ namespace AntHill.NET
             {
                 e = enumerator.Current;
                 if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
-                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1);
             }
             LIList<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
             while (enumeratorSpider.MoveNext())
             {
                 e = enumeratorSpider.Current;
                 if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
-                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1 ,1);
             }
             LIList<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
             while (enumeratorFood.MoveNext())
             {
                 f = enumeratorFood.Current;
                 if (ShouldOmitDrawing(f.Position.X, f.Position.Y)) continue;
-                DrawElement(f.Position.X, f.Position.Y, f.GetTexture(), Dir.N, offsetX, offsetY);
+                DrawElement(f.Position.X, f.Position.Y, f.GetTexture(), Dir.N, offsetX, offsetY, 1, 1);
             }
 
             e = Simulation.simulation.queen;
             if (e != null && !ShouldOmitDrawing(e.Position.X, e.Position.Y))
-                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1);
             
             //deszcz
             Rain rain = Simulation.simulation.rain;
             if (rain != null)
             {
-                Gl.glPushMatrix();
+                DrawElement(rain.Position.X, rain.Position.Y , rain.GetTexture(), Dir.N, offsetX, offsetY, AntHillConfig.rainWidth, AntHillConfig.rainWidth);
+                /*Gl.glPushMatrix();
                 Gl.glTranslatef(rain.Position.X + offsetX, rain.Position.Y + offsetY, 0);
                 Gl.glBindTexture(Gl.GL_TEXTURE_2D, rain.GetTexture());
                 Gl.glBegin(Gl.GL_TRIANGLE_FAN);
@@ -374,67 +376,106 @@ namespace AntHill.NET
                 Gl.glTexCoord2f(1, 1); Gl.glVertex3f(AntHillConfig.rainWidth, AntHillConfig.rainWidth, 0.0f);
                 Gl.glTexCoord2f(0, 1); Gl.glVertex3f(0.0f, AntHillConfig.rainWidth, 0.0f);
                 Gl.glEnd();
-                Gl.glPopMatrix();
+                Gl.glPopMatrix();*/
             }
-        }
-        static Vertex[] v = new Vertex[4];
+        }        
         class VertexData
-        {            
+        {                       
             public float []vertex = new float[3 * 4];
             public float []uv = new float[2 * 4];
-            public UInt16[] indices = new UInt16[4];
+            public UInt16[] indices = new UInt16[4];            
+            public IntPtr []intPointers = new IntPtr[3];
+            private GCHandle[] handles = new GCHandle[3];
+            public VertexData()
+            {
+                handles[0] = GCHandle.Alloc(vertex, GCHandleType.Pinned);
+                handles[1] = GCHandle.Alloc(uv, GCHandleType.Pinned);
+                handles[2] = GCHandle.Alloc(indices, GCHandleType.Pinned);
+                for (int i = 0; i < 3; i++)
+                    intPointers[i] = handles[i].AddrOfPinnedObject();
+            }
+            ~VertexData()
+            {
+                for (int i = 0; i < 3; i++)
+                    handles[i].Free();
+            }
         }
-        VertexData vertexData = new VertexData();
-        private void DrawElement(int x, int y, int texture, Dir direction, float moveX, float moveY)
-        {
-            Gl.glPushMatrix();
-            Gl.glTranslatef(x + moveX, y + moveY, 0);            
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-            //Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-            Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
-            vertexData.vertex[0] = -0.5f;// +x + moveX;
-            vertexData.vertex[1] = -0.5f;// +y + moveY;
+        private VertexData vertexData = new VertexData();
+        private void InitDrawing()
+        {            
             vertexData.vertex[2] = 0.0f;
-            vertexData.uv[0] = 0; vertexData.uv[1] = 0;
-
-            vertexData.vertex[3] = 0.5f;// +x + moveX;
-            vertexData.vertex[4] = -0.5f;// +y + moveY;
             vertexData.vertex[5] = 0.0f;
-            vertexData.uv[2] = 1; vertexData.uv[3] = 0;
-
-            vertexData.vertex[6] = 0.5f;// +x + moveX;
-            vertexData.vertex[7] = 0.5f;// +y + moveY;
             vertexData.vertex[8] = 0.0f;
-            vertexData.uv[4] = 1; vertexData.uv[5] = 1;
-
-            vertexData.vertex[9] = -0.5f;// +x + moveX;
-            vertexData.vertex[10] = 0.5f;// +y + moveY;
             vertexData.vertex[11] = 0.0f;
-            vertexData.uv[6] = 0; vertexData.uv[7] = 1;
-
             vertexData.indices[0] = 0;
             vertexData.indices[1] = 1;
             vertexData.indices[2] = 2;
             vertexData.indices[3] = 3;
-            
+
             Gl.glVertexPointer(3, Gl.GL_FLOAT, 0, vertexData.vertex);
             Gl.glTexCoordPointer(2, Gl.GL_FLOAT, 0, vertexData.uv);
             Gl.glEnable(Gl.GL_VERTEX_ARRAY);
             Gl.glEnable(Gl.GL_TEXTURE_COORD_ARRAY);            
+            
+        }
+        private void DrawElement(int x, int y, int texture, Dir direction, float moveX, float moveY, int width, int height)
+        {
+            width--;
+            height--;
+            //Gl.glPushMatrix();
+            //Gl.glTranslatef(x + moveX, y + moveY, 0);            
+            Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
+            //Gl.glBegin(Gl.GL_TRIANGLE_FAN);
+            //Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
+            vertexData.vertex[0] = -0.5f + x + moveX;
+            vertexData.vertex[1] = -0.5f + y + moveY;
+                        
+            vertexData.vertex[3] = 0.5f + x + moveX + width;
+            vertexData.vertex[4] = -0.5f + y + moveY;
+            
+            vertexData.vertex[6] = 0.5f + x + moveX + width;
+            vertexData.vertex[7] = 0.5f + y + moveY + height;
+                        
+            vertexData.vertex[9] = -0.5f + x + moveX;
+            vertexData.vertex[10] = 0.5f + y + moveY + height;
+
+            switch (direction)
+            {
+                case Dir.N:
+                    vertexData.uv[0] = 0; vertexData.uv[1] = 0;
+                    vertexData.uv[2] = 1; vertexData.uv[3] = 0;
+                    vertexData.uv[4] = 1; vertexData.uv[5] = 1;
+                    vertexData.uv[6] = 0; vertexData.uv[7] = 1;
+                    break;
+                case Dir.E:
+                    vertexData.uv[2] = 0; vertexData.uv[3] = 0;
+                    vertexData.uv[4] = 1; vertexData.uv[5] = 0;
+                    vertexData.uv[6] = 1; vertexData.uv[7] = 1;
+                    vertexData.uv[0] = 0; vertexData.uv[1] = 1;
+                    break;
+                case Dir.S:
+                    vertexData.uv[4] = 0; vertexData.uv[5] = 0;
+                    vertexData.uv[6] = 1; vertexData.uv[7] = 0;
+                    vertexData.uv[0] = 1; vertexData.uv[1] = 1;
+                    vertexData.uv[2] = 0; vertexData.uv[3] = 1;
+                    break;
+                case Dir.W:
+                    vertexData.uv[6] = 0; vertexData.uv[7] = 0;
+                    vertexData.uv[0] = 1; vertexData.uv[1] = 0;
+                    vertexData.uv[2] = 1; vertexData.uv[3] = 1;
+                    vertexData.uv[4] = 0; vertexData.uv[5] = 1;
+                    break;
+            }
+            
+
             Gl.glDrawElements(Gl.GL_TRIANGLE_FAN,4 ,Gl.GL_UNSIGNED_SHORT, vertexData.indices);
             /*Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
             Gl.glTexCoord2f(1, 0); Gl.glVertex3f(0.5f, -0.5f, 0.0f);
             Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
             Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-0.5f, 0.5f, 0.0f);
             Gl.glEnd();*/
-            Gl.glPopMatrix();
-        }
-        struct Vertex  
-        {   
-            public float u, v;   
-            public float nx, ny, nz;   
-            public float x, y, z;   
-        }        
+            //Gl.glPopMatrix();
+        }                
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
