@@ -34,9 +34,13 @@ namespace AntHill.NET
             get { return x; }
             set { x = value; }
         }
+        public override string ToString()
+        {
+            return ""+x+","+y;
+        }
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);
+            return (obj is Position)?(this == (Position)obj) :false;
         }
 
         public override int GetHashCode()
