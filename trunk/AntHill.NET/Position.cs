@@ -5,15 +5,15 @@ using System.Drawing;
 
 namespace AntHill.NET
 {
-    public class Position
+    public struct Position
     {
         private int x;
         private int y;
-        public Position()
+        /*public Position()
         {
             x = 0;
             y = 0;
-        }
+        }*/
         public Position(Position pos)
         {
             x = pos.x;
