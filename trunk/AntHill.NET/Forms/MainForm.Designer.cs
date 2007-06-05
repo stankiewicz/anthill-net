@@ -30,6 +30,7 @@ namespace AntHill.NET
         {
             this.components = new System.ComponentModel.Container();
             this.rightPanel = new System.Windows.Forms.Panel();
+            this.cbVisualize = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -72,6 +73,7 @@ namespace AntHill.NET
             // 
             // rightPanel
             // 
+            this.rightPanel.Controls.Add(this.cbVisualize);
             this.rightPanel.Controls.Add(this.groupBox1);
             this.rightPanel.Controls.Add(this.buttonShowConfig);
             this.rightPanel.Controls.Add(this.magnitudeBar);
@@ -88,6 +90,19 @@ namespace AntHill.NET
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.Size = new System.Drawing.Size(143, 425);
             this.rightPanel.TabIndex = 0;
+            // 
+            // cbVisualize
+            // 
+            this.cbVisualize.AutoSize = true;
+            this.cbVisualize.Checked = true;
+            this.cbVisualize.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbVisualize.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbVisualize.Location = new System.Drawing.Point(0, 232);
+            this.cbVisualize.Name = "cbVisualize";
+            this.cbVisualize.Size = new System.Drawing.Size(143, 17);
+            this.cbVisualize.TabIndex = 9;
+            this.cbVisualize.Text = "Visualize";
+            this.cbVisualize.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -390,6 +405,7 @@ namespace AntHill.NET
             this.openGLControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
             this.openGLControl.Paint += new System.Windows.Forms.PaintEventHandler(this.openGLControl_Paint);
             this.openGLControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
+            this.openGLControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.openGLControl_KeyDown);
             // 
             // MainForm
             // 
@@ -455,6 +471,7 @@ namespace AntHill.NET
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbVisualize;
     }
 }
 

@@ -17,7 +17,7 @@ namespace AntHill.NET
         private bool scrolling = false, rotating = false;
         private ConfigForm cf = null;        
         private Point mousePos;
-        private double lookAtangle, lookAtY;//, lookAtZ;
+        private double lookAtAngleX, lookAtAngleY;
         
         Counter counter = new Counter();
         public bool done = false;
@@ -27,7 +27,7 @@ namespace AntHill.NET
             Gl.glEnable(Gl.GL_TEXTURE_2D);                                      // Enable Texture Mapping
             Gl.glEnable(Gl.GL_BLEND);
             Gl.glShadeModel(Gl.GL_SMOOTH);                                      // Enable Smooth Shading
-            Gl.glClearColor(1, 0, 0, 0.5f);                                     // Black Background
+            Gl.glClearColor(0, 0, 0, 0);                                     // Black Background
             Gl.glClearDepth(1);                                                 // Depth Buffer Setup
             //Gl.glEnable(Gl.GL_DEPTH_TEST);                                      // Enables Depth Testing
             Gl.glDepthFunc(Gl.GL_LEQUAL);                                       // The Type Of Depth Testing To Do                        
@@ -290,13 +290,17 @@ namespace AntHill.NET
         {
             counter.FrameTick();
             
-            Gl.glClearColor(0, 0, 0, 0);
+            //Gl.glClearColor(0, 0, 0, 0);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+
+            if (!cbVisualize.Checked) return;
+
             Gl.glLoadIdentity();
             Glu.gluLookAt(  0, AntHillConfig.curMagnitude * 10.0f, AntHillConfig.curMagnitude * -20.0f, 
                             0, 0, 0, 
-                            0, -1, -1);//0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2));
-            Gl.glRotated(lookAtY, 1.0d, 0.0d, 0.0d);
+                            0, -1, 0);//0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2));
+            Gl.glRotated(lookAtAngleX, 1.0d, 0.0d, 0.0d);
+            Gl.glRotated(lookAtAngleY, 0.0d, 1.0d, 0.0d);
             if (Simulation.simulation == null) return;
                         
             Map map = Simulation.simulation.Map;
@@ -402,8 +406,7 @@ namespace AntHill.NET
         private VertexData vertexData = new VertexData();
         private void InitDrawing()
         {
-            lookAtY = 1;
-            lookAtangle = Math.PI * 0.25;
+            lookAtAngleY = lookAtAngleX = 0;
 
             vertexData.vertex[2] = 0.0f;
             vertexData.vertex[5] = 0.0f;
@@ -534,11 +537,34 @@ namespace AntHill.NET
             }
             else if (rotating)
             {
-                lookAtangle += ((double)(e.Y - mousePos.Y)) * 0.1;
-                lookAtY = lookAtangle;
-                //lookAtZ = lookAtangle;
+                lookAtAngleX += ((double)(e.Y - mousePos.Y)) * 0.1;
+                lookAtAngleY -= ((double)(e.X - mousePos.X)) * 0.1;
                 openGLControl.Invalidate();
                 mousePos = e.Location;
+            }
+        }
+
+        private void openGLControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.W)
+            {
+                lookAtAngleX -= 2;
+                openGLControl.Invalidate();
+            }
+            else if (e.KeyCode == Keys.S)
+            {
+                lookAtAngleX += 2;
+                openGLControl.Invalidate();
+            }
+            else if (e.KeyCode == Keys.A)
+            {
+                lookAtAngleY += 2;
+                openGLControl.Invalidate();
+            }
+            else if (e.KeyCode == Keys.D)
+            {
+                lookAtAngleY -= 2;
+                openGLControl.Invalidate();
             }
         }
     }
