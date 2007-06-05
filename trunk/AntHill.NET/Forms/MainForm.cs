@@ -76,11 +76,12 @@ namespace AntHill.NET
                 Gl.glViewport(0, 0, openGLControl.Width, openGLControl.Height);                            
             Gl.glMatrixMode(Gl.GL_PROJECTION);                                  // Select The Projection Matrix
             Gl.glLoadIdentity();                                                // Reset The Projection Matrix
-            Gl.glOrtho(-(0.5f * width), (0.5f * width), (0.5f * height), -(0.5f * height), -100, 100);
+            //Gl.glOrtho(-(0.5f * width), (0.5f * width), (0.5f * height), -(0.5f * height), -100, 100);
+            Glu.gluPerspective(60.0f, width / height, 1.0f, 10000.0f);
             sceneWidth = width;
             sceneHeight = height;
             Gl.glMatrixMode(Gl.GL_MODELVIEW);                                   // Select The Modelview Matrix
-            Gl.glLoadIdentity();                                                // Reset The Modelview Matrix
+            Gl.glLoadIdentity();                                                // Reset The Modelview Matrix            
         }
 
         private void loadData(object sender, EventArgs e)
@@ -288,7 +289,7 @@ namespace AntHill.NET
             Gl.glClearColor(0, 0, 0, 0);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
             Gl.glLoadIdentity();
-
+            Glu.gluLookAt(0, 0, -10, 0, 0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2), 0, 0.5f * Math.Sqrt(2), -0.5f * Math.Sqrt(2));
             if (Simulation.simulation == null) return;
                         
             Map map = Simulation.simulation.Map;
