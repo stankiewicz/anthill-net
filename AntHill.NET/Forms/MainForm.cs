@@ -77,7 +77,7 @@ namespace AntHill.NET
             Gl.glMatrixMode(Gl.GL_PROJECTION);                                  // Select The Projection Matrix
             Gl.glLoadIdentity();                                                // Reset The Projection Matrix
             //Gl.glOrtho(-(0.5f * width), (0.5f * width), (0.5f * height), -(0.5f * height), -100, 100);
-            Glu.gluPerspective(60.0f, width / height, 1.0f, 10000.0f);
+            Glu.gluPerspective(60.0f, (float)openGLControl.Width / (float)openGLControl.Height, 1.0f, 10000.0f);
             sceneWidth = width;
             sceneHeight = height;
             Gl.glMatrixMode(Gl.GL_MODELVIEW);                                   // Select The Modelview Matrix
@@ -127,7 +127,8 @@ namespace AntHill.NET
                     maxMagnitude = Simulation.simulation.Map.Height;
                 offsetX = -(Simulation.simulation.Map.Width >> 1) + 0.5f;
                 offsetY = -(Simulation.simulation.Map.Height >> 1) + 0.5f;
-
+                magnitudeBar.Maximum = 50 * Simulation.simulation.Map.Height;
+                AntHillConfig.curMagnitude = ((float)magnitudeBar.Value) / 1000.0f;
                 vScrollBar1.Minimum = 0;
                 vScrollBar1.LargeChange = 1;
                 vScrollBar1.Maximum = 10 * Simulation.simulation.Map.Height + vScrollBar1.LargeChange;
@@ -285,11 +286,13 @@ namespace AntHill.NET
         private void openGLControl_Paint(object sender, PaintEventArgs ea)
         {
             counter.FrameTick();
-
+            
             Gl.glClearColor(0, 0, 0, 0);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
             Gl.glLoadIdentity();
-            Glu.gluLookAt(0, 0, -10, 0, 0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2), 0, 0.5f * Math.Sqrt(2), -0.5f * Math.Sqrt(2));
+            Glu.gluLookAt(  0, AntHillConfig.curMagnitude * 10.0f, AntHillConfig.curMagnitude * -20.0f, 
+                            0, 0, 0, 
+                            0, -1, -1);//0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2));
             if (Simulation.simulation == null) return;
                         
             Map map = Simulation.simulation.Map;
@@ -301,8 +304,7 @@ namespace AntHill.NET
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    if (ShouldOmitDrawing(x, y))
-                        continue;
+                    //if (ShouldOmitDrawing(x, y)) continue;
                     DrawElement(x, y, map.GetTile(x, y).GetTexture(), Dir.N, offsetX, offsetY, 1, 1);
                 }
             }
@@ -311,7 +313,7 @@ namespace AntHill.NET
             {
                 for (int y = 0; y < map.Height; y++)
                 {
-                    if (ShouldOmitDrawing(x, y)) continue;
+                    //if (ShouldOmitDrawing(x, y)) continue;
 
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.FoodLocalization)) > 0)
                     {
@@ -343,43 +345,33 @@ namespace AntHill.NET
             while (enumerator.MoveNext())
             {
                 e = enumerator.Current;
-                if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
+                //if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
                 DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1);
             }
             LIList<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
             while (enumeratorSpider.MoveNext())
             {
                 e = enumeratorSpider.Current;
-                if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
+                //if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
                 DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1 ,1);
             }
             LIList<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
             while (enumeratorFood.MoveNext())
             {
                 f = enumeratorFood.Current;
-                if (ShouldOmitDrawing(f.Position.X, f.Position.Y)) continue;
+                //if (ShouldOmitDrawing(f.Position.X, f.Position.Y)) continue;
                 DrawElement(f.Position.X, f.Position.Y, f.GetTexture(), Dir.N, offsetX, offsetY, 1, 1);
             }
 
             e = Simulation.simulation.queen;
-            if (e != null && !ShouldOmitDrawing(e.Position.X, e.Position.Y))
+            if (e != null)// && !ShouldOmitDrawing(e.Position.X, e.Position.Y))
                 DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1);
             
             //deszcz
             Rain rain = Simulation.simulation.rain;
             if (rain != null)
             {
-                DrawElement(rain.Position.X, rain.Position.Y , rain.GetTexture(), Dir.N, offsetX, offsetY, AntHillConfig.rainWidth, AntHillConfig.rainWidth);
-                /*Gl.glPushMatrix();
-                Gl.glTranslatef(rain.Position.X + offsetX, rain.Position.Y + offsetY, 0);
-                Gl.glBindTexture(Gl.GL_TEXTURE_2D, rain.GetTexture());
-                Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-                Gl.glTexCoord2f(0, 0); Gl.glVertex3f(0.0f, 0.0f, 0.0f);
-                Gl.glTexCoord2f(1, 0); Gl.glVertex3f((AntHillConfig.rainWidth),0.0f, 0.0f);
-                Gl.glTexCoord2f(1, 1); Gl.glVertex3f(AntHillConfig.rainWidth, AntHillConfig.rainWidth, 0.0f);
-                Gl.glTexCoord2f(0, 1); Gl.glVertex3f(0.0f, AntHillConfig.rainWidth, 0.0f);
-                Gl.glEnd();
-                Gl.glPopMatrix();*/
+                DrawElement(rain.Position.X, rain.Position.Y , rain.GetTexture(), Dir.N, offsetX, offsetY, AntHillConfig.rainWidth, AntHillConfig.rainWidth);                
             }
         }        
         class VertexData
