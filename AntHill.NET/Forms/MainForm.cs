@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using AntHill.NET.Forms;
 using Tao.OpenGl;
+using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 
 namespace AntHill.NET
@@ -13,9 +14,10 @@ namespace AntHill.NET
         private float sceneWidth, sceneHeight; //OpenGL *scene* size, *not* control's size
         private float offsetX = 0, offsetY = 0; //scrollbar offset
         private int maxMagnitude = 0;
-        private bool scrolling = false;
+        private bool scrolling = false, rotating = false;
         private ConfigForm cf = null;        
         private Point mousePos;
+        private double lookAtangle, lookAtY, lookAtZ;
         
         Counter counter = new Counter();
         public bool done = false;
@@ -32,6 +34,7 @@ namespace AntHill.NET
             Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
 
             ReSizeGLScene(maxMagnitude, maxMagnitude, true);
+
             InitDrawing();
             return true;
         }
@@ -292,7 +295,7 @@ namespace AntHill.NET
             Gl.glLoadIdentity();
             Glu.gluLookAt(  0, AntHillConfig.curMagnitude * 10.0f, AntHillConfig.curMagnitude * -20.0f, 
                             0, 0, 0, 
-                            0, -1, -1);//0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2));
+                            0, -lookAtY, -lookAtZ);//0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2));
             if (Simulation.simulation == null) return;
                         
             Map map = Simulation.simulation.Map;
@@ -397,7 +400,10 @@ namespace AntHill.NET
         }
         private VertexData vertexData = new VertexData();
         private void InitDrawing()
-        {            
+        {
+            lookAtZ = lookAtY = 1;
+            lookAtangle = Math.PI * 0.25;
+
             vertexData.vertex[2] = 0.0f;
             vertexData.vertex[5] = 0.0f;
             vertexData.vertex[8] = 0.0f;
@@ -493,6 +499,11 @@ namespace AntHill.NET
                 mousePos = e.Location;
                 scrolling = true;
             }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                mousePos = e.Location;
+                rotating = true;
+            }
         }        
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
@@ -500,6 +511,10 @@ namespace AntHill.NET
             if (e.Button == MouseButtons.Right)
             {
                 scrolling = false;
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                rotating = false;
             }
         }
 
@@ -513,6 +528,14 @@ namespace AntHill.NET
                 vScrollBar1.Value = Math.Min(vScrollBar1.Maximum - vScrollBar1.LargeChange, Math.Max(0, vVal));
                 offsetX = -((float)hScrollBar1.Value / 10);
                 offsetY = -((float)vScrollBar1.Value / 10);
+                openGLControl.Invalidate();
+                mousePos = e.Location;
+            }
+            else if (rotating)
+            {
+                lookAtangle += ((double)(e.Y - mousePos.Y)) * 0.01;
+                lookAtY = Math.Sin(lookAtangle);
+                lookAtZ = Math.Cos(lookAtangle);
                 openGLControl.Invalidate();
                 mousePos = e.Location;
             }
