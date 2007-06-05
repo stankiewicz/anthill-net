@@ -17,7 +17,7 @@ namespace AntHill.NET
         private bool scrolling = false, rotating = false;
         private ConfigForm cf = null;        
         private Point mousePos;
-        private double lookAtangle, lookAtY, lookAtZ;
+        private double lookAtangle, lookAtY;//, lookAtZ;
         
         Counter counter = new Counter();
         public bool done = false;
@@ -295,7 +295,8 @@ namespace AntHill.NET
             Gl.glLoadIdentity();
             Glu.gluLookAt(  0, AntHillConfig.curMagnitude * 10.0f, AntHillConfig.curMagnitude * -20.0f, 
                             0, 0, 0, 
-                            0, -lookAtY, -lookAtZ);//0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2));
+                            0, -1, -1);//0.5f * Math.Sqrt(2), 0.5f * Math.Sqrt(2));
+            Gl.glRotated(lookAtY, 1.0d, 0.0d, 0.0d);
             if (Simulation.simulation == null) return;
                         
             Map map = Simulation.simulation.Map;
@@ -401,7 +402,7 @@ namespace AntHill.NET
         private VertexData vertexData = new VertexData();
         private void InitDrawing()
         {
-            lookAtZ = lookAtY = 1;
+            lookAtY = 1;
             lookAtangle = Math.PI * 0.25;
 
             vertexData.vertex[2] = 0.0f;
@@ -533,9 +534,9 @@ namespace AntHill.NET
             }
             else if (rotating)
             {
-                lookAtangle += ((double)(e.Y - mousePos.Y)) * 0.01;
-                lookAtY = Math.Sin(lookAtangle);
-                lookAtZ = Math.Cos(lookAtangle);
+                lookAtangle += ((double)(e.Y - mousePos.Y)) * 0.1;
+                lookAtY = lookAtangle;
+                //lookAtZ = lookAtangle;
                 openGLControl.Invalidate();
                 mousePos = e.Location;
             }
