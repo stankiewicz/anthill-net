@@ -140,7 +140,41 @@ namespace AntHill.NET
 
             return true;
         }
-        bool MoveOrRotateOrDig(ISimulationWorld isw, KeyValuePair<int, int> where)
+        
+        protected new  void MoveRandomly(ISimulationWorld isw)
+        {
+            randomMovementCount++;
+
+            if (randomMovementCount < currentTrail.Count)
+            {
+                if ((this.Position.X == currentTrail[randomMovementCount].Key) && (this.Position.Y == currentTrail[randomMovementCount].Value))
+                    randomMovementCount++;
+            }
+
+            if ((randomMovementCount >= currentTrail.Count) || (randomDestination.X < 0))
+            {
+                randomMovementCount = 0;
+                randomDestination = new Position(isw.GetMap().GetRandomIndoorOrOutdoorTile().Position);
+                currentTrail = Astar.Search(new KeyValuePair<int, int>(this.Position.X, this.Position.Y),
+                                            new KeyValuePair<int, int>(randomDestination.X, randomDestination.Y),
+                                            new AstarWorkerObject());
+            }
+            if (currentTrail == null)
+            {
+                randomDestination.X = -1;
+                return;
+            }
+            if (currentTrail.Count <= 1)
+            {
+                randomDestination.X = -1;
+                return;
+            }
+            if (!MoveOrRotateOrDig(isw,currentTrail[randomMovementCount]))
+                randomMovementCount--;
+            if (randomMovementCount >= 10)
+                randomDestination.X = -1;
+        }
+        protected bool MoveOrRotateOrDig(ISimulationWorld isw, KeyValuePair<int, int> where)
         {// nie chce mi sie obrotu zrobic do kopania.. 
             Tile t = isw.GetMap().GetTile(where.Key, where.Value);
             if (t.TileType == TileType.Wall)

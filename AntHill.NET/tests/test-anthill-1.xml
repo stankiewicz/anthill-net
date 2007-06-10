@@ -2,18 +2,18 @@
 
 <WorldMap rowCount="10" colCount="10">
 	<Map row="ssssssssss" />
-	<Map row="sxxxooxxxs" />
+	<Map row="sxxxxxxxxs" />
 	<Map row="sxxxooxxxs" />
 	<Map row="sxxooooxxs" />
-	<Map row="soooooooos" />
-	<Map row="soooooooos" />
+	<Map row="sxooooooxs" />
+	<Map row="sxooooooxs" />
 	<Map row="sxxooooxxs" />
 	<Map row="sxxxooxxxs" />
-	<Map row="sxxxooxxxs" />
+	<Map row="sxxxxxxxxs" />
 	<Map row="ssssssssss" />
 </WorldMap>
 <CreaturesAbilities>
-- <Ant maxLife="100" maxLifeWithoutFood="40" turnNumberToBecomeHungry="15" strength="3" forgettingTime="5" sightRadius="2">
+- <Ant maxLife="100" maxLifeWithoutFood="40" turnNumberToBecomeHungry="25" strength="3" forgettingTime="5" sightRadius="2">
 - <Citizen>
   <Warrior startCount="5" /> 
   <Worker startCount="0" /> 

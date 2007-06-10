@@ -12,7 +12,7 @@ namespace AntHill.NET
     public abstract class Creature : Element
     {
         public List<KeyValuePair<int, int>> path = new List<KeyValuePair<int,int>>();
-        private List<KeyValuePair<int, int>> currentTrail = new List<KeyValuePair<int, int>>();
+        protected List<KeyValuePair<int, int>> currentTrail = new List<KeyValuePair<int, int>>();
         protected int health;
         protected int randomMovementCount = 0;
         protected Dir direction;
