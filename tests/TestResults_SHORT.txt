@@ -5,10 +5,16 @@ Copyright (C) 2000-2002 Philip Craig.
 All Rights Reserved.
 
 Runtime Environment - 
-   OS Version: Microsoft Windows NT 5.1.2600 Dodatek Service Pack 2
+   OS Version: Microsoft Windows NT 5.0.2195 Service Pack 4
   CLR Version: 2.0.50727.42 ( Net 2.0.50727.42 )
 
-.....................
-Tests run: 21, Failures: 0, Not run: 0, Time: 1.442 seconds
+.........F............
+Tests run: 21, Failures: 1, Not run: 0, Time: 3.688 seconds
+
+Failures:
+1) AntHill.NET.TestClass.GetVisibleMessagesTest : GetVisibleMessagesTest problem to see message by worker (POSITION) 
+	expected:<3,3>
+	 but was:<2,2>
+   w AntHill.NET.TestClass.GetVisibleMessagesTest() w C:\Documents and Settings\jaworskif\Pulpit\anthill_project\AntHill.NET\tests\TestClass.cs:wiersz 575
 
 
