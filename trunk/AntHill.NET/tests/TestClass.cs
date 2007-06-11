@@ -5,12 +5,6 @@ using NUnit.Framework;
 using System.Drawing;
 using astar;
 
-/* TODO:
- * CitizenTest - dopisaæ o sygna³ach i inne...
- * SimulationTest - dopisaæ to co siê pojawi³o...
- * Create and Delete sth Test (spider, message, food, ant, ...)
- */
-
 namespace AntHill.NET
 {
 
@@ -330,7 +324,7 @@ namespace AntHill.NET
 
             Assert.AreSame(test_map, tmp_isw.GetMap(), "Simulation.GetMap problem");
 
-//tu brakuje doœæ du¿o funkcji i do nich testów ;)
+            //reszta jest testowana w innych funkcjach
 
         }
 
@@ -542,11 +536,10 @@ namespace AntHill.NET
         {
             Worker worker1 = new Worker(new Position(2, 2));
             Warrior warrior1 = new Warrior(new Position(3, 3));
-            Message message1 = new Message(new Position(2, 2), MessageType.QueenIsHungry, new Position(0,0));
-            Message message2 = new Message(new Position(3, 3), MessageType.QueenInDanger, new Position(0,0));
+            Message message1_tmp = new Message(new Position(2, 2), MessageType.QueenIsHungry, new Position(0,0));
+            Message message2_tmp = new Message(new Position(3, 3), MessageType.QueenInDanger, new Position(0,0));
             XmlReaderWriter reader = new XmlReaderWriter();
             reader.ReadMe("..\\..\\tests\\test-RAIN-anthill.xml");
-
 
             AHGraphics.Init();
 
@@ -554,11 +547,9 @@ namespace AntHill.NET
             tmp_isw.ants.AddLast(worker1);
             tmp_isw.ants.AddLast(warrior1);
 
-            tmp_isw.messages.AddLast(message1);
-            tmp_isw.messages.AddLast(message2);
-//            worker1.AddToSet(message, 2);
-//            worker1.SpreadSignal(tmp_isw);
-//            List<Message> list = tmp_isw.GetVisibleMessages(worker2);
+            tmp_isw.CreateMessage(new Position(2, 2), MessageType.QueenIsHungry, new Position(0, 0));
+            tmp_isw.CreateMessage(new Position(3, 3), MessageType.QueenInDanger, new Position(0, 0));
+
 
             Rain test_rain = new Rain(new Position(3, 3));
             tmp_isw.rain = test_rain;
@@ -567,10 +558,17 @@ namespace AntHill.NET
             LIList<Message> list2 = tmp_isw.GetVisibleMessages(warrior1);
             LIList<Message> list3 = tmp_isw.GetVisibleMessages(worker1);
 
-//            Assert.IsTrue(list1.Contains(message1), "GetVisibleMessagesTest problem to see message by rain");
-//            Assert.IsTrue(list2.Contains(message2), "GetVisibleMessagesTest problem to see message by warriror");
-//            Assert.IsTrue(list3.Contains(message1), "GetVisibleMessagesTest problem to see message by worker");
+            Assert.AreEqual(list1.First.Value.Position, message1_tmp.Position, "GetVisibleMessagesTest problem to see message by rain (POSITION)");
+            Assert.AreEqual(list1.First.Value.GetMessageType, message1_tmp.GetMessageType, "GetVisibleMessagesTest problem to see message by rain (MESSAGETYPE)");
+            Assert.AreEqual(list1.First.Value.TargetPosition, message1_tmp.TargetPosition, "GetVisibleMessagesTest problem to see message by rain (TARGETPOS)");
 
+            Assert.AreEqual(list2.Last.Value.Position, message2_tmp.Position, "GetVisibleMessagesTest problem to see message by warriror (POSITION)");
+            Assert.AreEqual(list2.Last.Value.GetMessageType, message2_tmp.GetMessageType, "GetVisibleMessagesTest problem to see message by warriror (MESSAGETYPE)");
+            Assert.AreEqual(list2.Last.Value.TargetPosition, message2_tmp.TargetPosition, "GetVisibleMessagesTest problem to see message by warriror (TARGETPOS)");
+            
+            Assert.AreEqual(list3.First.Value.Position, message1_tmp.Position, "GetVisibleMessagesTest problem to see message by worker (POSITION)");
+            Assert.AreEqual(list3.First.Value.GetMessageType, message1_tmp.GetMessageType, "GetVisibleMessagesTest problem to see message by worker (MESSAGETYPE)");
+            Assert.AreEqual(list3.First.Value.TargetPosition, message1_tmp.TargetPosition, "GetVisibleMessagesTest problem to see message by worker (TARGETPOS)");
         }
 
     }
