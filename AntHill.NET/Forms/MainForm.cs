@@ -29,7 +29,7 @@ namespace AntHill.NET
             Gl.glShadeModel(Gl.GL_SMOOTH);                                      // Enable Smooth Shading
             Gl.glClearColor(0, 0, 0, 0);                                     // Black Background
             Gl.glClearDepth(1);                                                 // Depth Buffer Setup
-            //Gl.glEnable(Gl.GL_DEPTH_TEST);                                      // Enables Depth Testing
+            Gl.glEnable(Gl.GL_DEPTH_TEST);                                      // Enables Depth Testing
             Gl.glDepthFunc(Gl.GL_LEQUAL);                                       // The Type Of Depth Testing To Do                        
             Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -113,13 +113,7 @@ namespace AntHill.NET
                     return;
                 }
 
-                rightPanel.Enabled = true;
-                /*
-                doTurnButton.Enabled = true;
-                startButton.Enabled = true;
-                btnStop.Enabled = false;
-                btnReset.Enabled = true;
-                */
+                rightPanel.Enabled = true;                
                 
                 timer.Interval = speedBar.Maximum - speedBar.Value + speedBar.Minimum;
 
@@ -313,7 +307,7 @@ namespace AntHill.NET
                 for (int y = 0; y < map.Height; y++)
                 {
                     //if (ShouldOmitDrawing(x, y)) continue;
-                    DrawElement(x, y, map.GetTile(x, y).GetTexture(), Dir.N, offsetX, offsetY, 1, 1);
+                    DrawElement(x, y, map.GetTile(x, y).GetTexture(), Dir.N, offsetX, offsetY, 1, 1, 0.0f);
                 }
             }
 
@@ -326,22 +320,22 @@ namespace AntHill.NET
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.FoodLocalization)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, offsetX, offsetY, 1, 1);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageFoodLocation, Dir.N, offsetX, offsetY, 1, 1, 0.01f);
                     }
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.QueenInDanger)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, offsetX, offsetY, 1, 1);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenInDanger, Dir.N, offsetX, offsetY, 1, 1, 0.01f);
                     }
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.QueenIsHungry)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, offsetX, offsetY, 1, 1);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageQueenIsHungry, Dir.N, offsetX, offsetY, 1, 1, 0.01f);
                     }
                     if ((signal = map.MsgCount[x, y].GetCount(MessageType.SpiderLocalization)) > 0)
                     {
                         Gl.glColor4f(1, 1, 1, (float)(signal + AntHillConfig.signalInitialAlpha) / AntHillConfig.signalHighestDensity);
-                        DrawElement(x, y, (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, offsetX, offsetY, 1, 1);
+                        DrawElement(x, y, (int)AHGraphics.Texture.MessageSpiderLocation, Dir.N, offsetX, offsetY, 1, 1, 0.01f);
                     }
                 }
             }
@@ -354,32 +348,32 @@ namespace AntHill.NET
             {
                 e = enumerator.Current;
                 //if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
-                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1, 0.02f);
             }
             LIList<Spider>.Enumerator enumeratorSpider = Simulation.simulation.spiders.GetEnumerator();
             while (enumeratorSpider.MoveNext())
             {
                 e = enumeratorSpider.Current;
                 //if (ShouldOmitDrawing(e.Position.X, e.Position.Y)) continue;
-                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1 ,1);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1, 0.02f);
             }
             LIList<Food>.Enumerator enumeratorFood = Simulation.simulation.food.GetEnumerator();
             while (enumeratorFood.MoveNext())
             {
                 f = enumeratorFood.Current;
                 //if (ShouldOmitDrawing(f.Position.X, f.Position.Y)) continue;
-                DrawElement(f.Position.X, f.Position.Y, f.GetTexture(), Dir.N, offsetX, offsetY, 1, 1);
+                DrawElement(f.Position.X, f.Position.Y, f.GetTexture(), Dir.N, offsetX, offsetY, 1, 1, 0.015f);
             }
 
             e = Simulation.simulation.queen;
             if (e != null)// && !ShouldOmitDrawing(e.Position.X, e.Position.Y))
-                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1);
+                DrawElement(e.Position.X, e.Position.Y, e.GetTexture(), e.Direction, offsetX, offsetY, 1, 1, 0.025f);
             
             //deszcz
             Rain rain = Simulation.simulation.rain;
             if (rain != null)
             {
-                DrawElement(rain.Position.X, rain.Position.Y , rain.GetTexture(), Dir.N, offsetX, offsetY, AntHillConfig.rainWidth, AntHillConfig.rainWidth);                
+                DrawElement(rain.Position.X, rain.Position.Y, rain.GetTexture(), Dir.N, offsetX, offsetY, AntHillConfig.rainWidth, AntHillConfig.rainWidth, 1.0f);                
             }
         }        
         class VertexData
@@ -424,27 +418,27 @@ namespace AntHill.NET
             startingTick = Environment.TickCount;
         }
         int startingTick;
-        private void DrawElement(int x, int y, int texture, Dir direction, float moveX, float moveY, int width, int height)
+        private void DrawElement(int x, int y, int texture, Dir direction, float moveX, float moveY, int width, int height, float z)
         {
+            z = -z;
             width--;
             height--;
             //Gl.glPushMatrix();
             //Gl.glTranslatef(x + moveX, y + moveY, 0);            
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-            //Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-            //Gl.glRotatef(90.0f * (float)direction, 0, 0, 1);
+            //Gl.glBegin(Gl.GL_TRIANGLE_FAN);            
             vertexData.vertex[0] = -0.5f + x + moveX;
             vertexData.vertex[1] = -0.5f + y + moveY;
-                        
+            vertexData.vertex[2] = z;            
             vertexData.vertex[3] = 0.5f + x + moveX + width;
             vertexData.vertex[4] = -0.5f + y + moveY;
-            
+            vertexData.vertex[5] = z;
             vertexData.vertex[6] = 0.5f + x + moveX + width;
             vertexData.vertex[7] = 0.5f + y + moveY + height;
-                        
+            vertexData.vertex[8] = z;                        
             vertexData.vertex[9] = -0.5f + x + moveX;
             vertexData.vertex[10] = 0.5f + y + moveY + height;
-
+            vertexData.vertex[11] = z;
             switch (direction)
             {
                 case Dir.N:
@@ -473,16 +467,16 @@ namespace AntHill.NET
                     break;
             }
 
-            //Gl.glPushMatrix();
-            //Gl.glRotatef((float)(Environment.TickCount - startingTick) * 0.02f, 1, 1, 1);
+            //Gl.glPushMatrix();            
+            if (magicCheckBox.Checked)
+            {
+                Gl.glPushMatrix();
+                float f = (float)(Environment.TickCount - startingTick) * 0.00001f;
+                Gl.glRotatef(f * (x + Simulation.simulation.Map.Width * y), 1, 1, 1);
+            }
             Gl.glDrawElements(Gl.GL_TRIANGLE_FAN,4 ,Gl.GL_UNSIGNED_SHORT, vertexData.intPointers[2]);
-            //Gl.glPopMatrix();
-            /*Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-0.5f, -0.5f, 0.0f);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3f(0.5f, -0.5f, 0.0f);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3f(0.5f, 0.5f, 0.0f);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-0.5f, 0.5f, 0.0f);
-            Gl.glEnd();*/
-            //Gl.glPopMatrix();
+            if (magicCheckBox.Checked)            
+                Gl.glPopMatrix();            
         }                
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
