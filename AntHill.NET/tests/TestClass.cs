@@ -115,25 +115,31 @@ namespace AntHill.NET
         [Test]
         public void MessageTest()
         {
-/*
-            Tile[,] test_tiles =
-            {{new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Wall, new Point())},
-            {new Tile(TileType.Wall, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Outdoor, new Point())},
-            {new Tile(TileType.Outdoor, new Point()), new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point())},
-            {new Tile(TileType.Indoor, new Point()), new Tile(TileType.Wall, new Point()), new Tile(TileType.Outdoor, new Point())}};
+            Message message1_tmp = new Message(new Position(2, 2), MessageType.QueenIsHungry, new Position(0, 0));
+            Message message2_tmp = new Message(new Position(3, 3), MessageType.QueenInDanger, new Position(0, 0));
 
-            Assert.IsNotNull(test_tiles, "TTT:{0} {1}", test_tiles.GetLength(0), test_tiles.GetLength(1));
+            Tile[,] test_tiles =
+            {{new Tile(TileType.Indoor, new Position()), new Tile(TileType.Outdoor, new Position()), new Tile(TileType.Wall, new Position())},
+            {new Tile(TileType.Wall, new Position()), new Tile(TileType.Indoor, new Position()), new Tile(TileType.Outdoor, new Position())},
+            {new Tile(TileType.Outdoor, new Position()), new Tile(TileType.Indoor, new Position()), new Tile(TileType.Wall, new Position())},
+            {new Tile(TileType.Indoor, new Position()), new Tile(TileType.Wall, new Position()), new Tile(TileType.Outdoor, new Position())}};
+
+            AHGraphics.Init();
 
             Map test_map = new Map(4, 3, test_tiles);
-
             Simulation tmp_isw = new Simulation(test_map);
-*/
 
+            tmp_isw.CreateMessage(new Position(2, 2), MessageType.QueenIsHungry, new Position(0, 0));
+            tmp_isw.CreateMessage(new Position(3, 3), MessageType.QueenInDanger, new Position(0, 0));
+
+            Assert.AreEqual(tmp_isw.messages.First.Value.Position, message1_tmp.Position, "MessageTest problem (POSITION)");
+            Assert.AreEqual(tmp_isw.messages.First.Value.GetMessageType, message1_tmp.GetMessageType, "MessageTest problem (MESSAGETYPE)");
+            Assert.AreEqual(tmp_isw.messages.First.Value.TargetPosition, message1_tmp.TargetPosition, "MessageTest problem (TARGETPOS)");
         }
+
         [Test]
         public void PointWithIntensityTest()
         {
-            //doda³em Point(3,4) - mo¿e nie dzia³aæ czasem - Kamil
             Tile test_tile = new Tile(TileType.Wall, new Position(3, 4));
             PointWithIntensity test_pointwithintensity = new PointWithIntensity(test_tile, 23);
             Assert.AreEqual(test_pointwithintensity.Intensity, 23, "PointWithIntensity.Intensity problem");
