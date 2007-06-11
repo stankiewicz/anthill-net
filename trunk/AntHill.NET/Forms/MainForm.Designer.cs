@@ -30,6 +30,7 @@ namespace AntHill.NET
         {
             this.components = new System.ComponentModel.Container();
             this.rightPanel = new System.Windows.Forms.Panel();
+            this.magicCheckBox = new System.Windows.Forms.CheckBox();
             this.cbVisualize = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -73,6 +74,7 @@ namespace AntHill.NET
             // 
             // rightPanel
             // 
+            this.rightPanel.Controls.Add(this.magicCheckBox);
             this.rightPanel.Controls.Add(this.cbVisualize);
             this.rightPanel.Controls.Add(this.groupBox1);
             this.rightPanel.Controls.Add(this.buttonShowConfig);
@@ -91,13 +93,23 @@ namespace AntHill.NET
             this.rightPanel.Size = new System.Drawing.Size(143, 425);
             this.rightPanel.TabIndex = 0;
             // 
+            // magicCheckBox
+            // 
+            this.magicCheckBox.AutoSize = true;
+            this.magicCheckBox.Location = new System.Drawing.Point(63, 226);
+            this.magicCheckBox.Name = "magicCheckBox";
+            this.magicCheckBox.Size = new System.Drawing.Size(55, 17);
+            this.magicCheckBox.TabIndex = 10;
+            this.magicCheckBox.Text = "Magic";
+            this.magicCheckBox.UseVisualStyleBackColor = true;
+            // 
             // cbVisualize
             // 
             this.cbVisualize.AutoSize = true;
             this.cbVisualize.Checked = true;
             this.cbVisualize.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbVisualize.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cbVisualize.Location = new System.Drawing.Point(0, 232);
+            this.cbVisualize.Location = new System.Drawing.Point(0, 226);
             this.cbVisualize.Name = "cbVisualize";
             this.cbVisualize.Size = new System.Drawing.Size(143, 17);
             this.cbVisualize.TabIndex = 9;
@@ -204,7 +216,7 @@ namespace AntHill.NET
             // buttonShowConfig
             // 
             this.buttonShowConfig.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonShowConfig.Location = new System.Drawing.Point(0, 208);
+            this.buttonShowConfig.Location = new System.Drawing.Point(0, 202);
             this.buttonShowConfig.Name = "buttonShowConfig";
             this.buttonShowConfig.Size = new System.Drawing.Size(143, 24);
             this.buttonShowConfig.TabIndex = 0;
@@ -216,11 +228,11 @@ namespace AntHill.NET
             // 
             this.magnitudeBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.magnitudeBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.magnitudeBar.Location = new System.Drawing.Point(0, 163);
+            this.magnitudeBar.Location = new System.Drawing.Point(0, 160);
             this.magnitudeBar.Maximum = 1000;
             this.magnitudeBar.Minimum = 100;
             this.magnitudeBar.Name = "magnitudeBar";
-            this.magnitudeBar.Size = new System.Drawing.Size(143, 45);
+            this.magnitudeBar.Size = new System.Drawing.Size(143, 42);
             this.magnitudeBar.TabIndex = 1;
             this.magnitudeBar.TickFrequency = 0;
             this.magnitudeBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -231,7 +243,7 @@ namespace AntHill.NET
             // 
             this.magnitudeLabel.AutoSize = true;
             this.magnitudeLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.magnitudeLabel.Location = new System.Drawing.Point(0, 150);
+            this.magnitudeLabel.Location = new System.Drawing.Point(0, 147);
             this.magnitudeLabel.Name = "magnitudeLabel";
             this.magnitudeLabel.Size = new System.Drawing.Size(60, 13);
             this.magnitudeLabel.TabIndex = 3;
@@ -246,7 +258,7 @@ namespace AntHill.NET
             this.speedBar.Maximum = 2000;
             this.speedBar.Minimum = 10;
             this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(143, 45);
+            this.speedBar.Size = new System.Drawing.Size(143, 42);
             this.speedBar.TabIndex = 5;
             this.speedBar.TickFrequency = 0;
             this.speedBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -472,6 +484,7 @@ namespace AntHill.NET
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cbVisualize;
+        private System.Windows.Forms.CheckBox magicCheckBox;
     }
 }
 
